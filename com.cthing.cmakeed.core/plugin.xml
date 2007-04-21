@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension-point id="commands"
+                     name="%commands-extension-point.name"
+                     schema="schema/commands.exsd"/>
+   	<extension
+    		point="com.cthing.cmakeed.core.commands">
+    	<!-- Commands MSUT be listed in alphabetical order by name. -->
+		<command name="ADD_CUSTOM_COMMAND"
+		         desc="Add a custom build rule to the generated build system.">
+			<usage value="(OUTPUT out1 [out2 ...] COMMAND cmd1 [ARGS] [args1...] [COMMAND cmd2 [ARGS] [args2...] ...] [MAIN_DEPENDENCY depend] [DEPENDS [depends...]] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM] [APPEND])"/>
+			<usage value="(TARGET target PRE_BUILD|PRE_LINK|POST_BUILD COMMAND cmd1 [ARGS] [args1...] [COMMAND cmd2 [ARGS] [args2...] ...] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM])"/>
+		</command>
+		<command name="ADD_CUSTOM_TARGET"
+		         desc="Add a target with no output so it will always be built.">
+			<usage value="(Name [ALL] [cmd1 [args1...]] [COMMAND cmd2 [args2...] ...] [DEPENDS depend depend ... ] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM])"/>
+		</command>
+		<command name="ADD_DEFINITIONS"
+		         desc="Adds -D define flags to the command line of C and C++ compilers.">
+			<usage value="(-DFOO -DBAR ...)"/>
+		</command>
+		<command name="ADD_DEPENDENCIES"
+		         desc="Add a dependency between top-level targets.">
+			<usage value="(target-name depend-target1 depend-target2 ...)"/>
+		</command>
+		<command name="ADD_EXECUTABLE"
+		         desc="Add an executable to the project using the specified source files.">
+			<usage value="(exename [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] src1 src2 ... srcN)"/>
+		</command>
+		<command name="ADD_LIBRARY"
+		         desc="Add a library to the project using the specified source files.">
+			<usage value="(libname [SHARED|STATIC|MODULE] [EXCLUDE_FROM_ALL] src1 src2 ... srcN)"/>
+		</command>
+		<command name="ADD_SUBDIRECTORY"
+		         desc="Add a subdirectory to the build.">
+			<usage value="(source_dir [binary_dir] [EXCLUDE_FROM_ALL])"/>
+		</command>
+		<command name="ADD_TEST"
+		         desc="Add a test to the project with the specified arguments.">
+			<usage value="(testname Exename arg1 arg2 ...)"/>
+		</command>
+		<command name="AUX_SOURCE_DIRECTORY"
+		         desc="Find all source files in a directory.">
+			<usage value="(dir VARIABLE)"/>
+		</command>
+		<command name="BUILD_COMMAND"
+		         desc="Get the command line that will build this project.">
+			<usage value="(variable MAKECOMMAND)"/>
+		</command>
+		<command name="BUILD_NAME"
+		         deprecated="true"
+		         desc="Deprecated. Use ${CMAKE_SYSTEM} and ${CMAKE_CXX_COMPILER}instead.">
+			<usage value="(variable)"/>
+		</command>
+		<command name="CMAKE_MINIMUM_REQUIRED"
+		         desc="Set the minimum required version of cmake for a project.">
+			<usage value="(VERSION versionNumber [FATAL_ERROR])"/>
+		</command>
+		<command name="CONFIGURE_FILE"
+		         desc="Copy a file to another location and modify its contents.">
+			<usage value="(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])"/>
+		</command>
+		<command name="CREATE_TEST_SOURCELIST"
+		         desc="Create a test driver and source list for building test programs.">
+			<usage value="(SourceListName DriverName test1 test2 test3 EXTRA_INCLUDE include.h FUNCTION function)"/>
+		</command>
+		<command name="ELSE"
+		         desc="Starts the ELSE portion of an IF block.">
+			<usage value="(expression)"/>
+		</command>
+		<command name="ELSEIF"
+		         desc="Starts the ELSEIF portion of an IF block.">
+			<usage value="(expression)"/>
+		</command>
+		<command name="ENABLE_LANGUAGE"
+		         desc="Set a name for the entire project.">
+			<usage value="(languageName)"/>
+		</command>
+		<command name="ENABLE_TESTING"
+		         desc="Enable testing for current directory and below.">
+			<usage value="()"/>
+		</command>
+		<command name="ENDFOREACH"
+		         desc="Ends a list of commands in a FOREACH block.">
+			<usage value="(expression)"/>
+		</command>
+		<command name="ENDIF"
+		         desc="Ends a list of commands in an IF block.">
+			<usage value="(expression)"/>
+		</command>
+		<command name="ENDMACRO"
+		         desc="Ends a list of commands in a MACRO block.">
+			<usage value="(expression)"/>
+		</command>
+		<command name="ENDWHILE"
+		         desc="Ends a list of commands in a WHILE block.">
+			<usage value="(expression)"/>
+		</command>
+		<command name="EXEC_PROGRAM"
+		         desc="Run and executable program during the processing of the CMakeList.txt file.">
+			<usage value="(Executable [directory] [ARGS arg1 ...] [OUTPUT_VARIABLE var] [RETURN_VALUE var])"/>
+		</command>
+		<command name="EXECUTE_PROCESS"
+		         desc="Execute one or more child processes.">
+			<usage value="(COMMAND cmd1 [args...]] [COMMAND cmd2 [args...] [...]] [WORKING_DIRECTORY directory] [TIMEOUT seconds] [RESULT_VARIABLE var] [OUTPUT_VARIABLE var] [ERROR_VARIABLE var] [INPUT_FILE file] [OUTPUT_FILE file] [ERROR_FILE file] [OUTPUT_QUIET] [ERROR_QUIET] [OUTPUT_STRIP_TRAILING_WHITESPACE] [ERROR_STRIP_TRAILING_WHITESPACE])"/>
+		</command>
+		<command name="EXPORT_LIBRARY_DEPENDENCIES"
+		         desc="Write out the dependency information for all targets of a project.">
+			<usage value="(FILE [APPEND])"/>
+		</command>
+		<command name="FILE"
+		         desc="File manipulation command.">
+			<usage value="(WRITE filename &quot;message&quot;... )"/>
+			<usage value="(APPEND filename &quot;message&quot;... )"/>
+			<usage value="(READ filename variable)"/>
+			<usage value="(GLOB variable [RELATIVE path] [globbing expressions]...)"/>
+			<usage value="(GLOB_RECURSE variable [RELATIVE path] [globbing expressions]...)"/>
+			<usage value="(REMOVE [directory]...)"/>
+			<usage value="(REMOVE_RECURSE [directory]...)"/>
+			<usage value="(MAKE_DIRECTORY [directory]...)"/>
+			<usage value="(RELATIVE_PATH variable directory file)"/>
+			<usage value="(TO_CMAKE_PATH path result)"/>
+			<usage value="(TO_NATIVE_PATH path result)"/>
+		</command>
+		<command name="FIND_FILE"
+		         desc="Find the full path to a file.">
+			<usage value="(var name1 path1 path2 ...)"/>
+			<usage value="(var name | NAMES name1 [name2 ...] PATHS path1 [path2 ... ENV var] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC $quot;cache documentation string$quot;] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH])"/>
+		</command>
+		<command name="FIND_LIBRARY"
+		         desc="Find a library.">
+			<usage value="(var name1 path1 path2 ...)"/>
+			<usage value="(var name | NAMES name1 [name2 ...] PATHS path1 [path2 ... ENV var] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC $quot;cache documentation string$quot;] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH])"/>
+		</command>
+		<command name="FIND_PACKAGE"
+		         desc="Load settings for an external project.">
+			<usage value="(name [major.minor] [QUIET] [NO_MODULE] [[REQUIRED|COMPONENTS] [componets...]])"/>
+		</command>
+		<command name="FIND_PATH"
+		         desc="Find the directory containing a file.">
+			<usage value="(var name1 path1 path2 ...)"/>
+			<usage value="(var name | NAMES name1 [name2 ...] PATHS path1 [path2 ... ENV var] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &quot;cache documentation string&quot;] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH])"/>
+		</command>
+		<command name="FIND_PROGRAM"
+		         desc="Find an executable program.">
+			<usage value="(var name1 path1 path2 ...)"/>
+			<usage value="(var name | NAMES name1 [name2 ...] PATHS path1 [path2 ... ENV var] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &quot;cache documentation string&quot;] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH])"/>
+		</command>
+		<command name="FLTK_WRAP_UI"
+		         desc="Create FLTK user interfaces Wrappers.">
+			<usage value="(resultingLibraryName source1 source2 ... sourceN)"/>
+		</command>
+		<command name="FOREACH"
+		         desc="Evaluate a group of commands for each value in a list.">
+			<usage value="(loop_var arg1 arg2 ...) COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... ENDFOREACH(loop_var) FOREACH(loop_var RANGE total) FOREACH(loop_var RANGE start stop [step])"/>
+		</command>
+		<command name="GET_CMAKE_PROPERTY"
+		         desc="Get a property of the CMake instance.">
+			<usage value="(var property)"/>
+		</command>
+		<command name="GET_DIRECTORY_PROPERTY"
+		         desc="Get a property of the directory.">
+			<usage value="(var [DIRECTORY dir] property)"/>
+		</command>
+		<command name="GET_FILENAME_COMPONENT"
+		         desc="Get a specific component of a full filename.">
+			<usage value="(var filename PATH|ABSOLUTE|NAME|EXT|NAME_WE [CACHE])"/>
+			<usage value="(var filename PROGRAM [PROGRAM_ARGS ArgVar] [CACHE])"/>
+		</command>
+		<command name="GET_SOURCE_FILE_PROPERTY"
+		         desc="Get a property for a source file.">
+			<usage value="(var file property)"/>
+		</command>
+		<command name="GET_TARGET_PROPERTY"
+		         desc="Get a property from a target.">
+			<usage value="(var target property)"/>
+		</command>
+		<command name="GET_TEST_PROPERTY"
+		         desc="Get a property of the test.">
+			<usage value="(test var property)"/>
+		</command>
+		<command name="IF"
+		         desc="Conditionally execute a group of commands.">
+			<usage value="(variable)"/>
+			<usage value="(NOT variable)"/>
+			<usage value="(variable1 AND variable2)"/>
+			<usage value="(variable1 OR variable2)"/>
+			<usage value="(COMMAND command-name)"/>
+			<usage value="(EXISTS file-name)"/>
+			<usage value="(EXISTS directory-name)"/>
+			<usage value="(file1 IS_NEWER_THAN file2)"/>
+			<usage value="(IS_DIRECTORY directory-name)"/>
+			<usage value="(variable MATCHES regex)"/>
+			<usage value="(string MATCHES regex)"/>
+			<usage value="(variable LESS number)"/>
+			<usage value="(string LESS number)"/>
+			<usage value="(variable GREATER number)"/>
+			<usage value="(string GREATER number)"/>
+			<usage value="(variable EQUAL number)"/>
+			<usage value="(string EQUAL number)"/>
+			<usage value="(variable STRLESS string)"/>
+			<usage value="(string STRLESS string)"/>
+			<usage value="(variable STRGREATER string)"/>
+			<usage value="(string STRGREATER string)"/>
+			<usage value="(variable STREQUAL string)"/>
+			<usage value="(string STREQUAL string)"/>
+			<usage value="(DEFINED variable)"/>
+		</command>
+		<command name="INCLUDE"
+		         desc="Read CMake list file code from the given file.">
+			<usage value="(file1 [OPTIONAL])"/>
+			<usage value="(module [OPTIONAL])"/>
+		</command>
+		<command name="INCLUDE_DIRECTORIES"
+		         desc="Add include directories to the build.">
+			<usage value="([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)"/>
+		</command>
+		<command name="INCLUDE_EXTERNAL_MSPROJECT"
+		         desc="Include an external Microsoft project file in a workspace.">
+			<usage value="(projectname location dep1 dep2 ...)"/>
+		</command>
+		<command name="INCLUDE_REGULAR_EXPRESSION"
+		         desc="Set the regular expression used for dependency checking.">
+			<usage value="(regex_match [regex_complain])"/>
+		</command>
+		<command name="INSTALL"
+		         desc="Specify rules to run at install time.">
+			<usage value="(TARGETS targets... [[ARCHIVE|LIBRARY|RUNTIME] [DESTINATION dir] [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [OPTIONAL]] [...])"/>
+			<usage value="(FILES files... DESTINATION dir [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [RENAME name] [OPTIONAL])"/>
+			<usage value="(PROGRAMS files... DESTINATION dir [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [RENAME name] [OPTIONAL])"/>
+			<usage value="(DIRECTORY dirs... DESTINATION dir [FILE_PERMISSIONS permissions...] [DIRECTORY_PERMISSIONS permissions...] [USE_SOURCE_PERMISSIONS] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [[PATTERN pattern | REGEX regex] [EXCLUDE] [PERMISSIONS permissions...]] [...])"/>
+			<usage value="([[SCRIPT file] [CODE code]] [...])"/>
+			<usage value="(CODE MESSAGE(&quot;Sample install message.&quot;))"/>
+		</command>
+		<command name="INSTALL_FILES"
+		         deprecated="true"
+		         desc="Old installation command. Use the INSTALL command.">
+			<usage value="(dir extension file file ...)"/>
+			<usage value="(dir regexp)"/>
+			<usage value="(dir FILES file file ...)"/>
+		</command>
+		<command name="INSTALL_PROGRAMS"
+		         deprecated="true"
+		         desc="Old installation command. Use the INSTALL command.">
+			<usage value="(dir file1 file2 [file3 ...])"/>
+			<usage value="(dir FILES file1 [file2 ...])"/>
+			<usage value="(dir regexp)"/>
+		</command>
+		<command name="INSTALL_TARGETS"
+		         deprecated="true"
+		         desc="Old installation command. Use the INSTALL command.">
+			<usage value="(dir [RUNTIME_DIRECTORY dir] target target)"/>
+		</command>
+		<command name="LINK_DIRECTORIES"
+		         desc="Specify directories in which to search for libraries.">
+			<usage value="(directory1 directory2 ...)"/>
+		</command>
+		<command name="LINK_LIBRARIES"
+		         desc="Link libraries to all targets added later.">
+			<usage value="(library1 debug|optimized library2 ...)"/>
+		</command>
+		<command name="LIST"
+		         desc="List operations.">
+			<usage value="(LENGTH list var)"/>
+			<usage value="(GET list index [index ...] var)"/>
+			<usage value="(APPEND list element [element ...])"/>
+			<usage value="(INSERT list index element [element ...])"/>
+			<usage value="(REMOVE_ITEM list value [value ...])"/>
+			<usage value="(REMOVE_AT list index [index ...])"/>
+			<usage value="(SORT list)"/>
+			<usage value="(REVERSE list)"/>
+		</command>
+		<command name="LOAD_CACHE"
+		         desc="Load in the values from another project's CMake cache.">
+			<usage value="(pathToCacheFile READ_WITH_PREFIX prefix entry1...)"/>
+			<usage value="(pathToCacheFile [EXCLUDE entry1...] [INCLUDE_INTERNALS entry1...])"/>
+		</command>
+		<command name="LOAD_COMMAND"
+		         desc="Load a command into a running CMake.">
+			<usage value="(COMMAND_NAME loc1 [loc2 ...])"/>
+		</command>
+		<command name="MACRO"
+		         desc="Start recording a macro for later invocation as a command.">
+			<usage value="(name [arg1 [arg2 [arg3 ...]]])"/>
+		</command>
+		<command name="MAKE_DIRECTORY"
+		         deprecated="true"
+		         desc="Old directory creation command. Use the FILE command.">
+			<usage value="(directory)"/>
+		</command>
+		<command name="MARK_AS_ADVANCED"
+		         desc="Mark cmake cached variables as advanced.">
+			<usage value="([CLEAR|FORCE] var var var ...)"/>
+		</command>
+		<command name="MATH"
+		         desc="Mathematical expressions.">
+			<usage value="(EXPR var expression)"/>
+		</command>
+		<command name="MESSAGE"
+		         desc="Display a message to the user.">
+			<usage value="([SEND_ERROR | STATUS | FATAL_ERROR] &quot;message&quot; ...)"/>
+		</command>
+		<command name="OPTION"
+		         desc="Provides an option that the user can optionally select.">
+			<usage value="(var &quot;help string&quot; [initial value])"/>
+		</command>
+		<command name="OUTPUT_REQUIRED_FILES"
+		         desc="Output a list of required source files for a specified source file.">
+			<usage value="(srcfile outputfile)"/>
+		</command>
+		<command name="PROJECT"
+		         desc="Set a name for the entire project.">
+			<usage value="(projectname [CXX] [C] [Java])"/>
+		</command>
+		<command name="QT_WRAP_CPP"
+		         desc="Create QT Wrappers.">
+			<usage value="(resultingLibraryName DestName SourceLists ...)"/>
+		</command>
+		<command name="QT_WRAP_UI"
+		         desc="Create QT user interfaces Wrappers.">
+			<usage value="(resultingLibraryName HeadersDestName SourcesDestName SourceLists ...)"/>
+		</command>
+		<command name="REMOVE"
+		         deprecated="true"
+		         desc="Old list item removal command. Use the LIST command.">
+			<usage value="(var value value ...)"/>
+		</command>
+		<command name="REMOVE_DEFINITIONS"
+		         desc="Removes -D define flags to the command line of C and C++ compilers.">
+			<usage value="(-DFOO -DBAR ...)"/>
+		</command>
+		<command name="SEPARATE_ARGUMENTS"
+		         desc="Split space separated arguments into a semi-colon separated list.">
+			<usage value="(var)"/>
+		</command>
+		<command name="SET"
+		         desc="Set a CMAKE variable to a given value.">
+			<usage value="(var [value] [CACHE TYPE DOCSTRING [FORCE]])"/>
+			<usage value="(var value1 ... valueN)"/>
+			<usage value="(ENV{path} value)"/>
+		</command>
+		<command name="SET_DIRECTORY_PROPERTIES"
+		         desc="Set a property of the directory.">
+			<usage value="(PROPERTIES prop1 value1 prop2 value2)"/>
+		</command>
+		<command name="SET_SOURCE_FILES_PROPERTIES"
+		         desc="Source files can have properties that affect how they are built.">
+			<usage value="(file1 file2 ... PROPERTIES prop1 value1 prop2 value2 ...)"/>
+		</command>
+		<command name="SET_TARGET_PROPERTIES"
+		         desc="Targets can have properties that affect how they are built.">
+			<usage value="(target1 target2 ... PROPERTIES prop1 value1 prop2 value2 ...)"/>
+		</command>
+		<command name="SET_TESTS_PROPERTIES"
+		         desc="Set a property of the tests.">
+			<usage value="(test1 [test2...] PROPERTIES prop1 value1 prop2 value2)"/>
+		</command>
+		<command name="SITE_NAME"
+		         desc="Set the given variable to the name of the computer.">
+			<usage value="(variable)"/>
+		</command>
+		<command name="SOURCE_GROUP"
+		         desc="Define a grouping for sources in the makefile.">
+			<usage value="(name [REGULAR_EXPRESSION regex] [FILES src1 src2 ...])"/>
+		</command>
+		<command name="STRING"
+		         desc="String operations.">
+			<usage value="(REGEX MATCH regex output input [input...])"/>
+			<usage value="(REGEX MATCHALL regex output input [input...])"/>
+			<usage value="(REGEX REPLACE regex replace_expr output input [input...])"/>
+			<usage value="(REPLACE match_expr replace_expr output input [input...])"/>
+			<usage value="(COMPARE EQUAL string1 string2 output)"/>
+			<usage value="(COMPARE NOTEQUAL string1 string2 output)"/>
+			<usage value="(COMPARE LESS string1 string2 output)"/>
+			<usage value="(COMPARE GREATER string1 string2 output)"/>
+			<usage value="(ASCII number [number ...] output)"/>
+			<usage value="(CONFIGURE string1 output [@ONLY] [ESCAPE_QUOTES])"/>
+			<usage value="(TOUPPER string1 output)"/>
+			<usage value="(TOLOWER string1 output)"/>
+			<usage value="(LENGTH string output)"/>
+			<usage value="(SUBSTRING string begin length output)"/>
+		</command>
+		<command name="SUBDIR_DEPENDS"
+		         deprecated="true"
+		         desc="Legacy command. Does nothing.">
+			<usage value="(subdir dep1 dep2 ...)"/>
+		</command>
+		<command name="SUBDIRS"
+		         deprecated="true"
+		         desc="Add a list of subdirectories to the build. The ADD_SUBDIRECTORY command should be used instead of SUBDIRS.">
+			<usage value="(dir1 dir2 ...[EXCLUDE_FROM_ALL dir1 dir2 ...] [PREORDER])"/>
+		</command>
+		<command name="TARGET_LINK_LIBRARIES"
+		         desc="Link a target to given libraries.">
+			<usage value="(target library1 debug|optimized library2 ...)"/>
+		</command>
+		<command name="TRY_COMPILE"
+		         desc="Try compiling some code.">
+			<usage value="(result bindir srcdir projectName targetname CMAKE_FLAGS flags OUTPUT_VARIABLE var)"/>
+			<usage value="(result bindir srcfile CMAKE_FLAGS flags COMPILE_DEFINITIONS flags ... OUTPUT_VARIABLE var)"/>
+		</command>
+		<command name="TRY_RUN"
+		         desc="Try compiling and then running some code.">
+			<usage value="(run_result_var compile_result_var bindir srcfile CMAKE_FLAGS flags COMPILE_DEFINITIONS flags OUTPUT_VARIABLE var ARGS arg1 arg2 ...)"/>
+		</command>
+		<command name="USE_MANGLED_MESA"
+		         desc="Copy mesa headers for use in combination with system GL.">
+			<usage value="(path_to_mesa output_directory)"/>
+		</command>
+		<command name="UTILITY_SOURCE"
+		         desc="Specify the source tree of a third-party utility.">
+			<usage value="(cache_entry executable_name path_to_source [file1 file2 ...])"/>
+		</command>
+		<command name="VARIABLE_REQUIRES"
+		         desc="Assert satisfaction of an option's required variables.">
+			<usage value="(test_var result_var required_var1 required_var2 ...)"/>
+		</command>
+		<command name="VTK_MAKE_INSTANTIATOR"
+		         deprecated="true"
+		         desc="Deprecated. For use only in VTK 4.0.">
+			<usage value="(className outSourceList src-list1 [src-list2 ..] EXPORT_MACRO exportMacro [HEADER_LOCATION dir] [GROUP_SIZE groupSize] [INCLUDES [file1 file2 ..]])"/>
+		</command>
+		<command name="VTK_WRAP_JAVA"
+		         deprecated="true"
+		         desc="Deprecated. For use only in VTK 4.0.">
+			<usage value="(resultingLibraryName SourceListName class1 class2 ...)"/>
+		</command>
+		<command name="VTK_WRAP_PYTHON"
+		         deprecated="true"
+		         desc="Deprecated. For use only in VTK 4.0.">
+			<usage value="(resultingLibraryName SourceListName class1 class2 ...)"/>
+		</command>
+		<command name="VTK_WRAP_TCL"
+		         deprecated="true"
+		         desc="Deprecated. For use only in VTK 4.0.">
+			<usage value="(resultingLibraryName [SOURCES] SourceListName class1 class2 ... [COMMANDS CommandName1 CommandName2 ...])"/>
+		</command>
+		<command name="WHILE"
+		         desc="Evaluate a group of commands while a condition is true.">
+			<usage value="(condition)"/>
+		</command>
+		<command name="WRITE_FILE"
+		         desc="Write a message to a file.">
+			<usage value="(filename &quot;message to write&quot;... [APPEND])"/>
+		</command>
+   	</extension>
+</plugin>
