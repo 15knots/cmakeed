@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: com.cthing.cmakeed.core.tests
+Bundle-Version: 0.0.0
+Bundle-Vendor: %Bundle-Vendor
+Fragment-Host: com.cthing.cmakeed.core
+Bundle-Localization: plugin
+Require-Bundle: org.junit
