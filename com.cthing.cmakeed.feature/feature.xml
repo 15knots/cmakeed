@@ -2,7 +2,7 @@
 <feature
       id="com.cthing.cmakeed.feature"
       label="CMake Editor"
-      version="1.0.0"
+      version="1.0.1"
       provider-name="C Thing Software">
 
    <description>
@@ -18,19 +18,19 @@
    </license>
 
    <url>
-      <update label="C Thing Software Update Site" url="http://www.cthing.com/eclipse/updates"/>
+      <update label="CMake Editor Update Site" url="http://cmakeed.sourceforge.net/updates/"/>
    </url>
 
    <plugin
          id="com.cthing.cmakeed.core"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="1.0.1"/>
 
    <plugin
          id="com.cthing.cmakeed.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="1.0.1"/>
 
 </feature>
