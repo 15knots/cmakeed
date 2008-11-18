@@ -63,7 +63,8 @@ public class CMakePropertyRule implements IRule, IPredicateRule
                 final CMakePartitionScanner cscan = (CMakePartitionScanner)scanner;
                 final IDocument doc = cscan.getDocument();
                 final int offset = cscan.getTokenOffset();
-                if (EditorUtils.inArguments(doc, offset)) {
+                if (EditorUtils.inArguments(doc, offset) && EditorUtils.startOfWord(doc, offset))
+                {
                     return this.propertyToken;
                 }
             }

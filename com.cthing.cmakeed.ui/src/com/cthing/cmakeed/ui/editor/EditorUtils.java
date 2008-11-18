@@ -15,6 +15,8 @@ import com.cthing.cmakeed.core.commands.CMakeCommand;
 import com.cthing.cmakeed.core.commands.CMakeCommands;
 import com.cthing.cmakeed.core.properties.CMakeProperty;
 import com.cthing.cmakeed.core.properties.CMakeProperties;
+import com.cthing.cmakeed.core.reservedwords.CMakeReservedWord;
+import com.cthing.cmakeed.core.reservedwords.CMakeReservedWords;
 import com.cthing.cmakeed.core.variables.CMakeVariable;
 import com.cthing.cmakeed.core.variables.CMakeVariables;
 import com.cthing.cmakeed.ui.UIPlugin;
@@ -28,6 +30,8 @@ public final class EditorUtils
     public static final char START_ARGS = '(';
     /** Command arguments closing delimiter. */
     public static final char END_ARGS = ')';
+    
+    public static final char SPACE = ' ';
     
     /**
      * Not to be instantiated.
@@ -64,6 +68,37 @@ public final class EditorUtils
         
         return false;
     }
+    
+    public static boolean isNameChar(final char c)
+    {
+        return Character.isLetterOrDigit(c) ||
+               (c == '/') ||
+               (c == '_') ||
+               (c == '.') ||
+               (c == '+') ||
+               (c == '-');
+    }
+    
+    /**
+     * Determines if the character represents the first character of a 'word'. This
+     * is determined simply by seeing if the preceeding character is a space.
+     * @param doc
+     * @param offset
+     * @return
+     */
+    public static boolean startOfWord(final IDocument doc, final int offset) {
+    	try {
+			final char ch = doc.getChar(offset - 1);
+			if ( EditorUtils.isNameChar(ch) == true)
+			{
+				return false;
+			}
+		} catch (final BadLocationException e) {
+			UIPlugin.logError(EditorUtils.class, e);
+			return false;
+		}
+		return true;
+	}
     
     /**
      * Obtains the command corresponding to the specified viewer and document
@@ -162,6 +197,43 @@ public final class EditorUtils
         
         return cmd;
     }
+    
+    
+    /**
+     * 
+     * @param doc
+     * @param offset
+     * @return
+     */
+    public static CMakeReservedWord getReservedWord(final IDocument doc, final int offset)
+    {
+    	return CMakeReservedWords.getCommand(getReservedWordName(doc, offset));
+    }
+    
+    public static String getReservedWordName(final ITextViewer viewer, final int offset)
+    {
+    	return getReservedWordName(viewer.getDocument(), offset);
+    }
+    
+    public static String getReservedWordName(final IDocument doc, final int offset)
+    {
+        String cmd = null;
+
+        try {
+            final String contentType = doc.getContentType(offset);
+            
+            if (CMakePartitionScanner.isReservedWord(contentType)) {
+                final ITypedRegion region = doc.getPartition(offset);
+                cmd = doc.get(region.getOffset(), region.getLength());
+            }
+        }
+        catch (final BadLocationException e) {
+            UIPlugin.logError(EditorUtils.class, e);
+        }
+        
+        return cmd;
+    }
+    
     
     
     
@@ -327,7 +399,43 @@ public final class EditorUtils
         return null;        
     }
     
-    
+    /**
+     * Attempts to find the variable containing the specified offset.
+     * 
+     * @param doc  Document in which the variable is contained.
+     * @param offset  Offset in the document which contains some aspect of the
+     *      variable (e.g. arguments, opening parenthesis, command string)
+     * @return Property containing the specified offset or <code>null</code>
+     *      if a variable could not be found.
+     */
+    public static CMakeReservedWord findContainingReservedWord(final IDocument doc,
+                                                           final int offset)
+    {
+        try {
+            int pos = offset;
+            
+            while (pos >= 0) {
+                final String contentType = doc.getContentType(pos);
+                if (CMakePartitionScanner.isComment(contentType) ||
+                        CMakePartitionScanner.isArgsClose(contentType)) {
+                    break;
+                }
+                
+                final CMakeReservedWord cmd = getReservedWord(doc, pos);
+                if (cmd != null) {
+                    return cmd;
+                }
+                
+                final ITypedRegion region = doc.getPartition(pos);
+                pos = region.getOffset() - 1;
+            }
+        }
+        catch (final BadLocationException e) {
+            UIPlugin.logError(EditorUtils.class, e);
+        }
+        
+        return null;        
+    }
     
     /**
      * Unread a buffer's worth of characters.

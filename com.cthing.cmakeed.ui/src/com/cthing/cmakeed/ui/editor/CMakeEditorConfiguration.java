@@ -104,14 +104,16 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
     public IContentAssistant getContentAssistant(final ISourceViewer sourceViewer)
     {
         final ContentAssistant ca = new ContentAssistant();
-        final IContentAssistProcessor pr = new CMakeCommandAssist();
-        final IContentAssistProcessor propProc = new CMakePropertyAssist();
-        final IContentAssistProcessor varProc = new CMakeVariableAssist();
+        final IContentAssistProcessor pr = new CMakeContentAssistantProcessor();
+//        final IContentAssistProcessor propProc = new CMakePropertyAssist();
+//        final IContentAssistProcessor varProc = new CMakeVariableAssist();
+//        final IContentAssistProcessor resProc = new CMakeReservedWordAssist();
         
         ca.setContentAssistProcessor(pr, IDocument.DEFAULT_CONTENT_TYPE);
-        ca.setContentAssistProcessor(pr, CMakePartitionScanner.COMMAND_CONTENT_TYPE);
-        ca.setContentAssistProcessor(propProc, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
-        ca.setContentAssistProcessor(varProc, CMakePartitionScanner.VARIABLE_CONTENT_TYPE);
+//        ca.setContentAssistProcessor(pr, CMakePartitionScanner.COMMAND_CONTENT_TYPE);
+//        ca.setContentAssistProcessor(propProc, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
+//        ca.setContentAssistProcessor(varProc, CMakePartitionScanner.VARIABLE_CONTENT_TYPE);
+//        ca.setContentAssistProcessor(resProc, CMakePartitionScanner.RESERVED_WORD_CONTENT_TYPE);
         ca.setInformationControlCreator(getInformationControlCreator(sourceViewer));
         ca.enableAutoActivation(true);
         
@@ -127,14 +129,9 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
                                    final String contentType)
     {
         if (CMakePartitionScanner.isAnyCommand(contentType)) {
-            return new CMakeCommandAssist();
+            return new CMakeContentAssistantProcessor();
         }
-        if (CMakePartitionScanner.isProperty(contentType)) {
-        	return new CMakePropertyAssist();
-        }
-        if (CMakePartitionScanner.isCMakeVariable(contentType)) {
-        	return new CMakeVariableAssist();
-        }
+
         return null;
     }
 
@@ -188,7 +185,10 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.PROPERTY_CONTENT_TYPE));    
         reconciler.setDamager(dr, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
         reconciler.setRepairer(dr, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
-
+        
+        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.RESERVED_WORD_CONTENT_TYPE));    
+        reconciler.setDamager(dr, CMakePartitionScanner.RESERVED_WORD_CONTENT_TYPE);
+        reconciler.setRepairer(dr, CMakePartitionScanner.RESERVED_WORD_CONTENT_TYPE);
         
         return reconciler;
     }

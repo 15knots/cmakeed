@@ -16,6 +16,7 @@ import com.cthing.cmakeed.ui.editor.rules.ArgsCloseRule;
 import com.cthing.cmakeed.ui.editor.rules.ArgsOpenRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakeCommandRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakePropertyRule;
+import com.cthing.cmakeed.ui.editor.rules.CMakeReservedWordRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakeVariableRule;
 
 /**
@@ -37,10 +38,12 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public static final String ARGS_OPEN_CONTENT_TYPE = "__args_open";      //$NON-NLS-1$
     /** Command arguments close. */
     public static final String ARGS_CLOSE_CONTENT_TYPE = "__args_close";      //$NON-NLS-1$
-    /** Command partition. */
+    /** Variable partition. */
     public static final String VARIABLE_CONTENT_TYPE = "__variable";    //$NON-NLS-1$
-    /** Command partition. */
+    /** Property partition. */
     public static final String PROPERTY_CONTENT_TYPE = "__property";    //$NON-NLS-1$
+    /** Reserved Word partition. */
+    public static final String RESERVED_WORD_CONTENT_TYPE = "__reservedword";    //$NON-NLS-1$
 
     /** Array of all partition types. */
     public static final String[] CONTENT_TYPES = new String[] {
@@ -54,6 +57,7 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
         ARGS_CLOSE_CONTENT_TYPE,
         VARIABLE_CONTENT_TYPE,
         PROPERTY_CONTENT_TYPE,
+        RESERVED_WORD_CONTENT_TYPE,
     };
 
     /**
@@ -72,7 +76,7 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
                 new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
                 new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
                 new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
-                
+                new CMakeReservedWordRule(new Token(RESERVED_WORD_CONTENT_TYPE), false),
             };
 
         setPredicateRules(preds);
@@ -190,6 +194,19 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public static boolean isCMakeVariable(final String contentType)
     {
         return VARIABLE_CONTENT_TYPE.equals(contentType);
+    }
+    
+    /**
+     * Indicates whether the specified content type represents a cmake reserved
+     * word partition
+     * 
+     * @param contentType  Partition content type.
+     * @return <code>true</code> if the specified content type represents a
+     *      cmake variable partition.
+     */
+    public static boolean isReservedWord(final String contentType)
+    {
+        return RESERVED_WORD_CONTENT_TYPE.equals(contentType);
     }
     
     /**
