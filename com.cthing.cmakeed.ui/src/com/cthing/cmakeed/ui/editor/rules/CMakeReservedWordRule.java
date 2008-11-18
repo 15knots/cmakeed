@@ -1,5 +1,5 @@
 /* *****************************************************************************
- * Copyright 2008 BlueQuartz Software, Michael Jackson
+ * Copyright 2007 C Thing Software
  * All Rights Reserved.
  ******************************************************************************/
 
@@ -13,8 +13,8 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.IWordDetector;
 import org.eclipse.jface.text.rules.Token;
 
-import com.cthing.cmakeed.core.variables.CMakeVariable;
-import com.cthing.cmakeed.core.variables.CMakeVariables;
+import com.cthing.cmakeed.core.reservedwords.CMakeReservedWord;
+import com.cthing.cmakeed.core.reservedwords.CMakeReservedWords;
 import com.cthing.cmakeed.ui.editor.CMakeNameDetector;
 import com.cthing.cmakeed.ui.editor.CMakePartitionScanner;
 import com.cthing.cmakeed.ui.editor.EditorUtils;
@@ -22,10 +22,10 @@ import com.cthing.cmakeed.ui.editor.EditorUtils;
 /**
  * Identifies a CMake command.
  */
-public class CMakeVariableRule implements IRule, IPredicateRule
+public class CMakeReservedWordRule implements IRule, IPredicateRule
 {
-    private IToken variableToken;
-    private boolean findDeprecated;
+    private IToken commandToken;
+ //   private boolean findDeprecated;
     private IWordDetector detector = new CMakeNameDetector();
     private StringBuilder buffer = new StringBuilder();
     
@@ -36,10 +36,10 @@ public class CMakeVariableRule implements IRule, IPredicateRule
      * @param findDeprecated  <code>true</code> if deprecated commands are
      *      to be found. Otherwise, only non-deprecated commands are found.
      */
-    public CMakeVariableRule(final IToken commandToken, final boolean findDeprecated)
+    public CMakeReservedWordRule(final IToken commandToken, final boolean findDeprecated)
     {
-        this.variableToken = commandToken;
-        this.findDeprecated = findDeprecated;
+        this.commandToken = commandToken;
+       // this.findDeprecated = findDeprecated;
     }
     
     /**
@@ -57,16 +57,15 @@ public class CMakeVariableRule implements IRule, IPredicateRule
         }
         scanner.unread();
         
-        final CMakeVariable cmd =
-            CMakeVariables.getCommand(this.buffer.toString());
-        if ((cmd != null) && (cmd.isDeprecated() == this.findDeprecated)) {
+        final CMakeReservedWord cmd = CMakeReservedWords.getCommand(this.buffer.toString());
+        if ( cmd != null ) {
             if (scanner instanceof CMakePartitionScanner) {
                 final CMakePartitionScanner cscan = (CMakePartitionScanner)scanner;
                 final IDocument doc = cscan.getDocument();
                 final int offset = cscan.getTokenOffset();
                 if (EditorUtils.inArguments(doc, offset) && EditorUtils.startOfWord(doc, offset))
                 {
-                    return this.variableToken;
+                    return this.commandToken;
                 }
             }
         }
@@ -91,6 +90,6 @@ public class CMakeVariableRule implements IRule, IPredicateRule
      */
     public IToken getSuccessToken()
     {
-        return this.variableToken;
+        return this.commandToken;
     }
 }

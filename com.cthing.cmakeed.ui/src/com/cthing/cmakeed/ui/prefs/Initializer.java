@@ -65,5 +65,9 @@ public class Initializer extends AbstractPreferenceInitializer
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.CMAKE_PROPERTY), new RGB(0, 127, 85));
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_PROPERTY), SWT.NONE);
+        
+        PreferenceConverter.setDefault(store,
+                Preferences.getColorKey(Preferences.CMAKE_RESERVED_WORD), new RGB(127, 85, 85));
+        store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_RESERVED_WORD), SWT.NONE);
     }
 }
