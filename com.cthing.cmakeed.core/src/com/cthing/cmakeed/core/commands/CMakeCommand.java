@@ -25,8 +25,7 @@ public class CMakeCommand
      * 
      * @param name  Name of the command
      * @param description  Description of the command
-     * @param deprecated  <code>true</code> if the command has been
-     *      deprecated.
+     * @param deprecated  <code>true</code> if the command has been deprecated.
      */
     public CMakeCommand(final String name, final String description,
                         final boolean deprecated)
@@ -43,6 +42,7 @@ public class CMakeCommand
         this.deprecated = deprecated;
         this.usages = new ArrayList<String>();
     }
+   
     
     /**
      * Adds the specified usage string to the command.
@@ -105,7 +105,7 @@ public class CMakeCommand
     @Override
     public String toString()
     {
-        return this.name.toUpperCase();
+    	return this.name + ": " + this.description;
     }
 
     /**
@@ -117,7 +117,7 @@ public class CMakeCommand
     {
         final int prime = 31;
         return prime +
-                ((this.name == null) ? 0 : this.name.toUpperCase().hashCode());
+                ((this.name == null) ? 0 : this.name.toLowerCase().hashCode());
     }
 
     /**
@@ -141,7 +141,7 @@ public class CMakeCommand
                 return false;
             }
         }
-        else if (!this.name.toUpperCase().equals(other.name.toUpperCase())) {
+        else if (!this.name.toLowerCase().equals(other.name.toLowerCase())) {
             return false;
         }
         

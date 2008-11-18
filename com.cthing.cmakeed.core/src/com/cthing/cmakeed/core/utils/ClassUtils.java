@@ -23,7 +23,7 @@ public final class ClassUtils
      * @param cls  Class whose short name is desired.
      * @return The last component of the fully qualified class name.
      */
-    public static String getShortClassName(final Class cls)
+    public static String getShortClassName(final java.lang.Class cls)
     {
         if (cls == null) {
             return "[null]";    //$NON-NLS-1$
