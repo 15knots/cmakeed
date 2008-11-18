@@ -953,6 +953,10 @@
     <usage value="(DOWNLOAD url[TIMEOUT timeout] [STATUS status] [LOG log])" />
     <usage value="(STRINGS my.txt my)" />
   </command>
+  <command name="find_file"
+         desc="Find the full path to a file."
+         deprecated="false" >
+  </command>
   <command name="find_library"
          desc="Find a library."
          deprecated="false" >
@@ -972,14 +976,6 @@
   </command>
   <command name="find_path"
          desc="Find the directory containing a file."
-         deprecated="false" >
-    <usage value="(VAR name1 [path1 path2 ...])" />
-    <usage value="( VAR name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH |ONLY_CMAKE_FIND_ROOT_PATH |NO_CMAKE_FIND_ROOT_PATH])" />
-    <usage value="(VAR NAMES name PATHS paths... NO_DEFAULT_PATH)" />
-    <usage value="(VAR NAMES name)" />
-  </command>
-  <command name="find_path"
-         desc="Find the full path to a file."
          deprecated="false" >
     <usage value="(VAR name1 [path1 path2 ...])" />
     <usage value="( VAR name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH |ONLY_CMAKE_FIND_ROOT_PATH |NO_CMAKE_FIND_ROOT_PATH])" />
@@ -1378,5 +1374,44 @@
          deprecated="true" >
     <usage value="(filename 'message to write'... [APPEND])" />
   </command>
+</extension> 
+<!-- ********************************************* -->
+<!-- CMake Reserved Words Section -->
+<!-- ********************************************* -->
+  <extension-point id="reservedwords" 
+                 name="%reservedwords-extension-point.name" 
+                 schema="schema/reservedwords.exsd"/> 
+  <extension point="com.cthing.cmakeed.core.reservedwords"> 
+  <reservedword name="AND" />
+  <reservedword name="APPEND" />
+  <reservedword name="ARGS" />
+  <reservedword name="BOOL" />
+  <reservedword name="CACHE" />
+  <reservedword name="CACHE" />
+  <reservedword name="COMMAND" />
+  <reservedword name="DEFINED" />
+  <reservedword name="DOC" />
+  <reservedword name="EQUAL" />
+  <reservedword name="EXISTS" />
+  <reservedword name="GREATER" />
+  <reservedword name="INTERNAL" />
+  <reservedword name="IS_DIRECTORY" />
+  <reservedword name="LESS" />
+  <reservedword name="MATCHES" />
+  <reservedword name="NAME" />
+  <reservedword name="NAMES" />
+  <reservedword name="NAME_WE" />
+  <reservedword name="NOT" />
+  <reservedword name="OR" />
+  <reservedword name="PATH" />
+  <reservedword name="PATHS" />
+  <reservedword name="POST_BUILD" />
+  <reservedword name="PRE_BUILD" />
+  <reservedword name="PROGRAM" />
+  <reservedword name="PROPERTIES" />
+  <reservedword name="STREQUAL" />
+  <reservedword name="STRGREATER" />
+  <reservedword name="STRLESS" />
+  <reservedword name="TARGET" />
 </extension> 
 </plugin> 

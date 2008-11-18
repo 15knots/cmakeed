@@ -5,9 +5,6 @@
 
 package com.cthing.cmakeed.core.variables;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.cthing.cmakeed.core.utils.StringUtils;
 
 /**
@@ -18,7 +15,7 @@ public class CMakeVariable
     private String name;
     private String description;
     private boolean deprecated;
-    private List<String> usages;
+
     
     /**
      * Constructor for the class.
@@ -40,23 +37,9 @@ public class CMakeVariable
         this.name = name;
         this.description = description;
         this.deprecated = deprecated;
-        this.usages = new ArrayList<String>();
     }
     
-    /**
-     * Adds the specified usage string to the command.
-     * 
-     * @param usage  Command usage string.
-     */
-    public void addUsage(final String usage)
-    {
-        if (StringUtils.isBlank(usage)) {
-            throw new IllegalArgumentException("usage cannot be blank."); //$NON-NLS-1$
-        }
-
-        this.usages.add(usage);
-    }
-
+   
     /**
      * Indicates whether the command has been deprecated.
      * 
@@ -87,16 +70,6 @@ public class CMakeVariable
         return this.description;
     }
     
-    /**
-     * Obtains the usage strings for the command.
-     * 
-     * @return Usage strings for the command.
-     */
-    public String[] getUsages()
-    {
-        return this.usages.toArray(new String[this.usages.size()]);
-    }
-
     /**
      * {@inheritDoc}
      * @see java.lang.Object#toString()
