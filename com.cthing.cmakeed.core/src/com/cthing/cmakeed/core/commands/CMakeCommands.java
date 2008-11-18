@@ -57,11 +57,11 @@ public final class CMakeCommands
                 for (IConfigurationElement commandElt : commandElts) {
                     final String name = commandElt.getAttribute(ATT_NAME);
                     final String desc = commandElt.getAttribute(ATT_DESC);
-                    final Boolean deprecated =
-                        Boolean.valueOf(commandElt.getAttribute(ATT_DEPRECATED));
+                    final Boolean deprecated = Boolean.valueOf(commandElt.getAttribute(ATT_DEPRECATED));
 
                     final CMakeCommand cmd = new CMakeCommand(name, desc, deprecated);
                     commands.put(name, cmd);
+                    //System.out.println(cmd.toString());
                     
                     final IConfigurationElement[] usageElts = commandElt.getChildren();
                     for (IConfigurationElement usageElt : usageElts) {
@@ -84,7 +84,7 @@ public final class CMakeCommands
             loadCommands();
         }
         
-        return (StringUtils.isBlank(name)) ? null : commands.get(name.toUpperCase());
+        return (StringUtils.isBlank(name)) ? null : commands.get(name.toLowerCase());
     }
     
     /**
