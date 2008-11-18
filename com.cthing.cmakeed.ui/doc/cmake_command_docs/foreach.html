@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command foreach</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:foreach"><b><code>foreach</code></b></a>: Evaluate a group of commands for each value in a list.<br>
+    <pre>  foreach(loop_var arg1 arg2 ...)<br>    COMMAND1(ARGS ...)<br>    COMMAND2(ARGS ...)<br>    ...<br>  endforeach(loop_var)<br>  foreach(loop_var RANGE total)<br>  foreach(loop_var RANGE start stop [step])<br></pre>
+    <p>All commands between foreach and the matching endforeach are recorded without being invoked.  Once the endforeach is evaluated, the recorded list of commands is invoked once for each argument listed in the original foreach command.  Before each iteration of the loop "${loop_var}" will be set as a variable with the current value in the list.<br><p>Foreach can also iterate over a generated range of numbers. There are three types of this iteration:<br><p>* When specifying single number, the range will have elements 0 to "total".<br><p>* When specifying two numbers, the range will have elements from the first number to the second number.<br><p>* The third optional number is the increment used to iterate from the first number to the second number.
+  </li>
+</ul>
+</div></body></html>

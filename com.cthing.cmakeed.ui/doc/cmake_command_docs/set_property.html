@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command set_property</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:set_property"><b><code>set_property</code></b></a>: Set a named property in a given scope.<br>
+    <pre>  set_property(&lt;GLOBAL                            |<br>                DIRECTORY [dir]                   |<br>                TARGET    [target1 [target2 ...]] |<br>                SOURCE    [src1 [src2 ...]]       |<br>                TEST      [test1 [test2 ...]]&gt;<br>               [APPEND]<br>               PROPERTY &lt;name&gt; [value1 [value2 ...]])<br></pre>
+    <p>Set one property on zero or more objects of a scope.  The first argument determines the scope in which the property is set.  It must be one of the following:<br><p>GLOBAL scope is unique and does not accept a name.<br><p>DIRECTORY scope defaults to the current directory but another directory (already processed by CMake) may be named by full or relative path.<br><p>TARGET scope may name zero or more existing targets.<br><p>SOURCE scope may name zero or more source files.<br><p>TEST scope may name zero or more existing tests.<br><p>The required PROPERTY option is immediately followed by the name of the property to set.  Remaining arguments are used to compose the property value in the form of a semicolon-separated list.  If the APPEND option is given the list is appended to any existing property value.
+  </li>
+</ul>
+</div></body></html>

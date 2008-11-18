@@ -57,5 +57,13 @@ public class Initializer extends AbstractPreferenceInitializer
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.VARIABLE), new RGB(127, 0, 85));
         store.setDefault(Preferences.getStyleKey(Preferences.VARIABLE), SWT.NONE);
+        
+        PreferenceConverter.setDefault(store,
+                Preferences.getColorKey(Preferences.CMAKE_VARIABLE), new RGB(127, 127, 85));
+        store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_VARIABLE), SWT.NONE);
+        
+        PreferenceConverter.setDefault(store,
+                Preferences.getColorKey(Preferences.CMAKE_PROPERTY), new RGB(0, 127, 85));
+        store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_PROPERTY), SWT.NONE);
     }
 }

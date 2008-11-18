@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command while</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:while"><b><code>while</code></b></a>: Evaluate a group of commands while a condition is true<br>
+    <pre>  while(condition)<br>    COMMAND1(ARGS ...)<br>    COMMAND2(ARGS ...)<br>    ...<br>  endwhile(condition)<br></pre>
+    <p>All commands between while and the matching endwhile are recorded without being invoked.  Once the endwhile is evaluated, the recorded list of commands is invoked as long as the condition is true. The condition is evaluated using the same logic as the if command.
+  </li>
+</ul>
+</div></body></html>

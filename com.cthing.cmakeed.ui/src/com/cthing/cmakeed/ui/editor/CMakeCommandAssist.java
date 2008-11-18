@@ -89,12 +89,10 @@ public class CMakeCommandAssist implements IContentAssistProcessor, ITextHover
                                                            final int offset)
     {
         final IDocument doc = viewer.getDocument();
-        
         final CMakeCommand cmd = EditorUtils.findContainingCommand(doc, offset);
         if (cmd != null) {
             final String[] usages = cmd.getUsages();
-            final IContextInformation[] contexts =
-                new IContextInformation[usages.length];
+            final IContextInformation[] contexts = new IContextInformation[usages.length];
             
             int i = 0;
             for (String usage : usages) {
@@ -127,7 +125,6 @@ public class CMakeCommandAssist implements IContentAssistProcessor, ITextHover
                 
                 try {
                     final String contentType = this.doc.getContentType(offset);
-                    
                     retval = CMakePartitionScanner.isAnyCommand(contentType) ||
                              CMakePartitionScanner.isArgsOpen(contentType) ||
                              CMakePartitionScanner.isString(contentType) ||
@@ -201,12 +198,12 @@ public class CMakeCommandAssist implements IContentAssistProcessor, ITextHover
         final List<CMakeCommand> possibles =
             new ArrayList<CMakeCommand>();
         final Collection<CMakeCommand> commands = CMakeCommands.getCommands();
-        final String upperPrefix = prefix.toUpperCase();
+        final String lowerPrefix = prefix.toLowerCase();
         
         for (CMakeCommand command : commands) {
             if (!command.isDeprecated()) {
                 final String name = command.getName();
-                if (name.startsWith(upperPrefix)) {
+                if (name.startsWith(lowerPrefix)) {
                     possibles.add(command);
                 }
                 else if (!possibles.isEmpty()) {

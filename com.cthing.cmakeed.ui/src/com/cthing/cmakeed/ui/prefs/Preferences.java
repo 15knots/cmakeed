@@ -27,6 +27,10 @@ public final class Preferences
     public static final String STRING = "string";               //$NON-NLS-1$
     /** CMake variable text descriptor key. */
     public static final String VARIABLE = "variable";           //$NON-NLS-1$
+    /** CMake Variable text descriptor key. */
+    public static final String CMAKE_VARIABLE = "cmake_variable";           //$NON-NLS-1$
+    /** CMake Property text descriptor key. */
+    public static final String CMAKE_PROPERTY = "cmake_property";           //$NON-NLS-1$
     
     /** Text color sub key. */
     public static final String COLOR = "Color";     //$NON-NLS-1$
@@ -40,6 +44,8 @@ public final class Preferences
         COMMENT,
         STRING,
         VARIABLE,
+        CMAKE_VARIABLE,
+        CMAKE_PROPERTY,
     };
 
     /**

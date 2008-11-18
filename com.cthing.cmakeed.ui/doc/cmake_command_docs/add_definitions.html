@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command add_definitions</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:add_definitions"><b><code>add_definitions</code></b></a>: Adds -D define flags to the compilation of source files.<br>
+    <pre>  add_definitions(-DFOO -DBAR ...)<br></pre>
+    <p>Adds flags to the compiler command line for sources in the current directory and below.  This command can be used to add any flags, but it was originally intended to add preprocessor definitions.  Flags beginning in -D or /D that look like preprocessor definitions are automatically added to the COMPILE_DEFINITIONS property for the current directory.  Definitions with non-trival values may be left in the set of flags instead of being converted for reasons of backwards compatibility.  See documentation of the directory, target, and source file COMPILE_DEFINITIONS properties for details on adding preprocessor definitions to specific scopes and configurations.
+  </li>
+</ul>
+</div></body></html>

@@ -1,0 +1,18 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property LINK_INTERFACE_LIBRARIES</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_property_index.html">All CMake propertys</a></p>
+<ul>
+  <li>
+    <a name="single_item:LINK_INTERFACE_LIBRARIES"><b><code>LINK_INTERFACE_LIBRARIES</code></b></a>: List public interface libraries for a shared library or executable.<br>
+    <p>By default linking to a shared library target transitively links to targets with which the library itself was linked.  For an executable with exports (see the ENABLE_EXPORTS property) no default transitive link dependencies are used.  This property replaces the default transitive link dependencies with an explict list.  When the target is linked into another target the libraries listed (and recursively their link interface libraries) will be provided to the other target also.  If the list is empty then no transitive link dependencies will be incorporated when this target is linked into another target even if the default set is non-empty.  This property is ignored for STATIC libraries.
+  </li>
+</ul>
+</div></body></html>

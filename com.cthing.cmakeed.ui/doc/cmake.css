@@ -1,0 +1,38 @@
+
+body {
+	background : #FFFFFF;
+	font-family:'Lucida Grande';
+}
+ ul
+ {
+   border: solid 1px #555555;
+ }
+
+ A:link			{ COLOR: #0000FF; TEXT-DECORATION: none; }
+ A:link:hover	{ COLOR: #FF6600; TEXT-DECORATION: underline }
+ A:active		{ COLOR: #FF6600; TEXT-DECORATION: underline}
+
+ A:visited		{ COLOR: #0000AA; TEXT-DECORATION: none }
+ A:visited:hover	{ COLOR: #FF6600; TEXT-DECORATION: underline } 
+ A.resources:link			{ COLOR: #0000FF; TEXT-DECORATION: none }
+ A.resources:link:hover		{ COLOR: #ff6600; TEXT-DECORATION: underline }
+ A.resources:visited			{ COLOR: #0000FF; TEXT-DECORATION: none }
+ A.resources:visited:hover	{ COLOR: #ff6600; TEXT-DECORATION: underline }
+ A.resources:active			{ COLOR: #ff6600; TEXT-DECORATION: underline }
+
+ .aLink {
+ 	color: black;
+ 	font: 80% Verdana, Arial, Helvetica, sans-serif;
+ 	text-decoration: none;
+ 	text-align: left;
+ 	border-right: 1px solid black;
+ 	border-left: 1px solid black;
+ 	background: white;
+ 	padding-top: 1px;
+ 	padding-bottom: 1px;
+ 	padding-right: 5px;
+ 	padding-left: 5px;
+ 	vertical-align:top;
+ 	width:150px;
+ }
+

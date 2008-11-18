@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module Use_wxWindows</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_module_index.html">All CMake modules</a></p>
+<ul>
+  <li>
+    <a name="single_item:Use_wxWindows"><b><code>Use_wxWindows</code></b></a>: ---------------------------------------------------<br>
+    <p><br><p>This convenience include finds if wxWindows is installed and set the appropriate libs, incdirs, flags etc. author Jan Woetzel &lt;jw -at- mip.informatik.uni-kiel.de&gt; (07/2003)<br><p>USAGE:<br><pre>   just include Use_wxWindows.cmake<br>   in your projects CMakeLists.txt<br></pre>
+    <p>INCLUDE( ${CMAKE_MODULE_PATH}/Use_wxWindows.cmake)<br><pre>   if you are sure you need GL then<br></pre>
+    <p>SET(WXWINDOWS_USE_GL 1)<br><pre>   *before* you include this file.<br></pre>
+    <p><br><p>16.Feb.2004: changed INCLUDE to FIND_PACKAGE to read from users own non-system CMAKE_MODULE_PATH (Jan Woetzel JW) 07/2006: rewrite as FindwxWidgets.cmake, kept for backward compatibilty JW
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.6.2/CMake 2.6-2.app/Contents/share/cmake-2.6/Modules/Use_wxWindows.cmake
+</div></body></html>

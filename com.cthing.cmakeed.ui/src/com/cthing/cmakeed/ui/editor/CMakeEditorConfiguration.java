@@ -105,9 +105,13 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
     {
         final ContentAssistant ca = new ContentAssistant();
         final IContentAssistProcessor pr = new CMakeCommandAssist();
+        final IContentAssistProcessor propProc = new CMakePropertyAssist();
+        final IContentAssistProcessor varProc = new CMakeVariableAssist();
         
         ca.setContentAssistProcessor(pr, IDocument.DEFAULT_CONTENT_TYPE);
         ca.setContentAssistProcessor(pr, CMakePartitionScanner.COMMAND_CONTENT_TYPE);
+        ca.setContentAssistProcessor(propProc, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
+        ca.setContentAssistProcessor(varProc, CMakePartitionScanner.VARIABLE_CONTENT_TYPE);
         ca.setInformationControlCreator(getInformationControlCreator(sourceViewer));
         ca.enableAutoActivation(true);
         
@@ -124,6 +128,12 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
     {
         if (CMakePartitionScanner.isAnyCommand(contentType)) {
             return new CMakeCommandAssist();
+        }
+        if (CMakePartitionScanner.isProperty(contentType)) {
+        	return new CMakePropertyAssist();
+        }
+        if (CMakePartitionScanner.isCMakeVariable(contentType)) {
+        	return new CMakeVariableAssist();
         }
         return null;
     }
@@ -170,6 +180,16 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         reconciler.setDamager(dr, CMakePartitionScanner.ARGS_CLOSE_CONTENT_TYPE);
         reconciler.setRepairer(dr, CMakePartitionScanner.ARGS_CLOSE_CONTENT_TYPE);
 
+
+        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.VARIABLE_CONTENT_TYPE));    
+        reconciler.setDamager(dr, CMakePartitionScanner.VARIABLE_CONTENT_TYPE);
+        reconciler.setRepairer(dr, CMakePartitionScanner.VARIABLE_CONTENT_TYPE);
+
+        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.PROPERTY_CONTENT_TYPE));    
+        reconciler.setDamager(dr, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
+        reconciler.setRepairer(dr, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
+
+        
         return reconciler;
     }
 }

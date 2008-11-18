@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command try_compile</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:try_compile"><b><code>try_compile</code></b></a>: Try compiling some code.<br>
+    <pre>  try_compile(RESULT_VAR bindir srcdir<br>              projectName &lt;targetname&gt; [CMAKE_FLAGS &lt;Flags&gt;]<br>              [OUTPUT_VARIABLE var])<br></pre>
+    <p>Try compiling a program.  In this form, srcdir should contain a complete CMake project with a CMakeLists.txt file and all sources. The bindir and srcdir will not be deleted after this command is run. If &lt;target name&gt; is specified then build just that target otherwise the all or ALL_BUILD target is built.<br><pre>  try_compile(RESULT_VAR bindir srcfile<br>              [CMAKE_FLAGS &lt;Flags&gt;]<br>              [COMPILE_DEFINITIONS &lt;flags&gt; ...]<br>              [OUTPUT_VARIABLE var]<br>              [COPY_FILE &lt;filename&gt; )<br></pre>
+    <p>Try compiling a srcfile.  In this case, the user need only supply a source file.  CMake will create the appropriate CMakeLists.txt file to build the source. If COPY_FILE is used, the compiled file will be copied to the given file.<br><p>In this version all files in bindir/CMakeFiles/CMakeTmp, will be cleaned automatically, for debugging a --debug-trycompile can be passed to cmake to avoid the clean. Some extra flags that  can be included are,  INCLUDE_DIRECTORIES, LINK_DIRECTORIES, and LINK_LIBRARIES.  COMPILE_DEFINITIONS are -Ddefinition that will be passed to the compile line.  try_compile creates a CMakeList.txt file on the fly that looks like this:<br><pre>  add_definitions( &lt;expanded COMPILE_DEFINITIONS from calling cmake&gt;)<br>  include_directories(${INCLUDE_DIRECTORIES})<br>  link_directories(${LINK_DIRECTORIES})<br>  add_executable(cmTryCompileExec sources)<br>  target_link_libraries(cmTryCompileExec ${LINK_LIBRARIES})<br></pre>
+    <p>In both versions of the command, if OUTPUT_VARIABLE is specified, then the output from the build process is stored in the given variable. Return the success or failure in RESULT_VAR. CMAKE_FLAGS can be used to pass -DVAR:TYPE=VALUE flags to the cmake that is run during the build. 
+  </li>
+</ul>
+</div></body></html>

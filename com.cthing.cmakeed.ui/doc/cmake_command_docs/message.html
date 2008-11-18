@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command message</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:message"><b><code>message</code></b></a>: Display a message to the user.<br>
+    <pre>  message([SEND_ERROR | STATUS | FATAL_ERROR]<br>          "message to display" ...)<br></pre>
+    <p>By default the message is displayed in a pop up window (CMakeSetup), or in the stdout of cmake, or the error section of ccmake. If the first argument is SEND_ERROR then an error is raised, and the generate phase will be skipped.  If the first argument is FATAL_ERROR, all processing is halted. If the first argument is STATUS then the message is displayed in the progress line for the GUI, or with a -- in the command line cmake.
+  </li>
+</ul>
+</div></body></html>

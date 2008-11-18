@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.cthing.cmakeed.ui; singleton:=true
-Bundle-Version: 1.0.1
+Bundle-Version: 1.1
 Bundle-Activator: com.cthing.cmakeed.ui.UIPlugin
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
@@ -13,6 +13,6 @@ Require-Bundle: com.cthing.cmakeed.core,
  org.eclipse.ui.editors,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.help
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: ui.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
