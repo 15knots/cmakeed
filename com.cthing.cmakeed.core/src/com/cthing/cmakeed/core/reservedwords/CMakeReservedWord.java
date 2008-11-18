@@ -3,7 +3,7 @@
  * All Rights Reserved.
  ******************************************************************************/
 
-package com.cthing.cmakeed.core.properties;
+package com.cthing.cmakeed.core.reservedwords;
 
 
 import com.cthing.cmakeed.core.utils.StringUtils;
@@ -11,11 +11,9 @@ import com.cthing.cmakeed.core.utils.StringUtils;
 /**
  * Represents information about a CMake command.
  */
-public class CMakeProperty
+public class CMakeReservedWord
 {
     private String name;
-    private String description;
-    private boolean deprecated;
 
     
     /**
@@ -25,31 +23,16 @@ public class CMakeProperty
      * @param description  Description of the command
      * @param deprecated  <code>true</code> if the command has been deprecated.
      */
-    public CMakeProperty(final String name, final String description,
-                        final boolean deprecated)
+    public CMakeReservedWord(final String name)
     {
         if (StringUtils.isBlank(name)) {
             throw new IllegalArgumentException("name cannot be blank."); //$NON-NLS-1$
         }
-        if (StringUtils.isBlank(description)) {
-            throw new IllegalArgumentException("description cannot be blank."); //$NON-NLS-1$
-        }
         
         this.name = name;
-        this.description = description;
-        this.deprecated = deprecated;
+        
     }
-
-    /**
-     * Indicates whether the command has been deprecated.
-     * 
-     * @return <code>true</code> if the command has been deprecated.
-     */
-    public boolean isDeprecated()
-    {
-        return this.deprecated;
-    }
-
+  
     /**
      * Provides the name of the command.
      * 
@@ -60,16 +43,6 @@ public class CMakeProperty
         return this.name;
     }
     
-    /**
-     * Provides a description for the command.
-     * 
-     * @return Command description.
-     */
-    public String getDescription()
-    {
-        return this.description;
-    }
- 
     /**
      * {@inheritDoc}
      * @see java.lang.Object#toString()
@@ -106,7 +79,7 @@ public class CMakeProperty
             return false;
         }
         
-        final CMakeProperty other = (CMakeProperty)obj;
+        final CMakeReservedWord other = (CMakeReservedWord)obj;
         
         if (this.name == null) {
             if (other.name != null) {
@@ -119,4 +92,5 @@ public class CMakeProperty
         
         return true;
     }
+
 }
