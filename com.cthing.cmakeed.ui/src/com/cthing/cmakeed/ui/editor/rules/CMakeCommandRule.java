@@ -57,8 +57,7 @@ public class CMakeCommandRule implements IRule, IPredicateRule
         }
         scanner.unread();
         
-        final CMakeCommand cmd =
-            CMakeCommands.getCommand(this.buffer.toString());
+        final CMakeCommand cmd = CMakeCommands.getCommand(this.buffer.toString());
         if ((cmd != null) && (cmd.isDeprecated() == this.findDeprecated)) {
             if (scanner instanceof CMakePartitionScanner) {
                 final CMakePartitionScanner cscan = (CMakePartitionScanner)scanner;

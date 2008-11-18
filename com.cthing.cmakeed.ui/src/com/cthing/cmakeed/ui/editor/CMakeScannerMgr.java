@@ -60,6 +60,14 @@ public class CMakeScannerMgr
         if (CMakePartitionScanner.isDepCommand(contentType)) {
             return getDepCommandScanner();
         }
+        
+        if (CMakePartitionScanner.isCMakeVariable(contentType)) {
+        	return getCMakeVariableScanner();
+        }
+        if (CMakePartitionScanner.isProperty(contentType)) {
+        	return getPropertyScanner();
+        }
+        
         if (CMakePartitionScanner.isArgsOpen(contentType) ||
                 CMakePartitionScanner.isArgsClose(contentType)) {
             return getCMakeScanner();
@@ -129,6 +137,15 @@ public class CMakeScannerMgr
         return createRuleBasedScanner(Preferences.DEP_COMMAND);
     }
 
+    private RuleBasedPartitionScanner getCMakeVariableScanner()
+    {
+    	return createRuleBasedScanner(Preferences.CMAKE_VARIABLE);
+    }
+    
+    private RuleBasedPartitionScanner getPropertyScanner()
+    {
+    	return createRuleBasedScanner(Preferences.CMAKE_PROPERTY);
+    }  
     /**
      * Obtains a scanner with the specified text coloring attribute.
      * 
@@ -139,13 +156,11 @@ public class CMakeScannerMgr
     {
         final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
         
-        final RGB color =
-            PreferenceConverter.getColor(store, Preferences.getColorKey(baseKey));
+        final RGB color = PreferenceConverter.getColor(store, Preferences.getColorKey(baseKey));
         final int style = store.getInt(Preferences.getStyleKey(baseKey));
 
         final RuleBasedPartitionScanner scanner = new RuleBasedPartitionScanner();
-        final TextAttribute attr =
-            new TextAttribute(this.colorMgr.getColor(color), null, style);
+        final TextAttribute attr = new TextAttribute(this.colorMgr.getColor(color), null, style);
         scanner.setDefaultReturnToken(new Token(attr));
         return scanner;
     }

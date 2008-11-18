@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command add_dependencies</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:add_dependencies"><b><code>add_dependencies</code></b></a>: Add a dependency between top-level targets.<br>
+    <pre>  add_dependencies(target-name depend-target1<br>                   depend-target2 ...)<br></pre>
+    <p>Make a top-level target depend on other top-level targets.  A top-level target is one created by ADD_EXECUTABLE, ADD_LIBRARY, or ADD_CUSTOM_TARGET.  Adding dependencies with this command can be used to make sure one target is built before another target.  See the DEPENDS option of ADD_CUSTOM_TARGET and ADD_CUSTOM_COMMAND for adding file-level dependencies in custom rules.  See the OBJECT_DEPENDS option in SET_SOURCE_FILES_PROPERTIES to add file-level dependencies to object files.
+  </li>
+</ul>
+</div></body></html>

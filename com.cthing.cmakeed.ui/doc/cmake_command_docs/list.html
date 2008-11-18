@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command list</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:list"><b><code>list</code></b></a>: List operations.<br>
+    <pre>  list(LENGTH &lt;list&gt; &lt;output variable&gt;)<br>  list(GET &lt;list&gt; &lt;element index&gt; [&lt;element index&gt; ...] &lt;output variable&gt;)<br>  list(APPEND &lt;list&gt; &lt;element&gt; [&lt;element&gt; ...])<br>  list(FIND &lt;list&gt; &lt;value&gt; &lt;output variable&gt;)<br>  list(INSERT &lt;list&gt; &lt;element_index&gt; &lt;element&gt; [&lt;element&gt; ...])<br>  list(REMOVE_ITEM &lt;list&gt; &lt;value&gt; [&lt;value&gt; ...])<br>  list(REMOVE_AT &lt;list&gt; &lt;index&gt; [&lt;index&gt; ...])<br>  list(REMOVE_DUPLICATES &lt;list&gt;)<br>  list(REVERSE &lt;list&gt;)<br>  list(SORT &lt;list&gt;)<br></pre>
+    <p>LENGTH will return a given list's length.<br><p>GET will return list of elements specified by indices from the list.<br><p>APPEND will append elements to the list.<br><p>FIND will return the index of the element specified in the list or -1 if it wasn't found.<br><p>INSERT will insert elements to the list to the specified location.<br><p>REMOVE_AT and REMOVE_ITEM will remove items from the list. The difference is that REMOVE_ITEM will remove the given items, while REMOVE_AT will remove the items at the given indices.<br><p>REMOVE_DUPLICATES will remove duplicated items in the list.<br><p>REVERSE reverses the contents of the list in-place.<br><p>SORT sorts the list in-place alphabetically.<br><p>NOTES: A list in cmake is a ; separated group of strings. To create a list the set command can be used. For example, set(var a b c d e)  creates a list with a;b;c;d;e, and set(var "a b c d e") creates a string or a list with one item in it.<br><p>When specifying index values, if &lt;element index&gt; is 0 or greater, it is indexed from the beginning of the list, with 0 representing the first list element. If &lt;element index&gt; is -1 or lesser, it is indexed from the end of the list, with -1 representing the last list element. Be careful when counting with negative indices: they do not start from 0. -0 is equivalent to 0, the first list element.<br>
+  </li>
+</ul>
+</div></body></html>

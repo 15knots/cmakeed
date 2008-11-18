@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command define_property</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="ContentTxtProd">
+<p><a href="./cmake_command_index.html">All CMake commands</a></p>
+<ul>
+  <li>
+    <a name="single_item:define_property"><b><code>define_property</code></b></a>: Define and document custom properties.<br>
+    <pre>  define_property(&lt;GLOBAL | DIRECTORY | TARGET | SOURCE |<br>                   TEST | VARIABLE | CACHED_VARIABLE&gt;<br>                   PROPERTY &lt;name&gt; [INHERITED]<br>                   BRIEF_DOCS &lt;brief-doc&gt;<br>                   FULL_DOCS &lt;full-doc&gt;)<br></pre>
+    <p>Define one property in a scope for use with the set_property and get_property commands.  This is primarily useful to associate documentation with property names that may be retrieved with the get_property command.  The first argument determines the kind of scope in which the property should be used.  It must be one of the following:<br><pre>  GLOBAL    = associated with the global namespace<br>  DIRECTORY = associated with one directory<br>  TARGET    = associated with one target<br>  SOURCE    = associated with one source file<br>  TEST      = associated with a test named with add_test command<br>  VARIABLE  = documents a CMake language variable<br>  CACHED_VARIABLE = documents a CMake cache variable<br></pre>
+    <p>Note that unlike set_property and get_property no actual scope needs to be given; only the kind of scope is important.<br><p>The required PROPERTY option is immediately followed by the name of the property being defined.<br><p>If the INHERITED option then the get_property command will chain up to the next higher scope when the requested property is not set in the scope given to the command.  DIRECTORY scope chains to GLOBAL.  TARGET, SOURCE, and TEST chain to DIRECTORY.<br><p>The BRIEF_DOCS and FULL_DOCS options are followed by strings to be associated with the property as its brief and full documentation.  Corresponding options to the get_property command will retrieve the documentation.
+  </li>
+</ul>
+</div></body></html>

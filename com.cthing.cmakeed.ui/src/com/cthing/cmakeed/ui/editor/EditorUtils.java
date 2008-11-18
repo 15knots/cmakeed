@@ -13,6 +13,10 @@ import org.eclipse.jface.text.rules.ICharacterScanner;
 
 import com.cthing.cmakeed.core.commands.CMakeCommand;
 import com.cthing.cmakeed.core.commands.CMakeCommands;
+import com.cthing.cmakeed.core.properties.CMakeProperty;
+import com.cthing.cmakeed.core.properties.CMakeProperties;
+import com.cthing.cmakeed.core.variables.CMakeVariable;
+import com.cthing.cmakeed.core.variables.CMakeVariables;
 import com.cthing.cmakeed.ui.UIPlugin;
 
 /**
@@ -94,6 +98,72 @@ public final class EditorUtils
     {
         return CMakeCommands.getCommand(getCommandName(doc, offset));
     }
+    
+    public static CMakeProperty getProperty(final IDocument doc, final int offset)
+    {
+    	return CMakeProperties.getCommand(getPropertyName(doc, offset));
+    }
+    
+    public static String getPropertyName(final ITextViewer viewer, final int offset)
+    {
+    	return getPropertyName(viewer.getDocument(), offset);
+    }
+    
+    public static String getPropertyName(final IDocument doc, final int offset)
+    {
+        String cmd = null;
+
+        try {
+            final String contentType = doc.getContentType(offset);
+            
+            if (CMakePartitionScanner.isProperty(contentType)) {
+                final ITypedRegion region = doc.getPartition(offset);
+                cmd = doc.get(region.getOffset(), region.getLength());
+            }
+        }
+        catch (final BadLocationException e) {
+            UIPlugin.logError(EditorUtils.class, e);
+        }
+        
+        return cmd;
+    }
+    
+    /**
+     * 
+     * @param doc
+     * @param offset
+     * @return
+     */
+    public static CMakeVariable getVariable(final IDocument doc, final int offset)
+    {
+    	return CMakeVariables.getCommand(getVariableName(doc, offset));
+    }
+    
+    public static String getVariableName(final ITextViewer viewer, final int offset)
+    {
+    	return getVariableName(viewer.getDocument(), offset);
+    }
+    
+    public static String getVariableName(final IDocument doc, final int offset)
+    {
+        String cmd = null;
+
+        try {
+            final String contentType = doc.getContentType(offset);
+            
+            if (CMakePartitionScanner.isVariable(contentType)) {
+                final ITypedRegion region = doc.getPartition(offset);
+                cmd = doc.get(region.getOffset(), region.getLength());
+            }
+        }
+        catch (final BadLocationException e) {
+            UIPlugin.logError(EditorUtils.class, e);
+        }
+        
+        return cmd;
+    }
+    
+    
     
     /**
      * Obtains the command name corresponding to the specified viewer and
@@ -180,6 +250,84 @@ public final class EditorUtils
         
         return null;        
     }
+    
+    /**
+     * Attempts to find the property containing the specified offset.
+     * 
+     * @param doc  Document in which the property is contained.
+     * @param offset  Offset in the document which contains some aspect of the
+     *      property (e.g. arguments, opening parenthesis, command string)
+     * @return Property containing the specified offset or <code>null</code>
+     *      if a property could not be found.
+     */
+    public static CMakeProperty findContainingProperty(final IDocument doc,
+                                                     final int offset)
+    {
+        try {
+            int pos = offset;
+            
+            while (pos >= 0) {
+                final String contentType = doc.getContentType(pos);
+                if (CMakePartitionScanner.isComment(contentType) ||
+                        CMakePartitionScanner.isArgsClose(contentType)) {
+                    break;
+                }
+                
+                final CMakeProperty cmd = getProperty(doc, pos);
+                if (cmd != null) {
+                    return cmd;
+                }
+                
+                final ITypedRegion region = doc.getPartition(pos);
+                pos = region.getOffset() - 1;
+            }
+        }
+        catch (final BadLocationException e) {
+            UIPlugin.logError(EditorUtils.class, e);
+        }
+        
+        return null;        
+    }
+    
+    /**
+     * Attempts to find the variable containing the specified offset.
+     * 
+     * @param doc  Document in which the variable is contained.
+     * @param offset  Offset in the document which contains some aspect of the
+     *      variable (e.g. arguments, opening parenthesis, command string)
+     * @return Property containing the specified offset or <code>null</code>
+     *      if a variable could not be found.
+     */
+    public static CMakeVariable findContainingVariable(final IDocument doc,
+                                                     final int offset)
+    {
+        try {
+            int pos = offset;
+            
+            while (pos >= 0) {
+                final String contentType = doc.getContentType(pos);
+                if (CMakePartitionScanner.isComment(contentType) ||
+                        CMakePartitionScanner.isArgsClose(contentType)) {
+                    break;
+                }
+                
+                final CMakeVariable cmd = getVariable(doc, pos);
+                if (cmd != null) {
+                    return cmd;
+                }
+                
+                final ITypedRegion region = doc.getPartition(pos);
+                pos = region.getOffset() - 1;
+            }
+        }
+        catch (final BadLocationException e) {
+            UIPlugin.logError(EditorUtils.class, e);
+        }
+        
+        return null;        
+    }
+    
+    
     
     /**
      * Unread a buffer's worth of characters.

@@ -15,6 +15,8 @@ import org.eclipse.jface.text.rules.Token;
 import com.cthing.cmakeed.ui.editor.rules.ArgsCloseRule;
 import com.cthing.cmakeed.ui.editor.rules.ArgsOpenRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakeCommandRule;
+import com.cthing.cmakeed.ui.editor.rules.CMakePropertyRule;
+import com.cthing.cmakeed.ui.editor.rules.CMakeVariableRule;
 
 /**
  * Identifies partitions within a CMake file.
@@ -35,6 +37,10 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public static final String ARGS_OPEN_CONTENT_TYPE = "__args_open";      //$NON-NLS-1$
     /** Command arguments close. */
     public static final String ARGS_CLOSE_CONTENT_TYPE = "__args_close";      //$NON-NLS-1$
+    /** Command partition. */
+    public static final String VARIABLE_CONTENT_TYPE = "__variable";    //$NON-NLS-1$
+    /** Command partition. */
+    public static final String PROPERTY_CONTENT_TYPE = "__property";    //$NON-NLS-1$
 
     /** Array of all partition types. */
     public static final String[] CONTENT_TYPES = new String[] {
@@ -46,6 +52,8 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
         DEP_COMMAND_CONTENT_TYPE,
         ARGS_OPEN_CONTENT_TYPE,
         ARGS_CLOSE_CONTENT_TYPE,
+        VARIABLE_CONTENT_TYPE,
+        PROPERTY_CONTENT_TYPE,
     };
 
     /**
@@ -62,6 +70,9 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
                 new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
                 new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),
                 new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
+                new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
+                new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
+                
             };
 
         setPredicateRules(preds);
@@ -153,6 +164,32 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public static boolean isCommand(final String contentType)
     {
         return COMMAND_CONTENT_TYPE.equals(contentType);
+    }
+    
+    /**
+     * Indicates whether the specified content type represents a property
+     * partition.
+     * 
+     * @param contentType  Partition content type.
+     * @return <code>true</code> if the specified content type represents a
+     *      property partition.
+     */
+    public static boolean isProperty(final String contentType)
+    {
+        return PROPERTY_CONTENT_TYPE.equals(contentType);
+    }
+    
+    /**
+     * Indicates whether the specified content type represents a cmake variable
+     * partition.
+     * 
+     * @param contentType  Partition content type.
+     * @return <code>true</code> if the specified content type represents a
+     *      cmake variable partition.
+     */
+    public static boolean isCMakeVariable(final String contentType)
+    {
+        return VARIABLE_CONTENT_TYPE.equals(contentType);
     }
     
     /**
