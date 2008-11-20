@@ -70,7 +70,10 @@ public class CMakeScannerMgr
         if (CMakePartitionScanner.isReservedWord(contentType)) {
         	return getReservedWordScanner();
         }
-        
+        if (CMakePartitionScanner.isUserVariable(contentType))
+        {
+        	return getUserVariableScanner();
+        }
         if (CMakePartitionScanner.isArgsOpen(contentType) ||
                 CMakePartitionScanner.isArgsClose(contentType)) {
             return getCMakeScanner();
@@ -107,7 +110,7 @@ public class CMakeScannerMgr
      */
     private RuleBasedPartitionScanner getArgumentScanner() 
     {
-        return createRuleBasedScanner(Preferences.VARIABLE);
+        return createRuleBasedScanner(Preferences.DOLLAR_VARIABLE);
     }
 
     /**
@@ -155,6 +158,10 @@ public class CMakeScannerMgr
     	return createRuleBasedScanner(Preferences.CMAKE_RESERVED_WORD);
     } 
     
+    private RuleBasedPartitionScanner getUserVariableScanner()
+    {
+    	return createRuleBasedScanner(Preferences.CMAKE_USER_VARIABLE);
+    }
     
     /**
      * Obtains a scanner with the specified text coloring attribute.
