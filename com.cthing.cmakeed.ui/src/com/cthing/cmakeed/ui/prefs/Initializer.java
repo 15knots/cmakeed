@@ -55,8 +55,8 @@ public class Initializer extends AbstractPreferenceInitializer
         store.setDefault(Preferences.getStyleKey(Preferences.STRING), SWT.NONE);
 
         PreferenceConverter.setDefault(store,
-                Preferences.getColorKey(Preferences.VARIABLE), new RGB(127, 0, 85));
-        store.setDefault(Preferences.getStyleKey(Preferences.VARIABLE), SWT.NONE);
+                Preferences.getColorKey(Preferences.DOLLAR_VARIABLE), new RGB(52,89,129));
+        store.setDefault(Preferences.getStyleKey(Preferences.DOLLAR_VARIABLE), SWT.NONE);
         
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.CMAKE_VARIABLE), new RGB(127, 127, 85));
@@ -69,5 +69,10 @@ public class Initializer extends AbstractPreferenceInitializer
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.CMAKE_RESERVED_WORD), new RGB(127, 85, 85));
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_RESERVED_WORD), SWT.NONE);
+    
+        PreferenceConverter.setDefault(store,
+                Preferences.getColorKey(Preferences.CMAKE_USER_VARIABLE), new RGB(52,89,129));
+        store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_USER_VARIABLE), SWT.NONE);
+    
     }
 }

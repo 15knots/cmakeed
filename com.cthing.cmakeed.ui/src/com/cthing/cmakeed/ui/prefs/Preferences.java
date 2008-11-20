@@ -26,14 +26,15 @@ public final class Preferences
     /** String text descriptor key. */
     public static final String STRING = "string";               //$NON-NLS-1$
     /** CMake variable text descriptor key. */
-    public static final String VARIABLE = "variable";           //$NON-NLS-1$
+    public static final String DOLLAR_VARIABLE = "variable";           //$NON-NLS-1$
     /** CMake Variable text descriptor key. */
     public static final String CMAKE_VARIABLE = "cmake_variable";           //$NON-NLS-1$
     /** CMake Property text descriptor key. */
     public static final String CMAKE_PROPERTY = "cmake_property";           //$NON-NLS-1$
     /** CMake Reserved Word text descriptor key. */
     public static final String CMAKE_RESERVED_WORD = "cmake_reserved_word";           //$NON-NLS-1$
-    
+    /** CMake User Variable text descriptor key. */
+    public static final String CMAKE_USER_VARIABLE = "cmake_user_variable";
     /** Text color sub key. */
     public static final String COLOR = "Color";     //$NON-NLS-1$
     /** Text style sub key. */
@@ -45,10 +46,11 @@ public final class Preferences
         DEP_COMMAND,
         COMMENT,
         STRING,
-        VARIABLE,
+        DOLLAR_VARIABLE,
         CMAKE_VARIABLE,
         CMAKE_PROPERTY,
         CMAKE_RESERVED_WORD,
+        CMAKE_USER_VARIABLE,
     };
 
     /**

@@ -17,6 +17,7 @@ import com.cthing.cmakeed.ui.editor.rules.ArgsOpenRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakeCommandRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakePropertyRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakeReservedWordRule;
+import com.cthing.cmakeed.ui.editor.rules.CMakeUserVariableRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakeVariableRule;
 
 /**
@@ -44,6 +45,8 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public static final String PROPERTY_CONTENT_TYPE = "__property";    //$NON-NLS-1$
     /** Reserved Word partition. */
     public static final String RESERVED_WORD_CONTENT_TYPE = "__reservedword";    //$NON-NLS-1$
+    
+    public static final String USER_VARIABLE_CONTENT_TYPE = "__uservariable";  //$NON-NLS-1$
 
     /** Array of all partition types. */
     public static final String[] CONTENT_TYPES = new String[] {
@@ -58,6 +61,7 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
         VARIABLE_CONTENT_TYPE,
         PROPERTY_CONTENT_TYPE,
         RESERVED_WORD_CONTENT_TYPE,
+        USER_VARIABLE_CONTENT_TYPE,
     };
 
     /**
@@ -72,11 +76,12 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
                 new SingleLineRule("\"", "\"", new Token(STRING_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
                 new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
-                new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),
-                new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
+                new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),                
                 new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
                 new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
                 new CMakeReservedWordRule(new Token(RESERVED_WORD_CONTENT_TYPE), false),
+                new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE)),
+                new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
             };
 
         setPredicateRules(preds);
@@ -90,6 +95,19 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public IDocument getDocument()
     {
         return this.fDocument;
+    }
+    
+    /**
+     * Indicates whether the specified content type represents a user variable
+     * partition.
+     * 
+     * @param contentType  Partition content type.
+     * @return <code>true</code> if the specified content type represents a
+     *      comment partition.
+     */
+    public static boolean isUserVariable(final String contentType)
+    {
+        return USER_VARIABLE_CONTENT_TYPE.equals(contentType);
     }
     
     /**
