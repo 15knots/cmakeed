@@ -45,14 +45,12 @@ public final class CMakeCommands
     {
         commands = new LinkedHashMap<String, CMakeCommand>();
         
-        final IExtensionPoint extensionPoint =
-            Platform.getExtensionRegistry().getExtensionPoint(CorePlugin.PLUGIN_ID, COMMANDS_EXT_ID);
+        final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(CorePlugin.PLUGIN_ID, COMMANDS_EXT_ID);
         final IExtension[] extensions = extensionPoint.getExtensions();
         
         for (IExtension extension : extensions) {
             if (extension.isValid()) {
-                final IConfigurationElement[] commandElts =
-                    extension.getConfigurationElements();
+                final IConfigurationElement[] commandElts = extension.getConfigurationElements();
                 
                 for (IConfigurationElement commandElt : commandElts) {
                     final String name = commandElt.getAttribute(ATT_NAME);
