@@ -956,9 +956,6 @@
   <command name="find_file"
          desc="Find the full path to a file."
          deprecated="false" >
-         <usage
-               value="(VAR name1 [path1 path2 ...])">
-         </usage>
   </command>
   <command name="find_library"
          desc="Find a library."
@@ -981,7 +978,7 @@
          desc="Find the directory containing a file."
          deprecated="false" >
     <usage value="(VAR name1 [path1 path2 ...])" />
-    <usage value="(VAR name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
+    <usage value="( VAR name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
     <usage value="(VAR NAMES name PATHS paths... NO_DEFAULT_PATH)" />
     <usage value="(VAR NAMES name)" />
   </command>
