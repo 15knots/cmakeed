@@ -34,7 +34,7 @@ public class CMakeDocumentProvider extends FileDocumentProvider
         if (document != null) {
             final IDocumentPartitioner partitioner =
                 new FastPartitioner(new CMakePartitionScanner(),
-                                    CMakePartitionScanner.CONTENT_TYPES);
+                                    CMakePartitionScanner.CMAKE_CONTENT_TYPES);
             partitioner.connect(document);
             document.setDocumentPartitioner(partitioner);
         }

@@ -5,29 +5,38 @@
 
 package com.cthing.cmakeed.ui.editor;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.editors.text.TextEditor;
+//import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.ContentAssistAction;
-import org.eclipse.ui.texteditor.IDocumentProvider;
+//import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
 import com.cthing.cmakeed.ui.Messages;
 import com.cthing.cmakeed.ui.UIPlugin;
 import com.cthing.cmakeed.ui.prefs.Preferences;
+import com.cthing.cmakeed.ui.editor.CMakeEditorConfiguration;
 
 /**
  * Editor for CMake files.
  */
-public class CMakeEditor extends AbstractDecoratedTextEditor
+public class CMakeEditor extends TextEditor
                          implements IPropertyChangeListener
 {
     private StyledText text;
@@ -51,13 +60,12 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
      */
     public CMakeEditor()
     {
-        this.colorMgr = new ColorMgr();
+     super();   
         
-        final IDocumentProvider provider = new CMakeDocumentProvider();
-        setDocumentProvider(provider);
-        final CMakeEditorConfiguration config =
-            new CMakeEditorConfiguration(this.colorMgr);
-        setSourceViewerConfiguration(config);
+//        final IDocumentProvider provider = new CMakeDocumentProvider();
+//        setDocumentProvider(provider);
+//        final CMakeEditorConfiguration config = new CMakeEditorConfiguration(this.colorMgr);
+//        setSourceViewerConfiguration(config);
         
         final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
         store.addPropertyChangeListener(this);
@@ -113,6 +121,28 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
         return super.getAdapter(key);
     }
     
+	/* (non-Javadoc)
+	 * Method declared on AbstractTextEditor
+	 */
+	protected void initializeEditor() {
+		super.initializeEditor();
+		if (null == this.colorMgr) {
+			this.colorMgr = new ColorMgr();
+		}
+		setSourceViewerConfiguration(new CMakeEditorConfiguration(this.colorMgr));
+	}
+	
+	/** The <code>JavaEditor</code> implementation of this
+	 * <code>AbstractTextEditor</code> method performs sets the
+	 * input of the outline page after AbstractTextEditor has set input.
+	 *
+	 * @param input the editor input
+	 * @throws CoreException in case the input can not be set
+	 */
+	public void doSetInput(IEditorInput input) throws CoreException {
+		super.doSetInput(input);
+	}
+	
     /**
      * {@inheritDoc}
      * @see org.eclipse.ui.editors.text.TextEditor#dispose()
@@ -148,18 +178,18 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
      */
     public void propertyChange(final PropertyChangeEvent event)
     {
-        if (event == null ||
-                event.getProperty().equals(Preferences.SPACES_FOR_TABS)) {
+        if (event == null || event.getProperty().equals(Preferences.SPACES_FOR_TABS)) {
             updateTabReplacer();
         }
         
         if (event == null || Preferences.isTextPreference(event.getProperty())) {
             final SourceViewer sourceViewer = (SourceViewer)getSourceViewer();
-            sourceViewer.unconfigure();
-            final CMakeEditorConfiguration config =
-                new CMakeEditorConfiguration(this.colorMgr);
+            int line = sourceViewer.getTopIndex();
+			sourceViewer.unconfigure();
+            final CMakeEditorConfiguration config = new CMakeEditorConfiguration(this.colorMgr);
             sourceViewer.configure(config);
             sourceViewer.refresh();
+            sourceViewer.setTopIndex(line);
         }
     }
 }
