@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
@@ -18,7 +19,8 @@ import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
+import org.eclipse.jface.text.source.SourceViewerConfiguration;
+
 
 import com.cthing.cmakeed.ui.UIPlugin;
 import com.cthing.cmakeed.ui.prefs.Preferences;
@@ -26,7 +28,7 @@ import com.cthing.cmakeed.ui.prefs.Preferences;
 /**
  * Configures add-ons for the CMake document editor.
  */
-public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
+public class CMakeEditorConfiguration extends SourceViewerConfiguration
 {
     private CMakeScannerMgr scannerMgr;
     
@@ -47,7 +49,7 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
     @Override
     public String[] getConfiguredContentTypes(final ISourceViewer sourceViewer)
     {
-        return CMakePartitionScanner.CONTENT_TYPES;
+        return CMakePartitionScanner.CMAKE_CONTENT_TYPES;
     }
 
     /**
@@ -96,6 +98,14 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         return list.toArray(new String[list.size()]);
     }
     
+
+	/**
+	 * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getConfiguredDocumentPartitioning(org.eclipse.jface.text.source.ISourceViewer)
+	 */
+	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
+		return UIPlugin.CMAKE_PARTITIONING;
+	}
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getContentAssistant(org.eclipse.jface.text.source.ISourceViewer)
@@ -120,20 +130,6 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         return ca;
     }
 
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getTextHover(org.eclipse.jface.text.source.ISourceViewer, java.lang.String, int)
-     */
-    @Override
-    public ITextHover getTextHover(final ISourceViewer sourceViewer,
-                                   final String contentType)
-    {
-        if (CMakePartitionScanner.isAnyCommand(contentType)) {
-            return new CMakeContentAssistantProcessor();
-        }
-
-        return null;
-    }
 
     /**
      * {@inheritDoc}
@@ -142,8 +138,9 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
     @Override
     public IPresentationReconciler getPresentationReconciler(final ISourceViewer sourceViewer) 
     {
-        final PresentationReconciler reconciler = new PresentationReconciler();
-        
+    	PresentationReconciler reconciler= new PresentationReconciler();
+		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
+		
         DefaultDamagerRepairer dr =
             new DefaultDamagerRepairer(this.scannerMgr.getScanner(IDocument.DEFAULT_CONTENT_TYPE));
         reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
@@ -194,4 +191,31 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         reconciler.setRepairer(dr, CMakePartitionScanner.ARGS_CLOSE_CONTENT_TYPE);
         return reconciler;
     }
+    
+	/* (non-Javadoc)
+	 * Method declared on SourceViewerConfiguration
+	 */
+	public int getTabWidth(ISourceViewer sourceViewer) {
+		return 4;
+	}
+
+    /**
+     * {@inheritDoc}
+     * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getTextHover(org.eclipse.jface.text.source.ISourceViewer, java.lang.String, int)
+     */
+    @Override
+    public ITextHover getTextHover(final ISourceViewer sourceViewer,
+                                   final String contentType)
+    {
+        if (CMakePartitionScanner.isAnyCommand(contentType)) {
+            return new CMakeContentAssistantProcessor();
+        }
+
+        return null;
+    }
+    
+    
+    
+    
+    
 }

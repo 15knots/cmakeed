@@ -49,7 +49,7 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public static final String USER_VARIABLE_CONTENT_TYPE = "__uservariable";  //$NON-NLS-1$
 
     /** Array of all partition types. */
-    public static final String[] CONTENT_TYPES = new String[] {
+    public static final String[] CMAKE_CONTENT_TYPES = new String[] {
         IDocument.DEFAULT_CONTENT_TYPE, 
         COMMENT_CONTENT_TYPE,
         VARREF_CONTENT_TYPE,

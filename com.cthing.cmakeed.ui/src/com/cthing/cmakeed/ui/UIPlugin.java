@@ -12,6 +12,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import com.cthing.cmakeed.core.utils.ClassUtils;
+import com.cthing.cmakeed.ui.editor.CMakePartitionScanner;
 
 /**
  * Activator class controlling the plug-in life cycle.
@@ -21,8 +22,12 @@ public class UIPlugin extends AbstractUIPlugin
     /** Plugin identifier. */
     public static final String PLUGIN_ID = "com.cthing.cmakeed.ui";     //$NON-NLS-1$
 
+	public static final String CMAKE_PARTITIONING = "__cmake_partitioning"; //$NON-NLS-1$
+
     // The shared instance
     private static UIPlugin plugin;
+    
+    private CMakePartitionScanner fPartitionScanner;
     
     /**
      * Default constructor for the class.
@@ -61,6 +66,12 @@ public class UIPlugin extends AbstractUIPlugin
     public static UIPlugin getDefault()
     {
         return plugin;
+    }
+    
+    public CMakePartitionScanner getCMakePartitionScanner() {
+		if (fPartitionScanner == null)
+			fPartitionScanner= new CMakePartitionScanner();
+		return fPartitionScanner;
     }
 
     /**
