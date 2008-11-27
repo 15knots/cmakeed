@@ -17,16 +17,16 @@ import com.cthing.cmakeed.core.utils.StringUtils;
 public final class CMakeUserVariables
 {
        
-    private static Map<String, CMakeUserVariable> uservariables;
+    private Map<String, CMakeUserVariable> uservariables;
     
     /**
      * Not to be instantiated.
      */
-    private CMakeUserVariables()
+    public CMakeUserVariables()
     {
     }
     
-    private static void initVariables()
+    private void initVariables()
     {
     	uservariables = new LinkedHashMap<String, CMakeUserVariable>();
     }
@@ -37,7 +37,7 @@ public final class CMakeUserVariables
      * @param name  Name of the command (case insensitive).
      * @return Command information object.
      */
-    public static CMakeUserVariable getUserVariable(final String name)
+    public CMakeUserVariable getUserVariable(final String name)
     {
         if (uservariables == null) {
         	initVariables();
@@ -49,7 +49,7 @@ public final class CMakeUserVariables
      * Adds a user defined variable to the list
      * @param name
      */
-    public static void addUserVariable(final String name)
+    public void addUserVariable(final String name)
     {
         if (uservariables == null) {
         	initVariables();
@@ -63,11 +63,12 @@ public final class CMakeUserVariables
      * 
      * @return A collection containing all commands.
      */
-    public static Collection<CMakeUserVariable> getUserVariables()
+    public Collection<CMakeUserVariable> getUserVariables()
     {        
     	if (uservariables == null) {
     		initVariables();
     	}
         return uservariables.values();
     }
+    
 }
