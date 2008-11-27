@@ -5,6 +5,10 @@
 
 package com.cthing.cmakeed.ui.editor.rules;
 
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IPredicateRule;
@@ -29,6 +33,8 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
     private IWordDetector detector = new CMakeNameDetector();
     private StringBuilder buffer = new StringBuilder();
     
+    public static Map<IDocument, CMakeUserVariables> userVariableMap;
+    
     /**
      * Constructor for the class.
      * 
@@ -39,6 +45,8 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
     public CMakeUserVariableRule(final IToken commandToken)
     {
         this.userVariableToken = commandToken;
+        userVariableMap = new LinkedHashMap<IDocument, CMakeUserVariables>();
+       // System.out.println("CMakeUserVariableRule Constructing");
     }
     
     /**
@@ -51,8 +59,16 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
         if (scanner instanceof CMakePartitionScanner) {
             final CMakePartitionScanner cscan = (CMakePartitionScanner)scanner;
             final IDocument doc = cscan.getDocument();
+            
+            CMakeUserVariables userVariables = this.userVariableMap.get(doc);
+            if (null == userVariables) {
+            	userVariables = new CMakeUserVariables();
+            	userVariableMap.put(doc, userVariables);
+            }
+            
             final int offset = cscan.getTokenOffset();
-            if (EditorUtils.inArguments(doc, offset) && EditorUtils.startOfWord(doc, offset))
+            if (EditorUtils.inArguments(doc, offset) 
+                && EditorUtils.startOfWord(doc, offset) ) 
             {	
             	this.buffer.setLength(0);
                 // Read the word into the buffer
@@ -63,23 +79,23 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
                     this.buffer.append((char)ch);
                 }
                 scanner.unread();
-                final CMakeUserVariable var = CMakeUserVariables.getUserVariable(this.buffer.toString());
+                final CMakeUserVariable var = userVariables.getUserVariable(this.buffer.toString() );
                 if ( var != null ) 
                 {
                 	return this.userVariableToken;
                 }
                 else 
                 {
-                	//TODO: Add the word to the list of words
                 	String uvar = this.buffer.toString();
                 	uvar = uvar.trim(); // trim off white space
                 	if (uvar.length() > 0
                 			&& uvar.contains(".") == false
                 			&& uvar.contains("/") == false 
                 			&& uvar.startsWith("/") == false
-                			&& uvar.startsWith("-") == false)
+                			&& uvar.startsWith("-") == false
+                			&& EditorUtils.firstArgument(doc, offset) == true)
                 	{
-                		CMakeUserVariables.addUserVariable(uvar);
+                		userVariables.addUserVariable(uvar);
                     	return this.userVariableToken;
                 	}
                 	

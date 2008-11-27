@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="CMake Documentation">
-      <topic label="CMake Commands" href="doc/cmake_command_docs/cmake_command_index.html">
+      <topic label="CMake commands" href="doc/cmake_command_docs/cmake_command_index.html">
         <topic label="add_custom_command" href="doc/cmake_command_docs/add_custom_command.html" />
         <topic label="add_custom_target" href="doc/cmake_command_docs/add_custom_target.html" />
         <topic label="add_definitions" href="doc/cmake_command_docs/add_definitions.html" />
@@ -97,7 +97,7 @@
         <topic label="variable_requires" href="doc/cmake_command_docs/variable_requires.html" />
         <topic label="write_file" href="doc/cmake_command_docs/write_file.html" />
    </topic>
-      <topic label="CMake Modules" href="doc/cmake_module_docs/cmake_module_index.html">
+      <topic label="CMake modules" href="doc/cmake_module_docs/cmake_module_index.html">
         <topic label="AddFileDependencies" href="doc/cmake_module_docs/AddFileDependencies.html" />
         <topic label="BundleUtilities" href="doc/cmake_module_docs/BundleUtilities.html" />
         <topic label="CMakeBackwardCompatibilityCXX" href="doc/cmake_module_docs/CMakeBackwardCompatibilityCXX.html" />
@@ -254,7 +254,7 @@
         <topic label="Use_wxWindows" href="doc/cmake_module_docs/Use_wxWindows.html" />
         <topic label="UsewxWidgets" href="doc/cmake_module_docs/UsewxWidgets.html" />
    </topic>
-      <topic label="CMake Variables" href="doc/cmake_variable_docs/cmake_variable_index.html">
+      <topic label="CMake variables" href="doc/cmake_variable_docs/cmake_variable_index.html">
         <topic label="CMAKE_AR" href="doc/cmake_variable_docs/CMAKE_AR.html" />
         <topic label="CMAKE_BINARY_DIR" href="doc/cmake_variable_docs/CMAKE_BINARY_DIR.html" />
         <topic label="CMAKE_BUILD_TOOL" href="doc/cmake_variable_docs/CMAKE_BUILD_TOOL.html" />
@@ -388,7 +388,7 @@
         <topic label="CMAKE_INTERNAL_PLATFORM_ABI" href="doc/cmake_variable_docs/CMAKE_INTERNAL_PLATFORM_ABI.html" />
         <topic label="CMAKE_USER_MAKE_RULES_OVERRIDE_&lt;LANG&gt;" href="doc/cmake_variable_docs/CMAKE_USER_MAKE_RULES_OVERRIDE_-LANG-.html" />
    </topic>
-      <topic label="CMake Properties" href="doc/cmake_property_docs/cmake_property_index.html">
+      <topic label="CMake propertys" href="doc/cmake_property_docs/cmake_property_index.html">
         <topic label="ALLOW_DUPLICATE_CUSTOM_TARGETS" href="doc/cmake_property_docs/ALLOW_DUPLICATE_CUSTOM_TARGETS.html" />
         <topic label="DISABLED_FEATURES" href="doc/cmake_property_docs/DISABLED_FEATURES.html" />
         <topic label="ENABLED_FEATURES" href="doc/cmake_property_docs/ENABLED_FEATURES.html" />

@@ -6,16 +6,22 @@
 package com.cthing.cmakeed.ui.editor;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentExtension3;
+import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
@@ -140,8 +146,41 @@ public class CMakeEditor extends TextEditor
 	 * @throws CoreException in case the input can not be set
 	 */
 	public void doSetInput(IEditorInput input) throws CoreException {
+	//	UIPlugin.getDefault().getCMakePartitionScanner().setDefaultScannerRules();
 		super.doSetInput(input);
+		UIPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
 	}
+	
+	
+	/**
+	 * 
+	 */
+	public void doSave(IProgressMonitor prog)
+	{
+		super.doSave(prog);	
+		UIPlugin.getDefault().getCMakePartitionScanner().setDefaultScannerRules();
+		IDocument document = this.getSourceViewer().getDocument();
+		if (document instanceof IDocumentExtension3) {
+			IDocumentExtension3 extension3 = (IDocumentExtension3) document;
+			IDocumentPartitioner partitioner = extension3.getDocumentPartitioner(UIPlugin.CMAKE_PARTITIONING);
+			partitioner.disconnect();
+			partitioner.connect(document);
+			// Reinit the syntax coloring
+			//TODO: Get the current Cursor Position and restore that also.
+			final SourceViewer sourceViewer = (SourceViewer)getSourceViewer();
+            int line = sourceViewer.getTopIndex();
+            ITextSelection sel = (ITextSelection)sourceViewer.getSelection();
+			sourceViewer.unconfigure();
+            final CMakeEditorConfiguration config = new CMakeEditorConfiguration(this.colorMgr);
+            sourceViewer.configure(config);
+            sourceViewer.refresh();
+            sourceViewer.setTopIndex(line);
+            sourceViewer.setSelectedRange(sel.getOffset(), sel.getLength()	);
+            
+		}
+		UIPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
+	}
+
 	
     /**
      * {@inheritDoc}

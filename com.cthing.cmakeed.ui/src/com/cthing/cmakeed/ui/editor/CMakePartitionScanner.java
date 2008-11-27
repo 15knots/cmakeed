@@ -48,6 +48,8 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     
     public static final String USER_VARIABLE_CONTENT_TYPE = "__uservariable";  //$NON-NLS-1$
 
+    private CMakeUserVariableRule userVariableRule;
+    
     /** Array of all partition types. */
     public static final String[] CMAKE_CONTENT_TYPES = new String[] {
         IDocument.DEFAULT_CONTENT_TYPE, 
@@ -69,21 +71,65 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
      */
     public CMakePartitionScanner()
     {
-        final IPredicateRule[] preds = new IPredicateRule[] {
+    	userVariableRule = new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE)); 
+         IPredicateRule[] preds = new IPredicateRule[] {
                 new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
+                new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
+                new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
+                new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),
                 new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new SingleLineRule("@", "@", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new SingleLineRule("\"", "\"", new Token(STRING_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
-                new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
-                new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
-                new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),                
                 new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
                 new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
                 new CMakeReservedWordRule(new Token(RESERVED_WORD_CONTENT_TYPE), false),
-                new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE)),
+                userVariableRule,
                 new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
             };
 
+        setPredicateRules(preds);
+    }
+    
+    /**
+     * Resets the list of predicate rules to NOT include the User Variable rule.
+     */
+    public void removeUserVariableRule()
+    {
+        IPredicateRule[] preds = new IPredicateRule[] {
+                new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
+                new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
+                new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
+                new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),
+                new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+                new SingleLineRule("@", "@", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+                new SingleLineRule("\"", "\"", new Token(STRING_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+                new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
+                new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
+                new CMakeReservedWordRule(new Token(RESERVED_WORD_CONTENT_TYPE), false),
+                new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
+            };
+        setPredicateRules(preds);
+    }
+    
+    /**
+     * Resets the list of predicate rules to NOT include the User Variable rule.
+     */
+    public void setDefaultScannerRules()
+    {
+        IPredicateRule[] preds = new IPredicateRule[] {
+                new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
+                new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
+                new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
+                new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),
+                new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+                new SingleLineRule("@", "@", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+                new SingleLineRule("\"", "\"", new Token(STRING_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+                new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
+                new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
+                new CMakeReservedWordRule(new Token(RESERVED_WORD_CONTENT_TYPE), false),
+                this.userVariableRule,
+                new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
+            };
         setPredicateRules(preds);
     }
     

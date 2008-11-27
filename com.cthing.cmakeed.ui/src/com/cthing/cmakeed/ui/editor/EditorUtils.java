@@ -101,6 +101,34 @@ public final class EditorUtils
 	}
     
     /**
+     * Determines if the word is the first argument of a command
+     * @param doc
+     * @param offset
+     * @return
+     */
+    public static boolean firstArgument(final IDocument doc, final int offset) {
+		try {
+			int index = 1;
+			char currentChar = doc.getChar(offset - index);
+			if (offset == 0) {
+				return false;
+			}
+
+			while (currentChar == ' ') {
+				index++;
+				currentChar = doc.getChar(offset - index);
+			}
+			if (currentChar == START_ARGS) {
+				return true;
+			}
+		} catch (final BadLocationException e) {
+			UIPlugin.logError(EditorUtils.class, e);
+			return false;
+		}
+		return false;
+	}
+    
+    /**
      * Obtains the command corresponding to the specified viewer and document
      * offset. The offset must be somewhere in a COMMAND_CONTENT_TYPE or
      * DEP_COMMAND_CONTENT_TYPE partition.
