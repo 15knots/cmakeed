@@ -27,6 +27,7 @@ public class CMakeDocumentSetupParticipant implements IDocumentSetupParticipant 
 		if (document instanceof IDocumentExtension3) {
 			IDocumentExtension3 extension3 = (IDocumentExtension3) document;
 			IDocumentPartitioner partitioner = new FastPartitioner(UIPlugin.getDefault().getCMakePartitionScanner(), CMakePartitionScanner.CMAKE_CONTENT_TYPES);
+			UIPlugin.getDefault().getCMakePartitionScanner().setDefaultScannerRules();
 			extension3.setDocumentPartitioner(UIPlugin.CMAKE_PARTITIONING, partitioner);
 			partitioner.connect(document);
 		}

@@ -85,7 +85,7 @@ function GenerateDocsForCommand()
   echo "</head>" >> $indexFile
   echo "<body>" >> $indexFile
   echo "<div id=\"ContentTxtProd\">" >> $indexFile
-  echo "<p><a href=\"../index.html\">All CMake Documentation</a></p>" >> $indexFile
+ # echo "<p><a href=\"../index.html\">All CMake Documentation</a></p>" >> $indexFile
   
   #----------------------------------------------------------------
   # Create a section in the toc.xml file
@@ -122,13 +122,13 @@ function GenerateDocsForCommand()
       echo "<link href=\"../$css_sheet\" rel=\"stylesheet\" type=\"text/css\" />" >> ${htmlFile}
       echo "</head>" >> ${htmlFile}
       echo "<body>" >> ${htmlFile}
-      echo "<div id=\"ContentTxtProd\">" >> ${htmlFile}
-      echo "<p><a href=\"./cmake_${1}_index.html\">All CMake ${1}s</a></p>" >> ${htmlFile}
+      echo "<div class=\"ContentTxtProd\">" >> ${htmlFile}
+     # echo "<p><a href=\"./cmake_${1}_index.html\">All CMake ${1}s</a></p>" >> ${htmlFile}
       cat ${tmpHTMLFile} >> ${htmlFile}
       echo "</div></body></html>" >> ${htmlFile}
       
       # Add a line to the index file
-      echo "<p><a href=\"${line}.html\">${line}</a></p>" >> $indexFile
+      echo "<div><a href=\"${line}.html\">${line}</a></div>" >> $indexFile
       
       # Add the keyword and section for this piece of documentation to the toc.xml file
       echo "        <topic label=\"${sub}\" href=\"${relHtmlFile}\" />" >> $tocFile
@@ -286,14 +286,28 @@ echo "</html>" >> ${mainIndexFile}
 mainIndexFileName="${css_sheet}"
 mainIndexFile=${assistantDir}/${mainIndexFileName}
 echo "" > ${mainIndexFile}
-echo "body {" >> ${mainIndexFile}
-echo "	background : #FFFFFF;" >> ${mainIndexFile}
-echo "	font-family:'Lucida Grande';" >> ${mainIndexFile}
+echo "p" >> ${mainIndexFile}
+echo "{" >> ${mainIndexFile}
+echo "   	color: black;" >> ${mainIndexFile}
+echo "  	font: 80% Verdana, Arial, Helvetica, sans-serif;" >> ${mainIndexFile}
+echo "  	text-decoration: none;" >> ${mainIndexFile}
+echo "  	text-align: left;" >> ${mainIndexFile}
+echo "  	border-bottom: 1px solid #BCC4DF;" >> ${mainIndexFile}
+echo "  	padding-top: 3px;" >> ${mainIndexFile}
+echo "  	padding-bottom: 2px;" >> ${mainIndexFile}
+echo "  	padding-right: 5px;" >> ${mainIndexFile}
+echo "  	padding-left: 5px;" >> ${mainIndexFile}
+echo "  	vertical-align:middle;" >> ${mainIndexFile}
 echo "}" >> ${mainIndexFile}
-echo " ul" >> ${mainIndexFile}
-echo " {" >> ${mainIndexFile}
-echo "   border: solid 1px #555555;" >> ${mainIndexFile}
-echo " }" >> ${mainIndexFile}
+echo " " >> ${mainIndexFile}
+echo "b" >> ${mainIndexFile}
+echo "{" >> ${mainIndexFile}
+echo "   color: #345981;" >> ${mainIndexFile}
+echo "}" >> ${mainIndexFile}
+echo "pre" >> ${mainIndexFile}
+echo "{" >> ${mainIndexFile}
+echo "   color: #345981;" >> ${mainIndexFile}
+echo "}" >> ${mainIndexFile}
 echo "" >> ${mainIndexFile}
 echo " A:link			{ COLOR: #0000FF; TEXT-DECORATION: none; }" >> ${mainIndexFile}
 echo " A:link:hover	{ COLOR: #FF6600; TEXT-DECORATION: underline }" >> ${mainIndexFile}

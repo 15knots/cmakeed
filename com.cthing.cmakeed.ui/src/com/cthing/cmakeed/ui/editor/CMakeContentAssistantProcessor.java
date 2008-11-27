@@ -27,10 +27,13 @@ import com.cthing.cmakeed.core.properties.CMakeProperties;
 import com.cthing.cmakeed.core.properties.CMakeProperty;
 import com.cthing.cmakeed.core.reservedwords.CMakeReservedWord;
 import com.cthing.cmakeed.core.reservedwords.CMakeReservedWords;
+import com.cthing.cmakeed.core.uservariables.CMakeUserVariable;
+import com.cthing.cmakeed.core.uservariables.CMakeUserVariables;
 import com.cthing.cmakeed.core.utils.StringUtils;
 import com.cthing.cmakeed.core.variables.CMakeVariable;
 import com.cthing.cmakeed.core.variables.CMakeVariables;
 import com.cthing.cmakeed.ui.UIPlugin;
+import com.cthing.cmakeed.ui.editor.rules.CMakeUserVariableRule;
 
 /**
  * Content assist for CMake commands.
@@ -83,7 +86,7 @@ public class CMakeContentAssistantProcessor implements IContentAssistProcessor, 
         }
         else
         {
-        	System.out.println("Inside Argument area of command");
+        	// System.out.println("Inside Argument area of command");
         	proposals = new ArrayList<ICompletionProposal>();
         	List<ICompletionProposal> propProposals = computePropertyCompletionProposals(viewer, offset);
         	if (propProposals != null)
@@ -97,16 +100,20 @@ public class CMakeContentAssistantProcessor implements IContentAssistProcessor, 
             	proposals.addAll(varProposals);	
         	}
         	
-        	
         	List<ICompletionProposal> resProposals = computeReservedWordCompletionProposals(viewer, offset);
         	if (resProposals != null)
         	{
             	proposals.addAll(resProposals);	
         	}
         	
+        	List<ICompletionProposal> uvarProposals = computeUserVariableCompletionProposals(viewer, offset);
+        	if (uvarProposals != null)
+        	{
+            	proposals.addAll(uvarProposals);	
+        	}
+        	
         }
-        
-        return (proposals.size() == 0) ? null : proposals.toArray(new ICompletionProposal[proposals.size()]);
+        return (null == proposals || proposals.size() == 0) ? null : proposals.toArray(new ICompletionProposal[proposals.size()]);
     }
  
     
@@ -145,6 +152,60 @@ public class CMakeContentAssistantProcessor implements IContentAssistProcessor, 
 
 		return proposals;
 	}
+
+    /**
+     * Determines the portion of the word that has already been entered.
+     * 
+     * @param doc  Document being edited
+     * @param offset  Offset into the document where content assist is desired.
+     * @return Portion of the word that has already been entered.
+     */
+    public List<ICompletionProposal> computeUserVariableCompletionProposals( final ITextViewer viewer, 
+    																         final int offset) {
+		final IDocument doc = viewer.getDocument();
+		List<ICompletionProposal> proposals = null;
+
+		if (EditorUtils.inArguments(doc, offset)) {
+			final String prefix = getPrefix(doc, offset);
+			final List<CMakeUserVariable> variables = findPossibleUserVariables(prefix, doc);
+
+			if (!StringUtils.isBlank(prefix) && !variables.isEmpty()) {
+				final int replacementOffset = offset - prefix.length();
+				final int replacementLength = prefix.length();
+
+				proposals = new ArrayList<ICompletionProposal>();
+				for (CMakeUserVariable variable : variables) {
+					final String name = variable.getName();
+					final IContextInformation contextInfo = new ContextInformation(name, name);
+					proposals.add(new CompletionProposal(name ,
+							replacementOffset, replacementLength,
+							name.length(), null, name, contextInfo, null));
+				}
+			}
+		}
+
+		return proposals;
+	}
+    
+    /**
+     * Determine possible commands that start with the specified prefix.
+     * 
+     * @param prefix  Prefix for commands
+     * @return Commands that begin with the specified prefix.
+     */
+    private List<CMakeUserVariable> findPossibleUserVariables( String prefix, IDocument doc)
+    {
+        final List<CMakeUserVariable> possibles = new ArrayList<CMakeUserVariable>();
+        final CMakeUserVariables variables = CMakeUserVariableRule.userVariableMap.get(doc);
+        Collection<CMakeUserVariable> commands = variables.getUserVariables();
+        for (CMakeUserVariable command : commands) { 
+                String name = command.getName();
+                if (name.startsWith(prefix)) {
+                    possibles.add(command);
+                }
+        }
+        return possibles;
+    }
     
     /**
      * Determine possible commands that start with the specified prefix.
