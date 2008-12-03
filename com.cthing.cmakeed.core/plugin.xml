@@ -953,10 +953,7 @@
     <usage value="(DOWNLOAD url [TIMEOUT timeout] [STATUS status] [LOG log])" />
     <usage value="(STRINGS my.txt my)" />
   </command>
-  <command name="find_file"
-         desc="Find the full path to a file."
-         deprecated="false" >
-  </command>
+
   <command name="find_library"
          desc="Find a library."
          deprecated="false" >
