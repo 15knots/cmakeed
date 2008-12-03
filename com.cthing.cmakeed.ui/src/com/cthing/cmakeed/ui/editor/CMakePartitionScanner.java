@@ -45,7 +45,7 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public static final String PROPERTY_CONTENT_TYPE = "__property";    //$NON-NLS-1$
     /** Reserved Word partition. */
     public static final String RESERVED_WORD_CONTENT_TYPE = "__reservedword";    //$NON-NLS-1$
-    
+    /** User Variable partitiion */
     public static final String USER_VARIABLE_CONTENT_TYPE = "__uservariable";  //$NON-NLS-1$
 
     private CMakeUserVariableRule userVariableRule;

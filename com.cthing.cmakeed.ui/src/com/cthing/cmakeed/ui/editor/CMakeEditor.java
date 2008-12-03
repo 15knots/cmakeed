@@ -1,5 +1,6 @@
 /* *****************************************************************************
  * Copyright 2007 C Thing Software
+ * Copyright 2008 BlueQuartz Software
  * All Rights Reserved.
  ******************************************************************************/
 
@@ -9,29 +10,25 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.Position;
-import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.editors.text.TextEditor;
-//import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.editors.text.ForwardingDocumentProvider;
+import org.eclipse.ui.editors.text.TextFileDocumentProvider;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.ContentAssistAction;
-//import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
 import com.cthing.cmakeed.ui.Messages;
@@ -42,12 +39,15 @@ import com.cthing.cmakeed.ui.editor.CMakeEditorConfiguration;
 /**
  * Editor for CMake files.
  */
-public class CMakeEditor extends TextEditor
+public class CMakeEditor extends AbstractDecoratedTextEditor
                          implements IPropertyChangeListener
 {
     private StyledText text;
     private ColorMgr colorMgr;
 
+    /**
+     * 
+     */
     private VerifyListener tabReplacer = new VerifyListener() {
         public void verifyText(final VerifyEvent event)
         {
@@ -64,18 +64,16 @@ public class CMakeEditor extends TextEditor
     /**
      * Default constructor for the class.
      */
-    public CMakeEditor()
-    {
-     super();   
-        
-//        final IDocumentProvider provider = new CMakeDocumentProvider();
-//        setDocumentProvider(provider);
-//        final CMakeEditorConfiguration config = new CMakeEditorConfiguration(this.colorMgr);
-//        setSourceViewerConfiguration(config);
-        
-        final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
-        store.addPropertyChangeListener(this);
-    }
+    public CMakeEditor() {
+		super();
+		IDocumentProvider provider = new TextFileDocumentProvider();
+		provider = new ForwardingDocumentProvider(UIPlugin.CMAKE_PARTITIONING,
+				new CMakeDocumentSetupParticipant(), provider);
+		setDocumentProvider(provider);
+		final IPreferenceStore store = UIPlugin.getDefault()
+				.getPreferenceStore();
+		store.addPropertyChangeListener(this);
+	}
     
     /**
      * {@inheritDoc}
@@ -146,14 +144,14 @@ public class CMakeEditor extends TextEditor
 	 * @throws CoreException in case the input can not be set
 	 */
 	public void doSetInput(IEditorInput input) throws CoreException {
-	//	UIPlugin.getDefault().getCMakePartitionScanner().setDefaultScannerRules();
 		super.doSetInput(input);
 		UIPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
 	}
 	
 	
 	/**
-	 * 
+	 * Saves the document to the underlying filebuffer.
+	 * @param prog The Progress monitor to use
 	 */
 	public void doSave(IProgressMonitor prog)
 	{
@@ -163,19 +161,22 @@ public class CMakeEditor extends TextEditor
 		if (document instanceof IDocumentExtension3) {
 			IDocumentExtension3 extension3 = (IDocumentExtension3) document;
 			IDocumentPartitioner partitioner = extension3.getDocumentPartitioner(UIPlugin.CMAKE_PARTITIONING);
-			partitioner.disconnect();
-			partitioner.connect(document);
-			// Reinit the syntax coloring
-			//TODO: Get the current Cursor Position and restore that also.
-			final SourceViewer sourceViewer = (SourceViewer)getSourceViewer();
-            int line = sourceViewer.getTopIndex();
-            ITextSelection sel = (ITextSelection)sourceViewer.getSelection();
-			sourceViewer.unconfigure();
-            final CMakeEditorConfiguration config = new CMakeEditorConfiguration(this.colorMgr);
-            sourceViewer.configure(config);
-            sourceViewer.refresh();
-            sourceViewer.setTopIndex(line);
-            sourceViewer.setSelectedRange(sel.getOffset(), sel.getLength()	);
+			if (partitioner != null)
+			{
+				partitioner.disconnect();
+				partitioner.connect(document);
+				// Reinit the syntax coloring
+				//TODO: Get the current Cursor Position and restore that also.
+				final SourceViewer sourceViewer = (SourceViewer)getSourceViewer();
+	            int line = sourceViewer.getTopIndex();
+	            ITextSelection sel = (ITextSelection)sourceViewer.getSelection();
+				sourceViewer.unconfigure();
+	            final CMakeEditorConfiguration config = new CMakeEditorConfiguration(this.colorMgr);
+	            sourceViewer.configure(config);
+	            sourceViewer.refresh();
+	            sourceViewer.setTopIndex(line);
+	            sourceViewer.setSelectedRange(sel.getOffset(), sel.getLength()	);
+			}
             
 		}
 		UIPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();

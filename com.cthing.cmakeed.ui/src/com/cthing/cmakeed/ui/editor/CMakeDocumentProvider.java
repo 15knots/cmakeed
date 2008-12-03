@@ -5,15 +5,20 @@
 
 package com.cthing.cmakeed.ui.editor;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.rules.FastPartitioner;
-import org.eclipse.ui.editors.text.FileDocumentProvider;
 
 /**
- * Provides CMake documents (e.g. CMakeLists.txt).
+ * This class is NOT used at all.
  */
-public class CMakeDocumentProvider {
-
+public class CMakeDocumentProvider // extends TextFileDocumentProvider
+{
+    /**
+     * Default constructor for the class.
+     */
+    public CMakeDocumentProvider()
+    {
+//    	IDocumentProvider provider= new TextFileDocumentProvider();
+//        provider= new ForwardingDocumentProvider(UIPlugin.CMAKE_PARTITIONING, new CMakeDocumentSetupParticipant(), provider);
+//        setParentDocumentProvider(provider);
+    }
+    
 }

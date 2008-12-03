@@ -5,7 +5,6 @@
 
 package com.cthing.cmakeed.ui.editor.rules;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -33,20 +32,23 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
     private IWordDetector detector = new CMakeNameDetector();
     private StringBuilder buffer = new StringBuilder();
     
+    /**
+     * Maps the an IDocument to a list of user defined variables
+     */
     public static Map<IDocument, CMakeUserVariables> userVariableMap;
     
     /**
      * Constructor for the class.
      * 
      * @param commandToken  Token to return if a CMake command is found
-     * @param findDeprecated  <code>true</code> if deprecated commands are
-     *      to be found. Otherwise, only non-deprecated commands are found.
      */
     public CMakeUserVariableRule(final IToken commandToken)
     {
         this.userVariableToken = commandToken;
-        userVariableMap = new LinkedHashMap<IDocument, CMakeUserVariables>();
-       // System.out.println("CMakeUserVariableRule Constructing");
+        if (CMakeUserVariableRule.userVariableMap == null)
+        {
+        	CMakeUserVariableRule.userVariableMap = new LinkedHashMap<IDocument, CMakeUserVariables>();
+        }
     }
     
     /**
@@ -60,7 +62,7 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
             final CMakePartitionScanner cscan = (CMakePartitionScanner)scanner;
             final IDocument doc = cscan.getDocument();
             
-            CMakeUserVariables userVariables = this.userVariableMap.get(doc);
+            CMakeUserVariables userVariables = CMakeUserVariableRule.userVariableMap.get(doc);
             if (null == userVariables) {
             	userVariables = new CMakeUserVariables();
             	userVariableMap.put(doc, userVariables);

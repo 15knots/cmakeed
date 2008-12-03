@@ -19,7 +19,7 @@
       <participant
             class="com.cthing.cmakeed.ui.editor.CMakeDocumentSetupParticipant"
             extensions="cmake"
-            fileNames="CMakeLists.txt">
+            fileNames="CMakeLists.txt,CMakeLists.txt.in">
       </participant>
    </extension>
    
@@ -28,7 +28,7 @@
       <content-type
             base-type="org.eclipse.core.runtime.text"
             file-extensions="cmake"
-            file-names="CMakeLists.txt"
+            file-names="CMakeLists.txt,CMakeLists.txt.in"
             id="com.cthing.cmakeed.CMakeFileType"
             name="%content-type.name"
             priority="normal"/>
