@@ -1,0 +1,18 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command link_libraries</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:link_libraries"><b><code>link_libraries</code></b></a>: Deprecated. Use the target_link_libraries() command instead.<br>
+    <p>Link libraries to all targets added later.<br><pre>  link_libraries(library1 &lt;debug | optimized&gt; library2 ...)<br></pre>
+    <p>Specify a list of libraries to be linked into any following targets (typically added with the add_executable or add_library calls).  This command is passed down to all subdirectories.  The debug and optimized strings may be used to indicate that the next library listed is to be used only for that specific type of build.
+  </li>
+</ul>
+</div></body></html>

@@ -1,0 +1,22 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module CMakeForceCompiler</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CMakeForceCompiler"><b><code>CMakeForceCompiler</code></b></a>:  <br>
+    <p>This module defines macros intended for use by cross-compiling toolchain files when CMake is not able to automatically detect the compiler identification.<br><p>Macro CMAKE_FORCE_C_COMPILER has the following signature:<br><pre>   CMAKE_FORCE_C_COMPILER(&lt;compiler&gt; &lt;compiler-id&gt;)<br></pre>
+    <p>It sets CMAKE_C_COMPILER to the given compiler and the cmake internal variable CMAKE_C_COMPILER_ID to the given compiler-id. It also bypasses the check for working compiler and basic compiler information tests.<br><p>Macro CMAKE_FORCE_CXX_COMPILER has the following signature:<br><pre>   CMAKE_FORCE_CXX_COMPILER(&lt;compiler&gt; &lt;compiler-id&gt;)<br></pre>
+    <p>It sets CMAKE_CXX_COMPILER to the given compiler and the cmake internal variable CMAKE_CXX_COMPILER_ID to the given compiler-id. It also bypasses the check for working compiler and basic compiler information tests.<br><p>So a simple toolchain file could look like this:<br><pre>   INCLUDE (CMakeForceCompiler)<br>   SET(CMAKE_SYSTEM_NAME Generic)<br>   CMAKE_FORCE_C_COMPILER   (chc12 MetrowerksHicross)<br>   CMAKE_FORCE_CXX_COMPILER (chc12 MetrowerksHicross)<br></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.6.2/CMake 2.6-2.app/Contents/share/cmake-2.6/Modules/CMakeForceCompiler.cmake
+</div></body></html>

@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command set</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:set"><b><code>set</code></b></a>: Set a CMAKE variable to a given value.<br>
+    <pre>  set(&lt;variable&gt; &lt;value&gt; [[CACHE &lt;type&gt; &lt;docstring&gt; [FORCE]] | PARENT_SCOPE])<br></pre>
+    <p>Within CMake sets &lt;variable&gt; to the value &lt;value&gt;.  &lt;value&gt; is expanded  before &lt;variable&gt; is set to it.  If CACHE is present, then the &lt;variable&gt; is put in the cache. &lt;type&gt; and &lt;docstring&gt; are then required. &lt;type&gt; is used by the CMake GUI to choose a widget with which the user sets a value.  The value for &lt;type&gt; may be one of<br><pre>  FILEPATH = File chooser dialog.<br>  PATH     = Directory chooser dialog.<br>  STRING   = Arbitrary string.<br>  BOOL     = Boolean ON/OFF checkbox.<br>  INTERNAL = No GUI entry (used for persistent variables).<br></pre>
+    <p>If &lt;type&gt; is INTERNAL, then the &lt;value&gt; is always written into the cache, replacing any values existing in the cache.  If it is not a cache variable, then this always writes into the current makefile. The FORCE option will overwrite the cache value removing any changes by the user.<br><p>If PARENT_SCOPE is present, the variable will be set in the scope above the current scope. Each new directory or function creates a new scope. This command will set the value of a variable into the parent directory or calling function (whichever is applicable to the case at hand) If VALUE is not specified then the variable is removed from the parent scope.<br><pre>  set(&lt;variable&gt; &lt;value1&gt; ... &lt;valueN&gt;)<br></pre>
+    <p>In this case &lt;variable&gt; is set to a semicolon separated list of values.<br><p>&lt;variable&gt; can be an environment variable such as:<br><pre>  set( ENV{PATH} /home/martink )<br></pre>
+    <p>in which case the environment variable will be set.
+  </li>
+</ul>
+</div></body></html>
