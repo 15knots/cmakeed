@@ -8,7 +8,7 @@ package com.cthing.cmakeed.core.variables;
 import com.cthing.cmakeed.core.utils.StringUtils;
 
 /**
- * Represents information about a CMake command.
+ * Represents information about a CMake Predefined Variable.
  */
 public class CMakeVariable
 {

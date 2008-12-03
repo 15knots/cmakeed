@@ -9,7 +9,7 @@ package com.cthing.cmakeed.core.properties;
 import com.cthing.cmakeed.core.utils.StringUtils;
 
 /**
- * Represents information about a CMake command.
+ * Represents information about a CMake property.
  */
 public class CMakeProperty
 {

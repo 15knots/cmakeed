@@ -4,6 +4,6 @@
  ******************************************************************************/
 
 /**
- * Classes that provide information about CMake.
+ * Classes that provide information about CMake Predefined Variables
  */
 package com.cthing.cmakeed.core.variables;

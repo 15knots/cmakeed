@@ -9,7 +9,7 @@ package com.cthing.cmakeed.core.reservedwords;
 import com.cthing.cmakeed.core.utils.StringUtils;
 
 /**
- * Represents information about a CMake command.
+ * Represents information about a CMake Reserved Word.
  */
 public class CMakeReservedWord
 {

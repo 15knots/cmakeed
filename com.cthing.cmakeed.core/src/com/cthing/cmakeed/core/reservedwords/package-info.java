@@ -4,6 +4,6 @@
  ******************************************************************************/
 
 /**
- * Classes that provide information about CMake.
+ * Classes that provide information about CMake reserved words or words of importance
  */
 package com.cthing.cmakeed.core.reservedwords;

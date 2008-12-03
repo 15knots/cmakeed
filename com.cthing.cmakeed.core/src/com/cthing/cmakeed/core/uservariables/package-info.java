@@ -4,6 +4,6 @@
  ******************************************************************************/
 
 /**
- * Classes that provide information about CMake.
+ * Classes that provide information about User Defined CMake variables
  */
 package com.cthing.cmakeed.core.uservariables;

@@ -12,7 +12,7 @@ import java.util.Map;
 import com.cthing.cmakeed.core.utils.StringUtils;
 
 /**
- * Provides CMake command information.
+ * Provides CMake User Variable information.
  */
 public final class CMakeUserVariables
 {
