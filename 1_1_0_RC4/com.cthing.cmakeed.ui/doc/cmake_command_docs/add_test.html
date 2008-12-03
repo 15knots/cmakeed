@@ -1,0 +1,18 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command add_test</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:add_test"><b><code>add_test</code></b></a>: Add a test to the project with the specified arguments.<br>
+    <pre>  add_test(testname Exename arg1 arg2 ...)<br></pre>
+    <p>If the ENABLE_TESTING command has been run, this command adds a test target to the current directory. If ENABLE_TESTING has not been run, this command does nothing.  The tests are run by the testing subsystem by executing Exename with the specified arguments.  Exename can be either an executable built by this project or an arbitrary executable on the system (like tclsh).  The test will be run with the current working directory set to the CMakeList.txt files corresponding directory in the binary tree.
+  </li>
+</ul>
+</div></body></html>
