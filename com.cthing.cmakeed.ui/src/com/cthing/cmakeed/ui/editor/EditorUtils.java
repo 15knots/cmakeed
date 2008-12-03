@@ -30,7 +30,7 @@ public final class EditorUtils
     public static final char START_ARGS = '(';
     /** Command arguments closing delimiter. */
     public static final char END_ARGS = ')';
-    
+    /** Space character */
     public static final char SPACE = ' ';
     
     /**
@@ -69,6 +69,11 @@ public final class EditorUtils
         return false;
     }
     
+    /**
+     * Is the character part of a valid cmake variable or command name
+     * @param c the character
+     * @return true or false
+     */
     public static boolean isNameChar(final char c)
     {
         return Character.isLetterOrDigit(c) ||
@@ -84,7 +89,7 @@ public final class EditorUtils
      * is determined simply by seeing if the preceeding character is a space.
      * @param doc
      * @param offset
-     * @return
+     * @return Are we at the start of a word
      */
     public static boolean startOfWord(final IDocument doc, final int offset) {
     	try {
@@ -104,7 +109,7 @@ public final class EditorUtils
      * Determines if the word is the first argument of a command
      * @param doc
      * @param offset
-     * @return
+     * @return Is this word the first argument of a command.
      */
     public static boolean firstArgument(final IDocument doc, final int offset) {
 		try {
@@ -162,16 +167,34 @@ public final class EditorUtils
         return CMakeCommands.getCommand(getCommandName(doc, offset));
     }
     
+    /**
+     * Returns a CMakeProperty
+     * @param doc Current document being scanned
+     * @param offset The offset into the document
+     * @return
+     */
     public static CMakeProperty getProperty(final IDocument doc, final int offset)
     {
     	return CMakeProperties.getCommand(getPropertyName(doc, offset));
     }
     
+    /**
+     * 
+     * @param viewer
+     * @param offset The offset into the document
+     * @return
+     */
     public static String getPropertyName(final ITextViewer viewer, final int offset)
     {
     	return getPropertyName(viewer.getDocument(), offset);
     }
     
+    /**
+     * 
+     * @param doc Current document being scanned
+     * @param offset The offset into the document
+     * @return
+     */
     public static String getPropertyName(final IDocument doc, final int offset)
     {
         String cmd = null;
@@ -193,8 +216,8 @@ public final class EditorUtils
     
     /**
      * 
-     * @param doc
-     * @param offset
+     * @param doc Current document being scanned
+     * @param offset The offset into the document
      * @return
      */
     public static CMakeVariable getVariable(final IDocument doc, final int offset)
@@ -202,11 +225,23 @@ public final class EditorUtils
     	return CMakeVariables.getCommand(getVariableName(doc, offset));
     }
     
+    /**
+     * 
+     * @param viewer
+     * @param offset The offset into the document
+     * @return The variable name
+     */
     public static String getVariableName(final ITextViewer viewer, final int offset)
     {
     	return getVariableName(viewer.getDocument(), offset);
     }
     
+    /**
+     * 
+     * @param doc Current document being scanned
+     * @param offset The offset into the document
+     * @return The variable name
+     */
     public static String getVariableName(final IDocument doc, final int offset)
     {
         String cmd = null;
@@ -229,8 +264,8 @@ public final class EditorUtils
     
     /**
      * 
-     * @param doc
-     * @param offset
+     * @param doc Current document being scanned
+     * @param offset The offset into the document
      * @return
      */
     public static CMakeReservedWord getReservedWord(final IDocument doc, final int offset)
@@ -238,11 +273,23 @@ public final class EditorUtils
     	return CMakeReservedWords.getCommand(getReservedWordName(doc, offset));
     }
     
+    /**
+     * 
+     * @param viewer
+     * @param offset The offset into the document
+     * @return
+     */
     public static String getReservedWordName(final ITextViewer viewer, final int offset)
     {
     	return getReservedWordName(viewer.getDocument(), offset);
     }
     
+    /**
+     * 
+     * @param doc Current document being scanned
+     * @param offset The offset into the document
+     * @return
+     */
     public static String getReservedWordName(final IDocument doc, final int offset)
     {
         String cmd = null;

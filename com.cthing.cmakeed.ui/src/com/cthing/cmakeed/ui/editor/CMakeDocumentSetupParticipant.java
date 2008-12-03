@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright 2008 Michael A. Jackson: BlueQuartz Software
+ * http://www.bluequartz.net All Rights Reserved.
  */
 package com.cthing.cmakeed.ui.editor;
 
@@ -13,16 +14,20 @@ import com.cthing.cmakeed.ui.UIPlugin;
 import com.cthing.cmakeed.ui.editor.CMakePartitionScanner;
 
 /**
- * @author mjackson
+ * @author Michael A. Jackson
  *
  */
 public class CMakeDocumentSetupParticipant implements IDocumentSetupParticipant {
 
+	/**
+	 * Constructor
+	 */
 	public CMakeDocumentSetupParticipant() {
-		
 	}
 	
-	
+	/**
+	 * @param document The Document being setup
+	 */
 	public void setup(IDocument document) {
 		if (document instanceof IDocumentExtension3) {
 			IDocumentExtension3 extension3 = (IDocumentExtension3) document;

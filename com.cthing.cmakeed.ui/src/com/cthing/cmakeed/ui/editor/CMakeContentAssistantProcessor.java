@@ -235,7 +235,10 @@ public class CMakeContentAssistantProcessor implements IContentAssistProcessor, 
     }
     
     /**
-     * {@inheritDoc}
+     * 
+     * @param viewer 
+     * @param offset 
+     * @return List of completion proposals.
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
      */
     public List<ICompletionProposal> computeReservedWordCompletionProposals(final ITextViewer viewer,

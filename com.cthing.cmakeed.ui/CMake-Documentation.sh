@@ -21,7 +21,7 @@ CMAKE="/Users/Shared/Toolkits/CMake-2.6.2/cmake"
 generationDir="./"
 assistantDir="${generationDir}/doc"
 # remove any previous builds of the docs
-rm -rf ${assistantDir}
+#rm -rf ${assistantDir}
 mkdir -p ${assistantDir}
 
 tocFile=${generationDir}/toc.xml
