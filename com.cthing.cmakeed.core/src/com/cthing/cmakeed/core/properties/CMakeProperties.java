@@ -18,7 +18,7 @@ import com.cthing.cmakeed.core.CorePlugin;
 import com.cthing.cmakeed.core.utils.StringUtils;
 
 /**
- * Provides CMake command information.
+ * Provides CMake Properties information.
  */
 public final class CMakeProperties
 {
