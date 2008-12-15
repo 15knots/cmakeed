@@ -15,7 +15,9 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ContextInformation;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -24,7 +26,10 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.text.templates.Template;
 import org.eclipse.jface.text.templates.TemplateCompletionProcessor;
+import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateContextType;
+import org.eclipse.jface.text.templates.TemplateException;
+import org.eclipse.jface.text.templates.TemplateProposal;
 import org.eclipse.swt.graphics.Image;
 
 
@@ -51,7 +56,10 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 {
 
     private final CMakeNameDetector detector = new CMakeNameDetector();
-    private static final String DEFAULT_IMAGE= "$nl$/icons/template.gif"; //$NON-NLS-1$
+    private static final String DEFAULT_IMAGE= "$nl$/icons/CMakeTemplate.gif"; //$NON-NLS-1$
+	private static final String COMMAND_IMAGE = "$nl$/icons/CMakeCommand.gif"; //$NON-NLS-1$
+	private static final String PROPERTY_IMAGE = "$nl$/icons/CMakeProperty.gif"; //$NON-NLS-1$
+	private static final String VARIABLE_IMAGE = "$nl$/icons/CMakeVariable.gif"; //$NON-NLS-1$
     
     /**
      * Default constructor for the class.
@@ -94,9 +102,26 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 		ImageRegistry registry= CMakeEditorUI.getDefault().getImageRegistry();
 		Image image= registry.get(DEFAULT_IMAGE);
 		if (image == null) {
-			ImageDescriptor desc= CMakeEditorUI.imageDescriptorFromPlugin("org.eclipse.ui.examples.javaeditor", DEFAULT_IMAGE); //$NON-NLS-1$
+			ImageDescriptor desc= CMakeEditorUI.imageDescriptorFromPlugin("com.cthing.cmakeed.ui", DEFAULT_IMAGE); //$NON-NLS-1$
 			registry.put(DEFAULT_IMAGE, desc);
 			image= registry.get(DEFAULT_IMAGE);
+		}
+		return image;
+	}
+	
+	/**
+	 * 
+	 * @param imageType
+	 * @return
+	 */
+	protected Image getCustomImage(final String imageType)
+	{
+		ImageRegistry registry= CMakeEditorUI.getDefault().getImageRegistry();
+		Image image= registry.get(imageType);
+		if (image == null) {
+			ImageDescriptor desc= CMakeEditorUI.imageDescriptorFromPlugin("com.cthing.cmakeed.ui", imageType); //$NON-NLS-1$
+			registry.put(imageType, desc);
+			image= registry.get(imageType);
 		}
 		return image;
 	}
@@ -114,12 +139,35 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 
         ICompletionProposal[] templateArray = super.computeCompletionProposals(viewer, offset);
         List<ICompletionProposal> proposals = findPossibleTemplates(prefix, templateArray);
-
+        /* ----------------------------------------------------------------*/
+        String pattern = "file(READ ${filename} ${variable} [LIMIT ${numBytes}] [OFFSET ${offset}] [HEX])";
+		ITextSelection selection= (ITextSelection) viewer.getSelectionProvider().getSelection();
+		// adjust offset to end of normalized selection
+		if (selection.getOffset() == offset)
+			offset= selection.getOffset() + selection.getLength();
+		Region region= new Region(offset - prefix.length(), prefix.length());
+		TemplateContext context= createContext(viewer, region);
+		Template template = new Template("file", "file command", "com.cthing.cmakeed.ui.editors.cmake.file", pattern, true);
+		if (context != null)
+		{ 
+			if (null == proposals) {
+				proposals = new ArrayList<ICompletionProposal>();
+			}
+			context.setVariable("selection", selection.getText()); // name of the selection variables {line, word}_selection //$NON-NLS-1$
+			try {
+				context.getContextType().validate(template.getPattern());
+			} catch (TemplateException e) {
+				System.out.println("Exception");;
+			}
+			proposals.add(new TemplateProposal(template, context, region, getCustomImage(COMMAND_IMAGE), 0));
+		}
+		/* ----------------------------------------------------------------*/
+		
         if (!EditorUtils.inArguments(doc, offset)) {
         //-- Get any command proposals	
             final List<CMakeCommand> commands = findPossibleCommands(prefix);
             
-            if ( /*!StringUtils.isBlank(prefix) && */ !commands.isEmpty()) {
+            if ( !commands.isEmpty()) {
                 boolean isLowercase = false;
                 if (prefix.length() > 0) { Character.isLowerCase(prefix.charAt(0)); }
                 int replacementOffset = offset - prefix.length();
@@ -134,10 +182,15 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                     
                     for (String usage : usages) {
                         final IContextInformation contextInfo = new ContextInformation(name, usage);
-                        proposals.add(new CompletionProposal(name + EditorUtils.START_ARGS,
+                        String replacementString = name  + usage;
+                        int    cursorPosition = name.length() + 1;
+                        Image image = null;
+                        String displayString = name + usage;
+                        String additionalProposalInfo = desc;
+                        proposals.add(new CompletionProposal(replacementString,
 							                                replacementOffset, replacementLength,
-							                                name.length() + 1, null, name + usage,
-							                                contextInfo, desc));
+							                                cursorPosition, image, displayString ,
+							                                contextInfo, additionalProposalInfo));
                     }
                 }
             }

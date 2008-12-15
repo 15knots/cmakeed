@@ -19,7 +19,7 @@ import com.cthing.cmakeed.core.reservedwords.CMakeReservedWord;
 import com.cthing.cmakeed.core.reservedwords.CMakeReservedWords;
 import com.cthing.cmakeed.core.variables.CMakeVariable;
 import com.cthing.cmakeed.core.variables.CMakeVariables;
-import com.cthing.cmakeed.ui.UIPlugin;
+import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 
 /**
  * Utilities for various common editor tasks.
@@ -51,7 +51,11 @@ public final class EditorUtils
      */
     public static boolean inArguments(final IDocument doc, final int offset)
     {
+        if (offset >= doc.getLength()) { return false; }
         try {
+        	if (doc.getChar(offset) == END_ARGS) { 
+        		return true; 
+        		}
             for (int off = offset; off >= 0; off--) {
                 final char ch = doc.getChar(off);
                 if (ch == START_ARGS) {
@@ -63,7 +67,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return false;
@@ -99,7 +103,7 @@ public final class EditorUtils
 				return false;
 			}
 		} catch (final BadLocationException e) {
-			UIPlugin.logError(EditorUtils.class, e);
+			CMakeEditorPlugin.logError(EditorUtils.class, e);
 			return false;
 		}
 		return true;
@@ -127,7 +131,7 @@ public final class EditorUtils
 				return true;
 			}
 		} catch (final BadLocationException e) {
-			UIPlugin.logError(EditorUtils.class, e);
+			CMakeEditorPlugin.logError(EditorUtils.class, e);
 			return false;
 		}
 		return false;
@@ -208,7 +212,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return cmd;
@@ -255,7 +259,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return cmd;
@@ -303,7 +307,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return cmd;
@@ -354,7 +358,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return cmd;
@@ -392,7 +396,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return null;        
@@ -430,7 +434,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return null;        
@@ -468,7 +472,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return null;        
@@ -506,7 +510,7 @@ public final class EditorUtils
             }
         }
         catch (final BadLocationException e) {
-            UIPlugin.logError(EditorUtils.class, e);
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
         }
         
         return null;        

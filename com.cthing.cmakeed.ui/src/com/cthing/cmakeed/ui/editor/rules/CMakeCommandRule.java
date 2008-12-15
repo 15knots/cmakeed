@@ -48,8 +48,7 @@ public class CMakeCommandRule implements IRule, IPredicateRule
      */
     public IToken evaluate(final ICharacterScanner scanner)
     {
-        this.buffer.setLength(0);
-        
+    	this.buffer.setLength(0);        
         for (int ch = scanner.read();
                 ch != ICharacterScanner.EOF && this.detector.isWordPart((char)ch);
                 ch = scanner.read()) {

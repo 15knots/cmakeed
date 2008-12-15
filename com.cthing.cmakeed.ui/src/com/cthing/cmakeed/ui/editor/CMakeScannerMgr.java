@@ -13,7 +13,7 @@ import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.swt.graphics.RGB;
 
-import com.cthing.cmakeed.ui.UIPlugin;
+import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.prefs.Preferences;
 
 /**
@@ -171,7 +171,7 @@ public class CMakeScannerMgr
      */
     private RuleBasedPartitionScanner createRuleBasedScanner(final String baseKey)
     {
-        final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
+        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         
         final RGB color = PreferenceConverter.getColor(store, Preferences.getColorKey(baseKey));
         final int style = store.getInt(Preferences.getStyleKey(baseKey));
