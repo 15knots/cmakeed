@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
+    
 <!-- 
   <extension
          point="org.eclipse.ui.newWizards">
@@ -17,16 +18,22 @@
       </wizard>
    </extension>
   --> 
+  
+  
    <extension point="org.eclipse.ui.editors">
-      <editor id="com.cthing.cmakeed.ui.editor.CMakeEditor"
-            name="%editor.name"
-            icon="icons/CMakeLogo.gif"
-            extensions="cmake"
+      <editor
             class="com.cthing.cmakeed.ui.editor.CMakeEditor"
-            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor">
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            default="true"
+            extensions="cmake"
+            icon="icons/CMakeLogo.gif"
+            id="com.cthing.cmakeed.ui.editor.CMakeEditor"
+            name="%editor.name">
          <contentTypeBinding contentTypeId="com.cthing.cmakeed.CMakeFileType"/>
       </editor>
    </extension>
+   
+   
    <extension
          id="CMakeDocumentSetupParticipant"
          name="%documentSetupParticipantName"
@@ -73,6 +80,9 @@
       <toc file="toc.xml" primary="true"/>
    </extension>
    
+<!-- =========================================================================== -->
+<!-- Templates                                                                   -->
+<!-- =========================================================================== -->  
    
    <extension
          point="org.eclipse.ui.editors.templates">
@@ -85,7 +95,7 @@
           autoinsert="true"
           contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
           description="%cmake.commands.if.description"
-          icon="icons/CMakeTemplate.gif"
+          icon="icons/CMakeTemplate.png"
           id="com.cthing.cmakeed.ui.editor.cmake.if"
           name="%cmake.commands.if.name"> 
         <pattern>if(${statement})
@@ -97,7 +107,7 @@ endif(${statement})
           autoinsert="true"
           contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
           description="%cmake.commands.while.description"
-          icon="icons/CMakeTemplate.gif"
+          icon="icons/CMakeTemplate.png"
           id="com.cthing.cmakeed.ui.editor.cmake.while"
           name="%cmake.commands.while.name"> 
         <pattern>while(${statement})
@@ -109,7 +119,7 @@ endwhile(${statement})
           autoinsert="true"
           contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
           description="%cmake.commands.foreach.description"
-          icon="icons/CMakeTemplate.gif"
+          icon="icons/CMakeTemplate.png"
           id="com.cthing.cmakeed.ui.editor.cmake.foreach"
           name="%cmake.commands.foreach.name"> 
         <pattern>foreach(${var} ${list})
@@ -122,7 +132,7 @@ endforeach(${var} ${list})
           contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
           name="%cmake.commands.macro.name"
           description="%cmake.commands.macro.description"
-          icon="icons/CMakeTemplate.gif"
+          icon="icons/CMakeTemplate.png"
           id="com.cthing.cmakeed.ui.editor.cmake.macro"> 
         <pattern>macro(${macroName} ${args})
   ${cursor}
@@ -134,7 +144,7 @@ endmacro(${macroName} ${args})
       autoinsert="true"
       contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
       description="%cmake.commands.cblock.description"
-      icon="icons/CMakeTemplate.gif"
+      icon="icons/CMakeTemplate.png"
       id="com.cthing.cmakeed.ui.editor.cmake.cblock"
       name="%cmake.commands.cblock.name">
 <pattern>
@@ -148,7 +158,7 @@ endmacro(${macroName} ${args})
       autoinsert="true"
       contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
       description="%cmake.commands.mark.description"
-      icon="icons/CMakeTemplate.gif"
+      icon="icons/CMakeTemplate.png"
       id="com.cthing.cmakeed.ui.editor.cmake.mark"
       name="%cmake.commands.mark.name">
 <pattern>
@@ -160,7 +170,7 @@ endmacro(${macroName} ${args})
       autoinsert="true"
       contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
       description="%cmake.commands.status.description"
-      icon="icons/CMakeTemplate.gif"
+      icon="icons/CMakeTemplate.png"
       id="com.cthing.cmakeed.ui.editors.cmake.status"
       name="%cmake.commands.status.name">
 <pattern>
@@ -172,7 +182,7 @@ message(STATUS "${cursor}")
       autoinsert="true"
       contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
       description="%cmake.commands.error.description"
-      icon="icons/CMakeTemplate.gif"
+      icon="icons/CMakeTemplate.png"
       id="com.cthing.cmakeed.ui.editor.cmake.error"
       name="%cmake.commands.error.name">
 <pattern>
@@ -184,7 +194,7 @@ message(FATAL_ERROR "${cursor}")
       autoinsert="true"
       contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
       description="%cmake.commands.printvar.description"
-      icon="icons/CMakeTemplate.gif"
+      icon="icons/CMakeTemplate.png"
       id="com.cthing.cmakeed.ui.editor.cmake.printvar"
       name="%cmake.commands.printvar.name">
 <pattern>

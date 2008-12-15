@@ -19,3 +19,10 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.core.resources,
  org.eclipse.ui.dialogs,
  org.eclipse.ui.ide
+Export-Package: com.cthing.cmakeed,
+ com.cthing.cmakeed.ui,
+ com.cthing.cmakeed.ui.editor,
+ com.cthing.cmakeed.ui.editor.rules,
+ com.cthing.cmakeed.ui.editor.template,
+ com.cthing.cmakeed.ui.editor.wizards,
+ com.cthing.cmakeed.ui.prefs
