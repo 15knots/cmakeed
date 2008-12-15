@@ -15,23 +15,19 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
-import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.jface.text.Region;
+import org.eclipse.jface.text.TextPresentation;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ContextInformation;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
+import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.text.templates.Template;
 import org.eclipse.jface.text.templates.TemplateCompletionProcessor;
-import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateContextType;
-import org.eclipse.jface.text.templates.TemplateException;
-import org.eclipse.jface.text.templates.TemplateProposal;
 import org.eclipse.swt.graphics.Image;
-
 
 import com.cthing.cmakeed.core.commands.CMakeCommand;
 import com.cthing.cmakeed.core.commands.CMakeCommands;
@@ -52,20 +48,78 @@ import com.cthing.cmakeed.ui.editor.template.CMakeContextType;
  * Content assist for CMake commands.
  */
 public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor 
-											implements IContentAssistProcessor, ITextHover
+											implements IContentAssistProcessor, 
+											           ITextHover
 {
+	/**
+	 * @brief Validator class for constext information
+	 */
+	protected static class Validator implements IContextInformationValidator, 
+												IContextInformationPresenter {
 
+		protected int fInstallOffset;
+		protected boolean isCommand = false;
+		protected ITextViewer viewer;
+		
+		/*
+		 * @see IContextInformationValidator#isContextInformationValid(int)
+		 */
+		public boolean isContextInformationValid(int offset) 
+		{
+			if (this.isCommand == false) { 
+				return false; 
+				}
+			try {
+	        	if (viewer.getDocument().getChar(offset - 1) != ')') { 
+	        		return true; 
+	            }
+	        }
+	        catch (final BadLocationException e) {
+	            CMakeEditorPlugin.logError(EditorUtils.class, e);
+	        }
+	        catch (Exception e) {
+	        	CMakeEditorPlugin.logError(null, e);
+	        }
+			return false;
+		}
+
+		/*
+		 * @see IContextInformationValidator#install(IContextInformation, ITextViewer, int)
+		 */
+		public void install(IContextInformation info, ITextViewer viewer, int offset) {
+			fInstallOffset= offset;
+			if (info.getContextDisplayString().startsWith("CMakeCommand::") == true)
+			{
+				this.isCommand = true;
+			}
+			this.viewer = viewer;
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.contentassist.IContextInformationPresenter#updatePresentation(int, TextPresentation)
+		 */
+		public boolean updatePresentation(int documentPosition, TextPresentation presentation) {
+			return false;
+		}
+		
+	}
+	
+	// protected IContextInformationValidator fValidator= new Validator();
+	
     private final CMakeNameDetector detector = new CMakeNameDetector();
-    private static final String DEFAULT_IMAGE= "$nl$/icons/CMakeTemplate.gif"; //$NON-NLS-1$
-	private static final String COMMAND_IMAGE = "$nl$/icons/CMakeCommand.gif"; //$NON-NLS-1$
-	private static final String PROPERTY_IMAGE = "$nl$/icons/CMakeProperty.gif"; //$NON-NLS-1$
-	private static final String VARIABLE_IMAGE = "$nl$/icons/CMakeVariable.gif"; //$NON-NLS-1$
-    
+    private static final String TEMPLATE_IMAGE= "$nl$/icons/CMakeTemplate.png"; //$NON-NLS-1$
+	private static final String COMMAND_IMAGE = "$nl$/icons/CMakeCommand.png"; //$NON-NLS-1$
+	private static final String PROPERTY_IMAGE = "$nl$/icons/CMakeProperty.png"; //$NON-NLS-1$
+	private static final String VARIABLE_IMAGE = "$nl$/icons/CMakeVariable.png"; //$NON-NLS-1$
+	private static final String RESERVED_WORD_IMAGE ="$nl$/icons/CMakeReservedWord.png"; //$NON-NLS-1$
+
+	
     /**
      * Default constructor for the class.
      */
     public CMakeContentAssistantProcessor()
     {
+    	// System.out.println("CMakeContentAssistantProcessor Constructor");
     }
     
 /* -------------------------------------------------------------------------- */    
@@ -100,11 +154,11 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 	 */
 	protected Image getImage(Template template) {
 		ImageRegistry registry= CMakeEditorUI.getDefault().getImageRegistry();
-		Image image= registry.get(DEFAULT_IMAGE);
+		Image image= registry.get(TEMPLATE_IMAGE);
 		if (image == null) {
-			ImageDescriptor desc= CMakeEditorUI.imageDescriptorFromPlugin("com.cthing.cmakeed.ui", DEFAULT_IMAGE); //$NON-NLS-1$
-			registry.put(DEFAULT_IMAGE, desc);
-			image= registry.get(DEFAULT_IMAGE);
+			ImageDescriptor desc= CMakeEditorUI.imageDescriptorFromPlugin("com.cthing.cmakeed.ui", TEMPLATE_IMAGE); //$NON-NLS-1$
+			registry.put(TEMPLATE_IMAGE, desc);
+			image= registry.get(TEMPLATE_IMAGE);
 		}
 		return image;
 	}
@@ -126,7 +180,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 		return image;
 	}
     
-    
+	
     /**
      * {@inheritDoc}
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
@@ -139,29 +193,9 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 
         ICompletionProposal[] templateArray = super.computeCompletionProposals(viewer, offset);
         List<ICompletionProposal> proposals = findPossibleTemplates(prefix, templateArray);
-        /* ----------------------------------------------------------------*/
-        String pattern = "file(READ ${filename} ${variable} [LIMIT ${numBytes}] [OFFSET ${offset}] [HEX])";
-		ITextSelection selection= (ITextSelection) viewer.getSelectionProvider().getSelection();
-		// adjust offset to end of normalized selection
-		if (selection.getOffset() == offset)
-			offset= selection.getOffset() + selection.getLength();
-		Region region= new Region(offset - prefix.length(), prefix.length());
-		TemplateContext context= createContext(viewer, region);
-		Template template = new Template("file", "file command", "com.cthing.cmakeed.ui.editors.cmake.file", pattern, true);
-		if (context != null)
-		{ 
-			if (null == proposals) {
-				proposals = new ArrayList<ICompletionProposal>();
-			}
-			context.setVariable("selection", selection.getText()); // name of the selection variables {line, word}_selection //$NON-NLS-1$
-			try {
-				context.getContextType().validate(template.getPattern());
-			} catch (TemplateException e) {
-				System.out.println("Exception");;
-			}
-			proposals.add(new TemplateProposal(template, context, region, getCustomImage(COMMAND_IMAGE), 0));
-		}
-		/* ----------------------------------------------------------------*/
+        if (null == proposals) {
+        	proposals = new ArrayList<ICompletionProposal>();
+        }
 		
         if (!EditorUtils.inArguments(doc, offset)) {
         //-- Get any command proposals	
@@ -181,16 +215,18 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                     final String[] usages = command.getUsages();
                     
                     for (String usage : usages) {
-                        final IContextInformation contextInfo = new ContextInformation(name, usage);
-                        String replacementString = name  + usage;
+                        final IContextInformation contextInfo 
+                              = new ContextInformation( "CMakeCommand::" + name, usage);
+                        String replacementString = name + "(";
                         int    cursorPosition = name.length() + 1;
-                        Image image = null;
+                        Image image = getCustomImage(COMMAND_IMAGE);
                         String displayString = name + usage;
                         String additionalProposalInfo = desc;
                         proposals.add(new CompletionProposal(replacementString,
 							                                replacementOffset, replacementLength,
 							                                cursorPosition, image, displayString ,
 							                                contextInfo, additionalProposalInfo));
+
                     }
                 }
             }
@@ -258,10 +294,10 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 				for (CMakeVariable variable : variables) {
 					final String name = isLowercase ? variable.getName().toUpperCase() : variable.getName();
 					final String desc = variable.getDescription();
-					final IContextInformation contextInfo = new ContextInformation(name, name);
+					final IContextInformation contextInfo = new ContextInformation("CMakeVariable::" + name, name);
 					proposals.add(new CompletionProposal(name ,
 							replacementOffset, replacementLength,
-							name.length(), null, name, contextInfo, desc));
+							name.length(), getCustomImage(VARIABLE_IMAGE), name, contextInfo, desc));
 				}
 			}
 		}
@@ -269,60 +305,6 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 		return proposals;
 	}
 
-    /**
-     * Determines the portion of the word that has already been entered.
-     * 
-     * @param viewer  viewer being edited
-     * @param offset  Offset into the document where content assist is desired.
-     * @return Portion of the word that has already been entered.
-     */
-    public List<ICompletionProposal> computeUserVariableCompletionProposals( final ITextViewer viewer, 
-    																         final int offset) {
-		final IDocument doc = viewer.getDocument();
-		List<ICompletionProposal> proposals = null;
-
-		if (EditorUtils.inArguments(doc, offset)) {
-			final String prefix = getPrefix(doc, offset);
-			final List<CMakeUserVariable> variables = findPossibleUserVariables(prefix, doc);
-
-			if (!StringUtils.isBlank(prefix) && !variables.isEmpty()) {
-				final int replacementOffset = offset - prefix.length();
-				final int replacementLength = prefix.length();
-
-				proposals = new ArrayList<ICompletionProposal>();
-				for (CMakeUserVariable variable : variables) {
-					final String name = variable.getName();
-					final IContextInformation contextInfo = new ContextInformation(name, name);
-					proposals.add(new CompletionProposal(name ,
-							replacementOffset, replacementLength,
-							name.length(), null, name, contextInfo, null));
-				}
-			}
-		}
-
-		return proposals;
-	}
-    
-    /**
-     * Determine possible commands that start with the specified prefix.
-     * 
-     * @param prefix  Prefix for commands
-     * @return Commands that begin with the specified prefix.
-     */
-    private List<CMakeUserVariable> findPossibleUserVariables( String prefix, IDocument doc)
-    {
-        final List<CMakeUserVariable> possibles = new ArrayList<CMakeUserVariable>();
-        final CMakeUserVariables variables = CMakeUserVariableRule.userVariableMap.get(doc);
-        Collection<CMakeUserVariable> commands = variables.getUserVariables();
-        for (CMakeUserVariable command : commands) { 
-                String name = command.getName();
-                if (name.startsWith(prefix)) {
-                    possibles.add(command);
-                }
-        }
-        return possibles;
-    }
-    
     /**
      * Determine possible commands that start with the specified prefix.
      * 
@@ -351,6 +333,62 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
     }
     
     /**
+     * Determines the portion of the word that has already been entered.
+     * 
+     * @param viewer  viewer being edited
+     * @param offset  Offset into the document where content assist is desired.
+     * @return Portion of the word that has already been entered.
+     */
+    public List<ICompletionProposal> computeUserVariableCompletionProposals( final ITextViewer viewer, 
+    																         final int offset) {
+		final IDocument doc = viewer.getDocument();
+		List<ICompletionProposal> proposals = null;
+
+		if (EditorUtils.inArguments(doc, offset)) {
+			final String prefix = getPrefix(doc, offset);
+			final List<CMakeUserVariable> variables = findPossibleUserVariables(prefix, doc);
+
+			if (!StringUtils.isBlank(prefix) && !variables.isEmpty()) {
+				final int replacementOffset = offset - prefix.length();
+				final int replacementLength = prefix.length();
+
+				proposals = new ArrayList<ICompletionProposal>();
+				for (CMakeUserVariable variable : variables) {
+					final String name = variable.getName();
+					final IContextInformation contextInfo = new ContextInformation("CMakeUserVariable::" + name, name);
+					proposals.add(new CompletionProposal(name ,
+							replacementOffset, replacementLength,
+							name.length(), getCustomImage(VARIABLE_IMAGE), name, contextInfo, null));
+				}
+			}
+		}
+
+		return proposals;
+	}
+    
+    /**
+     * Determine possible commands that start with the specified prefix.
+     * 
+     * @param prefix  Prefix for commands
+     * @return Commands that begin with the specified prefix.
+     */
+    private List<CMakeUserVariable> findPossibleUserVariables( String prefix, IDocument doc)
+    {
+        final List<CMakeUserVariable> possibles = new ArrayList<CMakeUserVariable>();
+        final CMakeUserVariables variables = CMakeUserVariableRule.userVariableMap.get(doc);
+        Collection<CMakeUserVariable> commands = variables.getUserVariables();
+        for (CMakeUserVariable command : commands) { 
+                String name = command.getName();
+                if (name.startsWith(prefix)) {
+                    possibles.add(command);
+                }
+        }
+        return possibles;
+    }
+    
+
+    
+    /**
      * 
      * @param viewer 
      * @param offset 
@@ -375,10 +413,10 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                 proposals = new ArrayList<ICompletionProposal>();
 				for (CMakeReservedWord variable : reservedWords) {
 					final String name = isLowercase ? variable.getName().toUpperCase() : variable.getName();
-					final IContextInformation contextInfo = new ContextInformation(name, name);
+					final IContextInformation contextInfo = new ContextInformation("CMakeReservedWord::" + name, name);
 					proposals.add(new CompletionProposal(name ,
 							replacementOffset, replacementLength,
-							name.length() , null, name, contextInfo, name));
+							name.length() , getCustomImage(RESERVED_WORD_IMAGE), name, contextInfo, name));
 				}
             }
         }
@@ -436,10 +474,10 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 				for (CMakeProperty property : properties) {
 					final String name = isLowercase ? property.getName().toUpperCase() : property.getName();
 					final String desc = property.getDescription();
-					final IContextInformation contextInfo = new ContextInformation(name, name);
+					final IContextInformation contextInfo = new ContextInformation("CMakeProperty::" + name, name);
 					proposals.add(new CompletionProposal(name ,
 							replacementOffset, replacementLength,
-							name.length(), null, name, contextInfo, desc));
+							name.length(), getCustomImage(PROPERTY_IMAGE), name, contextInfo, desc));
 				}
             }
         }
@@ -483,20 +521,22 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
     public IContextInformation[] computeContextInformation(final ITextViewer viewer,
                                                            final int offset)
     {
+    	/*
         final IDocument doc = viewer.getDocument();
-        final CMakeCommand cmd = EditorUtils.findContainingCommand(doc, offset);
+//        final CMakeCommand cmd = EditorUtils.findContainingCommand(doc, offset);
+        CMakeCommand cmd = CMakeCommands.getCommand("if");
         if (cmd != null) {
             final String[] usages = cmd.getUsages();
             final IContextInformation[] contexts = new IContextInformation[usages.length];
             
             int i = 0;
             for (String usage : usages) {
-                contexts[i++] = new ContextInformation(usage, usage);
+                contexts[i++] = new ContextInformation(cmd.getName(), usage);
             }
             
             return contexts;
         }
-        
+        */
         return null;
     }
 
@@ -504,36 +544,9 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
      * {@inheritDoc}
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getContextInformationValidator()
      */
-    public IContextInformationValidator getContextInformationValidator()
-    {
-        return new IContextInformationValidator() {
-            private IDocument doc;
-            public void install(final IContextInformation info,
-                                final ITextViewer viewer, final int offset)
-            {
-                this.doc = viewer.getDocument();
-            }
-
-            public boolean isContextInformationValid(final int offset)
-            {
-                boolean retval = false;
-                
-                try {
-                    final String contentType = this.doc.getContentType(offset);
-                    retval = CMakePartitionScanner.isAnyCommand(contentType) ||
-                             CMakePartitionScanner.isArgsOpen(contentType) ||
-                             CMakePartitionScanner.isString(contentType) ||
-                             CMakePartitionScanner.isVariable(contentType) ||
-                             (EditorUtils.findContainingCommand(this.doc, offset) != null);
-                }
-                catch (final BadLocationException e) {
-                    CMakeEditorPlugin.logError(this, e);
-                }
-                
-                return retval;
-            }
-        };
-    }
+	public IContextInformationValidator getContextInformationValidator() {
+		return new Validator();
+	}
 
     /**
      * {@inheritDoc}
@@ -555,7 +568,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
      */
     public char[] getContextInformationAutoActivationCharacters()
     {
-        return new char[] { '(' };
+        return new char[] { '(', };
     }
     
     /**
@@ -617,8 +630,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
      */
     private List<CMakeCommand> findPossibleCommands(final String prefix)
     {
-        final List<CMakeCommand> possibles =
-            new ArrayList<CMakeCommand>();
+        final List<CMakeCommand> possibles = new ArrayList<CMakeCommand>();
         final Collection<CMakeCommand> commands = CMakeCommands.getCommands();
         final String lowerPrefix = prefix.toLowerCase();
         
