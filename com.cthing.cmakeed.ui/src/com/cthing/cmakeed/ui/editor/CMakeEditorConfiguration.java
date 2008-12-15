@@ -18,16 +18,16 @@ import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.jface.text.source.SourceViewerConfiguration;
+//import org.eclipse.jface.text.source.SourceViewerConfiguration;
+import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 
-
-import com.cthing.cmakeed.ui.UIPlugin;
+import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.prefs.Preferences;
 
 /**
  * Configures add-ons for the CMake document editor.
  */
-public class CMakeEditorConfiguration extends SourceViewerConfiguration
+public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
 {
     private CMakeScannerMgr scannerMgr;
     
@@ -70,7 +70,7 @@ public class CMakeEditorConfiguration extends SourceViewerConfiguration
 
         final int tabWidth = getTabWidth(sourceViewer);
         
-        final IPreferenceStore prefStore = UIPlugin.getDefault().getPreferenceStore();
+        final IPreferenceStore prefStore = CMakeEditorPlugin.getDefault().getPreferenceStore();
         final boolean useSpaces = prefStore.getBoolean(Preferences.SPACES_FOR_TABS);
 
         for (int i = 0; i <= tabWidth; i++) {
@@ -102,32 +102,8 @@ public class CMakeEditorConfiguration extends SourceViewerConfiguration
 	 * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getConfiguredDocumentPartitioning(org.eclipse.jface.text.source.ISourceViewer)
 	 */
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
-		return UIPlugin.CMAKE_PARTITIONING;
+		return CMakeEditorPlugin.CMAKE_PARTITIONING;
 	}
-
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getContentAssistant(org.eclipse.jface.text.source.ISourceViewer)
-     */
-    @Override
-    public IContentAssistant getContentAssistant(final ISourceViewer sourceViewer)
-    {
-        final ContentAssistant ca = new ContentAssistant();
-        final IContentAssistProcessor pr = new CMakeContentAssistantProcessor();
-//        final IContentAssistProcessor propProc = new CMakePropertyAssist();
-//        final IContentAssistProcessor varProc = new CMakeVariableAssist();
-//        final IContentAssistProcessor resProc = new CMakeReservedWordAssist();
-        
-        ca.setContentAssistProcessor(pr, IDocument.DEFAULT_CONTENT_TYPE);
-//        ca.setContentAssistProcessor(pr, CMakePartitionScanner.COMMAND_CONTENT_TYPE);
-//        ca.setContentAssistProcessor(propProc, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
-//        ca.setContentAssistProcessor(varProc, CMakePartitionScanner.VARIABLE_CONTENT_TYPE);
-//        ca.setContentAssistProcessor(resProc, CMakePartitionScanner.RESERVED_WORD_CONTENT_TYPE);
-        ca.setInformationControlCreator(getInformationControlCreator(sourceViewer));
-        ca.enableAutoActivation(true);
-        
-        return ca;
-    }
 
 
     /**
@@ -191,6 +167,30 @@ public class CMakeEditorConfiguration extends SourceViewerConfiguration
         return reconciler;
     }
     
+
+    /**
+     * {@inheritDoc}
+     * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getContentAssistant(org.eclipse.jface.text.source.ISourceViewer)
+     */
+    @Override
+    public IContentAssistant getContentAssistant(final ISourceViewer sourceViewer)
+    {
+        ContentAssistant assistant = new ContentAssistant();
+		assistant.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
+
+        IContentAssistProcessor processor = new CMakeContentAssistantProcessor();
+        assistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
+        assistant.setContentAssistProcessor(processor, CMakePartitionScanner.COMMAND_CONTENT_TYPE);
+        
+        assistant.setContextInformationPopupOrientation(IContentAssistant.CONTEXT_INFO_ABOVE);
+        assistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
+        assistant.enableAutoActivation(true);
+        
+        return assistant;
+    }
+
+    
+    
 	/* (non-Javadoc)
 	 * Method declared on SourceViewerConfiguration
 	 */
@@ -212,9 +212,5 @@ public class CMakeEditorConfiguration extends SourceViewerConfiguration
 
         return null;
     }
-    
-    
-    
-    
     
 }

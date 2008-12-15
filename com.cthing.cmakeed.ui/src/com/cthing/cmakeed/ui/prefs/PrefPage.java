@@ -39,7 +39,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 
 import com.cthing.cmakeed.ui.Messages;
-import com.cthing.cmakeed.ui.UIPlugin;
+import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 
 /**
  * CMakeEd preference page.
@@ -63,7 +63,7 @@ public class PrefPage extends PreferencePage
      */
     public PrefPage()
     {
-        setPreferenceStore(UIPlugin.getDefault().getPreferenceStore());
+        setPreferenceStore(CMakeEditorPlugin.getDefault().getPreferenceStore());
     }
 
     /**
@@ -204,7 +204,7 @@ public class PrefPage extends PreferencePage
         strikeL.setLayoutData(new GridData());
         strikeL.setText(Messages.getString("PreferencePage.Strike"));   //$NON-NLS-1$
         
-        init(UIPlugin.getDefault().getWorkbench());
+        init(CMakeEditorPlugin.getDefault().getWorkbench());
         
         return topComp;
     }
@@ -247,7 +247,7 @@ public class PrefPage extends PreferencePage
             this.textAttrViewer.getList().select(0);
             this.textAttrViewer.getList().showSelection();
 
-            final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();            
+            final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();            
             this.spacesForTabsB.setSelection(store.getBoolean(Preferences.SPACES_FOR_TABS));
             
             readTextPrefs();
@@ -273,7 +273,7 @@ public class PrefPage extends PreferencePage
      */
     private void readTextPrefs()
     {
-        final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
+        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         
         for (String baseKey : Preferences.TEXT_KEYS) {
             this.colorMap.put(baseKey, PreferenceConverter.getColor(store,
@@ -288,7 +288,7 @@ public class PrefPage extends PreferencePage
      */
     private void writeTextPrefs()
     {
-        final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
+        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         
         for (String baseKey : Preferences.TEXT_KEYS) {
             PreferenceConverter.setValue(store, Preferences.getColorKey(baseKey), this.colorMap.get(baseKey));
@@ -343,7 +343,7 @@ public class PrefPage extends PreferencePage
     @Override
     protected void performDefaults()
     {
-        final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
+        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         
         for (String baseKey : Preferences.TEXT_KEYS) {
             this.colorMap.put(baseKey, PreferenceConverter.getDefaultColor(store,
@@ -364,7 +364,7 @@ public class PrefPage extends PreferencePage
     @Override
     public boolean performOk()
     {
-        final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();            
+        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();            
         store.setValue(Preferences.SPACES_FOR_TABS, this.spacesForTabsB.getSelection());
 
         writeTextPrefs();

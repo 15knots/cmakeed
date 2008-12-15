@@ -32,7 +32,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
 import com.cthing.cmakeed.ui.Messages;
-import com.cthing.cmakeed.ui.UIPlugin;
+import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.prefs.Preferences;
 import com.cthing.cmakeed.ui.editor.CMakeEditorConfiguration;
 
@@ -67,10 +67,10 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
     public CMakeEditor() {
 		super();
 		IDocumentProvider provider = new TextFileDocumentProvider();
-		provider = new ForwardingDocumentProvider(UIPlugin.CMAKE_PARTITIONING,
+		provider = new ForwardingDocumentProvider(CMakeEditorPlugin.CMAKE_PARTITIONING,
 				new CMakeDocumentSetupParticipant(), provider);
 		setDocumentProvider(provider);
-		final IPreferenceStore store = UIPlugin.getDefault()
+		final IPreferenceStore store = CMakeEditorPlugin.getDefault()
 				.getPreferenceStore();
 		store.addPropertyChangeListener(this);
 	}
@@ -145,7 +145,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 	 */
 	public void doSetInput(IEditorInput input) throws CoreException {
 		super.doSetInput(input);
-		UIPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
+		CMakeEditorPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
 	}
 	
 	
@@ -156,11 +156,11 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 	public void doSave(IProgressMonitor prog)
 	{
 		super.doSave(prog);	
-		UIPlugin.getDefault().getCMakePartitionScanner().setDefaultScannerRules();
+		CMakeEditorPlugin.getDefault().getCMakePartitionScanner().setDefaultScannerRules();
 		IDocument document = this.getSourceViewer().getDocument();
 		if (document instanceof IDocumentExtension3) {
 			IDocumentExtension3 extension3 = (IDocumentExtension3) document;
-			IDocumentPartitioner partitioner = extension3.getDocumentPartitioner(UIPlugin.CMAKE_PARTITIONING);
+			IDocumentPartitioner partitioner = extension3.getDocumentPartitioner(CMakeEditorPlugin.CMAKE_PARTITIONING);
 			if (partitioner != null)
 			{
 				partitioner.disconnect();
@@ -179,7 +179,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 			}
             
 		}
-		UIPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
+		CMakeEditorPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
 	}
 
 	
@@ -190,7 +190,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
     @Override
     public void dispose()
     {
-        final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
+        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         store.removePropertyChangeListener(this);
      
         this.colorMgr.dispose();
@@ -203,7 +203,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
      */
     private void updateTabReplacer()
     {
-        final IPreferenceStore prefStore = UIPlugin.getDefault().getPreferenceStore();
+        final IPreferenceStore prefStore = CMakeEditorPlugin.getDefault().getPreferenceStore();
         if (prefStore.getBoolean(Preferences.SPACES_FOR_TABS)) {
             this.text.addVerifyListener(this.tabReplacer);
         }

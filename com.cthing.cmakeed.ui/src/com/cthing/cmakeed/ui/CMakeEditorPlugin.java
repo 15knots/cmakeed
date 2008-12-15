@@ -17,7 +17,7 @@ import com.cthing.cmakeed.ui.editor.CMakePartitionScanner;
 /**
  * Activator class controlling the plug-in life cycle.
  */
-public class UIPlugin extends AbstractUIPlugin
+public class CMakeEditorPlugin extends AbstractUIPlugin
 {
     /** Plugin identifier. */
     public static final String PLUGIN_ID = "com.cthing.cmakeed.ui";     //$NON-NLS-1$
@@ -25,14 +25,14 @@ public class UIPlugin extends AbstractUIPlugin
 	public static final String CMAKE_PARTITIONING = "__cmake_partitioning"; //$NON-NLS-1$
 
     // The shared instance
-    private static UIPlugin plugin;
+    private static CMakeEditorPlugin plugin;
     
     private CMakePartitionScanner fPartitionScanner;
     
     /**
      * Default constructor for the class.
      */
-    public UIPlugin()
+    public CMakeEditorPlugin()
     {
         plugin = this;
     }
@@ -63,7 +63,7 @@ public class UIPlugin extends AbstractUIPlugin
      *
      * @return Instance of the plugin.
      */
-    public static UIPlugin getDefault()
+    public static CMakeEditorPlugin getDefault()
     {
         return plugin;
     }

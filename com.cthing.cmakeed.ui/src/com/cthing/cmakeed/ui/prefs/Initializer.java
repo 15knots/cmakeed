@@ -12,7 +12,7 @@ import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 
-import com.cthing.cmakeed.ui.UIPlugin;
+import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 
 /**
  * Initializes the default preference values.
@@ -33,7 +33,7 @@ public class Initializer extends AbstractPreferenceInitializer
     @Override
     public void initializeDefaultPreferences()
     {
-        final IPreferenceStore store = UIPlugin.getDefault().getPreferenceStore();
+        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         
         store.setDefault(Preferences.SPACES_FOR_TABS, true);
         

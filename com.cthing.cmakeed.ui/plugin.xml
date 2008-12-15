@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-
+<!-- 
+  <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="com.cthing.cmakeed.ui.editor.CMakeEditor"
+            name="CMake Wizards">
+      </category>
+      <wizard
+            category="com.cthing.cmakeed.ui.editor.CMakeEditor"
+            class="com.cthing.cmakeed.ui.editor.wizards.CMakeFileNewWizard"
+            icon="icons/CMakeLogo.gif"
+            id="com.cthing.cmakeed.ui.editor.wizards.CMakFileNewWizard"
+            name="New CMake file based on a template">
+      </wizard>
+   </extension>
+  --> 
    <extension point="org.eclipse.ui.editors">
       <editor id="com.cthing.cmakeed.ui.editor.CMakeEditor"
             name="%editor.name"
@@ -36,9 +51,16 @@
    
    <extension point="org.eclipse.ui.preferencePages">
       <page
+            name="%CMakePreferences.Name"
             class="com.cthing.cmakeed.ui.prefs.PrefPage"
-            id="com.cthing.cmakeed.ui.prefs.PreferencePage"
-            name="%page.name"/>
+            id="com.cthing.cmakeed.ui.prefs.PrefPage">
+            </page>
+     <page
+            name="%CMakeTemplatePreferences.Name"
+            category="com.cthing.cmakeed.ui.prefs.PrefPage"
+            class="com.cthing.cmakeed.ui.prefs.TemplatesPreferencePage"
+            id="com.cthing.cmakeed.ui.prefs.TemplatesPreferencePage">
+      </page>
    </extension>
    
    <extension
@@ -50,5 +72,126 @@
          point="org.eclipse.help.toc">
       <toc file="toc.xml" primary="true"/>
    </extension>
+   
+   
+   <extension
+         point="org.eclipse.ui.editors.templates">
+       <contextType
+            name="%cmake.contextType.name"
+            class="com.cthing.cmakeed.ui.editor.template.CMakeContextType"
+            id="com.cthing.cmakeed.ui.editor.cmake">
+      </contextType>
+    <template
+          autoinsert="true"
+          contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+          description="%cmake.commands.if.description"
+          icon="icons/CMakeTemplate.gif"
+          id="com.cthing.cmakeed.ui.editor.cmake.if"
+          name="%cmake.commands.if.name"> 
+        <pattern>if(${statement})
+  ${cursor}
+endif(${statement})
+    </pattern>
+    </template>
+        <template
+          autoinsert="true"
+          contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+          description="%cmake.commands.while.description"
+          icon="icons/CMakeTemplate.gif"
+          id="com.cthing.cmakeed.ui.editor.cmake.while"
+          name="%cmake.commands.while.name"> 
+        <pattern>while(${statement})
+  ${cursor}
+endwhile(${statement})
+    </pattern>
+    </template>
+    <template
+          autoinsert="true"
+          contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+          description="%cmake.commands.foreach.description"
+          icon="icons/CMakeTemplate.gif"
+          id="com.cthing.cmakeed.ui.editor.cmake.foreach"
+          name="%cmake.commands.foreach.name"> 
+        <pattern>foreach(${var} ${list})
+  ${cursor}
+endforeach(${var} ${list})
+    </pattern>
+    </template>
+    <template
+          autoinsert="true"
+          contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+          name="%cmake.commands.macro.name"
+          description="%cmake.commands.macro.description"
+          icon="icons/CMakeTemplate.gif"
+          id="com.cthing.cmakeed.ui.editor.cmake.macro"> 
+        <pattern>macro(${macroName} ${args})
+  ${cursor}
+endmacro(${macroName} ${args})
+    </pattern>
+    </template>    
+    
+<template
+      autoinsert="true"
+      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+      description="%cmake.commands.cblock.description"
+      icon="icons/CMakeTemplate.gif"
+      id="com.cthing.cmakeed.ui.editor.cmake.cblock"
+      name="%cmake.commands.cblock.name">
+<pattern>
+# --------------------------------------------------------------------
+# ${cursor}
+# --------------------------------------------------------------------
+</pattern>
+</template>    
+    
+<template
+      autoinsert="true"
+      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+      description="%cmake.commands.mark.description"
+      icon="icons/CMakeTemplate.gif"
+      id="com.cthing.cmakeed.ui.editor.cmake.mark"
+      name="%cmake.commands.mark.name">
+<pattern>
+# --------------------------------------------------------------------
+</pattern>
+</template> 
+
+<template
+      autoinsert="true"
+      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+      description="%cmake.commands.status.description"
+      icon="icons/CMakeTemplate.gif"
+      id="com.cthing.cmakeed.ui.editors.cmake.status"
+      name="%cmake.commands.status.name">
+<pattern>
+message(STATUS "${cursor}")
+</pattern>
+</template>
+
+<template
+      autoinsert="true"
+      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+      description="%cmake.commands.error.description"
+      icon="icons/CMakeTemplate.gif"
+      id="com.cthing.cmakeed.ui.editor.cmake.error"
+      name="%cmake.commands.error.name">
+<pattern>
+message(FATAL_ERROR "${cursor}")
+</pattern>
+</template>
+
+<template
+      autoinsert="true"
+      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+      description="%cmake.commands.printvar.description"
+      icon="icons/CMakeTemplate.gif"
+      id="com.cthing.cmakeed.ui.editor.cmake.printvar"
+      name="%cmake.commands.printvar.name">
+<pattern>
+message(STATUS "${variable}: $${${variable}}")
+</pattern>
+</template>
+
+</extension>
 
 </plugin>

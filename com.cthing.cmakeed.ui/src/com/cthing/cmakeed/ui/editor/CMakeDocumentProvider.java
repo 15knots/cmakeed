@@ -17,7 +17,7 @@ public class CMakeDocumentProvider // extends TextFileDocumentProvider
     public CMakeDocumentProvider()
     {
 //    	IDocumentProvider provider= new TextFileDocumentProvider();
-//        provider= new ForwardingDocumentProvider(UIPlugin.CMAKE_PARTITIONING, new CMakeDocumentSetupParticipant(), provider);
+//        provider= new ForwardingDocumentProvider(CMakeEditorPlugin.CMAKE_PARTITIONING, new CMakeDocumentSetupParticipant(), provider);
 //        setParentDocumentProvider(provider);
     }
     
