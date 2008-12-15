@@ -70,8 +70,8 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 		provider = new ForwardingDocumentProvider(CMakeEditorPlugin.CMAKE_PARTITIONING,
 				new CMakeDocumentSetupParticipant(), provider);
 		setDocumentProvider(provider);
-		final IPreferenceStore store = CMakeEditorPlugin.getDefault()
-				.getPreferenceStore();
+		final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
+
 		store.addPropertyChangeListener(this);
 	}
     

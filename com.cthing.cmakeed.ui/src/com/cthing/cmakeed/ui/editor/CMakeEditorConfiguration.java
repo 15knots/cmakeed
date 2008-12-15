@@ -12,7 +12,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
-import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
@@ -178,14 +177,15 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         ContentAssistant assistant = new ContentAssistant();
 		assistant.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 
-        IContentAssistProcessor processor = new CMakeContentAssistantProcessor();
-        assistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
-        assistant.setContentAssistProcessor(processor, CMakePartitionScanner.COMMAND_CONTENT_TYPE);
+       // IContentAssistProcessor processor = new CMakeContentAssistantProcessor();
+        assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), IDocument.DEFAULT_CONTENT_TYPE);
+        assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), CMakePartitionScanner.COMMAND_CONTENT_TYPE);
         
-        assistant.setContextInformationPopupOrientation(IContentAssistant.CONTEXT_INFO_ABOVE);
-        assistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
         assistant.enableAutoActivation(true);
-        
+		assistant.setAutoActivationDelay(500);
+		assistant.setProposalPopupOrientation(IContentAssistant.PROPOSAL_OVERLAY);
+		assistant.setContextInformationPopupOrientation(IContentAssistant.CONTEXT_INFO_ABOVE);
+
         return assistant;
     }
 
@@ -206,11 +206,10 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
     public ITextHover getTextHover(final ISourceViewer sourceViewer,
                                    final String contentType)
     {
-        if (CMakePartitionScanner.isAnyCommand(contentType)) {
-            return new CMakeContentAssistantProcessor();
-        }
-
-        return null;
+      //  if (CMakePartitionScanner.isAnyCommand(contentType)) {
+            return new CMakeEditorTextHover();
+     //   }
+    //    return null;
     }
     
 }
