@@ -232,4 +232,14 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
             sourceViewer.setTopIndex(line);
         }
     }
+    
+    /**
+     * Get the spefile source viewer, this method is useful for test cases.
+     * 
+     * @return
+     *      the specfile source viewer
+     */
+    public SourceViewer getCMakeEditorSourceViewer() {
+        return (SourceViewer) getSourceViewer();
+    }
 }
