@@ -3,6 +3,7 @@
 	<name>com.cthing.cmakeed.ui</name>
 	<comment></comment>
 	<projects>
+		<project>com.cthing.cmakeed.core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
