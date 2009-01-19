@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <description url="file:///Users/mjackson/Projects/cmakeed/com.cthing.cmakeed.site/site.xml">
+   <description url="site.xml">
       CMake Editor Eclipse plug-in update site
    </description>
-   <feature url="features/com.cthing.cmakeed.feature_1.1.0.jar" id="com.cthing.cmakeed.feature" version="1.1.0">
+   <feature url="features/com.cthing.cmakeed.feature_1.1.1.jar" id="com.cthing.cmakeed.feature" version="1.1.1">
       <category name="CMake Editor Plugin"/>
    </feature>
    <category-def name="CMake Editor Plugin" label="CMakeEditor"/>
