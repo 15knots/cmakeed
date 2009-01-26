@@ -2,7 +2,7 @@
 <feature
       id="com.cthing.cmakeed.feature"
       label="CMake Editor"
-      version="1.1.1"
+      version="1.1.2"
       provider-name="C Thing Software/BlueQuartz Software">
 
    <description url="http://cmakeed.sourceforge.net">
@@ -26,12 +26,12 @@
          id="com.cthing.cmakeed.core"
          download-size="0"
          install-size="0"
-         version="1.1.1"
+         version="1.1.2"
          unpack="false"/>
    <plugin
          id="com.cthing.cmakeed.ui"
          download-size="0"
          install-size="0"
-         version="1.1.1"
+         version="1.1.2"
          unpack="false"/>
 </feature>
