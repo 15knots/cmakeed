@@ -33,6 +33,13 @@ public final class EditorUtils
     /** Space character */
     public static final char SPACE = ' ';
     
+    public static final char DOLLAR = '$';
+    public static final char OPEN_BRACKET = '{';
+    
+    public static final char CLOSE_BRACKET = '}';
+    
+    
+    
     /**
      * Not to be instantiated.
      */
@@ -110,6 +117,29 @@ public final class EditorUtils
 	}
     
     /**
+     * Determines if this is the start of a Variable reference '${var}'
+     * @param doc
+     * @param offset
+     * @return
+     */
+    public static boolean startOfVariableReference(final IDocument doc, final int offset)
+    {
+        try {
+            final char dollar = doc.getChar(offset - 1);
+            final char bracket = doc.getChar(offset);
+            if ( dollar == EditorUtils.DOLLAR && bracket == EditorUtils.OPEN_BRACKET)
+            {
+                return true;
+            }
+        } catch (final BadLocationException e) {
+            CMakeEditorPlugin.logError(EditorUtils.class, e);
+            return false;
+        }
+        return false;
+    }
+    
+    
+    /**
      * Determines if the word is the first argument of a command
      * @param doc
      * @param offset
@@ -140,7 +170,7 @@ public final class EditorUtils
     /**
      * Obtains the command corresponding to the specified viewer and document
      * offset. The offset must be somewhere in a COMMAND_CONTENT_TYPE or
-     * DEP_COMMAND_CONTENT_TYPE partition.
+     * DEPRECATED_COMMAND_CONTENT_TYPE partition.
      * 
      * @param viewer Viewer hosting the document in which the command is
      *        contained.
@@ -158,7 +188,7 @@ public final class EditorUtils
     /**
      * Obtains the command corresponding to the specified document offset. The
      * offset must be somewhere in a COMMAND_CONTENT_TYPE or
-     * DEP_COMMAND_CONTENT_TYPE partition.
+     * DEPRECATED_COMMAND_CONTENT_TYPE partition.
      * 
      * @param doc Document in which the command is contained.
      * @param offset Offset into a command or deprecated command partition.
@@ -319,7 +349,7 @@ public final class EditorUtils
     /**
      * Obtains the command name corresponding to the specified viewer and
      * document offset. The offset must be somewhere in a COMMAND_CONTENT_TYPE
-     * or DEP_COMMAND_CONTENT_TYPE partition.
+     * or DEPRECATED_COMMAND_CONTENT_TYPE partition.
      * 
      * @param viewer Viewer hosting the document in which the command is
      *        contained.
@@ -337,7 +367,7 @@ public final class EditorUtils
     /**
      * Obtains the command name corresponding to the specified document offset.
      * The offset must be somewhere in a COMMAND_CONTENT_TYPE or
-     * DEP_COMMAND_CONTENT_TYPE partition.
+     * DEPRECATED_COMMAND_CONTENT_TYPE partition.
      * 
      * @param doc Document in which the command is contained.
      * @param offset Offset into a command or deprecated command partition.

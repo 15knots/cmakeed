@@ -115,38 +115,33 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
     	PresentationReconciler reconciler= new PresentationReconciler();
 		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 		
-        DefaultDamagerRepairer dr =
-            new DefaultDamagerRepairer(this.scannerMgr.getScanner(IDocument.DEFAULT_CONTENT_TYPE));
+        DefaultDamagerRepairer dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(IDocument.DEFAULT_CONTENT_TYPE));
         reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
         reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
         
         dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.COMMENT_CONTENT_TYPE));    
         reconciler.setDamager(dr, CMakePartitionScanner.COMMENT_CONTENT_TYPE);
         reconciler.setRepairer(dr, CMakePartitionScanner.COMMENT_CONTENT_TYPE);
-        
-        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.VARREF_CONTENT_TYPE));    
-        reconciler.setDamager(dr, CMakePartitionScanner.VARREF_CONTENT_TYPE);
-        reconciler.setRepairer(dr, CMakePartitionScanner.VARREF_CONTENT_TYPE);
-        
-        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.STRING_CONTENT_TYPE));    
-        reconciler.setDamager(dr, CMakePartitionScanner.STRING_CONTENT_TYPE);
-        reconciler.setRepairer(dr, CMakePartitionScanner.STRING_CONTENT_TYPE);
-        
+ 
         dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.COMMAND_CONTENT_TYPE));    
         reconciler.setDamager(dr, CMakePartitionScanner.COMMAND_CONTENT_TYPE);
         reconciler.setRepairer(dr, CMakePartitionScanner.COMMAND_CONTENT_TYPE);
         
-        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.DEP_COMMAND_CONTENT_TYPE));    
-        reconciler.setDamager(dr, CMakePartitionScanner.DEP_COMMAND_CONTENT_TYPE);
-        reconciler.setRepairer(dr, CMakePartitionScanner.DEP_COMMAND_CONTENT_TYPE);
+        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.DEPRECATED_COMMAND_CONTENT_TYPE));    
+        reconciler.setDamager(dr, CMakePartitionScanner.DEPRECATED_COMMAND_CONTENT_TYPE);
+        reconciler.setRepairer(dr, CMakePartitionScanner.DEPRECATED_COMMAND_CONTENT_TYPE);
         
         dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.ARGS_OPEN_CONTENT_TYPE));    
         reconciler.setDamager(dr, CMakePartitionScanner.ARGS_OPEN_CONTENT_TYPE);
         reconciler.setRepairer(dr, CMakePartitionScanner.ARGS_OPEN_CONTENT_TYPE);
+               
+        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.VARREF_CONTENT_TYPE));    
+        reconciler.setDamager(dr, CMakePartitionScanner.VARREF_CONTENT_TYPE);
+        reconciler.setRepairer(dr, CMakePartitionScanner.VARREF_CONTENT_TYPE);
        
-        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.VARIABLE_CONTENT_TYPE));    
-        reconciler.setDamager(dr, CMakePartitionScanner.VARIABLE_CONTENT_TYPE);
-        reconciler.setRepairer(dr, CMakePartitionScanner.VARIABLE_CONTENT_TYPE);
+        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.CMAKE_DEFINED_VARIABLE_CONTENT_TYPE));    
+        reconciler.setDamager(dr, CMakePartitionScanner.CMAKE_DEFINED_VARIABLE_CONTENT_TYPE);
+        reconciler.setRepairer(dr, CMakePartitionScanner.CMAKE_DEFINED_VARIABLE_CONTENT_TYPE);
 
         dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.PROPERTY_CONTENT_TYPE));    
         reconciler.setDamager(dr, CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
@@ -159,6 +154,10 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.USER_VARIABLE_CONTENT_TYPE));    
         reconciler.setDamager(dr, CMakePartitionScanner.USER_VARIABLE_CONTENT_TYPE);
         reconciler.setRepairer(dr, CMakePartitionScanner.USER_VARIABLE_CONTENT_TYPE);
+        
+        dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.STRING_CONTENT_TYPE));    
+        reconciler.setDamager(dr, CMakePartitionScanner.STRING_CONTENT_TYPE);
+        reconciler.setRepairer(dr, CMakePartitionScanner.STRING_CONTENT_TYPE);
         
         dr = new DefaultDamagerRepairer(this.scannerMgr.getScanner(CMakePartitionScanner.ARGS_CLOSE_CONTENT_TYPE));    
         reconciler.setDamager(dr, CMakePartitionScanner.ARGS_CLOSE_CONTENT_TYPE);
@@ -177,9 +176,14 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         ContentAssistant assistant = new ContentAssistant();
 		assistant.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 
-       // IContentAssistProcessor processor = new CMakeContentAssistantProcessor();
+
         assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), IDocument.DEFAULT_CONTENT_TYPE);
         assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), CMakePartitionScanner.COMMAND_CONTENT_TYPE);
+        assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), CMakePartitionScanner.VARREF_CONTENT_TYPE);
+        assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), CMakePartitionScanner.CMAKE_DEFINED_VARIABLE_CONTENT_TYPE);
+        assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), CMakePartitionScanner.PROPERTY_CONTENT_TYPE);
+        assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), CMakePartitionScanner.RESERVED_WORD_CONTENT_TYPE);
+        assistant.setContentAssistProcessor(new CMakeContentAssistantProcessor(), CMakePartitionScanner.USER_VARIABLE_CONTENT_TYPE);
         
         assistant.enableAutoActivation(true);
 		assistant.setAutoActivationDelay(500);

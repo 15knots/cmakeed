@@ -88,7 +88,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 		 */
 		public void install(IContextInformation info, ITextViewer viewer, int offset) {
 			fInstallOffset= offset;
-			if (info.getContextDisplayString().startsWith("CMakeCommand::") == true)
+			if (info.getContextDisplayString().startsWith("Command::") == true)
 			{
 				this.isCommand = true;
 			}
@@ -216,7 +216,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                     
                     for (String usage : usages) {
                         final IContextInformation contextInfo 
-                              = new ContextInformation( "CMakeCommand::" + name, usage);
+                              = new ContextInformation( "Command::" + name, usage);
                         String replacementString = name + "(";
                         int    cursorPosition = name.length() + 1;
                         Image image = getCustomImage(COMMAND_IMAGE);
@@ -233,9 +233,9 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         }
         else
         {
-            if (null == proposals) {
-            	proposals = new ArrayList<ICompletionProposal>();
-            }
+//            if (null == proposals) {
+//            	proposals = new ArrayList<ICompletionProposal>();
+//            }
         	proposals = new ArrayList<ICompletionProposal>();
         	List<ICompletionProposal> propProposals = computePropertyCompletionProposals(viewer, offset);
         	if (propProposals != null)
@@ -243,7 +243,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
             	proposals.addAll(propProposals);	
         	}
         	
-        	List<ICompletionProposal> varProposals = computeVariableCompletionProposals(viewer, offset);
+        	List<ICompletionProposal> varProposals = computeCMakeVariableCompletionProposals(viewer, offset);
         	if (varProposals != null)
         	{
             	proposals.addAll(varProposals);	
@@ -276,14 +276,14 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
      * @param offset  Offset into the document where content assist is desired.
      * @return Portion of the word that has already been entered.
      */
-    public List<ICompletionProposal> computeVariableCompletionProposals( final ITextViewer viewer, 
+    public List<ICompletionProposal> computeCMakeVariableCompletionProposals( final ITextViewer viewer, 
     																     final int offset) {
 		final IDocument doc = viewer.getDocument();
 		List<ICompletionProposal> proposals = null;
 
 		if (EditorUtils.inArguments(doc, offset)) {
 			final String prefix = getPrefix(doc, offset);
-			final List<CMakeVariable> variables = findPossibleVariables(prefix);
+			final List<CMakeVariable> variables = findPossibleCMakeVariables(prefix);
 
 			if (!StringUtils.isBlank(prefix) && !variables.isEmpty()) {
 				final boolean isLowercase = Character.isLowerCase(prefix.charAt(0));
@@ -311,21 +311,23 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
      * @param prefix  Prefix for commands
      * @return Commands that begin with the specified prefix.
      */
-    private List<CMakeVariable> findPossibleVariables(final String prefix)
+    private List<CMakeVariable> findPossibleCMakeVariables(final String prefix)
     {
         final List<CMakeVariable> possibles = new ArrayList<CMakeVariable>();
-        final Collection<CMakeVariable> commands = CMakeVariables.getCommands();
-        final String lowerPrefix = prefix.toUpperCase();
+        final Collection<CMakeVariable> cmakeVariables = CMakeVariables.getCommands();
+        final String upperPrefix = prefix.toUpperCase();
         
-        for (CMakeVariable command : commands) {
-            if (!command.isDeprecated()) {
-                final String name = command.getName();
-                if (name.startsWith(lowerPrefix)) {
-                    possibles.add(command);
-                }
-                else if (!possibles.isEmpty()) {
-                    break;
-                }
+        /* VERY important that the list is kept in alphabetical order otherwise
+         * this little block of code will only pick up the first match and not
+         * all possible matches
+         */
+        for (CMakeVariable cmakeVariable : cmakeVariables) {
+            final String name = cmakeVariable.getName();
+            if (name.startsWith(upperPrefix)) {
+                possibles.add(cmakeVariable);
+            }
+            else if (!possibles.isEmpty()) {
+                break;
             }
         }
         
@@ -375,12 +377,17 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
     private List<CMakeUserVariable> findPossibleUserVariables( String prefix, IDocument doc)
     {
         final List<CMakeUserVariable> possibles = new ArrayList<CMakeUserVariable>();
-        final CMakeUserVariables variables = CMakeUserVariableRule.userVariableMap.get(doc);
-        Collection<CMakeUserVariable> commands = variables.getUserVariables();
-        for (CMakeUserVariable command : commands) { 
-                String name = command.getName();
+        final CMakeUserVariables documentUserVariables = CMakeUserVariableRule.userVariableMap.get(doc);
+        Collection<CMakeUserVariable> userVariables = documentUserVariables.getUserVariables();
+        if (prefix.length() == 0)
+        {
+            possibles.addAll(userVariables);
+            return possibles;
+        }
+        for (CMakeUserVariable userVariable : userVariables) { 
+                String name = userVariable.getName();
                 if (name.startsWith(prefix)) {
-                    possibles.add(command);
+                    possibles.add(userVariable);
                 }
         }
         return possibles;
@@ -413,7 +420,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                 proposals = new ArrayList<ICompletionProposal>();
 				for (CMakeReservedWord variable : reservedWords) {
 					final String name = isLowercase ? variable.getName().toUpperCase() : variable.getName();
-					final IContextInformation contextInfo = new ContextInformation("CMakeReservedWord::" + name, name);
+					final IContextInformation contextInfo = new ContextInformation("ReservedWord::" + name, name);
 					proposals.add(new CompletionProposal(name ,
 							replacementOffset, replacementLength,
 							name.length() , getCustomImage(RESERVED_WORD_IMAGE), name, contextInfo, name));
