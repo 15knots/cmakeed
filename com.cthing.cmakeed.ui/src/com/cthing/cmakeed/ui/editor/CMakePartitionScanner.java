@@ -34,13 +34,13 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     /** Command partition. */
     public static final String COMMAND_CONTENT_TYPE = "__command";    //$NON-NLS-1$
     /** Deprecated command partition. */
-    public static final String DEP_COMMAND_CONTENT_TYPE = "__dep_command";    //$NON-NLS-1$
+    public static final String DEPRECATED_COMMAND_CONTENT_TYPE = "__dep_command";    //$NON-NLS-1$
     /** Command arguments open. */
     public static final String ARGS_OPEN_CONTENT_TYPE = "__args_open";      //$NON-NLS-1$
     /** Command arguments close. */
     public static final String ARGS_CLOSE_CONTENT_TYPE = "__args_close";      //$NON-NLS-1$
     /** Variable partition. */
-    public static final String VARIABLE_CONTENT_TYPE = "__variable";    //$NON-NLS-1$
+    public static final String CMAKE_DEFINED_VARIABLE_CONTENT_TYPE = "__variable";    //$NON-NLS-1$
     /** Property partition. */
     public static final String PROPERTY_CONTENT_TYPE = "__property";    //$NON-NLS-1$
     /** Reserved Word partition. */
@@ -49,6 +49,7 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public static final String USER_VARIABLE_CONTENT_TYPE = "__uservariable";  //$NON-NLS-1$
 
     private CMakeUserVariableRule userVariableRule;
+    private CMakeUserVariableRule variableReference;
     
     /** Array of all partition types. */
     public static final String[] CMAKE_CONTENT_TYPES = new String[] {
@@ -57,10 +58,10 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
         VARREF_CONTENT_TYPE,
         STRING_CONTENT_TYPE,
         COMMAND_CONTENT_TYPE,
-        DEP_COMMAND_CONTENT_TYPE,
+        DEPRECATED_COMMAND_CONTENT_TYPE,
         ARGS_OPEN_CONTENT_TYPE,
         ARGS_CLOSE_CONTENT_TYPE,
-        VARIABLE_CONTENT_TYPE,
+        CMAKE_DEFINED_VARIABLE_CONTENT_TYPE,
         PROPERTY_CONTENT_TYPE,
         RESERVED_WORD_CONTENT_TYPE,
         USER_VARIABLE_CONTENT_TYPE,
@@ -71,19 +72,21 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
      */
     public CMakePartitionScanner()
     {
-    	userVariableRule = new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE)); 
+    	userVariableRule = new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE));
+    	variableReference = new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE)); 
          IPredicateRule[] preds = new IPredicateRule[] {
                 new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
                 new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
-                new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
+                new CMakeCommandRule(new Token(DEPRECATED_COMMAND_CONTENT_TYPE), true),
                 new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),
-                new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+  //              new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new SingleLineRule("@", "@", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new SingleLineRule("\"", "\"", new Token(STRING_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
-                new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
+                new CMakeVariableRule(new Token(CMAKE_DEFINED_VARIABLE_CONTENT_TYPE), false),
                 new CMakeReservedWordRule(new Token(RESERVED_WORD_CONTENT_TYPE), false),
                 userVariableRule,
+                variableReference,
                 new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
             };
 
@@ -98,13 +101,13 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
         IPredicateRule[] preds = new IPredicateRule[] {
                 new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
                 new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
-                new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
+                new CMakeCommandRule(new Token(DEPRECATED_COMMAND_CONTENT_TYPE), true),
                 new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),
-                new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
-                new SingleLineRule("@", "@", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+//                new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+//                new SingleLineRule("@", "@", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new SingleLineRule("\"", "\"", new Token(STRING_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
-                new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
+                new CMakeVariableRule(new Token(CMAKE_DEFINED_VARIABLE_CONTENT_TYPE), false),
                 new CMakeReservedWordRule(new Token(RESERVED_WORD_CONTENT_TYPE), false),
                 new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
             };
@@ -119,13 +122,13 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
         IPredicateRule[] preds = new IPredicateRule[] {
                 new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
                 new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
-                new CMakeCommandRule(new Token(DEP_COMMAND_CONTENT_TYPE), true),
+                new CMakeCommandRule(new Token(DEPRECATED_COMMAND_CONTENT_TYPE), true),
                 new ArgsOpenRule(new Token(ARGS_OPEN_CONTENT_TYPE)),
-                new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
-                new SingleLineRule("@", "@", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+//                new SingleLineRule("${", "}", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
+//                new SingleLineRule("@", "@", new Token(VARREF_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new SingleLineRule("\"", "\"", new Token(STRING_CONTENT_TYPE)),   //$NON-NLS-1$ //$NON-NLS-2$
                 new CMakePropertyRule(new Token(PROPERTY_CONTENT_TYPE), false),
-                new CMakeVariableRule(new Token(VARIABLE_CONTENT_TYPE), false),
+                new CMakeVariableRule(new Token(CMAKE_DEFINED_VARIABLE_CONTENT_TYPE), false),
                 new CMakeReservedWordRule(new Token(RESERVED_WORD_CONTENT_TYPE), false),
                 this.userVariableRule,
                 new ArgsCloseRule(new Token(ARGS_CLOSE_CONTENT_TYPE)),
@@ -257,7 +260,7 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
      */
     public static boolean isCMakeVariable(final String contentType)
     {
-        return VARIABLE_CONTENT_TYPE.equals(contentType);
+        return CMAKE_DEFINED_VARIABLE_CONTENT_TYPE.equals(contentType);
     }
     
     /**
@@ -283,7 +286,7 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
      */
     public static boolean isDepCommand(final String contentType)
     {
-        return DEP_COMMAND_CONTENT_TYPE.equals(contentType);
+        return DEPRECATED_COMMAND_CONTENT_TYPE.equals(contentType);
     }
     
     /**

@@ -69,41 +69,33 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
             }
             
             final int offset = cscan.getTokenOffset();
-            if (EditorUtils.inArguments(doc, offset) 
-                && EditorUtils.startOfWord(doc, offset) ) 
-            {	
-            	this.buffer.setLength(0);
-                // Read the word into the buffer
-                for (int ch = scanner.read();
-                        ch != ICharacterScanner.EOF && this.detector.isWordPart((char)ch);
-                        ch = scanner.read()) 
-                {
-                    this.buffer.append((char)ch);
+            if (EditorUtils.inArguments(doc, offset)  ) {
+                    if (EditorUtils.startOfWord(doc, offset) ) {
+                        this.buffer.setLength(0);
+                        // Read the word into the buffer
+                        for (int ch = scanner.read(); ch != ICharacterScanner.EOF
+                                && this.detector.isWordPart((char) ch); ch = scanner.read()) {
+                            this.buffer.append((char) ch);
+                        }
+                        scanner.unread();
+                        final CMakeUserVariable var = userVariables.getUserVariable(this.buffer.toString());
+                        if (var != null) {
+                            return this.userVariableToken;
+                        } else {
+                            String uvar = this.buffer.toString();
+                            uvar = uvar.trim(); // trim off white space
+                            if (uvar.length() > 0 && uvar.contains(".") == false && uvar.contains("/") == false
+                                    && uvar.startsWith("/") == false && uvar.startsWith("-") == false
+                                    && EditorUtils.firstArgument(doc, offset) == true) {
+                                userVariables.addUserVariable(uvar);
+                                return this.userVariableToken;
+                            }
+
+                        }
+                        EditorUtils.unread(scanner, this.buffer);
+                    }
                 }
-                scanner.unread();
-                final CMakeUserVariable var = userVariables.getUserVariable(this.buffer.toString() );
-                if ( var != null ) 
-                {
-                	return this.userVariableToken;
-                }
-                else 
-                {
-                	String uvar = this.buffer.toString();
-                	uvar = uvar.trim(); // trim off white space
-                	if (uvar.length() > 0
-                			&& uvar.contains(".") == false
-                			&& uvar.contains("/") == false 
-                			&& uvar.startsWith("/") == false
-                			&& uvar.startsWith("-") == false
-                			&& EditorUtils.firstArgument(doc, offset) == true)
-                	{
-                		userVariables.addUserVariable(uvar);
-                    	return this.userVariableToken;
-                	}
-                	
-                }
-                EditorUtils.unread(scanner, this.buffer);
-            }
+          
         }
         return Token.UNDEFINED;
     }

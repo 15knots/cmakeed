@@ -15,8 +15,6 @@ import com.cthing.cmakeed.core.properties.CMakeProperties;
 import com.cthing.cmakeed.core.properties.CMakeProperty;
 import com.cthing.cmakeed.core.reservedwords.CMakeReservedWord;
 import com.cthing.cmakeed.core.reservedwords.CMakeReservedWords;
-import com.cthing.cmakeed.core.uservariables.CMakeUserVariable;
-import com.cthing.cmakeed.core.uservariables.CMakeUserVariables;
 import com.cthing.cmakeed.core.variables.CMakeVariable;
 import com.cthing.cmakeed.core.variables.CMakeVariables;
 
@@ -53,18 +51,17 @@ public class CMakeEditorTextHover implements ITextHover {
 			if (null != cmd) return cmd.getName() + ": " + cmd.getDescription();
 			
 			CMakeProperty prop = CMakeProperties.getCommand(word);
-			if (null != prop) return "Property: " + prop.getDescription();
-			
+			if (null != prop) return "CMake Property: " + prop.getDescription();
 			
 			CMakeReservedWord resword = CMakeReservedWords.getCommand(word);
-			if (null != resword) return "Key Word: " + resword.getName();
+			if (null != resword) return "CMake Reserved Word: " + resword.getName();
 			
 			CMakeVariable var = CMakeVariables.getCommand(word);
-			if (null != var) return "Predefined Variable: " + var.getDescription();
+			if (null != var) return "CMake Defined Variable: " + var.getDescription();
 
-			return "No Documentation Found";
+			return null;
 		} catch (Exception e) {
-			return "Exception Was Thrown";
+			return null;
 		}
 	}
 	
