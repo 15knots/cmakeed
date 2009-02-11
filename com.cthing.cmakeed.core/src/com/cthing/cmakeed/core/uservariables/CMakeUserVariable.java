@@ -19,9 +19,9 @@ public class CMakeUserVariable
     /**
      * Constructor for the class.
      * 
-     * @param name  Name of the command
-     * @param description  Description of the command
-     * @param deprecated  <code>true</code> if the command has been deprecated.
+     * @param name  Name of the user defined cmake variable
+     * @param description  Description of the user defined cmake variable
+     * @param deprecated  <code>true</code> if the user defined cmake variable has been deprecated.
      */
     public CMakeUserVariable(final String name)
     {
@@ -34,9 +34,9 @@ public class CMakeUserVariable
     }
   
     /**
-     * Provides the name of the command.
+     * Provides the name of the user defined cmake variable.
      * 
-     * @return The command name.
+     * @return The user defined cmake variable name.
      */
     public String getName()
     {

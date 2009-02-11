@@ -20,9 +20,9 @@ public class CMakeVariable
     /**
      * Constructor for the class.
      * 
-     * @param name  Name of the command
-     * @param description  Description of the command
-     * @param deprecated  <code>true</code> if the command has been deprecated.
+     * @param name  Name of the cmake variable
+     * @param description  Description of the cmake variable
+     * @param deprecated  <code>true</code> if the cmake variable has been deprecated.
      */
     public CMakeVariable(final String name, final String description,
                         final boolean deprecated)
@@ -41,9 +41,9 @@ public class CMakeVariable
     
    
     /**
-     * Indicates whether the command has been deprecated.
+     * Indicates whether the cmake variable has been deprecated.
      * 
-     * @return <code>true</code> if the command has been deprecated.
+     * @return <code>true</code> if the cmake variable has been deprecated.
      */
     public boolean isDeprecated()
     {
@@ -51,9 +51,9 @@ public class CMakeVariable
     }
 
     /**
-     * Provides the name of the command.
+     * Provides the name of the cmake variable.
      * 
-     * @return The command name.
+     * @return The cmake variable name.
      */
     public String getName()
     {
@@ -61,7 +61,7 @@ public class CMakeVariable
     }
     
     /**
-     * Provides a description for the command.
+     * Provides a description for the cmake variable.
      * 
      * @return Command description.
      */
@@ -77,7 +77,7 @@ public class CMakeVariable
     @Override
     public String toString()
     {
-        return this.name.toUpperCase();
+        return this.name;
     }
 
     /**
@@ -89,7 +89,7 @@ public class CMakeVariable
     {
         final int prime = 31;
         return prime +
-                ((this.name == null) ? 0 : this.name.toUpperCase().hashCode());
+                ((this.name == null) ? 0 : this.name.hashCode());
     }
 
     /**
@@ -113,7 +113,7 @@ public class CMakeVariable
                 return false;
             }
         }
-        else if (!this.name.toUpperCase().equals(other.name.toUpperCase())) {
+        else if (!this.name.equals(other.name)) {
             return false;
         }
         
