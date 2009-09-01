@@ -1,0 +1,22 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module UsewxWidgets</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:UsewxWidgets"><b><code>UsewxWidgets</code></b></a>: Convenience include for using wxWidgets library<br>
+    <p>Finds if wxWidgets is installed and set the appropriate libs, incdirs, flags etc. INCLUDE_DIRECTORIES, LINK_DIRECTORIES and ADD_DEFINITIONS are called.<br><p>USAGE<br><pre>  SET( wxWidgets_USE_LIBS  gl xml xrc ) # optionally: more than wx std libs<br>  FIND_PACKAGE(wxWidgets REQUIRED)<br>  INCLUDE( ${xWidgets_USE_FILE} )<br>  ... add your targets here, e.g. ADD_EXECUTABLE/ ADD_LIBRARY ...<br>  TARGET_LINK_LIBRARIERS( &lt;yourWxDependantTarget&gt;  ${wxWidgets_LIBRARIES})<br></pre>
+    <p><br><p>DEPRECATED<br><pre>  LINK_LIBRARIES is not called in favor of adding dependencies per target.<br></pre>
+    <p><br><p>AUTHOR<br><pre>  Jan Woetzel &lt;jw -at- mip.informatik.uni-kiel.de&gt;<br></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.6.4/share/cmake-2.6/Modules/UsewxWidgets.cmake
+</div></body></html>

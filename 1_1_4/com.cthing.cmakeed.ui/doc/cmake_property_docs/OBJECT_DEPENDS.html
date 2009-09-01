@@ -1,0 +1,17 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property OBJECT_DEPENDS</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:OBJECT_DEPENDS"><b><code>OBJECT_DEPENDS</code></b></a>: Additional files on which a compiled object file depends.<br>
+    <p>Specifies a semicolon-separated list of full-paths to files on which any object files compiled from this source file depend.  An object file will be recompiled if any of the named files is newer than it.<br><p>This property need not be used to specify the dependency of a source file on a generated header file that it includes.  Although the property was originally introduced for this purpose, it is no longer necessary.  If the generated header file is created by a custom command in the same target as the source file, the automatic dependency scanning process will recognize the dependency.  If the generated header file is created by another target, an inter-target dependency should be created with the add_dependencies command (if one does not already exist due to linking relationships).
+  </li>
+</ul>
+</div></body></html>
