@@ -1,0 +1,30 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module FindOpenSceneGraph</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:FindOpenSceneGraph"><b><code>FindOpenSceneGraph</code></b></a>: Find OpenSceneGraph<br>
+    <p>This module searches for the OpenSceneGraph core "osg" library as well as OpenThreads, and whatever additional COMPONENTS that you specify.<br><pre>    See <a href="http://www.openscenegraph.org">http://www.openscenegraph.org</a><br></pre>
+    <p><br><p>NOTE: If you would like to use this module in your CMAKE_MODULE_PATH instead of requiring CMake &gt;= 2.6.3, you will also need to download FindOpenThreads.cmake, Findosg_functions.cmake, Findosg.cmake, as well as files for any Components you need to call (FindosgDB.cmake, FindosgUtil.cmake, etc.)<br><p>==================================<br><p>This module accepts the following variables (note mixed case)<br><pre>    OpenSceneGraph_DEBUG - Enable debugging output<br></pre>
+    <p><br><pre>    OpenSceneGraph_MARK_AS_ADVANCED - Mark cache variables as advanced <br>                                      automatically<br></pre>
+    <p><br><p>The following environment variables are also respected for finding the OSG and it's various components.  CMAKE_PREFIX_PATH can also be used for this (see find_library() CMake documentation).<br><pre>    &lt;MODULE&gt;_DIR (where MODULE is of the form "OSGVOLUME" and there is a FindosgVolume.cmake file)<br>    OSG_DIR<br>    OSGDIR<br>    OSG_ROOT<br></pre>
+    <p><br><p>This module defines the following output variables:<br><pre>    OPENSCENEGRAPH_FOUND - Was the OSG and all of the specified components found?<br></pre>
+    <p><br><pre>    OPENSCENEGRAPH_VERSION - The version of the OSG which was found<br></pre>
+    <p><br><pre>    OPENSCENEGRAPH_INCLUDE_DIRS - Where to find the headers<br></pre>
+    <p><br><pre>    OPENSCENEGRAPH_LIBRARIES - The OSG libraries<br></pre>
+    <p><br><p>================================== Example Usage:<br><pre>  find_package(OpenSceneGraph 2.0.0 COMPONENTS osgDB osgUtil)<br>  include_directories(${OPENSCENEGRAPH_INCLUDE_DIRS})<br></pre>
+    <p><br><pre>  add_executable(foo foo.cc)<br>  target_link_libraries(foo ${OPENSCENEGRAPH_LIBRARIES})<br></pre>
+    <p><br><p>==================================<br><p>Naming convention:<br><pre>  Local variables of the form _osg_foo<br>  Input variables of the form OpenSceneGraph_FOO<br>  Output variables of the form OPENSCENEGRAPH_FOO<br></pre>
+    <p><br><p>Copyright (c) 2009, Philip Lowman &lt;philip@yhbt.com&gt;<br><p>Redistribution AND use is allowed according to the terms of the New BSD license. For details see the accompanying COPYING-CMAKE-SCRIPTS file.<br><p>==================================
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.6.4/share/cmake-2.6/Modules/FindOpenSceneGraph.cmake
+</div></body></html>

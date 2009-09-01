@@ -1,11 +1,16 @@
-<html><body>
+<html><head><title>cmake_policies_index - cmake</title></head><body>
 <h2><a name="section_Index"/>Master Index</h2>
 <ul>
+  <li><a href="#section_Introduction"<b>Introduction</b></a></li>
   <li><a href="#section_Description"<b>Description</b></a></li>
   <li><a href="#section_Policies"<b>Policies</b></a></li>
   <li><a href="#section_Copyright"<b>Copyright</b></a></li>
   <li><a href="#section_See Also"<b>See Also</b></a></li>
 </ul>
+<h2><a name="section_Introduction"/>Introduction</h2>
+<ul>
+</ul>
+<p>cmake_policies_index - Reference of CMake policies.
 <h2><a name="section_Description"/>Description</h2>
 <ul>
 </ul>
@@ -13,7 +18,7 @@
 <p>CMake is a cross-platform build system generator.  Projects specify their build process with platform-independent CMake listfiles included in each directory of a source tree with the name CMakeLists.txt. Users build a project by using CMake to generate a build system for a native tool on their platform.
 <h2><a name="section_Policies"/>Policies</h2>
 <ul>
-    <li><a href="#policy:CMP0000"><b><code>CMP0000</code></b></a></li>    <li><a href="#policy:CMP0001"><b><code>CMP0001</code></b></a></li>    <li><a href="#policy:CMP0002"><b><code>CMP0002</code></b></a></li>    <li><a href="#policy:CMP0003"><b><code>CMP0003</code></b></a></li>    <li><a href="#policy:CMP0004"><b><code>CMP0004</code></b></a></li>    <li><a href="#policy:CMP0005"><b><code>CMP0005</code></b></a></li>    <li><a href="#policy:CMP0006"><b><code>CMP0006</code></b></a></li>    <li><a href="#policy:CMP0007"><b><code>CMP0007</code></b></a></li>    <li><a href="#policy:CMP0008"><b><code>CMP0008</code></b></a></li>    <li><a href="#policy:CMP0009"><b><code>CMP0009</code></b></a></li></ul>
+    <li><a href="#policy:CMP0000"><b><code>CMP0000</code></b></a></li>    <li><a href="#policy:CMP0001"><b><code>CMP0001</code></b></a></li>    <li><a href="#policy:CMP0002"><b><code>CMP0002</code></b></a></li>    <li><a href="#policy:CMP0003"><b><code>CMP0003</code></b></a></li>    <li><a href="#policy:CMP0004"><b><code>CMP0004</code></b></a></li>    <li><a href="#policy:CMP0005"><b><code>CMP0005</code></b></a></li>    <li><a href="#policy:CMP0006"><b><code>CMP0006</code></b></a></li>    <li><a href="#policy:CMP0007"><b><code>CMP0007</code></b></a></li>    <li><a href="#policy:CMP0008"><b><code>CMP0008</code></b></a></li>    <li><a href="#policy:CMP0009"><b><code>CMP0009</code></b></a></li>    <li><a href="#policy:CMP0010"><b><code>CMP0010</code></b></a></li>    <li><a href="#policy:CMP0011"><b><code>CMP0011</code></b></a></li></ul>
 <ul>
   <li>
     <a name="policy:CMP0000"><b><code>CMP0000</code></b></a>: A minimum required CMake version must be specified.<br>
@@ -67,6 +72,14 @@
   <li>
     <a name="policy:CMP0009"><b><code>CMP0009</code></b></a>: FILE GLOB_RECURSE calls should not follow symlinks by default.<br>
     <p>In CMake 2.6.1 and below, FILE GLOB_RECURSE calls would follow through symlinks, sometimes coming up with unexpectedly large result sets because of symlinks to top level directories that contain hundreds of thousands of files.<br><p>This policy determines whether or not to follow symlinks encountered during a FILE GLOB_RECURSE call. The OLD behavior for this policy is to follow the symlinks. The NEW behavior for this policy is not to follow the symlinks by default, but only if FOLLOW_SYMLINKS is given as an additional argument to the FILE command.<br><p>This policy was introduced in CMake version 2.6.2.  CMake version 2.6 warns when the policy is not set and uses OLD behavior.  Use the cmake_policy command to set it to OLD or NEW explicitly.
+  </li>
+  <li>
+    <a name="policy:CMP0010"><b><code>CMP0010</code></b></a>: Bad variable reference syntax is an error.<br>
+    <p>In CMake 2.6.2 and below, incorrect variable reference syntax such as a missing close-brace ("${FOO") was reported but did not stop processing of CMake code.  This policy determines whether a bad variable reference is an error.  The OLD behavior for this policy is to warn about the error, leave the string untouched, and continue. The NEW behavior for this policy is to report an error.<br><p>This policy was introduced in CMake version 2.6.3.  CMake version 2.6 warns when the policy is not set and uses OLD behavior.  Use the cmake_policy command to set it to OLD or NEW explicitly.
+  </li>
+  <li>
+    <a name="policy:CMP0011"><b><code>CMP0011</code></b></a>: Included scripts do automatic cmake_policy PUSH and POP.<br>
+    <p>In CMake 2.6.2 and below, CMake Policy settings in scripts loaded by the include() and find_package() commands would affect the includer.  Explicit invocations of cmake_policy(PUSH) and cmake_policy(POP) were required to isolate policy changes and protect the includer.  While some scripts intend to affect the policies of their includer, most do not.  In CMake 2.6.3 and above, include() and find_package() by default PUSH and POP an entry on the policy stack around an included script, but provide a NO_POLICY_SCOPE option to disable it.  This policy determines whether or not to imply NO_POLICY_SCOPE for compatibility.  The OLD behavior for this policy is to imply NO_POLICY_SCOPE for include() and find_package() commands.  The NEW behavior for this policy is to allow the commands to do their default cmake_policy PUSH and POP.<br><p>This policy was introduced in CMake version 2.6.3.  CMake version 2.6 warns when the policy is not set and uses OLD behavior.  Use the cmake_policy command to set it to OLD or NEW explicitly.
   </li>
 </ul>
 <h2><a name="section_Copyright"/>Copyright</h2>
