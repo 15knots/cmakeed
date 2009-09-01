@@ -1,0 +1,17 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake variable CMAKE_CFG_INTDIR</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CMAKE_CFG_INTDIR"><b><code>CMAKE_CFG_INTDIR</code></b></a>: Build time configuration directory for project.<br>
+    <p>This is a variable that is used to provide developers access to the intermediate directory used by Visual Studio IDE projects.   For example, if building Debug all executables and libraries end up in a Debug directory.   On UNIX systems this variable is set to ".".  However, with Visual Studio this variable is set to $(IntDir).   $(IntDir) is expanded by the IDE only.  So this variable should only be used in custom commands that will be run during the build process.   This variable should not be used directly in a CMake command.  CMake has no way of knowing if Debug or Release will be picked by the IDE for a build type. If a program needs to know the directory it was built in, it can use CMAKE_INTDIR. CMAKE_INTDIR is a C/C++ preprocessor macro that is defined on the command line of the compiler.   If it has a value, it will be the intermediate directory used to build the file.   This way an executable or a library can find files that are located in the build directory.
+  </li>
+</ul>
+</div></body></html>

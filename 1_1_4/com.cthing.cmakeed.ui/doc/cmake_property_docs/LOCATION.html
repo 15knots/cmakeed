@@ -1,0 +1,17 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property LOCATION</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:LOCATION"><b><code>LOCATION</code></b></a>: Read-only location of a target on disk.<br>
+    <p>For an imported target, this read-only property returns the value of the LOCATION_&lt;CONFIG&gt; property for an unspecified configuration &lt;CONFIG&gt; provided by the target.<br><p>For a non-imported target, this property is provided for compatibility with CMake 2.4 and below.  It was meant to get the location of an executable target's output file for use in add_custom_command.  The path may contain a build-system-specific portion that is replaced at build time with the configuration getting built (such as "$(ConfigurationName)" in VS). In CMake 2.6 and above add_custom_command automatically recognizes a target name in its COMMAND and DEPENDS options and computes the target location.  Therefore this property is not needed for creating custom commands.
+  </li>
+</ul>
+</div></body></html>
