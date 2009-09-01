@@ -16,7 +16,7 @@
 
 #export QTDIR="/Users/Shared/Toolkits/Qt-4.3.5-UBDylib"
 #qtassistant="$QTDIR/bin/Assistant_adp.app/Contents/MacOS/assistant_adp"
-CMAKE="/Users/Shared/Toolkits/CMake-2.6.2/cmake"
+CMAKE="/Users/Shared/Toolkits/CMake-2.6.4/bin/cmake"
 
 generationDir="./"
 assistantDir="${generationDir}/doc"
