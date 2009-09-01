@@ -11,7 +11,7 @@
 <ul>
   <li>
     <a name="single_item:LIBRARY_OUTPUT_PATH"><b><code>LIBRARY_OUTPUT_PATH</code></b></a>: Old library location variable.<br>
-    <p>This variable should no longer be used as of CMake 2.6.  Use the ARCHIVE_OUTPUT_DIRECTORY, LIBRARY_OUTPUT_DIRECTORY, and RUNTIME_OUTPUT_DIRECTORY target properties instead.  They will override this variable if they are set.<br><p>If set, this is the directory where all the libraries built during the build process will be placed.
+    <p>The target properties ARCHIVE_OUTPUT_DIRECTORY, LIBRARY_OUTPUT_DIRECTORY, and RUNTIME_OUTPUT_DIRECTORY supercede this variable for a target if they are set.  Library targets are otherwise placed in this directory.
   </li>
 </ul>
 </div></body></html>
