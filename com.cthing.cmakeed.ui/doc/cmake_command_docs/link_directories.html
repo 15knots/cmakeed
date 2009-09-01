@@ -12,7 +12,7 @@
   <li>
     <a name="single_item:link_directories"><b><code>link_directories</code></b></a>: Specify directories in which the linker will look for libraries.<br>
     <pre>  link_directories(directory1 directory2 ...)<br></pre>
-    <p>Specify the paths in which the linker should search for libraries. The command will apply only to targets created after it is called.
+    <p>Specify the paths in which the linker should search for libraries. The command will apply only to targets created after it is called. For historical reasons, relative paths given to this command are passed to the linker unchanged (unlike many CMake commands which interpret them relative to the current source directory).
   </li>
 </ul>
 </div></body></html>
