@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command cmake_minimum_required</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:cmake_minimum_required"><b><code>cmake_minimum_required</code></b></a>: Set the minimum required version of cmake for a project.<br>
+    <pre>  cmake_minimum_required(VERSION major[.minor[.patch]]<br>                         [FATAL_ERROR])<br></pre>
+    <p>If the current version of CMake is lower than that required it will stop processing the project and report an error.  When a version higher than 2.4 is specified the command implicitly invokes<br><pre>  cmake_policy(VERSION major[.minor[.patch]])<br></pre>
+    <p>which sets the cmake policy version level to the version specified.  When version 2.4 or lower is given the command implicitly invokes<br><pre>  cmake_policy(VERSION 2.4)<br></pre>
+    <p>which enables compatibility features for CMake 2.4 and lower.<br><p>The FATAL_ERROR option is accepted but ignored.  It is left from CMake versions 2.4 and lower in which failure to meet the minimum version was a warning by default.
+  </li>
+</ul>
+</div></body></html>
