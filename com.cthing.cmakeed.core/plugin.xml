@@ -17,6 +17,9 @@
   <variable name="BUILD_SHARED_LIBS"
           desc="Global flag to cause add_library to create shared libraries if on."
           deprecated="false" />
+  <variable name="CMAKE_&lt;CONFIG&gt;_POSTFIX"
+          desc="Default filename postfix for libraries under configuration &lt;CONFIG&gt;."
+          deprecated="false" />
   <variable name="CMAKE_&lt;LANG&gt;_ARCHIVE_APPEND"
           desc="Rule variable to append to a static archive."
           deprecated="false" />
@@ -61,6 +64,9 @@
           deprecated="false" />
   <variable name="CMAKE_&lt;LANG&gt;_IGNORE_EXTENSIONS"
           desc="File extensions that should be ignored by the build."
+          deprecated="false" />
+  <variable name="CMAKE_&lt;LANG&gt;_IMPLICIT_INCLUDE_DIRECTORIES"
+          desc="Directories implicitly searched by the compiler for header files."
           deprecated="false" />
   <variable name="CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE"
           desc="Determine if a language should be used for linking."
@@ -119,6 +125,9 @@
   <variable name="CMAKE_CL_64"
           desc="Using the 64 bit compiler from Microsoft"
           deprecated="false" />
+  <variable name="CMAKE_COLOR_MAKEFILE"
+          desc="Enables color output when using the Makefile generator."
+          deprecated="false" />
   <variable name="CMAKE_COMMAND"
           desc="The full path to the cmake executable."
           deprecated="false" />
@@ -150,7 +159,7 @@
           desc="The path to the source directory currently being processed."
           deprecated="false" />
   <variable name="CMAKE_DEBUG_POSTFIX"
-          desc="A postfix to add to targets when build as debug."
+          desc="See variable CMAKE_&lt;CONFIG&gt;_POSTFIX."
           deprecated="false" />
   <variable name="CMAKE_DL_LIBS"
           desc="Name of library containing dlopen and dlcose."
@@ -272,6 +281,9 @@
   <variable name="CMAKE_PARENT_LIST_FILE"
           desc="Full path to the parent listfile of the one currently being processed."
           deprecated="false" />
+  <variable name="CMAKE_PATCH_VERSION"
+          desc="The patch version of cmake (i.e. the 3 in X.X.3)."
+          deprecated="false" />
   <variable name="CMAKE_PREFIX_PATH"
           desc="Path used for searching by FIND_XXX(), with appropriate suffixes added."
           deprecated="false" />
@@ -361,6 +373,9 @@
           deprecated="false" />
   <variable name="CMAKE_VERBOSE_MAKEFILE"
           desc="Create verbose makefiles if on."
+          deprecated="false" />
+  <variable name="CMAKE_VERSION"
+          desc="The full version of cmake in major.minor.patch format."
           deprecated="false" />
   <variable name="CYGWIN"
           desc="True for cygwin."
@@ -457,11 +472,17 @@
   <property name="COMPILE_FLAGS"
           desc="Additional flags to use when compiling this target's sources."
           deprecated="false" />
+  <property name="DEBUG_CONFIGURATIONS"
+          desc="Specify which configurations are for debugging."
+          deprecated="false" />
   <property name="DEBUG_OUTPUT_NAME"
           desc="Sets the real name of a target when it is built."
           deprecated="false" />
   <property name="DEBUG_POSTFIX"
-          desc="A postfix that will be applied to this target when build debug."
+          desc="See target property &lt;CONFIG&gt;_POSTFIX."
+          deprecated="false" />
+  <property name="DEBUG_POSTFIX"
+          desc="Postfix to append to the target file name for configuration &lt;CONFIG&gt;."
           deprecated="false" />
   <property name="DEFINE_SYMBOL"
           desc="Define a symbol when compiling this target's sources."
@@ -680,19 +701,22 @@
           desc="The current stack of listfiles being processed."
           deprecated="false" />
   <property name="LOCATION"
-          desc="Deprecated.  Use LOCATION_&lt;CONFIG&gt; or avoid altogether."
-          deprecated="true" />
-  <property name="LOCATION_DEBUG"
+          desc="Read-only location of a target on disk."
+          deprecated="false" />
+  <property name="LOCATION_&lt;CONFIG&gt;"
           desc="Read-only property providing a target location on disk."
+          deprecated="false" />
+  <property name="LOCATION_DEBUG"
+          desc="Read-only location of a target on disk."
           deprecated="false" />
   <property name="LOCATION_MINSIZEREL"
-          desc="Read-only property providing a target location on disk."
+          desc="Read-only location of a target on disk."
           deprecated="false" />
   <property name="LOCATION_RELEASE"
-          desc="Read-only property providing a target location on disk."
+          desc="Read-only location of a target on disk."
           deprecated="false" />
   <property name="LOCATION_RELWITHDEBINFO"
-          desc="Read-only property providing a target location on disk."
+          desc="Read-only location of a target on disk."
           deprecated="false" />
   <property name="MACOSX_BUNDLE"
           desc="Build an executable as an application bundle on Mac OS X."
@@ -730,8 +754,11 @@
   <property name="MINSIZEREL_OUTPUT_NAME"
           desc="Sets the real name of a target when it is built."
           deprecated="false" />
+  <property name="MINSIZEREL_POSTFIX"
+          desc="Postfix to append to the target file name for configuration &lt;CONFIG&gt;."
+          deprecated="false" />
   <property name="OBJECT_DEPENDS"
-          desc="Additional dependencies."
+          desc="Additional files on which a compiled object file depends."
           deprecated="false" />
   <property name="OBJECT_OUTPUTS"
           desc="Additional outputs for a Makefile rule."
@@ -763,14 +790,23 @@
   <property name="PRIVATE_HEADER"
           desc="Specify private header files in a FRAMEWORK shared library target."
           deprecated="false" />
+  <property name="PROJECT_LABEL"
+          desc="Change the name of a target in an IDE."
+          deprecated="false" />
   <property name="PUBLIC_HEADER"
           desc="Specify public header files in a FRAMEWORK shared library target."
           deprecated="false" />
   <property name="RELEASE_OUTPUT_NAME"
           desc="Sets the real name of a target when it is built."
           deprecated="false" />
+  <property name="RELEASE_POSTFIX"
+          desc="Postfix to append to the target file name for configuration &lt;CONFIG&gt;."
+          deprecated="false" />
   <property name="RELWITHDEBINFO_OUTPUT_NAME"
           desc="Sets the real name of a target when it is built."
+          deprecated="false" />
+  <property name="RELWITHDEBINFO_POSTFIX"
+          desc="Postfix to append to the target file name for configuration &lt;CONFIG&gt;."
           deprecated="false" />
   <property name="REPORT_UNDEFINED_PROPERTIES"
           desc="If set, report any undefined properties to this file."
@@ -811,11 +847,26 @@
   <property name="TIMEOUT"
           desc="How many seconds to allow for this test."
           deprecated="false" />
+  <property name="TYPE"
+          desc="The type of the target."
+          deprecated="false" />
   <property name="VARIABLES"
           desc="List of variables defined in the current directory."
           deprecated="false" />
   <property name="VERSION"
           desc="What version number is this target."
+          deprecated="false" />
+  <property name="VS_KEYWORD"
+          desc="Visual Studio project keyword."
+          deprecated="false" />
+  <property name="VS_SCC_LOCALPATH"
+          desc="Visual Studio Source Code Control Provider."
+          deprecated="false" />
+  <property name="VS_SCC_PROJECTNAME"
+          desc="Visual Studio Source Code Control Project."
+          deprecated="false" />
+  <property name="VS_SCC_PROVIDER"
+          desc="Visual Studio Source Code Control Provider."
           deprecated="false" />
   <property name="WILL_FAIL"
           desc="If set to true, this will invert the pass/fail flag of the test."
@@ -849,7 +900,7 @@
   <command name="add_custom_target"
          desc="Add a target with no output so it will always be built."
          deprecated="false" >
-    <usage value="(Name [ALL] [command1 [args1...]] [COMMAND command2 [args2...] ...] [DEPENDS depend depend depend ... ] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM])" />
+    <usage value="(Name [ALL] [command1 [args1...]] [COMMAND command2 [args2...] ...] [DEPENDS depend depend depend ... ] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM] [SOURCES src1 [src2...]])" />
   </command>
   <command name="add_definitions"
          desc="Adds -D define flags to the compilation of source files."
@@ -1031,8 +1082,8 @@
   <command name="find_package"
          desc="Load settings for an external project."
          deprecated="false" >
-    <usage value="(package [version] [EXACT] [QUIET] [[REQUIRED|COMPONENTS] [components...]])" />
-    <usage value="(package [version] [EXACT] [QUIET] [[REQUIRED|COMPONENTS] [components...]] [NO_MODULE] [NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]] [PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_BUILDS_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])" />
+    <usage value="(package [version] [EXACT] [QUIET] [[REQUIRED|COMPONENTS] [components...]] [NO_POLICY_SCOPE])" />
+    <usage value="(package [version] [EXACT] [QUIET] [[REQUIRED|COMPONENTS] [components...]] [NO_MODULE] [NO_POLICY_SCOPE] [NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]] [PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_BUILDS_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])" />
     <usage value="(package [major[.minor]] [EXACT] [REQUIRED|QUIET])" />
     <usage value="(package PATHS paths... NO_DEFAULT_PATH)" />
     <usage value="(package)" />
@@ -1085,7 +1136,7 @@
   <command name="get_filename_component"
          desc="Get a specific component of a full filename."
          deprecated="false" >
-    <usage value="(VarName FileName PATH|ABSOLUTE|NAME|EXT|NAME_WE [CACHE])" />
+    <usage value="(VarName FileName PATH|ABSOLUTE|NAME|EXT|NAME_WE|REALPATH [CACHE])" />
     <usage value="(VarName FileName PROGRAM [PROGRAM_ARGS ArgVar] [CACHE])" />
   </command>
   <command name="get_property"
@@ -1148,8 +1199,7 @@
   <command name="include"
          desc="Read CMake listfile code from the given file."
          deprecated="false" >
-    <usage value="(file1 [OPTIONAL] [RESULT_VARIABLE VAR])" />
-    <usage value="(module [OPTIONAL] [RESULT_VARIABLE VAR])" />
+    <usage value="(file|module [OPTIONAL] [RESULT_VARIABLE VAR] [NO_POLICY_SCOPE])" />
   </command>
   <command name="include_directories"
          desc="Add include directories to the build."
@@ -1276,7 +1326,7 @@
   <command name="project"
          desc="Set a name for the entire project."
          deprecated="false" >
-    <usage value="(name [CXX] [C] [Java])" />
+    <usage value="(name [languageName1 languageName2 ... ] )" />
   </command>
   <command name="qt_wrap_cpp"
          desc="Create Qt Wrappers."
@@ -1399,6 +1449,12 @@
          deprecated="false" >
     <usage value="(RUN_RESULT_VAR COMPILE_RESULT_VAR bindir srcfile [CMAKE_FLAGS Flags] [COMPILE_DEFINITIONS flags] [COMPILE_OUTPUT_VARIABLE comp] [RUN_OUTPUT_VARIABLE run] [OUTPUT_VARIABLE var] [ARGS arg1 arg2...])" />
   </command>
+  <command name="unset"
+         desc="Unset a variable, cache variable, or environment variable."
+         deprecated="false" >
+    <usage value="(variable [CACHE])" />
+    <usage value="(ENV{LD_LIBRARY_PATH})" />
+  </command>
   <command name="use_mangled_mesa"
          desc="Copy mesa headers for use in combination with system GL."
          deprecated="true" >
@@ -1475,7 +1531,6 @@
   <reservedword name="COPYONLY" />
   <reservedword name="COPY_FILE" />
   <reservedword name="CVS" />
-  <reservedword name="CXX" />
   <reservedword name="DBAR" />
   <reservedword name="DEFINED" />
   <reservedword name="DEPENDS" />
@@ -1529,6 +1584,7 @@
   <reservedword name="IS_ABSOLUTE" />
   <reservedword name="IS_DIRECTORY" />
   <reservedword name="IS_NEWER_THAN" />
+  <reservedword name="LD_LIBRARY_PATH" />
   <reservedword name="LENGTH" />
   <reservedword name="LENGTH_MAXIMUM" />
   <reservedword name="LENGTH_MINIMUM" />
@@ -1566,6 +1622,7 @@
   <reservedword name="NO_DEFAULT_PATH" />
   <reservedword name="NO_HEX_CONVERSION" />
   <reservedword name="NO_MODULE" />
+  <reservedword name="NO_POLICY_SCOPE" />
   <reservedword name="NO_SYSTEM_ENVIRONMENT_PATH" />
   <reservedword name="OFFSET" />
   <reservedword name="OLD" />
@@ -1607,6 +1664,7 @@
   <reservedword name="RANGE" />
   <reservedword name="READ" />
   <reservedword name="READ_WITH_PREFIX" />
+  <reservedword name="REALPATH" />
   <reservedword name="REGEX" />
   <reservedword name="REGULAR_EXPRESSION" />
   <reservedword name="RELATIVE" />
@@ -1636,6 +1694,7 @@
   <reservedword name="SHARED" />
   <reservedword name="SORT" />
   <reservedword name="SOURCE" />
+  <reservedword name="SOURCES" />
   <reservedword name="STATIC" />
   <reservedword name="STATUS" />
   <reservedword name="STREQUAL" />
