@@ -1,0 +1,32 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module FindKDE3</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:FindKDE3"><b><code>FindKDE3</code></b></a>: Find the KDE3 include and library dirs, KDE preprocessors and define a some macros<br>
+    <p><br><p>This module defines the following variables:<br><pre>  KDE3_DEFINITIONS         - compiler definitions required for compiling KDE software<br>  KDE3_INCLUDE_DIR         - the KDE include directory<br>  KDE3_INCLUDE_DIRS        - the KDE and the Qt include directory, for use with INCLUDE_DIRECTORIES()<br>  KDE3_LIB_DIR             - the directory where the KDE libraries are installed, for use with LINK_DIRECTORIES()<br>  QT_AND_KDECORE_LIBS      - this contains both the Qt and the kdecore library<br>  KDE3_DCOPIDL_EXECUTABLE  - the dcopidl executable<br>  KDE3_DCOPIDL2CPP_EXECUTABLE - the dcopidl2cpp executable<br>  KDE3_KCFGC_EXECUTABLE    - the kconfig_compiler executable<br>  KDE3_FOUND               - set to TRUE if all of the above has been found<br></pre>
+    <p><br><p>The following user adjustable options are provided:<br><pre>  KDE3_BUILD_TESTS - enable this to build KDE testcases<br></pre>
+    <p><br><p><br><p>It also adds the following macros (from KDE3Macros.cmake) SRCS_VAR is always the variable which contains the list of source files for your application or library.<br><p>KDE3_AUTOMOC(file1 ... fileN)<br><pre>    Call this if you want to have automatic moc file handling.<br>    This means if you include "foo.moc" in the source file foo.cpp<br>    a moc file for the header foo.h will be created automatically.<br>    You can set the property SKIP_AUTOMAKE using SET_SOURCE_FILES_PROPERTIES()<br>    to exclude some files in the list from being processed.<br></pre>
+    <p><br><p>KDE3_ADD_MOC_FILES(SRCS_VAR file1 ... fileN )<br><pre>    If you don't use the KDE3_AUTOMOC() macro, for the files<br>    listed here moc files will be created (named "foo.moc.cpp")<br></pre>
+    <p><br><p>KDE3_ADD_DCOP_SKELS(SRCS_VAR header1.h ... headerN.h )<br><pre>    Use this to generate DCOP skeletions from the listed headers.<br></pre>
+    <p><br><p>KDE3_ADD_DCOP_STUBS(SRCS_VAR header1.h ... headerN.h )<br><pre>     Use this to generate DCOP stubs from the listed headers.<br></pre>
+    <p><br><p>KDE3_ADD_UI_FILES(SRCS_VAR file1.ui ... fileN.ui )<br><pre>    Use this to add the Qt designer ui files to your application/library.<br></pre>
+    <p><br><p>KDE3_ADD_KCFG_FILES(SRCS_VAR file1.kcfgc ... fileN.kcfgc )<br><pre>    Use this to add KDE kconfig compiler files to your application/library.<br></pre>
+    <p><br><p>KDE3_INSTALL_LIBTOOL_FILE(target)<br><pre>    This will create and install a simple libtool file for the given target.<br></pre>
+    <p><br><p>KDE3_ADD_EXECUTABLE(name file1 ... fileN )<br><pre>    Currently identical to ADD_EXECUTABLE(), may provide some advanced features in the future.<br></pre>
+    <p><br><p>KDE3_ADD_KPART(name [WITH_PREFIX] file1 ... fileN )<br><pre>    Create a KDE plugin (KPart, kioslave, etc.) from the given source files.<br>    If WITH_PREFIX is given, the resulting plugin will have the prefix "lib", otherwise it won't.<br>    It creates and installs an appropriate libtool la-file.<br></pre>
+    <p><br><p>KDE3_ADD_KDEINIT_EXECUTABLE(name file1 ... fileN )<br><pre>    Create a KDE application in the form of a module loadable via kdeinit.<br>    A library named kdeinit_&lt;name&gt; will be created and a small executable which links to it.<br></pre>
+    <p><br><p>The option KDE3_ENABLE_FINAL to enable all-in-one compilation is no longer supported.<br><p><br><p>Author: Alexander Neundorf &lt;neundorf@kde.org&gt;
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/FindKDE3.cmake
+</div></body></html>

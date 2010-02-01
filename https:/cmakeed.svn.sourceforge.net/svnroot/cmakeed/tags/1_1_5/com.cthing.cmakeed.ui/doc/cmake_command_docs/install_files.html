@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command install_files</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:install_files"><b><code>install_files</code></b></a>: Deprecated.  Use the install(FILES ) command instead.<br>
+    <p>This command has been superceded by the install command.  It is provided for compatibility with older CMake code.  The FILES form is directly replaced by the FILES form of the install command.  The regexp form can be expressed more clearly using the GLOB form of the file command.<br><pre>  install_files(&lt;dir&gt; extension file file ...)<br></pre>
+    <p>Create rules to install the listed files with the given extension into the given directory.  Only files existing in the current source tree or its corresponding location in the binary tree may be listed.  If a file specified already has an extension, that extension will be removed first.  This is useful for providing lists of source files such as foo.cxx when you want the corresponding foo.h to be installed. A typical extension is '.h'.<br><pre>  install_files(&lt;dir&gt; regexp)<br></pre>
+    <p>Any files in the current source directory that match the regular expression will be installed.<br><pre>  install_files(&lt;dir&gt; FILES file file ...)<br></pre>
+    <p>Any files listed after the FILES keyword will be installed explicitly from the names given.  Full paths are allowed in this form.<br><p>The directory &lt;dir&gt; is relative to the installation prefix, which is stored in the variable CMAKE_INSTALL_PREFIX.
+  </li>
+</ul>
+</div></body></html>

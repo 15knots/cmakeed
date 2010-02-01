@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command export_library_dependencies</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:export_library_dependencies"><b><code>export_library_dependencies</code></b></a>: Deprecated.  Use INSTALL(EXPORT) or EXPORT command.<br>
+    <p>This command generates an old-style library dependencies file.  Projects requiring CMake 2.6 or later should not use the command.  Use instead the install(EXPORT) command to help export targets from an installation tree and the export() command to export targets from a build tree.<br><p>The old-style library dependencies file does not take into account per-configuration names of libraries or the LINK_INTERFACE_LIBRARIES target property.<br><pre>  export_library_dependencies(&lt;file&gt; [APPEND])<br></pre>
+    <p>Create a file named &lt;file&gt; that can be included into a CMake listfile with the INCLUDE command.  The file will contain a number of SET commands that will set all the variables needed for library dependency information.  This should be the last command in the top level CMakeLists.txt file of the project.  If the APPEND option is specified, the SET commands will be appended to the given file instead of replacing it.
+  </li>
+</ul>
+</div></body></html>

@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake variable CMAKE_CFG_INTDIR</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CMAKE_CFG_INTDIR"><b><code>CMAKE_CFG_INTDIR</code></b></a>: Build-time reference to per-configuration output subdirectory.<br>
+    <p>For native build systems supporting multiple configurations in the build tree (such as Visual Studio and Xcode), the value is a reference to a build-time variable specifying the name of the per-configuration output subdirectory.  On Makefile generators this evaluates to "." because there is only one configuration in a build tree.  Example values:<br><pre>  $(IntDir)        = Visual Studio 6<br>  $(OutDir)        = Visual Studio 7, 8, 9<br>  $(Configuration) = Visual Studio 10<br>  $(CONFIGURATION) = Xcode<br>  .                = Make-based tools<br></pre>
+    <p>Since these values are evaluated by the native build system, this variable is suitable only for use in command lines that will be evaluated at build time.  Example of intended usage:<br><pre>  add_executable(mytool mytool.c)<br>  add_custom_command(<br>    OUTPUT out.txt<br>    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/mytool<br>            ${CMAKE_CURRENT_SOURCE_DIR}/in.txt out.txt<br>    DEPENDS mytool in.txt<br>    )<br>  add_custom_target(drive ALL DEPENDS out.txt)<br></pre>
+    <p>Note that CMAKE_CFG_INTDIR is no longer necessary for this purpose but has been left for compatibility with existing projects.  Instead add_custom_command() recognizes executable target names in its COMMAND option, so "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/mytool" can be replaced by just "mytool".<br><p>This variable is read-only.  Setting it is undefined behavior.  In multi-configuration build systems the value of this variable is passed as the value of preprocessor symbol "CMAKE_INTDIR" to the compilation of all source files.
+  </li>
+</ul>
+</div></body></html>

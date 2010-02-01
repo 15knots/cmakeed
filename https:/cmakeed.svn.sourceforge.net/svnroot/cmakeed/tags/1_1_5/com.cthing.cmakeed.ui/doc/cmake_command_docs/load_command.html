@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command load_command</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:load_command"><b><code>load_command</code></b></a>: Load a command into a running CMake.<br>
+    <pre>  load_command(COMMAND_NAME &lt;loc1&gt; [loc2 ...])<br></pre>
+    <p>The given locations are searched for a library whose name is cmCOMMAND_NAME.  If found, it is loaded as a module and the command is added to the set of available CMake commands.  Usually, TRY_COMPILE is used before this command to compile the module. If the command is successfully loaded a variable named<br><pre>  CMAKE_LOADED_COMMAND_&lt;COMMAND_NAME&gt;<br></pre>
+    <p>will be set to the full path of the module that was loaded.  Otherwise the variable will not be set.
+  </li>
+</ul>
+</div></body></html>
