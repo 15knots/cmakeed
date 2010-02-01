@@ -1,0 +1,24 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module FindSquish</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:FindSquish"><b><code>FindSquish</code></b></a>: -- Typical Use<br>
+    <p><br><p>This module can be used to find Squish (currently support is aimed at version 3).<br><pre>  SQUISH_FOUND                    If false, don't try to use Squish<br>  SQUISH_VERSION_MAJOR            The major version of Squish found<br>  SQUISH_VERSION_MINOR            The minor version of Squish found<br>  SQUISH_VERSION_PATCH            The patch version of Squish found<br></pre>
+    <p><br><pre>  SQUISH_INSTALL_DIR              The Squish installation directory (containing bin, lib, etc)<br>  SQUISH_SERVER_EXECUTABLE        The squishserver executable<br>  SQUISH_CLIENT_EXECUTABLE        The squishrunner executable<br></pre>
+    <p><br><pre>  SQUISH_INSTALL_DIR_FOUND        Was the install directory found?<br>  SQUISH_SERVER_EXECUTABLE_FOUND  Was the server executable found?<br>  SQUISH_CLIENT_EXECUTABLE_FOUND  Was the client executable found?<br></pre>
+    <p><br><p>macro SQUISH_ADD_TEST(testName applicationUnderTest testSuite testCase)<br><pre>  ENABLE_TESTING()<br>  FIND_PACKAGE(Squish)<br>  IF (SQUISH_FOUND)<br>    SQUISH_ADD_TEST(myTestName myApplication testSuiteName testCaseName)<br>  ENDIF (SQUISH_FOUND)<br></pre>
+    <p><br>
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/FindSquish.cmake
+</div></body></html>

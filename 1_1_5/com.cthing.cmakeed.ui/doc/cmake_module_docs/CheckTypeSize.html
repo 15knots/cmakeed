@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module CheckTypeSize</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CheckTypeSize"><b><code>CheckTypeSize</code></b></a>: Check sizeof a type<br>
+    <pre>  CHECK_TYPE_SIZE(TYPE VARIABLE [BUILTIN_TYPES_ONLY])<br></pre>
+    <p>Check if the type exists and determine size of type.  if the type exists, the size will be stored to the variable. This also calls check_include_file for sys/types.h stdint.h and stddef.h, setting HAVE_SYS_TYPES_H, HAVE_STDINT_H,  and HAVE_STDDEF_H.  This is because many types are stored in these include files.  <br><pre>  VARIABLE - variable to store size if the type exists.<br>  HAVE_${VARIABLE} - does the variable exists or not<br>  BUILTIN_TYPES_ONLY - The third argument is optional and if <br>                       it is set to the string BUILTIN_TYPES_ONLY<br>                       this macro will not check for any header files.<br></pre>
+    <p>The following variables may be set before calling this macro to modify the way the check is run:<br><pre>  CMAKE_REQUIRED_FLAGS = string of compile command line flags<br>  CMAKE_REQUIRED_DEFINITIONS = list of macros to define (-DFOO=bar)<br>  CMAKE_REQUIRED_INCLUDES = list of include directories<br>  CMAKE_REQUIRED_LIBRARIES = list of libraries to link<br></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/CheckTypeSize.cmake
+</div></body></html>

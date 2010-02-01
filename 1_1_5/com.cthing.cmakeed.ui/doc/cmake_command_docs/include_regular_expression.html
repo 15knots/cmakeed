@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command include_regular_expression</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:include_regular_expression"><b><code>include_regular_expression</code></b></a>: Set the regular expression used for dependency checking.<br>
+    <pre>  include_regular_expression(regex_match [regex_complain])<br></pre>
+    <p>Set the regular expressions used in dependency checking.  Only files matching regex_match will be traced as dependencies.  Only files matching regex_complain will generate warnings if they cannot be found (standard header paths are not searched).  The defaults are:<br><pre>  regex_match    = "^.*$" (match everything)<br>  regex_complain = "^$" (match empty string only)</pre>
+    
+  </li>
+</ul>
+</div></body></html>
