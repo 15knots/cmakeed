@@ -27,6 +27,11 @@ public class CMakeNameDetector implements IWordDetector
     {
         return isNameChar(c);
     }
+    
+    public boolean isCommandPart(final char c)
+    {
+        return Character.isLetterOrDigit(c) || (c == '_');
+    }
 
     /**
      * {@inheritDoc}

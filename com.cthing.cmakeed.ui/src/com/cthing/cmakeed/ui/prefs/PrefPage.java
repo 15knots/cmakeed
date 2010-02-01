@@ -49,7 +49,7 @@ public class PrefPage extends PreferencePage
 {
     private Map<String, RGB> colorMap = new HashMap<String, RGB>();
     private Map<String, Integer> styleMap = new HashMap<String, Integer>();
-    
+    private Button upperCaseCommandsB;
     private Button spacesForTabsB;
     private ListViewer textAttrViewer;
     private ColorSelector colorB;
@@ -79,6 +79,17 @@ public class PrefPage extends PreferencePage
         // Header
         final Control control = createHeader(topComp);
         control.setLayoutData(new GridData());
+        
+        // Capitalization Preferences
+        final Composite upperCaseCommandsComp = new Composite(topComp, SWT.NONE);
+        upperCaseCommandsComp.setLayoutData(new GridData());
+        upperCaseCommandsComp.setLayout(new GridLayout(2, false));
+        
+        this.upperCaseCommandsB = new Button(upperCaseCommandsComp, SWT.CHECK);
+        this.upperCaseCommandsB.setLayoutData(new GridData());
+        final Label upperCaseCommandsL = new Label(upperCaseCommandsComp, SWT.NONE);
+        upperCaseCommandsL.setLayoutData(new GridData());
+        upperCaseCommandsL.setText(Messages.getString("PreferencePage.UpperCaseCommands")); //$NON-NLS-1$
         
         // Spaces for tabs
         final Composite spacesComp = new Composite(topComp, SWT.NONE);
@@ -249,6 +260,7 @@ public class PrefPage extends PreferencePage
 
             final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();            
             this.spacesForTabsB.setSelection(store.getBoolean(Preferences.SPACES_FOR_TABS));
+            this.upperCaseCommandsB.setSelection(store.getBoolean(Preferences.UPPER_CASE_COMMANDS));
             
             readTextPrefs();
             writeTextUI();
@@ -366,6 +378,7 @@ public class PrefPage extends PreferencePage
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();            
         store.setValue(Preferences.SPACES_FOR_TABS, this.spacesForTabsB.getSelection());
+        store.setValue(Preferences.UPPER_CASE_COMMANDS, this.upperCaseCommandsB.getSelection());
 
         writeTextPrefs();
         return super.performOk();

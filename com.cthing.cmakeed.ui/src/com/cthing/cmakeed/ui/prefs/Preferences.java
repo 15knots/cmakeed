@@ -15,6 +15,8 @@ import com.cthing.cmakeed.ui.Messages;
  */
 public final class Preferences
 {
+    /** Use UPPER CASE for CMake commands */
+    public static final String UPPER_CASE_COMMANDS = "upperCaseCommands";      //$NON-NLS-1$
     /** Use spaces instead of tabs key. */
     public static final String SPACES_FOR_TABS = "spacesForTabsPref";      //$NON-NLS-1$
     /** CMake command text descriptor key. */
