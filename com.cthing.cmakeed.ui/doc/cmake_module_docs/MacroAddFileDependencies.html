@@ -7,13 +7,14 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
     <a name="single_item:MacroAddFileDependencies"><b><code>MacroAddFileDependencies</code></b></a>: MACRO_ADD_FILE_DEPENDENCIES(&lt;_file&gt; depend_files...)<br>
-    <p>MACRO_OPTIONAL_FIND_PACKAGE( &lt;name&gt; [QUIT] )
+    <p>Using the macro MACRO_ADD_FILE_DEPENDENCIES() is discouraged. There are usually better ways to specifiy the correct dependencies.<br><p>MACRO_ADD_FILE_DEPENDENCIES(&lt;_file&gt; depend_files...) is just a convenience  wrapper around the OBJECT_DEPENDS source file property. You can just use SET_PROPERTY(SOURCE &lt;file&gt; APPEND PROPERTY OBJECT_DEPENDS depend_files) instead.
   </li>
 </ul>
 
-       Defined in: /Users/Shared/Toolkits/CMake-2.6.4/share/cmake-2.6/Modules/MacroAddFileDependencies.cmake
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/MacroAddFileDependencies.cmake
 </div></body></html>

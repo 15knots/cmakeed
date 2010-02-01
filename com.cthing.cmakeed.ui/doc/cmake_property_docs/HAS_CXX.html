@@ -7,11 +7,12 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
-    <a name="single_item:HAS_CXX"><b><code>HAS_CXX</code></b></a>: Force a target to use the CXX linker.<br>
-    <p>Setting HAS_CXX on a target will force the target to use the C++ linker (and C++ runtime libraries) for linking even if the target has no C++ code in it.
+    <a name="single_item:HAS_CXX"><b><code>HAS_CXX</code></b></a>: Link the target using the C++ linker tool (obselete).<br>
+    <p>This is equivalent to setting the LINKER_LANGUAGE property to CXX.  See that property's documentation for details.
   </li>
 </ul>
 </div></body></html>

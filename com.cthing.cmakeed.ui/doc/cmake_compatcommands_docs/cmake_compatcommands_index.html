@@ -1,5 +1,5 @@
 <html><head><title>cmake_compatcommands_index - cmake</title></head><body>
-<h2><a name="section_Index"/>Master Index</h2>
+<h2><a name="section_Index"/>Master Index CMake 2.8.0</h2>
 <ul>
   <li><a href="#section_Introduction"<b>Introduction</b></a></li>
   <li><a href="#section_Compatibility Commands"<b>Compatibility Commands</b></a></li>
@@ -72,7 +72,7 @@
   </li>
   <li>
     <a name="command:subdirs"><b><code>subdirs</code></b></a>: Deprecated. Use the add_subdirectory() command instead.<br>
-    <p>Add a list of subdirectories to the build.<br><pre>  subdirs(dir1 dir2 ...[EXCLUDE_FROM_ALL exclude_dir1 exclude_dir2 ...] [PREORDER] )<br></pre>
+    <p>Add a list of subdirectories to the build.<br><pre>  subdirs(dir1 dir2 ...[EXCLUDE_FROM_ALL exclude_dir1 exclude_dir2 ...]<br>          [PREORDER] )<br></pre>
     <p>Add a list of subdirectories to the build. The add_subdirectory command should be used instead of subdirs although subdirs will still work. This will cause any CMakeLists.txt files in the sub directories to be processed by CMake.  Any directories after the PREORDER flag are traversed first by makefile builds, the PREORDER flag has no effect on IDE projects.  Any directories after the EXCLUDE_FROM_ALL marker will not be included in the top level makefile or project file. This is useful for having CMake create makefiles or projects for a set of examples in a project. You would want CMake to generate makefiles or project files for all the examples at the same time, but you would not want them to show up in the top level project or be built each time make is run from the top.
   </li>
   <li>
@@ -99,13 +99,12 @@
 <h2><a name="section_Copyright"/>Copyright</h2>
 <ul>
 </ul>
-<p>Copyright (c) 2002 Kitware, Inc., Insight Consortium.  All rights reserved.
+<p>Copyright 2000-2009 Kitware, Inc., Insight Software Consortium.  All rights reserved.
 <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 <p>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 <p>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-<p>The names of Kitware, Inc., the Insight Consortium, or the names of any consortium members, or of any contributors, may not be used to endorse or promote products derived from this software without specific prior written permission.
-<p>Modified source versions must be plainly marked as such, and must not be misrepresented as being the original software.
-<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+<p>Neither the names of Kitware, Inc., the Insight Software Consortium, nor the names of their contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <h2><a name="section_See Also"/>See Also</h2>
 <ul>
     <li><a href="#see:HomePage"><b><code>Home Page</code></b></a></li>    <li><a href="#see:FrequentlyAskedQuestions"><b><code>Frequently Asked Questions</code></b></a></li>    <li><a href="#see:OnlineDocumentation"><b><code>Online Documentation</code></b></a></li>    <li><a href="#see:MailingList"><b><code>Mailing List</code></b></a></li></ul>

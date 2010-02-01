@@ -7,6 +7,7 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
@@ -41,7 +42,8 @@
     <p><br><pre>   CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS - Extra NSIS commands that will<br>   be added to the uninstall Section.<br></pre>
     <p><br><pre>   CPACK_NSIS_COMPRESSOR - The arguments that will be passed to the<br>   NSIS SetCompressor command.<br></pre>
     <p><br><pre>   CPACK_NSIS_MODIFY_PATH - If this is set to "ON", then an extra page<br>   will appear in the installer that will allow the user to choose<br>   whether the program directory should be added to the system PATH<br>   variable.<br></pre>
-    <p><br><pre>   CPACK_NSIS_DISPLAY_NAME - The title displayed at the top of the<br>   installer.<br></pre>
+    <p><br><pre>   CPACK_NSIS_DISPLAY_NAME - The display name string that appears in<br>   the Windows Add/Remove Program control panel<br></pre>
+    <p><br><pre>   CPACK_NSIS_PACKAGE_NAME - The title displayed at the top of the<br>   installer.<br></pre>
     <p><br><pre>   CPACK_NSIS_INSTALLED_ICON_NAME - A path to the executable that<br>   contains the installer icon.<br></pre>
     <p><br><pre>   CPACK_NSIS_HELP_LINK - URL to a web site providing assistance in<br>   installing your application.<br></pre>
     <p><br><pre>   CPACK_NSIS_URL_INFO_ABOUT - URL to a web site providing more<br>   information about your application.<br></pre>
@@ -86,12 +88,12 @@
     <p><br><pre>     <a href="http://nsis.sourceforge.net/ZipDLL_plug-in">http://nsis.sourceforge.net/ZipDLL_plug-in</a><br></pre>
     <p><br><pre>   On Mac OS X, installers that download components on-the-fly can<br>   only be built and installed on system using Mac OS X 10.5 or<br>   later.<br></pre>
     <p><br><pre>   The site argument is a URL where the archives for downloadable <br>   components will reside, e.g., <a href="http://www.cmake.org/files/2.6.1/installer/">http://www.cmake.org/files/2.6.1/installer/</a><br>   All of the archives produced by CPack should be uploaded to that location.<br></pre>
-    <p><br><pre>   UPLOAD_DIRECTORY is the local directory where CPack will create the <br>   various archives for each of the components. The contents of this<br>   directory should be uploaded to a location accessible by the URL given<br>   in the site argument. If omitted, CPack will use the directory CPackUploads<br>   inside the CMake binary directory to store the generated archives.<br></pre>
+    <p><br><pre>   UPLOAD_DIRECTORY is the local directory where CPack will create the <br>   various archives for each of the components. The contents of this<br>   directory should be uploaded to a location accessible by the URL given<br>   in the site argument. If omitted, CPack will use the directory <br>   CPackUploads inside the CMake binary directory to store the generated<br>   archives.<br></pre>
     <p><br><pre>   The ALL flag indicates that all components be downloaded. Otherwise, only <br>   those components explicitly marked as DOWNLOADED or that have a specified <br>   ARCHIVE_FILE will be downloaded. Additionally, the ALL option implies<br>   ADD_REMOVE (unless NO_ADD_REMOVE is specified).<br></pre>
     <p><br><pre>   ADD_REMOVE indicates that CPack should install a copy of the installer<br>   that can be called from Windows' Add/Remove Programs dialog (via the <br>   "Modify" button) to change the set of installed components. NO_ADD_REMOVE<br>   turns off this behavior. This option is ignored on Mac OS X.<br></pre>
     
   </li>
 </ul>
 
-       Defined in: /Users/Shared/Toolkits/CMake-2.6.4/share/cmake-2.6/Modules/CPack.cmake
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/CPack.cmake
 </div></body></html>

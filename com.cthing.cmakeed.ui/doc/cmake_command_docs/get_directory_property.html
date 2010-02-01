@@ -7,12 +7,14 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
-    <a name="single_item:get_directory_property"><b><code>get_directory_property</code></b></a>: Get a property of the directory.<br>
-    <pre>  get_directory_property(VAR [DIRECTORY dir] property)<br></pre>
-    <p>Get a property from the Directory.  The value of the property is stored in the variable VAR. If the property is not found, CMake will report an error. The properties include: VARIABLES, CACHE_VARIABLES, COMMANDS, MACROS, INCLUDE_DIRECTORIES, LINK_DIRECTORIES, DEFINITIONS, INCLUDE_REGULAR_EXPRESSION, LISTFILE_STACK, PARENT_DIRECTORY, and DEFINITION varname.  If the DIRECTORY argument is provided then the property of the provided directory will be retrieved instead of the current directory. You can only get properties of a directory during or after it has been traversed by cmake.
+    <a name="single_item:get_directory_property"><b><code>get_directory_property</code></b></a>: Get a property of DIRECTORY scope.<br>
+    <pre>  get_directory_property(&lt;variable&gt; [DIRECTORY &lt;dir&gt;] &lt;prop-name&gt;)<br></pre>
+    <p>Store a property of directory scope in the named variable.  If the property is not defined the empty-string is returned.  The DIRECTORY argument specifies another directory from which to retrieve the property value.  The specified directory must have already been traversed by CMake.<br><pre>  get_directory_property(&lt;variable&gt; [DIRECTORY &lt;dir&gt;]<br>                         DEFINITION &lt;var-name&gt;)<br></pre>
+    <p>Get a variable definition from a directory.  This form is useful to get a variable definition from another directory.
   </li>
 </ul>
 </div></body></html>
