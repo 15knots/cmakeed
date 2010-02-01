@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module FindGTest</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:FindGTest"><b><code>FindGTest</code></b></a>: --------------------<br>
+    <p>Locate the Google C++ Testing Framework.<br><p>Defines the following variables:<br><pre>   GTEST_FOUND - Found the Google Testing framework<br>   GTEST_INCLUDE_DIRS - Include directories<br></pre>
+    <p><br><p>Also defines the library variables below as normal variables.  These contain debug/optimized keywords when a debugging library is found.<br><pre>   GTEST_BOTH_LIBRARIES - Both libgtest &amp; libgtest-main<br>   GTEST_LIBRARIES - libgtest<br>   GTEST_MAIN_LIBRARIES - libgtest-main<br></pre>
+    <p><br><p>Accepts the following variables as input:<br><pre>   GTEST_ROOT - (as CMake or env. variable)<br>                The root directory of the gtest install prefix<br></pre>
+    <p><br><pre>   GTEST_MSVC_SEARCH - If on MSVC, enables searching the build tree of<br>                       GTest if set to MD or MT (defaults: MD)<br></pre>
+    <p><br><p>Example Usage:<br><pre>    enable_testing(true)<br>    find_package(GTest REQUIRED)<br>    include_directories(${GTEST_INCLUDE_DIRS})<br></pre>
+    <p><br><pre>    add_executable(foo foo.cc)<br>    target_link_libraries(foo ${GTEST_BOTH_LIBRARIES})<br></pre>
+    <p><br><pre>    add_test(AllTestsInFoo foo)<br></pre>
+    <p><br><p><br><p>If you would like each Google test to show up in CTest as a test you may use the following macro.  NOTE: It WILL slow down your tests, so be warned.<br><p>GTEST_ADD_TESTS(executable extra_args ARGN)<br><pre>    executable = The path to the test executable<br>    extra_args = Pass a list of extra arguments to be passed to<br>                 executable enclosed in quotes (or "" for none)<br>    ARGN =       A list of source files to search for tests &amp; test<br>                 fixtures.<br></pre>
+    <p><br><pre>  Example:<br>     set(FooTestArgs --foo 1 --bar 2)<br>     add_executable(FooTest FooUnitTest.cc)<br>     GTEST_ADD_TESTS(FooTest "${FooTestArgs}" FooUnitTest.cc)<br></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/FindGTest.cmake
+</div></body></html>

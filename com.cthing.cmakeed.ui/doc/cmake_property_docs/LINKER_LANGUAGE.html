@@ -7,11 +7,12 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
-    <a name="single_item:LINKER_LANGUAGE"><b><code>LINKER_LANGUAGE</code></b></a>: What tool to use for linking, based on language.<br>
-    <p>The LINKER_LANGUAGE property is used to change the tool used to link an executable or shared library. The default is set the language to match the files in the library. CXX and C are common values for this property.
+    <a name="single_item:LINKER_LANGUAGE"><b><code>LINKER_LANGUAGE</code></b></a>: Specifies language whose compiler will invoke the linker.<br>
+    <p>For executables, shared libraries, and modules, this sets the language whose compiler is used to link the target (such as "C" or "CXX").  A typical value for an executable is the language of the source file providing the program entry point (main).  If not set, the language with the highest linker preference value is the default.  See documentation of CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE variables.
   </li>
 </ul>
 </div></body></html>

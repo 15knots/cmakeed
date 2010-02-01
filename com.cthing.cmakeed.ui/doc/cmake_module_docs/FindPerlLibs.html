@@ -7,14 +7,17 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
     <a name="single_item:FindPerlLibs"><b><code>FindPerlLibs</code></b></a>: Find Perl libraries<br>
-    <p>This module finds if PERL is installed and determines where the include files and libraries are. It also determines what the name of the library is. This code sets the following variables:<br><pre>  PERL_INCLUDE_PATH = path to where perl.h is found<br>  PERL_EXECUTABLE   = full path to the perl binary<br></pre>
+    <p>This module finds if PERL is installed and determines where the include files and libraries are. It also determines what the name of the library is. This code sets the following variables:<br><pre>  PERLLIBS_FOUND    = True if perl.h &amp; libperl were found<br>  PERL_INCLUDE_PATH = path to where perl.h is found<br>  PERL_LIBRARY      = path to libperl<br>  PERL_EXECUTABLE   = full path to the perl binary<br></pre>
+    <p><br><pre>  The following variables are also available if needed<br>  (introduced after CMake 2.6.4)<br></pre>
+    <p><br><pre>  PERL_SITESEARCH    = path to the sitesearch install dir<br>  PERL_SITELIB       = path to the sitelib install directory<br>  PERL_VENDORARCH    = path to the vendor arch install directory<br>  PERL_VENDORLIB     = path to the vendor lib install directory<br>  PERL_ARCHLIB       = path to the arch lib install directory<br>  PERL_PRIVLIB       = path to the priv lib install directory<br>  PERL_EXTRA_C_FLAGS = Compilation flags used to build perl<br></pre>
     <p><br>
   </li>
 </ul>
 
-       Defined in: /Users/Shared/Toolkits/CMake-2.6.4/share/cmake-2.6/Modules/FindPerlLibs.cmake
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/FindPerlLibs.cmake
 </div></body></html>

@@ -7,11 +7,12 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
     <a name="single_item:CMAKE_MFC_FLAG"><b><code>CMAKE_MFC_FLAG</code></b></a>: Tell cmake to use MFC for an executable or dll.<br>
-    <p>This can be set in a CMakeLists.txt file and will enable MFC in the application.  It should be set to 1 for static the static MFC library, and 2 for the shared MFC library.  This is used in visual studio 6 and 7 project files.   The CMakeSetup dialog uses MFC and the CMakeLists.txt looks like this:<br><p>ADD_DEFINITIONS(-D_AFXDLL)<br><p>set(CMAKE_MFC_FLAG 2)<br><p>add_executable(CMakeSetup WIN32 ${SRCS})<br>
+    <p>This can be set in a CMakeLists.txt file and will enable MFC in the application.  It should be set to 1 for static the static MFC library, and 2 for the shared MFC library.  This is used in visual studio 6 and 7 project files.   The CMakeSetup dialog used MFC and the CMakeLists.txt looks like this:<br><p>add_definitions(-D_AFXDLL)<br><p>set(CMAKE_MFC_FLAG 2)<br><p>add_executable(CMakeSetup WIN32 ${SRCS})<br>
   </li>
 </ul>
 </div></body></html>

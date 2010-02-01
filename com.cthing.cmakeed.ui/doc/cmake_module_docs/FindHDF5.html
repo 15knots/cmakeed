@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module FindHDF5</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.0</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:FindHDF5"><b><code>FindHDF5</code></b></a>: Find HDF5, a library for reading and writing self describing array data.<br>
+    <p><br><p>This module invokes the HDF5 wrapper compiler that should be installed alongside HDF5.  Depending upon the HDF5 Configuration, the wrapper compiler is called either h5cc or h5pcc.  If this succeeds, the module will then call the compiler with the -show argument to see what flags are used when compiling an HDF5 client application.<br><p>The module will optionally accept the COMPONENTS argument.  If no COMPONENTS are specified, then the find module will default to finding only the HDF5 C library.  If one or more COMPONENTS are specified, the module will attempt to find the language bindings for the specified components.  Currently, the only valid components are C and CXX.  The module does not yet support finding the Fortran bindings.  If the COMPONENTS argument is not given, the module will attempt to find only the C bindings.<br><p>On UNIX systems, this module will read the variable HDF5_USE_STATIC_LIBRARIES to determine whether or not to prefer a static link to a dynamic link for HDF5 and all of it's dependencies.  To use this feature, make sure that the HDF5_USE_STATIC_LIBRARIES variable is set before the call to find_package.<br><p>To provide the module with a hint about where to find your HDF5 installation, you can set the environment variable HDF5_ROOT.  The Find module will then look in this path when searching for HDF5 executables, paths, and libraries.<br><p>In addition to finding the includes and libraries required to compile an HDF5 client application, this module also makes an effort to find tools that come with the HDF5 distribution that may be useful for regression testing.<br><p>This module will define the following variables:<br><pre>  HDF5_INCLUDE_DIR - Location of the hdf5 includes<br>  HDF5_DEFINITIONS - Required compiler definitions for HDF5<br>  HDF5_C_LIBRARIES - Required libraries for the HDF5 C bindings.<br>  HDF5_CXX_LIBRARIES - Required libraries for the HDF5 C++ bindings<br>  HDF5_LIBRARIES - Required libraries for all requested bindings<br>  HDF5_FOUND - true if HDF5 was found on the system<br>  HDF5_LIBRARY_DIRS - the full set of library directories<br>  HDF5_IS_PARALLEL - Whether or not HDF5 was found with parallel IO support<br>  HDF5_C_COMPILER_EXECUTABLE - the path to the HDF5 C wrapper compiler<br>  HDF5_CXX_COMPILER_EXECUTABLE - the path to the HDF5 C++ wrapper compiler<br>  HDF5_DIFF_EXECUTABLE - the path to the HDF5 dataset comparison tool<br></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/FindHDF5.cmake
+</div></body></html>

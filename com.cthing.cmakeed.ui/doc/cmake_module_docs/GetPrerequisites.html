@@ -7,15 +7,16 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
     <a name="single_item:GetPrerequisites"><b><code>GetPrerequisites</code></b></a>:  <br>
     <p>GetPrerequisites.cmake<br><p>This script provides functions to list the .dll, .dylib or .so files that an executable or shared library file depends on. (Its prerequisites.)<br><p>It uses various tools to obtain the list of required shared library files:<br><pre>   dumpbin (Windows)<br>   ldd (Linux/Unix)<br>   otool (Mac OSX)<br></pre>
-    <p><br><p>The following functions are provided by this script:<br><pre>   gp_append_unique<br>   gp_file_type<br>   is_file_executable<br>   gp_item_default_embedded_path<br>     (projects can override with gp_item_default_embedded_path_override)<br>   gp_resolve_item<br>     (projects can override with gp_resolve_item_override)<br>   get_prerequisites<br>   list_prerequisites<br>   list_prerequisites_by_glob<br></pre>
+    <p><br><p>The following functions are provided by this script:<br><pre>   gp_append_unique<br>   is_file_executable<br>   gp_item_default_embedded_path<br>     (projects can override with gp_item_default_embedded_path_override)<br>   gp_resolve_item<br>     (projects can override with gp_resolve_item_override)<br>   gp_resolved_file_type<br>   gp_file_type<br>   get_prerequisites<br>   list_prerequisites<br>   list_prerequisites_by_glob<br></pre>
     <p><br><p>Requires CMake 2.6 or greater because it uses function, break, return and PARENT_SCOPE.
   </li>
 </ul>
 
-       Defined in: /Users/Shared/Toolkits/CMake-2.6.4/share/cmake-2.6/Modules/GetPrerequisites.cmake
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.0/share/cmake-2.8/Modules/GetPrerequisites.cmake
 </div></body></html>

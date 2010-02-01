@@ -7,11 +7,14 @@
 <link href="../cmake.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div><b>CMake 2.8.0</b></div>
 <div class="ContentTxtProd">
 <ul>
   <li>
-    <a name="single_item:CMAKE_CFG_INTDIR"><b><code>CMAKE_CFG_INTDIR</code></b></a>: Build time configuration directory for project.<br>
-    <p>This is a variable that is used to provide developers access to the intermediate directory used by Visual Studio IDE projects.   For example, if building Debug all executables and libraries end up in a Debug directory.   On UNIX systems this variable is set to ".".  However, with Visual Studio this variable is set to $(IntDir).   $(IntDir) is expanded by the IDE only.  So this variable should only be used in custom commands that will be run during the build process.   This variable should not be used directly in a CMake command.  CMake has no way of knowing if Debug or Release will be picked by the IDE for a build type. If a program needs to know the directory it was built in, it can use CMAKE_INTDIR. CMAKE_INTDIR is a C/C++ preprocessor macro that is defined on the command line of the compiler.   If it has a value, it will be the intermediate directory used to build the file.   This way an executable or a library can find files that are located in the build directory.
+    <a name="single_item:CMAKE_CFG_INTDIR"><b><code>CMAKE_CFG_INTDIR</code></b></a>: Build-time reference to per-configuration output subdirectory.<br>
+    <p>For native build systems supporting multiple configurations in the build tree (such as Visual Studio and Xcode), the value is a reference to a build-time variable specifying the name of the per-configuration output subdirectory.  On Makefile generators this evaluates to "." because there is only one configuration in a build tree.  Example values:<br><pre>  $(IntDir)        = Visual Studio 6<br>  $(OutDir)        = Visual Studio 7, 8, 9<br>  $(Configuration) = Visual Studio 10<br>  $(CONFIGURATION) = Xcode<br>  .                = Make-based tools<br></pre>
+    <p>Since these values are evaluated by the native build system, this variable is suitable only for use in command lines that will be evaluated at build time.  Example of intended usage:<br><pre>  add_executable(mytool mytool.c)<br>  add_custom_command(<br>    OUTPUT out.txt<br>    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/mytool<br>            ${CMAKE_CURRENT_SOURCE_DIR}/in.txt out.txt<br>    DEPENDS mytool in.txt<br>    )<br>  add_custom_target(drive ALL DEPENDS out.txt)<br></pre>
+    <p>Note that CMAKE_CFG_INTDIR is no longer necessary for this purpose but has been left for compatibility with existing projects.  Instead add_custom_command() recognizes executable target names in its COMMAND option, so "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/mytool" can be replaced by just "mytool".<br><p>This variable is read-only.  Setting it is undefined behavior.  In multi-configuration build systems the value of this variable is passed as the value of preprocessor symbol "CMAKE_INTDIR" to the compilation of all source files.
   </li>
 </ul>
 </div></body></html>
