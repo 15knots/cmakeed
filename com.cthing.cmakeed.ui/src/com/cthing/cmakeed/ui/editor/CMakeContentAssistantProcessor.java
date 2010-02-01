@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+//import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.text.BadLocationException;
@@ -43,6 +44,7 @@ import com.cthing.cmakeed.core.variables.CMakeVariables;
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.editor.rules.CMakeUserVariableRule;
 import com.cthing.cmakeed.ui.editor.template.CMakeContextType;
+import com.cthing.cmakeed.ui.prefs.Preferences;
 
 /**
  * Content assist for CMake commands.
@@ -119,7 +121,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
      */
     public CMakeContentAssistantProcessor()
     {
-    	// System.out.println("CMakeContentAssistantProcessor Constructor");
+    //	 System.out.println("CMakeContentAssistantProcessor Constructor");
     }
     
 /* -------------------------------------------------------------------------- */    
@@ -202,7 +204,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
             final List<CMakeCommand> commands = findPossibleCommands(prefix);
             
             if ( !commands.isEmpty()) {
-                boolean isLowercase = false;
+                boolean isUpperCase = CMakeEditorPlugin.getDefault().getPreferenceStore().getBoolean(Preferences.UPPER_CASE_COMMANDS);
                 if (prefix.length() > 0) { Character.isLowerCase(prefix.charAt(0)); }
                 int replacementOffset = offset - prefix.length();
                 int replacementLength = prefix.length();
@@ -210,7 +212,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                 	proposals = new ArrayList<ICompletionProposal>();
                 }
                 for (CMakeCommand command : commands) {
-                    final String name = isLowercase ? command.getName().toLowerCase() : command.getName();
+                    final String name = isUpperCase ? command.getName().toUpperCase() : command.getName().toLowerCase();
                     final String desc = command.getDescription();
                     final String[] usages = command.getUsages();
                     

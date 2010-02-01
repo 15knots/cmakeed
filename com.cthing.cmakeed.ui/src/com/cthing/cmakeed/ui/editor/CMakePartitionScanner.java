@@ -146,6 +146,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
         return this.fDocument;
     }
     
+    public int getOffset()
+    {
+        return fOffset;
+    }
+    
     /**
      * Indicates whether the specified content type represents a user variable
      * partition.
