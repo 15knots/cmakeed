@@ -14,10 +14,12 @@
 # /Users/Shared/Toolkits/Qt-4.3.5-UBLib/bin
 # Change the 'qtassistant' variable to point to your QtAssistant executable
 
+
 #export QTDIR="/Users/Shared/Toolkits/Qt-4.3.5-UBDylib"
 #qtassistant="$QTDIR/bin/Assistant_adp.app/Contents/MacOS/assistant_adp"
-CMAKE="/Users/Shared/Toolkits/CMake-2.6.4/bin/cmake"
-
+CMAKE="/Users/Shared/Toolkits/CMake-2.8.0/bin/cmake"
+VERSION=`$CMAKE --version`
+VERSION=`echo $VERSION | cut -d " " -f 3`
 generationDir="./"
 assistantDir="${generationDir}/doc"
 # remove any previous builds of the docs
@@ -47,6 +49,7 @@ echo "<title>CMake Documentation</title>" >> ${mainIndexFile}
 echo "<link href=\"$css_sheet\" rel=\"stylesheet\" type=\"text/css\" />" >> ${mainIndexFile}
 echo "</head>" >> ${mainIndexFile}
 echo "<body>" >> ${mainIndexFile}
+echo "<div><b>CMake $VERSION</b></div>" >> ${mainIndexFile}
 echo "<div id=\"ContentTxtProd\">" >> ${mainIndexFile}
 
 #----------------------------------------------------------------
@@ -55,7 +58,7 @@ echo "<div id=\"ContentTxtProd\">" >> ${mainIndexFile}
 echo "" > $tocFile
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" > $tocFile
 echo "<?NLS TYPE=\"org.eclipse.help.toc\"?>" >> $tocFile
-echo "<toc label=\"CMake Documentation\">" >> $tocFile
+echo "<toc label=\"CMake $VERSION Documentation\">" >> $tocFile
 
 
 #################################################################
@@ -68,7 +71,31 @@ function GenerateDocsForCommand()
   docDir="${assistantDir}/${docDirName}"
   mkdir ${docDir}
   listFile="${generationDir}/list.txt"
+	sortedFile="${generationDir}/sorted.txt"
+	# Clear any existing file first
+	echo "" > $sortedFile
   ${CMAKE} --help-${1}-list ${listFile}
+
+  # We are going to sort the output first
+	# strip the first line from the output that has the version of CMake by
+	# copying all the other lines into another file
+	i=0
+  exec 9<${listFile}
+  while read -u 9 line
+   do
+   if [[ ${i} -gt 0 ]]; then
+		echo $line >> $sortedFile
+    fi
+    let i=i+1
+  done
+  exec 9<&-
+	# Now sort the file and put the results back into the First file
+	sort -d $sortedFile -o $listFile
+	# Remove the temporary file
+	rm $sortedFile
+	
+	# now get on with generating the documentation
+
   echo "* Generating HTML files for command '${1}'"
   #----------------------------------------------------------------
   # Start the Index File for this group of docs
@@ -95,7 +122,7 @@ function GenerateDocsForCommand()
   #----------------------------------------------------------------
   # Create a section in the top level index file
   #----------------------------------------------------------------
-  echo "<p><a target=\"DocFrame\" href=\"./${docDirName}/cmake_${1}_index.html\">CMake ${1}s</a></p>" >> ${mainIndexFile}
+  echo "<p><a target=\"DocFrame\" href=\"./${docDirName}/cmake_${1}_index.html\">CMake ${2}</a></p>" >> ${mainIndexFile}
   
   #----------------------------------------------------------------
   # Generate all the individual documentation html files
@@ -122,6 +149,7 @@ function GenerateDocsForCommand()
       echo "<link href=\"../$css_sheet\" rel=\"stylesheet\" type=\"text/css\" />" >> ${htmlFile}
       echo "</head>" >> ${htmlFile}
       echo "<body>" >> ${htmlFile}
+			echo "<div><b>CMake $VERSION</b></div>" >> ${htmlFile}
       echo "<div class=\"ContentTxtProd\">" >> ${htmlFile}
      # echo "<p><a href=\"./cmake_${1}_index.html\">All CMake ${1}s</a></p>" >> ${htmlFile}
       cat ${tmpHTMLFile} >> ${htmlFile}
@@ -171,7 +199,7 @@ function GenerateDocsForSection()
   #----------------------------------------------------------------
   # Create a section in the top level index file
   #----------------------------------------------------------------
-  echo "<p><a target=\"DocFrame\" href=\"./${docDirName}/cmake_${1}_index.html\">CMake ${1}s</a></p>" >> ${mainIndexFile}
+  echo "<p><a target=\"DocFrame\" href=\"./${docDirName}/cmake_${1}_index.html\">CMake ${2}</a></p>" >> ${mainIndexFile}
 
   # Finish the section in the .adp file
   echo "  </topic>" >> $tocFile
@@ -234,12 +262,12 @@ function GenerateCopyRightHTML()
 }
 #################################################################
 
-GenerateDocsForCommand "command"
-GenerateDocsForCommand "module"
-GenerateDocsForCommand "variable"
-GenerateDocsForCommand "property"
-GenerateDocsForSection "policies"
-GenerateDocsForSection "compatcommands"
+GenerateDocsForCommand "command" "Commands"
+GenerateDocsForCommand "module" "Modules"
+GenerateDocsForCommand "variable" "Variables"
+GenerateDocsForCommand "property" "Properties"
+GenerateDocsForSection "policies" "Policies"
+GenerateDocsForSection "compatcommands" "Compatibility-Commands"
 
 #GenerateCopyRightHTML "copyright"
 
