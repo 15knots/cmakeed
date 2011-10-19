@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property DEBUG_CONFIGURATIONS</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:DEBUG_CONFIGURATIONS"><b><code>DEBUG_CONFIGURATIONS</code></b></a>: Specify which configurations are for debugging.<br />
+    <p>The value must be a semi-colon separated list of configuration names.  Currently this property is used only by the target_link_libraries command (see its documentation for details).  Additional uses may be defined in the future.  <br /></p>
+<p>This property must be set at the top level of the project and before the first target_link_libraries command invocation.  If any entry in the list does not match a valid configuration for the project the behavior is undefined.</p>
+
+  </li>
+</ul>
+</div></body></html>

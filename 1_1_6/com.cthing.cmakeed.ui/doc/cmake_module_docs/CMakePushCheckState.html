@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module CMakePushCheckState</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CMakePushCheckState"><b><code>CMakePushCheckState</code></b></a>:  <br />
+    <p>This module defines two macros: CMAKE_PUSH_CHECK_STATE() and CMAKE_POP_CHECK_STATE() These two macros can be used to save and restore the state of the variables CMAKE_REQUIRED_FLAGS, CMAKE_REQUIRED_DEFINITIONS, CMAKE_REQUIRED_LIBRARIES and CMAKE_REQUIRED_INCLUDES used by the various Check-files coming with CMake, like e.g. check_function_exists() etc. The variable contents are pushed on a stack, pushing multiple times is supported. This is useful e.g. when executing such tests in a Find-module, where they have to be set, but after the Find-module has been executed they should have the same value as they had before.<br /></p>
+<p>Usage:<br /></p>
+<pre>   cmake_push_check_state()<br />   set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} -DSOME_MORE_DEF)<br />   check_function_exists(...)<br />   cmake_pop_check_state()<br /></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/CMakePushCheckState.cmake
+</div></body></html>

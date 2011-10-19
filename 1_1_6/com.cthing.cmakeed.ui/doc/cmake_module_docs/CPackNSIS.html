@@ -1,0 +1,59 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module CPackNSIS</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CPackNSIS"><b><code>CPackNSIS</code></b></a>: CPack NSIS generator specific options<br />
+    <p><br /></p>
+<p>The following variables are specific to the graphical installers built on Windows using the Nullsoft Installation System.<br /></p>
+<pre>   CPACK_PACKAGE_INSTALL_REGISTRY_KEY - Registry key used when<br />   installing this project.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_INSTALL_ROOT - The default installation directory presented<br />   to the end user by the NSIS installer is under this root dir. The full<br />   directory presented to the end user is:<br />   ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_PACKAGE_INSTALL_DIRECTORY}<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_MUI_ICON - The icon file (.ico) for the generated<br />   install program.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_MUI_UNIICON - The icon file (.ico) for the generated<br />   uninstall program.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_PACKAGE_ICON - A branding image that will be displayed inside<br />   the installer.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_EXTRA_INSTALL_COMMANDS - Extra NSIS commands that will<br />   be added to the install Section.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS - Extra NSIS commands that will<br />   be added to the uninstall Section.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_COMPRESSOR - The arguments that will be passed to the<br />   NSIS SetCompressor command.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_MODIFY_PATH - If this is set to "ON", then an extra page<br />   will appear in the installer that will allow the user to choose<br />   whether the program directory should be added to the system PATH<br />   variable.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_DISPLAY_NAME - The display name string that appears in<br />   the Windows Add/Remove Program control panel<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_PACKAGE_NAME - The title displayed at the top of the<br />   installer.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_INSTALLED_ICON_NAME - A path to the executable that<br />   contains the installer icon.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_HELP_LINK - URL to a web site providing assistance in<br />   installing your application.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_URL_INFO_ABOUT - URL to a web site providing more<br />   information about your application.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_CONTACT - Contact information for questions and comments<br />   about the installation process.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_CREATE_ICONS_EXTRA - Additional NSIS commands for<br />   creating start menu shortcuts.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_DELETE_ICONS_EXTRA -Additional NSIS commands to<br />   uninstall start menu shortcuts.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_EXECUTABLES_DIRECTORY - Creating NSIS start menu links<br />   assumes that they are in 'bin' unless this variable is set.<br />   For example, you would set this to 'exec' if your executables are<br />   in an exec directory.<br /></pre>
+    <p><br /></p>
+<pre>   CPACK_NSIS_MUI_FINISHPAGE_RUN - Specify an executable to add an option<br />   to run on the finish page of the NSIS installer.<br /></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/CPackNSIS.cmake
+</div></body></html>

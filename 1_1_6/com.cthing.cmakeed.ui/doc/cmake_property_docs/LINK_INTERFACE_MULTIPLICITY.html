@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property LINK_INTERFACE_MULTIPLICITY</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:LINK_INTERFACE_MULTIPLICITY"><b><code>LINK_INTERFACE_MULTIPLICITY</code></b></a>: Repetition count for STATIC libraries with cyclic dependencies.<br />
+    <p>When linking to a STATIC library target with cyclic dependencies the linker may need to scan more than once through the archives in the strongly connected component of the dependency graph.  CMake by default constructs the link line so that the linker will scan through the component at least twice.  This property specifies the minimum number of scans if it is larger than the default.  CMake uses the largest value specified by any target in a component.</p>
+
+  </li>
+</ul>
+</div></body></html>

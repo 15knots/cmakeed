@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake variable CMAKE_SYSTEM_IGNORE_PATH</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CMAKE_SYSTEM_IGNORE_PATH"><b><code>CMAKE_SYSTEM_IGNORE_PATH</code></b></a>: Path to be ignored by FIND_XXX() commands.<br />
+    <p>Specifies directories to be ignored by searches in FIND_XXX() commands This is useful in cross-compiled environments where some system directories contain incompatible but possibly linkable libraries. For example, on cross-compiled cluster environments, this allows a user to ignore directories containing libraries meant for the front-end machine that modules like FindX11 (and others) would normally search. By default this contains a list of directories containing incompatible binaries for the host system. See also CMAKE_SYSTEM_PREFIX_PATH, CMAKE_SYSTEM_LIBRARY_PATH, CMAKE_SYSTEM_INCLUDE_PATH, and CMAKE_SYSTEM_PROGRAM_PATH.</p>
+
+  </li>
+</ul>
+</div></body></html>
