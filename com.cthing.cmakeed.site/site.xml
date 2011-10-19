@@ -3,7 +3,7 @@
    <description url="site.xml">
       CMake Editor Eclipse plug-in update site
    </description>
-   <feature url="features/com.cthing.cmakeed.feature_1.1.5.jar" id="com.cthing.cmakeed.feature" version="1.1.5">
+   <feature url="features/com.cthing.cmakeed.feature_1.1.6.jar" id="com.cthing.cmakeed.feature" version="1.1.6">
       <category name="CMake Editor Plugin"/>
    </feature>
    <category-def name="CMake Editor Plugin" label="CMakeEditor"/>
