@@ -49,7 +49,7 @@
       <participant
             class="com.cthing.cmakeed.ui.editor.CMakeDocumentSetupParticipant"
             extensions="cmake"
-            fileNames="CMakeLists.txt,CMakeLists.txt.in">
+            fileNames="CMakeLists.txt,CMakeLists.txt.in,*.cmake,*.cmake.in">
       </participant>
    </extension>
    

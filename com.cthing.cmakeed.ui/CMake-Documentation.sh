@@ -17,7 +17,7 @@
 
 #export QTDIR="/Users/Shared/Toolkits/Qt-4.3.5-UBDylib"
 #qtassistant="$QTDIR/bin/Assistant_adp.app/Contents/MacOS/assistant_adp"
-CMAKE="/Users/Shared/Toolkits/CMake-2.8.0/bin/cmake"
+CMAKE="/Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/bin/cmake"
 VERSION=`$CMAKE --version`
 VERSION=`echo $VERSION | cut -d " " -f 3`
 generationDir="./"
