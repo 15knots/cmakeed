@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="Compile com.cthing.cmakeed.feature" default="main">
-	<target name="main">
-		<ant antfile="build.xml" dir="../com.cthing.cmakeed.core" target="build.jars"/>
-		<ant antfile="build.xml" dir="../com.cthing.cmakeed.ui" target="build.jars"/>
-	</target>
-</project>
