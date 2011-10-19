@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command create_test_sourcelist</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:create_test_sourcelist"><b><code>create_test_sourcelist</code></b></a>: Create a test driver and source list for building test programs.<br />
+    <pre>  create_test_sourcelist(sourceListName driverName<br />                         test1 test2 test3<br />                         EXTRA_INCLUDE include.h<br />                         FUNCTION function)<br /></pre>
+    <p>A test driver is a program that links together many small tests into a single executable.  This is useful when building static executables with large libraries to shrink the total required size.  The list of source files needed to build the test driver will be in sourceListName.  DriverName is the name of the test driver program.  The rest of the arguments consist of a list of test source files, can be semicolon separated.  Each test source file should have a function in it that is the same name as the file with no extension (foo.cxx should have int foo(int, char*[]);) DriverName will be able to call each of the tests by name on the command line. If EXTRA_INCLUDE is specified, then the next argument is included into the generated file. If FUNCTION is specified, then the next argument is taken as a function name that is passed a pointer to ac and av.  This can be used to add extra command line processing to each test. The cmake variable CMAKE_TESTDRIVER_BEFORE_TESTMAIN can be set to have code that will be placed directly before calling the test main function.   CMAKE_TESTDRIVER_AFTER_TESTMAIN can be set to have code that will be placed directly after the call to the test main function.</p>
+
+  </li>
+</ul>
+</div></body></html>

@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command utility_source</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:utility_source"><b><code>utility_source</code></b></a>: Specify the source tree of a third-party utility.<br />
+    <pre>  utility_source(cache_entry executable_name<br />                 path_to_source [file1 file2 ...])<br /></pre>
+    <p>When a third-party utility's source is included in the distribution, this command specifies its location and name.  The cache entry will not be set unless the path_to_source and all listed files exist.  It is assumed that the source tree of the utility will have been built before it is needed.<br /></p>
+<p>When cross compiling CMake will print a warning if a utility_source() command is executed, because in many cases it is used to build an executable which is executed later on. This doesn't work when cross compiling, since the executable can run only on their target platform. So in this case the cache entry has to be adjusted manually so it points to an executable which is runnable on the build host.</p>
+
+  </li>
+</ul>
+</div></body></html>

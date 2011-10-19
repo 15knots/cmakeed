@@ -1,0 +1,27 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module GNUInstallDirs</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:GNUInstallDirs"><b><code>GNUInstallDirs</code></b></a>: Define GNU standard installation directories<br />
+    <p>Provides install directory variables as defined for GNU software:<br /></p>
+<pre>  <a href="http://www.gnu.org/prep/standards/html_node/Directory-Variables.html">http://www.gnu.org/prep/standards/html_node/Directory-Variables.html</a><br /></pre>
+    <p>Inclusion of this module defines the following variables:<br /></p>
+<pre>  CMAKE_INSTALL_&lt;dir&gt;      - destination for files of a given type<br />  CMAKE_INSTALL_FULL_&lt;dir&gt; - corresponding absolute path<br /></pre>
+    <p>where &lt;dir&gt; is one of:<br /></p>
+<pre>  BINDIR           - user executables (bin)<br />  SBINDIR          - system admin executables (sbin)<br />  LIBEXECDIR       - program executables (libexec)<br />  SYSCONFDIR       - read-only single-machine data (etc)<br />  SHAREDSTATEDIR   - modifiable architecture-independent data (com)<br />  LOCALSTATEDIR    - modifiable single-machine data (var)<br />  LIBDIR           - object code libraries (lib or lib64)<br />  INCLUDEDIR       - C header files (include)<br />  OLDINCLUDEDIR    - C header files for non-gcc (/usr/include)<br />  DATAROOTDIR      - read-only architecture-independent data root (share)<br />  DATADIR          - read-only architecture-independent data (DATAROOTDIR)<br />  INFODIR          - info documentation (DATAROOTDIR/info)<br />  LOCALEDIR        - locale-dependent data (DATAROOTDIR/locale)<br />  MANDIR           - man documentation (DATAROOTDIR/man)<br />  DOCDIR           - documentation root (DATAROOTDIR/doc/PROJECT_NAME)<br /></pre>
+    <p>Each CMAKE_INSTALL_&lt;dir&gt; value may be passed to the DESTINATION options of install() commands for the corresponding file type.  If the includer does not define a value the above-shown default will be used and the value will appear in the cache for editing by the user. Each CMAKE_INSTALL_FULL_&lt;dir&gt; value contains an absolute path constructed from the corresponding destination by prepending (if necessary) the value of CMAKE_INSTALL_PREFIX.</p>
+
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/GNUInstallDirs.cmake
+</div></body></html>

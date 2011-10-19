@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property LINK_SEARCH_START_STATIC</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:LINK_SEARCH_START_STATIC"><b><code>LINK_SEARCH_START_STATIC</code></b></a>: Assume the linker looks for static libraries by default.<br />
+    <p>Some linkers support switches such as -Bstatic and -Bdynamic to determine whether to use static or shared libraries for -lXXX options.  CMake uses these options to set the link type for libraries whose full paths are not known or (in some cases) are in implicit link directories for the platform.  By default the linker search type is assumed to be -Bdynamic at the beginning of the library list.  This property switches the assumption to -Bstatic.  It is intended for use when linking an executable statically (e.g. with the GNU -static option).  See also LINK_SEARCH_END_STATIC.</p>
+
+  </li>
+</ul>
+</div></body></html>

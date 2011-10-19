@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property COMPILE_DEFINITIONS</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:COMPILE_DEFINITIONS"><b><code>COMPILE_DEFINITIONS</code></b></a>: Preprocessor definitions for compiling a directory's sources.<br />
+    <p>The COMPILE_DEFINITIONS property may be set to a semicolon-separated list of preprocessor definitions using the syntax VAR or VAR=value.  Function-style definitions are not supported.  CMake will automatically escape the value correctly for the native build system (note that CMake language syntax may require escapes to specify some values).  This property may be set on a per-configuration basis using the name COMPILE_DEFINITIONS_&lt;CONFIG&gt; where &lt;CONFIG&gt; is an upper-case name (ex. "COMPILE_DEFINITIONS_DEBUG").  This property will be initialized in each directory by its value in the directory's parent.<br /></p>
+<p>CMake will automatically drop some definitions that are not supported by the native build tool.  The VS6 IDE does not support definition values with spaces (but NMake does).<br /></p>
+<p>Disclaimer: Most native build tools have poor support for escaping certain values.  CMake has work-arounds for many cases but some values may just not be possible to pass correctly.  If a value does not seem to be escaped correctly, do not attempt to work-around the problem by adding escape sequences to the value.  Your work-around may break in a future version of CMake that has improved escape support.  Instead consider defining the macro in a (configured) header file.  Then report the limitation.  Known limitations include:<br /></p>
+<pre>  #          - broken almost everywhere<br />  ;          - broken in VS IDE and Borland Makefiles<br />  ,          - broken in VS IDE<br />  %          - broken in some cases in NMake<br />  &amp; |        - broken in some cases on MinGW<br />  ^ &lt; &gt; \"   - broken in most Make tools on Windows<br /></pre>
+    <p>CMake does not reject these values outright because they do work in some cases.  Use with caution.  </p>
+
+  </li>
+</ul>
+</div></body></html>
