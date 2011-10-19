@@ -1,0 +1,32 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module FindSubversion</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:FindSubversion"><b><code>FindSubversion</code></b></a>: Extract information from a subversion working copy<br />
+    <p>The module defines the following variables:<br /></p>
+<pre>  Subversion_SVN_EXECUTABLE - path to svn command line client<br />  Subversion_VERSION_SVN - version of svn command line client<br />  Subversion_FOUND - true if the command line client was found<br />  SUBVERSION_FOUND - same as Subversion_FOUND, set for compatiblity reasons<br /></pre>
+    <p><br /></p>
+<p>The minimum required version of Subversion can be specified using the standard syntax, e.g. FIND_PACKAGE(Subversion 1.4)<br /></p>
+<p>If the command line client executable is found two macros are defined:<br /></p>
+<pre>  Subversion_WC_INFO(&lt;dir&gt; &lt;var-prefix&gt;)<br />  Subversion_WC_LOG(&lt;dir&gt; &lt;var-prefix&gt;)<br /></pre>
+    <p>Subversion_WC_INFO extracts information of a subversion working copy at a given location. This macro defines the following variables:<br /></p>
+<pre>  &lt;var-prefix&gt;_WC_URL - url of the repository (at &lt;dir&gt;)<br />  &lt;var-prefix&gt;_WC_ROOT - root url of the repository<br />  &lt;var-prefix&gt;_WC_REVISION - current revision<br />  &lt;var-prefix&gt;_WC_LAST_CHANGED_AUTHOR - author of last commit<br />  &lt;var-prefix&gt;_WC_LAST_CHANGED_DATE - date of last commit<br />  &lt;var-prefix&gt;_WC_LAST_CHANGED_REV - revision of last commit<br />  &lt;var-prefix&gt;_WC_INFO - output of command `svn info &lt;dir&gt;'<br /></pre>
+    <p>Subversion_WC_LOG retrieves the log message of the base revision of a subversion working copy at a given location. This macro defines the variable:<br /></p>
+<pre>  &lt;var-prefix&gt;_LAST_CHANGED_LOG - last log of base revision<br /></pre>
+    <p>Example usage:<br /></p>
+<pre>  FIND_PACKAGE(Subversion)<br />  IF(SUBVERSION_FOUND)<br />    Subversion_WC_INFO(${PROJECT_SOURCE_DIR} Project)<br />    MESSAGE("Current revision is ${Project_WC_REVISION}")<br />    Subversion_WC_LOG(${PROJECT_SOURCE_DIR} Project)<br />    MESSAGE("Last changed log is ${Project_LAST_CHANGED_LOG}")<br />  ENDIF(SUBVERSION_FOUND)<br /></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/FindSubversion.cmake
+</div></body></html>

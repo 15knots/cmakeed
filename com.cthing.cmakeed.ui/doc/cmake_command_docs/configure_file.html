@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command configure_file</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:configure_file"><b><code>configure_file</code></b></a>: Copy a file to another location and modify its contents.<br />
+    <pre>  configure_file(&lt;input&gt; &lt;output&gt;<br />                 [COPYONLY] [ESCAPE_QUOTES] [@ONLY])<br /></pre>
+    <p>Copies a file &lt;input&gt; to file &lt;output&gt; and substitutes variable values referenced in the file content.  If &lt;input&gt; is a relative path it is evaluated with respect to the current source directory.  The &lt;input&gt; must be a file, not a directory.  If &lt;output&gt; is a relative path it is evaluated with respect to the current binary directory.  If &lt;output&gt; names an existing directory the input file is placed in that directory with its original name.  <br /></p>
+<p>This command replaces any variables in the input file referenced as ${VAR} or @VAR@ with their values as determined by CMake.  If a variable is not defined, it will be replaced with nothing.  If COPYONLY is specified, then no variable expansion will take place.  If ESCAPE_QUOTES is specified then any substituted quotes will be C-style escaped.  The file will be configured with the current values of CMake variables. If @ONLY is specified, only variables of the form @VAR@ will be replaces and ${VAR} will be ignored.  This is useful for configuring scripts that use ${VAR}. Any occurrences of #cmakedefine VAR will be replaced with either #define VAR or /* #undef VAR */ depending on the setting of VAR in CMake. Any occurrences of #cmakedefine01 VAR will be replaced with either #define VAR 1 or #define VAR 0 depending on whether VAR evaluates to TRUE or FALSE in CMake</p>
+
+  </li>
+</ul>
+</div></body></html>

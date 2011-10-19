@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property IMPORTED_LINK_DEPENDENT_LIBRARIES</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:IMPORTED_LINK_DEPENDENT_LIBRARIES"><b><code>IMPORTED_LINK_DEPENDENT_LIBRARIES</code></b></a>: Dependent shared libraries of an imported shared library.<br />
+    <p>Shared libraries may be linked to other shared libraries as part of their implementation.  On some platforms the linker searches for the dependent libraries of shared libraries they are including in the link.  This property lists the dependent shared libraries of an imported library.  The list should be disjoint from the list of interface libraries in the IMPORTED_LINK_INTERFACE_LIBRARIES property.  On platforms requiring dependent shared libraries to be found at link time CMake uses this list to add appropriate files or paths to the link command line.  Ignored for non-imported targets.</p>
+
+  </li>
+</ul>
+</div></body></html>

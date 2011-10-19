@@ -1,0 +1,27 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module FindVTK</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:FindVTK"><b><code>FindVTK</code></b></a>: Find a VTK installation or build tree.<br />
+    <p>The following variables are set if VTK is found.  If VTK is not found, VTK_FOUND is set to false.<br /></p>
+<pre>  VTK_FOUND         - Set to true when VTK is found.<br />  VTK_USE_FILE      - CMake file to use VTK.<br />  VTK_MAJOR_VERSION - The VTK major version number.<br />  VTK_MINOR_VERSION - The VTK minor version number <br />                       (odd non-release).<br />  VTK_BUILD_VERSION - The VTK patch level <br />                       (meaningless for odd minor).<br />  VTK_INCLUDE_DIRS  - Include directories for VTK<br />  VTK_LIBRARY_DIRS  - Link directories for VTK libraries<br />  VTK_KITS          - List of VTK kits, in CAPS <br />                      (COMMON,IO,) etc.<br />  VTK_LANGUAGES     - List of wrapped languages, in CAPS<br />                      (TCL, PYHTON,) etc.<br /></pre>
+    <p>The following cache entries must be set by the user to locate VTK:<br /></p>
+<pre>  VTK_DIR  - The directory containing VTKConfig.cmake.  <br />             This is either the root of the build tree,<br />             or the lib/vtk directory.  This is the <br />             only cache entry.<br /></pre>
+    <p>The following variables are set for backward compatibility and should not be used in new code:<br /></p>
+<pre>  USE_VTK_FILE - The full path to the UseVTK.cmake file.<br />                 This is provided for backward <br />                 compatibility.  Use VTK_USE_FILE <br />                 instead.<br /></pre>
+    <p><br /></p>
+
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/FindVTK.cmake
+</div></body></html>

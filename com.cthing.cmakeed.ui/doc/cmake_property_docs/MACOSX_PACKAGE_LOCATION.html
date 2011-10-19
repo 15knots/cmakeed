@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake property MACOSX_PACKAGE_LOCATION</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:MACOSX_PACKAGE_LOCATION"><b><code>MACOSX_PACKAGE_LOCATION</code></b></a>: Place a source file inside a Mac OS X bundle, CFBundle, or framework.<br />
+    <p>Executable targets with the MACOSX_BUNDLE property set are built as Mac OS X application bundles on Apple platforms.  Shared library targets with the FRAMEWORK property set are built as Mac OS X frameworks on Apple platforms.  Module library targets with the BUNDLE property set are built as Mac OS X CFBundle bundles on Apple platforms.  Source files listed in the target with this property set will be copied to a directory inside the bundle or framework content folder specified by the property value.  For bundles the content folder is "&lt;name&gt;.app/Contents".  For frameworks the content folder is "&lt;name&gt;.framework/Versions/&lt;version&gt;".  For cfbundles the content folder is "&lt;name&gt;.bundle/Contents" (unless the extension is changed).  See the PUBLIC_HEADER, PRIVATE_HEADER, and RESOURCE target properties for specifying files meant for Headers, PrivateHeaders, or Resources directories.</p>
+
+  </li>
+</ul>
+</div></body></html>

@@ -1,0 +1,38 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module CMakeParseArguments</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CMakeParseArguments"><b><code>CMakeParseArguments</code></b></a>:  <br />
+    <p>CMAKE_PARSE_ARGUMENTS(&lt;prefix&gt; &lt;options&gt; &lt;one_value_keywords&gt; &lt;multi_value_keywords&gt; args...)<br /></p>
+<p>CMAKE_PARSE_ARGUMENTS() is intended to be used in macros or functions for parsing the arguments given to that macro or function. It processes the arguments and defines a set of variables which hold the values of the respective options.<br /></p>
+<p>The &lt;options&gt; argument contains all options for the respective macro, i.e. keywords which can be used when calling the macro without any value following, like e.g. the OPTIONAL keyword of the install() command.<br /></p>
+<p>The &lt;one_value_keywords&gt; argument contains all keywords for this macro which are followed by one value, like e.g. DESTINATION keyword of the install() command.<br /></p>
+<p>The &lt;multi_value_keywords&gt; argument contains all keywords for this macro which can be followed by more than one value, like e.g. the TARGETS or FILES keywords of the install() command.<br /></p>
+<p>When done, CMAKE_PARSE_ARGUMENTS() will have defined for each of the keywords listed in &lt;options&gt;, &lt;one_value_keywords&gt; and &lt;multi_value_keywords&gt; a variable composed of the given &lt;prefix&gt; followed by "_" and the name of the respective keyword. These variables will then hold the respective value from the argument list. For the &lt;options&gt; keywords this will be TRUE or FALSE.<br /></p>
+<p>All remaining arguments are collected in a variable &lt;prefix&gt;_UNPARSED_ARGUMENTS, this can be checked afterwards to see whether your macro was called with unrecognized parameters.<br /></p>
+<p>As an example here a my_install() macro, which takes similar arguments as the real install() command:<br /></p>
+<pre>   function(MY_INSTALL)<br />     set(options OPTIONAL FAST)<br />     set(oneValueArgs DESTINATION RENAME)<br />     set(multiValueArgs TARGETS CONFIGURATIONS)<br />     cmake_parse_arguments(MY_INSTALL "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )<br />     ...<br /></pre>
+    <p><br /></p>
+<p>Assume my_install() has been called like this:<br /></p>
+<pre>   my_install(TARGETS foo bar DESTINATION bin OPTIONAL blub)<br /></pre>
+    <p><br /></p>
+<p>After the cmake_parse_arguments() call the macro will have set the following variables:<br /></p>
+<pre>   MY_INSTALL_OPTIONAL = TRUE<br />   MY_INSTALL_FAST = FALSE (this option was not used when calling my_install()<br />   MY_INSTALL_DESTINATION = "bin"<br />   MY_INSTALL_RENAME = "" (was not used)<br />   MY_INSTALL_TARGETS = "foo;bar"<br />   MY_INSTALL_CONFIGURATIONS = "" (was not used)<br />   MY_INSTALL_UNPARSED_ARGUMENTS = "blub" (no value expected after "OPTIONAL"<br /></pre>
+    <p><br /></p>
+<p>You can the continue and process these variables.<br /></p>
+<p>Keywords terminate lists of values, e.g. if directly after a one_value_keyword another recognized keyword follows, this is interpreted as the beginning of the new option. E.g. my_install(TARGETS foo DESTINATION OPTIONAL) would result in MY_INSTALL_DESTINATION set to "OPTIONAL", but MY_INSTALL_DESTINATION would be empty and MY_INSTALL_OPTIONAL would be set to TRUE therefor.</p>
+
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/CMakeParseArguments.cmake
+</div></body></html>

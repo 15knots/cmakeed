@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module WriteBasicConfigVersionFile</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:WriteBasicConfigVersionFile"><b><code>WriteBasicConfigVersionFile</code></b></a>:  <br />
+    <pre>  WRITE_BASIC_CONFIG_VERSION_FILE( filename VERSION major.minor.patch COMPATIBILITY (AnyNewerVersion|SameMajorVersion) )<br /></pre>
+    <p><br /></p>
+<p>Writes a file for use as &lt;package&gt;ConfigVersion.cmake file to &lt;filename&gt;. See the documentation of FIND_PACKAGE() for details on this.<br /></p>
+<pre>    filename is the output filename, it should be in the build tree.<br />    major.minor.patch is the version number of the project to be installed<br /></pre>
+    <p>The COMPATIBILITY mode AnyNewerVersion means that the installed package version will be considered compatible if it is newer or exactly the same as the requested version. If SameMajorVersion is used instead, then the behaviour differs from AnyNewerVersion in that the major version number must be the same as requested, e.g. version 2.0 will not be considered compatible if 1.0 is requested. If your project has more elaborated version matching rules, you will need to write your own custom ConfigVersion.cmake file instead of using this macro.<br /></p>
+<p>Example:<br /></p>
+<pre>     write_basic_config_version_file(${CMAKE_CURRENT_BINARY_DIR}/FooConfigVersion.cmake<br />                                     VERSION 1.2.3<br />                                     COMPATIBILITY SameMajorVersion )<br />     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/FooConfigVersion.cmake<br />                   ${CMAKE_CURRENT_BINARY_DIR}/FooConfig.cmake<br />             DESTINATION lib/cmake/Foo )<br /></pre>
+    <p><br /></p>
+<p>Internally, this macro executes configure_file() to create the resulting version file. Depending on the COMPATIBLITY, either the file BasicConfigVersion-SameMajorVersion.cmake.in or BasicConfigVersion-AnyNewerVersion.cmake.in is used. Please note that these two files are internal to CMake and you should not call configure_file() on them yourself, but they can be used as starting point to create more sophisticted custom ConfigVersion.cmake files.</p>
+
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/WriteBasicConfigVersionFile.cmake
+</div></body></html>
