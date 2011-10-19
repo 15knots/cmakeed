@@ -1,0 +1,67 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module BundleUtilities</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:BundleUtilities"><b><code>BundleUtilities</code></b></a>: Functions to help assemble a standalone bundle application.<br />
+    <p>A collection of CMake utility functions useful for dealing with .app bundles on the Mac and bundle-like directories on any OS.<br /></p>
+<p>The following functions are provided by this module:<br /></p>
+<pre>   fixup_bundle<br />   copy_and_fixup_bundle<br />   verify_app<br />   get_bundle_main_executable<br />   get_dotapp_dir<br />   get_bundle_and_executable<br />   get_bundle_all_executables<br />   get_item_key<br />   clear_bundle_keys<br />   set_bundle_key_values<br />   get_bundle_keys<br />   copy_resolved_item_into_bundle<br />   copy_resolved_framework_into_bundle<br />   fixup_bundle_item<br />   verify_bundle_prerequisites<br />   verify_bundle_symlinks<br /></pre>
+    <p>Requires CMake 2.6 or greater because it uses function, break and PARENT_SCOPE. Also depends on GetPrerequisites.cmake.<br /></p>
+<pre>  FIXUP_BUNDLE(&lt;app&gt; &lt;libs&gt; &lt;dirs&gt;)<br /></pre>
+    <p>Fix up a bundle in-place and make it standalone, such that it can be drag-n-drop copied to another machine and run on that machine as long as all of the system libraries are compatible.<br /></p>
+<p>If you pass plugins to fixup_bundle as the libs parameter, you should install them or copy them into the bundle before calling fixup_bundle. The "libs" parameter is a list of libraries that must be fixed up, but that cannot be determined by otool output analysis. (i.e., plugins)<br /></p>
+<p>Gather all the keys for all the executables and libraries in a bundle, and then, for each key, copy each prerequisite into the bundle. Then fix each one up according to its own list of prerequisites.<br /></p>
+<p>Then clear all the keys and call verify_app on the final bundle to ensure that it is truly standalone.<br /></p>
+<pre>  COPY_AND_FIXUP_BUNDLE(&lt;src&gt; &lt;dst&gt; &lt;libs&gt; &lt;dirs&gt;)<br /></pre>
+    <p>Makes a copy of the bundle &lt;src&gt; at location &lt;dst&gt; and then fixes up the new copied bundle in-place at &lt;dst&gt;...<br /></p>
+<pre>  VERIFY_APP(&lt;app&gt;)<br /></pre>
+    <p>Verifies that an application &lt;app&gt; appears valid based on running analysis tools on it. Calls "message(FATAL_ERROR" if the application is not verified.<br /></p>
+<pre>  GET_BUNDLE_MAIN_EXECUTABLE(&lt;bundle&gt; &lt;result_var&gt;)<br /></pre>
+    <p>The result will be the full path name of the bundle's main executable file or an "error:" prefixed string if it could not be determined.<br /></p>
+<pre>  GET_DOTAPP_DIR(&lt;exe&gt; &lt;dotapp_dir_var&gt;)<br /></pre>
+    <p>Returns the nearest parent dir whose name ends with ".app" given the full path to an executable. If there is no such parent dir, then simply return the dir containing the executable.<br /></p>
+<p>The returned directory may or may not exist.<br /></p>
+<pre>  GET_BUNDLE_AND_EXECUTABLE(&lt;app&gt; &lt;bundle_var&gt; &lt;executable_var&gt; &lt;valid_var&gt;)<br /></pre>
+    <p>Takes either a ".app" directory name or the name of an executable nested inside a ".app" directory and returns the path to the ".app" directory in &lt;bundle_var&gt; and the path to its main executable in &lt;executable_var&gt;<br /></p>
+<pre>  GET_BUNDLE_ALL_EXECUTABLES(&lt;bundle&gt; &lt;exes_var&gt;)<br /></pre>
+    <p>Scans the given bundle recursively for all executable files and accumulates them into a variable.<br /></p>
+<pre>  GET_ITEM_KEY(&lt;item&gt; &lt;key_var&gt;)<br /></pre>
+    <p>Given a file (item) name, generate a key that should be unique considering the set of libraries that need copying or fixing up to make a bundle standalone. This is essentially the file name including extension with "." replaced by "_"<br /></p>
+<p>This key is used as a prefix for CMake variables so that we can associate a set of variables with a given item based on its key.<br /></p>
+<pre>  CLEAR_BUNDLE_KEYS(&lt;keys_var&gt;)<br /></pre>
+    <p>Loop over the list of keys, clearing all the variables associated with each key. After the loop, clear the list of keys itself.<br /></p>
+<p>Caller of get_bundle_keys should call clear_bundle_keys when done with list of keys.<br /></p>
+<pre>  SET_BUNDLE_KEY_VALUES(&lt;keys_var&gt; &lt;context&gt; &lt;item&gt; &lt;exepath&gt; &lt;dirs&gt;<br />                        &lt;copyflag&gt;)<br /></pre>
+    <p>Add a key to the list (if necessary) for the given item. If added, also set all the variables associated with that key.<br /></p>
+<pre>  GET_BUNDLE_KEYS(&lt;app&gt; &lt;libs&gt; &lt;dirs&gt; &lt;keys_var&gt;)<br /></pre>
+    <p>Loop over all the executable and library files within the bundle (and given as extra &lt;libs&gt;) and accumulate a list of keys representing them. Set values associated with each key such that we can loop over all of them and copy prerequisite libs into the bundle and then do appropriate install_name_tool fixups.<br /></p>
+<pre>  COPY_RESOLVED_ITEM_INTO_BUNDLE(&lt;resolved_item&gt; &lt;resolved_embedded_item&gt;)<br /></pre>
+    <p>Copy a resolved item into the bundle if necessary. Copy is not necessary if the resolved_item is "the same as" the resolved_embedded_item.<br /></p>
+<pre>  COPY_RESOLVED_FRAMEWORK_INTO_BUNDLE(&lt;resolved_item&gt; &lt;resolved_embedded_item&gt;)<br /></pre>
+    <p>Copy a resolved framework into the bundle if necessary. Copy is not necessary if the resolved_item is "the same as" the resolved_embedded_item.<br /></p>
+<p>By default, BU_COPY_FULL_FRAMEWORK_CONTENTS is not set. If you want full frameworks embedded in your bundles, set BU_COPY_FULL_FRAMEWORK_CONTENTS to ON before calling fixup_bundle. By default, COPY_RESOLVED_FRAMEWORK_INTO_BUNDLE copies the framework dylib itself plus the framework Resources directory.<br /></p>
+<pre>  FIXUP_BUNDLE_ITEM(&lt;resolved_embedded_item&gt; &lt;exepath&gt; &lt;dirs&gt;)<br /></pre>
+    <p>Get the direct/non-system prerequisites of the resolved embedded item. For each prerequisite, change the way it is referenced to the value of the _EMBEDDED_ITEM keyed variable for that prerequisite. (Most likely changing to an "@executable_path" style reference.)<br /></p>
+<p>This function requires that the resolved_embedded_item be "inside" the bundle already. In other words, if you pass plugins to fixup_bundle as the libs parameter, you should install them or copy them into the bundle before calling fixup_bundle. The "libs" parameter is a list of libraries that must be fixed up, but that cannot be determined by otool output analysis. (i.e., plugins)<br /></p>
+<p>Also, change the id of the item being fixed up to its own _EMBEDDED_ITEM value.<br /></p>
+<p>Accumulate changes in a local variable and make *one* call to install_name_tool at the end of the function with all the changes at once.<br /></p>
+<p>If the BU_CHMOD_BUNDLE_ITEMS variable is set then bundle items will be marked writable before install_name_tool tries to change them.<br /></p>
+<pre>  VERIFY_BUNDLE_PREREQUISITES(&lt;bundle&gt; &lt;result_var&gt; &lt;info_var&gt;)<br /></pre>
+    <p>Verifies that the sum of all prerequisites of all files inside the bundle are contained within the bundle or are "system" libraries, presumed to exist everywhere.<br /></p>
+<pre>  VERIFY_BUNDLE_SYMLINKS(&lt;bundle&gt; &lt;result_var&gt; &lt;info_var&gt;)<br /></pre>
+    <p>Verifies that any symlinks found in the bundle point to other files that are already also in the bundle... Anything that points to an external file causes this function to fail the verification.</p>
+
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/BundleUtilities.cmake
+</div></body></html>

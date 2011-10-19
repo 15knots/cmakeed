@@ -1,0 +1,26 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake command build_command</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:build_command"><b><code>build_command</code></b></a>: Get the command line to build this project.<br />
+    <pre>  build_command(&lt;variable&gt;<br />                [CONFIGURATION &lt;config&gt;]<br />                [PROJECT_NAME &lt;projname&gt;]<br />                [TARGET &lt;target&gt;])<br /></pre>
+    <p>Sets the given &lt;variable&gt; to a string containing the command line for building one configuration of a target in a project using the build tool appropriate for the current CMAKE_GENERATOR.<br /></p>
+<p>If CONFIGURATION is omitted, CMake chooses a reasonable default value  for multi-configuration generators.  CONFIGURATION is ignored for single-configuration generators.<br /></p>
+<p>If PROJECT_NAME is omitted, the resulting command line will build the top level PROJECT in the current build tree.<br /></p>
+<p>If TARGET is omitted, the resulting command line will build everything, effectively using build target 'all' or 'ALL_BUILD'.<br /></p>
+<pre>  build_command(&lt;cachevariable&gt; &lt;makecommand&gt;)<br /></pre>
+    <p>This second signature is deprecated, but still available for backwards compatibility. Use the first signature instead.<br /></p>
+<p>Sets the given &lt;cachevariable&gt; to a string containing the command to build this project from the root of the build tree using the build tool given by &lt;makecommand&gt;.  &lt;makecommand&gt; should be the full path to msdev, devenv, nmake, make or one of the end user build tools.</p>
+
+  </li>
+</ul>
+</div></body></html>

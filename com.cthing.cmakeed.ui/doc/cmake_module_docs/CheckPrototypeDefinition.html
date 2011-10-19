@@ -1,0 +1,26 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module CheckPrototypeDefinition</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:CheckPrototypeDefinition"><b><code>CheckPrototypeDefinition</code></b></a>: Check if the protoype we expect is correct.<br />
+    <p>check_prototype_definition(FUNCTION PROTOTYPE RETURN HEADER VARIABLE)<br /></p>
+<pre>  FUNCTION - The name of the function (used to check if prototype exists)<br />  PROTOTYPE- The prototype to check.<br />  RETURN - The return value of the function.<br />  HEADER - The header files required.<br />  VARIABLE - The variable to store the result.<br /></pre>
+    <p>Example:<br /></p>
+<pre>  check_prototype_definition(getpwent_r<br />   "struct passwd *getpwent_r(struct passwd *src, char *buf, int buflen)"<br />   "NULL"<br />   "unistd.h;pwd.h"<br />   SOLARIS_GETPWENT_R)<br /></pre>
+    <p>The following variables may be set before calling this macro to modify the way the check is run:<br /></p>
+<pre>  CMAKE_REQUIRED_FLAGS = string of compile command line flags<br />  CMAKE_REQUIRED_DEFINITIONS = list of macros to define (-DFOO=bar)<br />  CMAKE_REQUIRED_INCLUDES = list of include directories<br />  CMAKE_REQUIRED_LIBRARIES = list of libraries to link<br /></pre>
+    
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/CheckPrototypeDefinition.cmake
+</div></body></html>

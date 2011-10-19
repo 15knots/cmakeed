@@ -1,0 +1,27 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module ProcessorCount</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:ProcessorCount"><b><code>ProcessorCount</code></b></a>: ProcessorCount(var)<br />
+    <p>Determine the number of processors/cores and save value in ${var}<br /></p>
+<p>Sets the variable named ${var} to the number of physical cores available on the machine if the information can be determined. Otherwise it is set to 0. Currently this functionality is implemented for AIX, cygwin, FreeBSD, HPUX, IRIX, Linux, Mac OS X, QNX, Sun and Windows.<br /></p>
+<p>This function is guaranteed to return a positive integer (&gt;=1) if it succeeds. It returns 0 if there's a problem determining the processor count.<br /></p>
+<p>Example use, in a ctest -S dashboard script:<br /></p>
+<pre>   include(ProcessorCount)<br />   ProcessorCount(N)<br />   if(NOT N EQUAL 0)<br />     set(CTEST_BUILD_FLAGS -j${N})<br />     set(ctest_test_args ${ctest_test_args} PARALLEL_LEVEL ${N})<br />   endif()<br /></pre>
+    <p><br /></p>
+<p>This function is intended to offer an approximation of the value of the number of compute cores available on the current machine, such that you may use that value for parallel building and parallel testing. It is meant to help utilize as much of the machine as seems reasonable. Of course, knowledge of what else might be running on the machine simultaneously should be used when deciding whether to request a machine's full capacity all for yourself.</p>
+
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/ProcessorCount.cmake
+</div></body></html>

@@ -1,0 +1,63 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>CMake module GenerateExportHeader</title>
+<link href="../cmake.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div><b>CMake 2.8.6</b></div>
+<div class="ContentTxtProd">
+<ul>
+  <li>
+    <a name="single_item:GenerateExportHeader"><b><code>GenerateExportHeader</code></b></a>: Function for generation of export macros for libraries<br />
+    <p>This module provides the function GENERATE_EXPORT_HEADER() and the accompanying ADD_COMPILER_EXPORT_FLAGS() function.<br /></p>
+<p>The GENERATE_EXPORT_HEADER function can be used to generate a file suitable for preprocessor inclusion which contains EXPORT macros to be used in library classes.<br /></p>
+<p>GENERATE_EXPORT_HEADER( LIBRARY_TARGET<br /></p>
+<pre>             [BASE_NAME &lt;base_name&gt;]<br />             [EXPORT_MACRO_NAME &lt;export_macro_name&gt;]<br />             [EXPORT_FILE_NAME &lt;export_file_name&gt;]<br />             [DEPRECATED_MACRO_NAME &lt;deprecated_macro_name&gt;]<br />             [NO_EXPORT_MACRO_NAME &lt;no_export_macro_name&gt;]<br />             [STATIC_DEFINE &lt;static_define&gt;]<br />             [NO_DEPRECATED_MACRO_NAME &lt;no_deprecated_macro_name&gt;]<br />             [DEFINE_NO_DEPRECATED]<br />             [PREFIX_NAME &lt;prefix_name&gt;]<br /></pre>
+    <p>)<br /></p>
+<p>ADD_COMPILER_EXPORT_FLAGS( [FATAL_WARNINGS] )<br /></p>
+<p>By default GENERATE_EXPORT_HEADER() generates macro names in a file name determined by the name of the library. The ADD_COMPILER_EXPORT_FLAGS function adds -fvisibility=hidden to CMAKE_CXX_FLAGS if supported, and is a no-op on Windows which does not need extra compiler flags for exporting support. You may optionally pass a single argument to ADD_COMPILER_EXPORT_FLAGS that will be populated with the required CXX_FLAGS required to enable visibility support for the compiler/architecture in use.<br /></p>
+<p>This means that in the simplest case, users of these functions will be equivalent to:<br /></p>
+<pre>   add_compiler_export_flags()<br />   add_library(somelib someclass.cpp)<br />   generate_export_header(somelib)<br />   install(TARGETS somelib DESTINATION ${LIBRARY_INSTALL_DIR})<br />   install(FILES<br />    someclass.h<br />    ${PROJECT_BINARY_DIR}/somelib_export.h DESTINATION ${INCLUDE_INSTALL_DIR}<br />   )<br /></pre>
+    <p><br /></p>
+<p>And in the ABI header files:<br /></p>
+<pre>   #include "somelib_export.h"<br />   class SOMELIB_EXPORT SomeClass {<br />     ...<br />   };<br /></pre>
+    <p><br /></p>
+<p>The CMake fragment will generate a file in the ${CMAKE_CURRENT_BUILD_DIR} called somelib_export.h containing the macros SOMELIB_EXPORT, SOMELIB_NO_EXPORT, SOMELIB_DEPRECATED, SOMELIB_DEPRECATED_EXPORT and SOMELIB_DEPRECATED_NO_EXPORT. The resulting file should be installed with other headers in the library.<br /></p>
+<p>The BASE_NAME argument can be used to override the file name and the names used for the macros<br /></p>
+<pre>   add_library(somelib someclass.cpp)<br />   generate_export_header(somelib<br />     BASE_NAME other_name<br />   )<br /></pre>
+    <p><br /></p>
+<p>Generates a file called other_name_export.h containing the macros OTHER_NAME_EXPORT, OTHER_NAME_NO_EXPORT and OTHER_NAME_DEPRECATED etc.<br /></p>
+<p>The BASE_NAME may be overridden by specifiying other options in the function. For example:<br /></p>
+<pre>   add_library(somelib someclass.cpp)<br />   generate_export_header(somelib<br />     EXPORT_MACRO_NAME OTHER_NAME_EXPORT<br />   )<br /></pre>
+    <p><br /></p>
+<p>creates the macro OTHER_NAME_EXPORT instead of SOMELIB_EXPORT, but other macros and the generated file name is as default.<br /></p>
+<pre>   add_library(somelib someclass.cpp)<br />   generate_export_header(somelib<br />     DEPRECATED_MACRO_NAME KDE_DEPRECATED<br />   )<br /></pre>
+    <p><br /></p>
+<p>creates the macro KDE_DEPRECATED instead of SOMELIB_DEPRECATED.<br /></p>
+<p>If LIBRARY_TARGET is a static library, macros are defined without values.<br /></p>
+<p>If the same sources are used to create both a shared and a static library, the uppercased symbol ${BASE_NAME}_STATIC_DEFINE should be used when building the static library<br /></p>
+<pre>   add_library(shared_variant SHARED ${lib_SRCS})<br />   add_library(static_variant ${lib_SRCS})<br />   generate_export_header(shared_variant BASE_NAME libshared_and_static)<br />   set_target_properties(static_variant PROPERTIES<br />     COMPILE_FLAGS -DLIBSHARED_AND_STATIC_STATIC_DEFINE)<br /></pre>
+    <p><br /></p>
+<p>This will cause the export macros to expand to nothing when building the static library.<br /></p>
+<p>If DEFINE_NO_DEPRECATED is specified, then a macro ${BASE_NAME}_NO_DEPRECATED will be defined This macro can be used to remove deprecated code from preprocessor output.<br /></p>
+<pre>   option(EXCLUDE_DEPRECATED "Exclude deprecated parts of the library" FALSE)<br />   if (EXCLUDE_DEPRECATED)<br />     set(NO_BUILD_DEPRECATED DEFINE_NO_DEPRECATED)<br />   endif()<br />   generate_export_header(somelib ${NO_BUILD_DEPRECATED})<br /></pre>
+    <p><br /></p>
+<p>And then in somelib:<br /></p>
+<pre>   class SOMELIB_EXPORT SomeClass<br />   {<br />   public:<br />   #ifndef SOMELIB_NO_DEPRECATED<br />     SOMELIB_DEPRECATED void oldMethod();<br />   #endif<br />   };<br /></pre>
+    <p><br /></p>
+<pre>   #ifndef SOMELIB_NO_DEPRECATED<br />   void SomeClass::oldMethod() {  }<br />   #endif<br /></pre>
+    <p><br /></p>
+<p>If PREFIX_NAME is specified, the argument will be used as a prefix to all generated macros.<br /></p>
+<p>For example:<br /></p>
+<pre>   generate_export_header(somelib PREFIX_NAME VTK_)<br /></pre>
+    <p><br /></p>
+<p>Generates the macros VTK_SOMELIB_EXPORT etc.</p>
+
+  </li>
+</ul>
+
+       Defined in: /Users/Shared/Toolkits/CMake-2.8.6/CMake-2.8.6.app/Contents/share/cmake-2.8/Modules/GenerateExportHeader.cmake
+</div></body></html>
