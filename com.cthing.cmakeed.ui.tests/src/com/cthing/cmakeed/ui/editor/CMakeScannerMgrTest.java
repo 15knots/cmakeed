@@ -28,7 +28,7 @@ public class CMakeScannerMgrTest extends TestCase
     {
         final CMakeScannerMgr mgr = new CMakeScannerMgr(new ColorMgr());
         
-        for (String contentType : CMakePartitionScanner.CONTENT_TYPES) {
+        for (String contentType : CMakePartitionScanner.CMAKE_CONTENT_TYPES) {
             final ITokenScanner scanner = mgr.getScanner(contentType);
             assertNotNull(scanner);
         }

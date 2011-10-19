@@ -45,7 +45,7 @@ public class CMakeEditorConfigurationTest extends EditorTestCase
         final String[] contentTypes =
             this.conf.getConfiguredContentTypes(getViewer());
         assertNotNull(contentTypes);
-        assertEquals(CMakePartitionScanner.CONTENT_TYPES, contentTypes);
+        assertEquals(CMakePartitionScanner.CMAKE_CONTENT_TYPES, contentTypes);
     }
     
     /**
@@ -78,7 +78,7 @@ public class CMakeEditorConfigurationTest extends EditorTestCase
         assertNotNull(hover);
         
         hover = this.conf.getTextHover(getViewer(),
-                CMakePartitionScanner.DEP_COMMAND_CONTENT_TYPE);
+                CMakePartitionScanner.DEPRECATED_COMMAND_CONTENT_TYPE);
         assertNotNull(hover);
         
         hover = this.conf.getTextHover(getViewer(),

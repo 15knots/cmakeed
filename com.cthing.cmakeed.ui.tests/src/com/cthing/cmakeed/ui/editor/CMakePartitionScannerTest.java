@@ -26,7 +26,7 @@ public class CMakePartitionScannerTest extends EditorTestCase
      */
     public void testContentTypes()
     {
-        final String[] contentTypes = CMakePartitionScanner.CONTENT_TYPES;
+        final String[] contentTypes = CMakePartitionScanner.CMAKE_CONTENT_TYPES;
         assertNotNull(contentTypes);
         assertTrue(contentTypes.length > 0);
     }
@@ -78,7 +78,7 @@ public class CMakePartitionScannerTest extends EditorTestCase
     public void testIsAnyCommand()
     {
         assertTrue(CMakePartitionScanner.isAnyCommand(CMakePartitionScanner.COMMAND_CONTENT_TYPE));
-        assertTrue(CMakePartitionScanner.isAnyCommand(CMakePartitionScanner.DEP_COMMAND_CONTENT_TYPE));
+        assertTrue(CMakePartitionScanner.isAnyCommand(CMakePartitionScanner.DEPRECATED_COMMAND_CONTENT_TYPE));
         assertFalse(CMakePartitionScanner.isAnyCommand(CMakePartitionScanner.ARGS_CLOSE_CONTENT_TYPE));
         assertFalse(CMakePartitionScanner.isAnyCommand(null));
     }
@@ -99,7 +99,7 @@ public class CMakePartitionScannerTest extends EditorTestCase
      */
     public void testIsDepCommand()
     {
-        assertTrue(CMakePartitionScanner.isDepCommand(CMakePartitionScanner.DEP_COMMAND_CONTENT_TYPE));
+        assertTrue(CMakePartitionScanner.isDepCommand(CMakePartitionScanner.DEPRECATED_COMMAND_CONTENT_TYPE));
         assertFalse(CMakePartitionScanner.isDepCommand(CMakePartitionScanner.ARGS_CLOSE_CONTENT_TYPE));
         assertFalse(CMakePartitionScanner.isDepCommand(null));
     }

@@ -17,7 +17,7 @@ import com.cthing.cmakeed.ui.EditorTestCase;
  */
 public class CMakeCommandAssistTest extends EditorTestCase
 {
-    private CMakeCommandAssist assist;
+    private CMakeContentAssistantProcessor assist;
     
     /**
      * Default constructor for the class.
@@ -35,7 +35,7 @@ public class CMakeCommandAssistTest extends EditorTestCase
     {
         super.setUp();
         
-        this.assist = new CMakeCommandAssist();
+        this.assist = new CMakeContentAssistantProcessor();
     }
     
     /**
