@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.cthing.cmakeed.ui.tests
-Bundle-Version: 0.0.0
+Bundle-Version: 1.1.6
 Bundle-Vendor: %Bundle-Vendor
 Fragment-Host: com.cthing.cmakeed.ui
 Bundle-Localization: plugin
