@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.cthing.cmakeed</groupId>
+        <artifactId>cmakeed-parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../parent</relativePath>
+    </parent>
+
+    <!-- builds a zipped p2 update site -->
+    <artifactId>com.cthing.cmakeed-repo</artifactId>
+    <version>1.1.6</version>
+    <packaging>eclipse-repository</packaging>
+
+    <build>
+        <plugins>
+            <plugin><!-- don't pollute repositories with useless stuff -->
+                <artifactId>maven-install-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin><!-- don't pollute repositories with useless stuff -->
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-p2-repository-plugin</artifactId>
+                <configuration>
+                    <repositoryName>CMake Editor</repositoryName>
+                    <!-- rename zipped p2 repository -->
+                    <finalName>CMakeEd-${project.version}</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+    </profiles>
+</project>
