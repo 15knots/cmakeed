@@ -14,7 +14,6 @@ Require-Bundle: com.cthing.cmakeed.core,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.help
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: ui.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: com.cthing.cmakeed.ui.editor,
  org.eclipse.core.resources,
