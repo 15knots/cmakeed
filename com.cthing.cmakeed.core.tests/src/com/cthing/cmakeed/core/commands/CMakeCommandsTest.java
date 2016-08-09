@@ -23,7 +23,7 @@ public class CMakeCommandsTest extends TestCase
     public CMakeCommandsTest()
     {
     }
-    
+
     /**
      * Tests the command collection access method.
      */
@@ -33,7 +33,7 @@ public class CMakeCommandsTest extends TestCase
         assertNotNull(cmds);
         assertTrue(cmds.size() > 1);
     }
-    
+
     /**
      * Tests the command access method.
      */
@@ -41,15 +41,15 @@ public class CMakeCommandsTest extends TestCase
     {
         final CMakeCommand cmd1 = CMakeCommands.getCommand("SET");
         assertNotNull(cmd1);
-        assertEquals("SET", cmd1.getName());
+        assertEquals("SET", cmd1.getName().toUpperCase());
         assertFalse(StringUtils.isBlank(cmd1.getDescription()));
         assertFalse(cmd1.isDeprecated());
-        
+
         final CMakeCommand cmd2 = CMakeCommands.getCommand("set");
         assertNotNull(cmd2);
-        
+
         assertEquals(cmd1, cmd2);
-        
+
         assertNull(CMakeCommands.getCommand(null));
     }
 }
