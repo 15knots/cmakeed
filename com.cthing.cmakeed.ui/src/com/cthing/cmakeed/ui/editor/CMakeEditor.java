@@ -46,7 +46,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
     private ColorMgr colorMgr;
 
     /**
-     * 
+     *
      */
     private VerifyListener tabReplacer = new VerifyListener() {
         public void verifyText(final VerifyEvent event)
@@ -74,7 +74,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 
 		store.addPropertyChangeListener(this);
 	}
-    
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#createPartControl(org.eclipse.swt.widgets.Composite)
@@ -85,10 +85,10 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
         super.createPartControl(parent);
 
         this.text = getSourceViewer().getTextWidget();
-        
+
         updateTabReplacer();
     }
-    
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.ui.texteditor.AbstractTextEditor#createActions()
@@ -97,7 +97,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
     protected void createActions()
     {
         super.createActions();
-        
+
         final Action action =
             new ContentAssistAction(Messages.getResourceBundle(),
                                     "ContentProposal.", this);      //$NON-NLS-1$
@@ -121,10 +121,10 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
         if (key.equals(StyledText.class)) {
             return this.text;
         }
-        
+
         return super.getAdapter(key);
     }
-    
+
 	/* (non-Javadoc)
 	 * Method declared on AbstractTextEditor
 	 */
@@ -135,7 +135,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 		}
 		setSourceViewerConfiguration(new CMakeEditorConfiguration(this.colorMgr));
 	}
-	
+
 	/** The <code>JavaEditor</code> implementation of this
 	 * <code>AbstractTextEditor</code> method performs sets the
 	 * input of the outline page after AbstractTextEditor has set input.
@@ -147,16 +147,23 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 		super.doSetInput(input);
 		CMakeEditorPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
 	}
-	
-	
+
+
 	/**
 	 * Saves the document to the underlying filebuffer.
 	 * @param prog The Progress monitor to use
 	 */
 	public void doSave(IProgressMonitor prog)
 	{
-		super.doSave(prog);	
+		super.doSave(prog);
 		CMakeEditorPlugin.getDefault().getCMakePartitionScanner().setDefaultScannerRules();
+		if(false){
+		  /* WW: disabled, since this wipes out the undo history (#4).
+		   * Tested it manually, neither the NPE when saving a file that was opened with
+		   * the CMakeEd plugin but did not have the .cmake extension hanppened nor any
+		   * issue where opening an arbitrary cmake file with the CMakeEd Plugin
+		   * did not produce the correct syntax highlighting or completions.
+		   */
 		IDocument document = this.getSourceViewer().getDocument();
 		if (document instanceof IDocumentExtension3) {
 			IDocumentExtension3 extension3 = (IDocumentExtension3) document;
@@ -177,12 +184,13 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 	            sourceViewer.setTopIndex(line);
 	            sourceViewer.setSelectedRange(sel.getOffset(), sel.getLength()	);
 			}
-            
+
 		}
+}
 		CMakeEditorPlugin.getDefault().getCMakePartitionScanner().removeUserVariableRule();
 	}
 
-	
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.ui.editors.text.TextEditor#dispose()
@@ -192,12 +200,12 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         store.removePropertyChangeListener(this);
-     
+
         this.colorMgr.dispose();
-        
+
         super.dispose();
     }
-    
+
     /**
      * Adds or removes the tab replacer based on the preference setting.
      */
@@ -221,7 +229,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
         if (event == null || event.getProperty().equals(Preferences.SPACES_FOR_TABS)) {
             updateTabReplacer();
         }
-        
+
         if (event == null || Preferences.isTextPreference(event.getProperty())) {
             final SourceViewer sourceViewer = (SourceViewer)getSourceViewer();
             int line = sourceViewer.getTopIndex();
@@ -232,10 +240,10 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
             sourceViewer.setTopIndex(line);
         }
     }
-    
+
     /**
      * Get the spefile source viewer, this method is useful for test cases.
-     * 
+     *
      * @return
      *      the specfile source viewer
      */

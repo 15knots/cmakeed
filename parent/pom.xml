@@ -47,10 +47,8 @@
     <module>../com.cthing.cmakeed.core</module>
     <module>../com.cthing.cmakeed.ui</module>
     <module>../com.cthing.cmakeed.feature</module>
-    <!--
-    -->
-    <module>../com.cthing.cmakeed.ui.tests</module>
     <module>../com.cthing.cmakeed.core.tests</module>
+    <module>../com.cthing.cmakeed.ui.tests</module>
     <module>../com.cthing.cmakeed.site</module>
   </modules>
 
@@ -189,9 +187,6 @@
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-surefire-plugin</artifactId>
           <version>${tycho-version}</version>
-          <configuration>
-            <useUIHarness>true</useUIHarness>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
