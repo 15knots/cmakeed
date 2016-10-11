@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copy this file to https://sourceforge.net/projects/cmakeed/files/updates/
+    to publish a new release of cmakeed to Eclipse users -->
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='cmakeed Update'
+  type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+  <properties size='2'>
+    <!-- get new time w/ `date +%s000` -->
+    <property name='p2.timestamp' value='1319056164000' />
+    <property name='p2.name' value='cmakeed Update' />
+  </properties>
+  <children size='1'>
+    <child location='https://sourceforge.net/projects/cmakeed/files/eclipse/site.xml' />
+  </children>
+</repository>
