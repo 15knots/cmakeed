@@ -33,7 +33,7 @@
             class="com.cthing.cmakeed.ui.editor.CMakeEditor"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             default="true"
-            extensions="cmake"
+            extensions="cmake,ctest"
             icon="icons/CMakeLogo.gif"
             id="com.cthing.cmakeed.ui.editor.CMakeEditor"
             name="%editor.name">
