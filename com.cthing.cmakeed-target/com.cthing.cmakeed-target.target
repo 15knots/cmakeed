@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="eclipse/3.8.0.target" sequenceNumber="2">
+<?pde version="3.8"?><target name="eclipse/3.8.0" sequenceNumber="2">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.8.0.v20120913-155553-9N89H_oGMMn84_uucqpkwz0bBdLL"/>
