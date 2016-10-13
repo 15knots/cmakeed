@@ -6,10 +6,11 @@
   type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
   <properties size='2'>
     <!-- get new time w/ `date +%s000` -->
-    <property name='p2.timestamp' value='1319056164000' />
+    <property name='p2.timestamp' value='1476386628000' />
     <property name='p2.name' value='cmakeed Update' />
   </properties>
-  <children size='1'>
+  <children size='2'>
+    <child location='https://sourceforge.net/projects/cmakeed/files/updates/CMakeEd-1.2.0.zip' />
     <!-- rev 1.1.6 -->
     <child location='https://sourceforge.net/projects/cmakeed/files/eclipse/site.xml' />
   </children>
