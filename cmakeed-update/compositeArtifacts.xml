@@ -10,7 +10,7 @@
     <property name='p2.name' value='cmakeed Update' />
   </properties>
   <children size='2'>
-    <child location='https://sourceforge.net/projects/cmakeed/files/updates/CMakeEd-1.2.0.zip' />
+    <child location='jar:https://dl.bintray.com/15knots/p2-zip/CMakeEd-1.2.0.zip!/' />
     <!-- rev 1.1.6 -->
     <child location='https://sourceforge.net/projects/cmakeed/files/eclipse/site.xml' />
   </children>
