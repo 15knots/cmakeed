@@ -27,6 +27,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.editors.text.ForwardingDocumentProvider;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.ContentAssistAction;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
@@ -70,9 +71,6 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 		provider = new ForwardingDocumentProvider(CMakeEditorPlugin.CMAKE_PARTITIONING,
 				new CMakeDocumentSetupParticipant(), provider);
 		setDocumentProvider(provider);
-		final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
-
-		store.addPropertyChangeListener(this);
 	}
 
     /**
@@ -129,7 +127,9 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 	 * Method declared on AbstractTextEditor
 	 */
 	protected void initializeEditor() {
-		super.initializeEditor();
+                final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
+                setPreferenceStore(store);
+                store.addPropertyChangeListener(this);
 		if (null == this.colorMgr) {
 			this.colorMgr = new ColorMgr();
 		}
@@ -211,8 +211,11 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
      */
     private void updateTabReplacer()
     {
+        if(this.text==null){
+          return;
+        }
         final IPreferenceStore prefStore = CMakeEditorPlugin.getDefault().getPreferenceStore();
-        if (prefStore.getBoolean(Preferences.SPACES_FOR_TABS)) {
+        if (prefStore.getBoolean(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS)) {
             this.text.addVerifyListener(this.tabReplacer);
         }
         else {
@@ -226,7 +229,8 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
      */
     public void propertyChange(final PropertyChangeEvent event)
     {
-        if (event == null || event.getProperty().equals(Preferences.SPACES_FOR_TABS)) {
+        if (event == null
+            || event.getProperty().equals(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS)) {
             updateTabReplacer();
         }
 
