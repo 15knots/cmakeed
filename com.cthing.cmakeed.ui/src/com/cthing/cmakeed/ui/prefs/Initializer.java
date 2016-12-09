@@ -11,6 +11,7 @@ import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 
@@ -25,7 +26,7 @@ public class Initializer extends AbstractPreferenceInitializer
     public Initializer()
     {
     }
-    
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
@@ -34,9 +35,21 @@ public class Initializer extends AbstractPreferenceInitializer
     public void initializeDefaultPreferences()
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
-        
-        store.setDefault(Preferences.SPACES_FOR_TABS, true);
-        
+
+        store.setDefault(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS, true);
+        // migrate SPACES_FOR_TABS --> EDITOR_SPACES_FOR_TABS..
+        final String spacesForTabsOldKey = Preferences.SPACES_FOR_TABS;
+        if(store.contains(spacesForTabsOldKey)){
+          final boolean spaceForTabs = store.getBoolean(spacesForTabsOldKey);
+          // remove old value
+          store.setDefault(spacesForTabsOldKey,true);
+          store.setToDefault(spacesForTabsOldKey);
+          store.setValue(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS,
+            spaceForTabs);
+        }
+
+        store.setDefault(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH, 8);
+
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.COMMAND), new RGB(0, 0, 128));
         store.setDefault(Preferences.getStyleKey(Preferences.COMMAND), SWT.NONE);
@@ -57,22 +70,22 @@ public class Initializer extends AbstractPreferenceInitializer
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.DOLLAR_VARIABLE), new RGB(52,89,129));
         store.setDefault(Preferences.getStyleKey(Preferences.DOLLAR_VARIABLE), SWT.NONE);
-        
+
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.CMAKE_VARIABLE), new RGB(127, 127, 85));
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_VARIABLE), SWT.NONE);
-        
+
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.CMAKE_PROPERTY), new RGB(0, 127, 85));
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_PROPERTY), SWT.NONE);
-        
+
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.CMAKE_RESERVED_WORD), new RGB(127, 85, 85));
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_RESERVED_WORD), SWT.NONE);
-    
+
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.CMAKE_USER_VARIABLE), new RGB(52,89,129));
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_USER_VARIABLE), SWT.NONE);
-    
+
     }
 }

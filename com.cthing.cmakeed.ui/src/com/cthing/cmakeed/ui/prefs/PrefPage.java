@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.dialogs.PreferencesUtil;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 
 import com.cthing.cmakeed.ui.Messages;
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
@@ -57,7 +58,7 @@ public class PrefPage extends PreferencePage
     private Button italicB;
     private Button underlineB;
     private Button strikeB;
-    
+
     /**
      * Default constructor for the class.
      */
@@ -75,45 +76,45 @@ public class PrefPage extends PreferencePage
     {
         final Composite topComp = new Composite(parent, SWT.NONE);
         topComp.setLayout(new GridLayout(1, false));
-        
+
         // Header
         final Control control = createHeader(topComp);
         control.setLayoutData(new GridData());
-        
+
         // Capitalization Preferences
         final Composite upperCaseCommandsComp = new Composite(topComp, SWT.NONE);
         upperCaseCommandsComp.setLayoutData(new GridData());
         upperCaseCommandsComp.setLayout(new GridLayout(2, false));
-        
+
         this.upperCaseCommandsB = new Button(upperCaseCommandsComp, SWT.CHECK);
         this.upperCaseCommandsB.setLayoutData(new GridData());
         final Label upperCaseCommandsL = new Label(upperCaseCommandsComp, SWT.NONE);
         upperCaseCommandsL.setLayoutData(new GridData());
         upperCaseCommandsL.setText(Messages.getString("PreferencePage.UpperCaseCommands")); //$NON-NLS-1$
-        
+
         // Spaces for tabs
         final Composite spacesComp = new Composite(topComp, SWT.NONE);
         spacesComp.setLayoutData(new GridData());
         spacesComp.setLayout(new GridLayout(2, false));
-        
+
         this.spacesForTabsB = new Button(spacesComp, SWT.CHECK);
         this.spacesForTabsB.setLayoutData(new GridData());
         final Label spacesForTabsL = new Label(spacesComp, SWT.NONE);
         spacesForTabsL.setLayoutData(new GridData());
         spacesForTabsL.setText(Messages.getString("PreferencePage.SpacesForTabs")); //$NON-NLS-1$
-        
+
         // Text attributes
         final Composite textComp = new Composite(topComp, SWT.NONE);
         textComp.setLayoutData(new GridData());
         textComp.setLayout(new GridLayout(2, false));
-        
+
         //      List of text attributes
         final Label attrL = new Label(textComp, SWT.NONE);
         final GridData attrData = new GridData();
         attrData.horizontalSpan = 2;
         attrL.setLayoutData(attrData);
         attrL.setText(Messages.getString("PreferencePage.Attributes"));    //$NON-NLS-1$
-        
+
         this.textAttrViewer = new ListViewer(textComp, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
         this.textAttrViewer.getList().setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING,
                                                                 false, false));
@@ -141,18 +142,18 @@ public class PrefPage extends PreferencePage
                 writeTextUI();
             }
         });
-        
+
         //      Text styles
         final Composite styleComp = new Composite(textComp, SWT.NONE);
         styleComp.setLayoutData(new GridData(SWT.NONE, SWT.BEGINNING,
                                              false, false));
         styleComp.setLayout(new GridLayout(2, false));
-        
+
         //              Text color
         final Label colorL = new Label(styleComp, SWT.NONE);
         colorL.setLayoutData(new GridData(SWT.END, SWT.NONE, false, false));
         colorL.setText(Messages.getString("PreferencePage.Color")); //$NON-NLS-1$
-        
+
         this.colorB = new ColorSelector(styleComp);
         this.colorB.getButton().setLayoutData(new GridData());
         this.colorB.addListener(new IPropertyChangeListener() {
@@ -161,7 +162,7 @@ public class PrefPage extends PreferencePage
                 readTextUI();
             }
         });
-        
+
         //              Text typographics
         this.boldB = new Button(styleComp, SWT.CHECK);
         this.boldB.setLayoutData(new GridData(SWT.END, SWT.NONE, false, false));
@@ -175,7 +176,7 @@ public class PrefPage extends PreferencePage
         final Label boldL = new Label(styleComp, SWT.NONE);
         boldL.setLayoutData(new GridData());
         boldL.setText(Messages.getString("PreferencePage.Bold"));   //$NON-NLS-1$
-        
+
         this.italicB = new Button(styleComp, SWT.CHECK);
         this.italicB.setLayoutData(new GridData(SWT.END, SWT.NONE, false, false));
         this.italicB.addSelectionListener(new SelectionAdapter() {
@@ -188,7 +189,7 @@ public class PrefPage extends PreferencePage
         final Label italicL = new Label(styleComp, SWT.NONE);
         italicL.setLayoutData(new GridData());
         italicL.setText(Messages.getString("PreferencePage.Italic"));   //$NON-NLS-1$
-        
+
         this.underlineB = new Button(styleComp, SWT.CHECK);
         this.underlineB.setLayoutData(new GridData(SWT.END, SWT.NONE, false, false));
         this.underlineB.addSelectionListener(new SelectionAdapter() {
@@ -201,7 +202,7 @@ public class PrefPage extends PreferencePage
         final Label underlineL = new Label(styleComp, SWT.NONE);
         underlineL.setLayoutData(new GridData());
         underlineL.setText(Messages.getString("PreferencePage.Underline"));   //$NON-NLS-1$
-        
+
         this.strikeB = new Button(styleComp, SWT.CHECK);
         this.strikeB.setLayoutData(new GridData(SWT.END, SWT.NONE, false, false));
         this.strikeB.addSelectionListener(new SelectionAdapter() {
@@ -214,17 +215,17 @@ public class PrefPage extends PreferencePage
         final Label strikeL = new Label(styleComp, SWT.NONE);
         strikeL.setLayoutData(new GridData());
         strikeL.setText(Messages.getString("PreferencePage.Strike"));   //$NON-NLS-1$
-        
+
         init(CMakeEditorPlugin.getDefault().getWorkbench());
-        
+
         return topComp;
     }
-    
+
     /**
      * Creates the preference header hyper link label indicating that
      * additional preferences are available on the Text Editors preference
      * page.
-     * 
+     *
      * @param parent  Parent container
      * @return The created control
      */
@@ -240,10 +241,10 @@ public class PrefPage extends PreferencePage
                 PreferencesUtil.createPreferenceDialogOn(link.getShell(), target, null, null);
             }
         });
-        
+
         final String linktooltip = Messages.getString("PreferencePage.AdditionalTip"); //$NON-NLS-1$
         link.setToolTipText(linktooltip);
-        
+
         return link;
     }
 
@@ -252,24 +253,24 @@ public class PrefPage extends PreferencePage
      * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
     public void init(final IWorkbench workbench)
-    {   
+    {
         if (this.textAttrViewer != null) {
             this.textAttrViewer.setInput(Preferences.TEXT_KEYS);
             this.textAttrViewer.getList().select(0);
             this.textAttrViewer.getList().showSelection();
 
-            final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();            
-            this.spacesForTabsB.setSelection(store.getBoolean(Preferences.SPACES_FOR_TABS));
+            final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
+            this.spacesForTabsB.setSelection(store.getBoolean(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS));
             this.upperCaseCommandsB.setSelection(store.getBoolean(Preferences.UPPER_CASE_COMMANDS));
-            
+
             readTextPrefs();
             writeTextUI();
         }
     }
-    
+
     /**
      * Obtains the current text attribute selection.
-     * 
+     *
      * @return Current text attribute selection. This is the base preference
      *      key.
      */
@@ -279,14 +280,14 @@ public class PrefPage extends PreferencePage
             (IStructuredSelection)this.textAttrViewer.getSelection();
         return (String)selection.getFirstElement();
     }
-    
+
     /**
      * Reads the text preferences into the local style.
      */
     private void readTextPrefs()
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
-        
+
         for (String baseKey : Preferences.TEXT_KEYS) {
             this.colorMap.put(baseKey, PreferenceConverter.getColor(store,
                     Preferences.getColorKey(baseKey)));
@@ -294,26 +295,26 @@ public class PrefPage extends PreferencePage
                     store.getInt(Preferences.getStyleKey(baseKey)));
         }
     }
-    
+
     /**
      * Writes the text preferences from the local style.
      */
     private void writeTextPrefs()
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
-        
+
         for (String baseKey : Preferences.TEXT_KEYS) {
             PreferenceConverter.setValue(store, Preferences.getColorKey(baseKey), this.colorMap.get(baseKey));
             store.setValue(Preferences.getStyleKey(baseKey), this.styleMap.get(baseKey));
-            
-            
+
+
             this.colorMap.put(baseKey, PreferenceConverter.getColor(store,
                     Preferences.getColorKey(baseKey)));
             this.styleMap.put(baseKey,
                     store.getInt(Preferences.getStyleKey(baseKey)));
         }
     }
-    
+
     /**
      * Updates the text UI based on the local style.
      */
@@ -322,24 +323,24 @@ public class PrefPage extends PreferencePage
         final String baseKey = getSelection();
 
         this.colorB.setColorValue(this.colorMap.get(baseKey));
-        
+
         final int style = this.styleMap.get(baseKey);
         this.boldB.setSelection((style & SWT.BOLD) != 0);
         this.italicB.setSelection((style & SWT.ITALIC) != 0);
         this.underlineB.setSelection((style & TextAttribute.UNDERLINE) != 0);
         this.strikeB.setSelection((style & TextAttribute.STRIKETHROUGH) != 0);
     }
-    
+
     /**
      * Reads the style from the UI and sets the local style.
      */
     private void readTextUI()
     {
         final String baseKey = getSelection();
-        
+
         final RGB color = this.colorB.getColorValue();
         this.colorMap.put(baseKey, color);
-        
+
         final int bold = this.boldB.getSelection() ? SWT.BOLD : SWT.NONE;
         final int italic = this.italicB.getSelection() ? SWT.ITALIC : SWT.NONE;
         final int underline = this.underlineB.getSelection() ? TextAttribute.UNDERLINE : SWT.NONE;
@@ -356,14 +357,14 @@ public class PrefPage extends PreferencePage
     protected void performDefaults()
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
-        
+
         for (String baseKey : Preferences.TEXT_KEYS) {
             this.colorMap.put(baseKey, PreferenceConverter.getDefaultColor(store,
                     Preferences.getColorKey(baseKey)));
             this.styleMap.put(baseKey,
                     store.getDefaultInt(Preferences.getStyleKey(baseKey)));
         }
-        
+
         writeTextUI();
 
         super.performDefaults();
@@ -376,8 +377,8 @@ public class PrefPage extends PreferencePage
     @Override
     public boolean performOk()
     {
-        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();            
-        store.setValue(Preferences.SPACES_FOR_TABS, this.spacesForTabsB.getSelection());
+        final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
+        store.setValue(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS, this.spacesForTabsB.getSelection());
         store.setValue(Preferences.UPPER_CASE_COMMANDS, this.upperCaseCommandsB.getSelection());
 
         writeTextPrefs();

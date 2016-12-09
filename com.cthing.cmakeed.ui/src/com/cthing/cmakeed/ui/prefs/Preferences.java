@@ -10,14 +10,14 @@ import com.cthing.cmakeed.ui.Messages;
 /**
  * Constants representing preferences.
  */
-/**
- * 
- */
 public final class Preferences
 {
     /** Use UPPER CASE for CMake commands */
     public static final String UPPER_CASE_COMMANDS = "upperCaseCommands";      //$NON-NLS-1$
-    /** Use spaces instead of tabs key. */
+    /** Use spaces instead of tabs key.
+     * @deprecated use {@link org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants} instead
+     */
+    @Deprecated
     public static final String SPACES_FOR_TABS = "spacesForTabsPref";      //$NON-NLS-1$
     /** CMake command text descriptor key. */
     public static final String COMMAND = "command";             //$NON-NLS-1$
@@ -41,7 +41,7 @@ public final class Preferences
     public static final String COLOR = "Color";     //$NON-NLS-1$
     /** Text style sub key. */
     public static final String STYLE = "Style";     //$NON-NLS-1$
-    
+
     /** All text attribute related keys.  */
     public static final String[] TEXT_KEYS = new String[] {
         COMMAND,
@@ -61,10 +61,10 @@ public final class Preferences
     private Preferences()
     {
     }
-    
+
     /**
      * Forms the color sub key for a text attribute.
-     * 
+     *
      * @param baseKey  Base text attribute key.
      * @return Color sub key.
      */
@@ -72,10 +72,10 @@ public final class Preferences
     {
         return baseKey + COLOR;
     }
-    
+
     /**
      * Forms the style sub key for a text attribute.
-     * 
+     *
      * @param baseKey  Base text attribute key.
      * @return Style sub key.
      */
@@ -83,10 +83,10 @@ public final class Preferences
     {
         return baseKey + STYLE;
     }
-    
+
     /**
      * Obtains the message key for the specified preference.
-     * 
+     *
      * @param baseKey  Base preference key.
      * @return Message key
      */
@@ -94,10 +94,10 @@ public final class Preferences
     {
         return Messages.getString("Preference." + baseKey);     //$NON-NLS-1$
     }
-    
+
     /**
      * Tests whether the specified preference is a text preference.
-     * 
+     *
      * @param preference  Preference key to test
      * @return <code>true</code> if the specified preference key is a
      *      text preference.
