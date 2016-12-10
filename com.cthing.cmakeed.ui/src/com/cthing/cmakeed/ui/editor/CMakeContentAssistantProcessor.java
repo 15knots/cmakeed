@@ -49,31 +49,31 @@ import com.cthing.cmakeed.ui.prefs.Preferences;
 /**
  * Content assist for CMake commands.
  */
-public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor 
-											implements IContentAssistProcessor, 
+public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
+											implements IContentAssistProcessor,
 											           ITextHover
 {
 	/**
 	 * @brief Validator class for constext information
 	 */
-	protected static class Validator implements IContextInformationValidator, 
+	protected static class Validator implements IContextInformationValidator,
 												IContextInformationPresenter {
 
 		protected int fInstallOffset;
 		protected boolean isCommand = false;
 		protected ITextViewer viewer;
-		
+
 		/*
 		 * @see IContextInformationValidator#isContextInformationValid(int)
 		 */
-		public boolean isContextInformationValid(int offset) 
+		public boolean isContextInformationValid(int offset)
 		{
-			if (this.isCommand == false) { 
-				return false; 
+			if (this.isCommand == false) {
+				return false;
 				}
 			try {
-	        	if (viewer.getDocument().getChar(offset - 1) != ')') { 
-	        		return true; 
+	        	if (viewer.getDocument().getChar(offset - 1) != ')') {
+	        		return true;
 	            }
 	        }
 	        catch (final BadLocationException e) {
@@ -103,11 +103,11 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 		public boolean updatePresentation(int documentPosition, TextPresentation presentation) {
 			return false;
 		}
-		
+
 	}
-	
+
 	// protected IContextInformationValidator fValidator= new Validator();
-	
+
     private final CMakeNameDetector detector = new CMakeNameDetector();
     private static final String TEMPLATE_IMAGE= "$nl$/icons/CMakeTemplate.png"; //$NON-NLS-1$
 	private static final String COMMAND_IMAGE = "$nl$/icons/CMakeCommand.png"; //$NON-NLS-1$
@@ -115,7 +115,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 	private static final String VARIABLE_IMAGE = "$nl$/icons/CMakeVariable.png"; //$NON-NLS-1$
 	private static final String RESERVED_WORD_IMAGE ="$nl$/icons/CMakeReservedWord.png"; //$NON-NLS-1$
 
-	
+
     /**
      * Default constructor for the class.
      */
@@ -123,8 +123,8 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
     {
     //	 System.out.println("CMakeContentAssistantProcessor Constructor");
     }
-    
-/* -------------------------------------------------------------------------- */    
+
+/* -------------------------------------------------------------------------- */
 /* Start TemplateCompletionProcessor Implementation    */
 /* -------------------------------------------------------------------------- */
 	/**
@@ -164,9 +164,9 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 		}
 		return image;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param imageType
 	 * @return
 	 */
@@ -181,15 +181,15 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 		}
 		return image;
 	}
-    
-	
+
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
      */
     public ICompletionProposal[] computeCompletionProposals( ITextViewer viewer,
                                                              int offset)
-    {    	
+    {
         IDocument doc = viewer.getDocument();
         String prefix = getPrefix(doc, offset);
 
@@ -198,26 +198,23 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         if (null == proposals) {
         	proposals = new ArrayList<ICompletionProposal>();
         }
-		
+
         if (!EditorUtils.inArguments(doc, offset)) {
-        //-- Get any command proposals	
+        //-- Get any command proposals
             final List<CMakeCommand> commands = findPossibleCommands(prefix);
-            
+
             if ( !commands.isEmpty()) {
                 boolean isUpperCase = CMakeEditorPlugin.getDefault().getPreferenceStore().getBoolean(Preferences.UPPER_CASE_COMMANDS);
                 if (prefix.length() > 0) { Character.isLowerCase(prefix.charAt(0)); }
                 int replacementOffset = offset - prefix.length();
                 int replacementLength = prefix.length();
-                if (null == proposals) {
-                	proposals = new ArrayList<ICompletionProposal>();
-                }
                 for (CMakeCommand command : commands) {
                     final String name = isUpperCase ? command.getName().toUpperCase() : command.getName().toLowerCase();
                     final String desc = command.getDescription();
                     final String[] usages = command.getUsages();
-                    
+
                     for (String usage : usages) {
-                        final IContextInformation contextInfo 
+                        final IContextInformation contextInfo
                               = new ContextInformation( "Command::" + name, usage);
                         String replacementString = name + "(";
                         int    cursorPosition = name.length() + 1;
@@ -242,43 +239,43 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         	List<ICompletionProposal> propProposals = computePropertyCompletionProposals(viewer, offset);
         	if (propProposals != null)
         	{
-            	proposals.addAll(propProposals);	
+            	proposals.addAll(propProposals);
         	}
-        	
+
         	List<ICompletionProposal> varProposals = computeCMakeVariableCompletionProposals(viewer, offset);
         	if (varProposals != null)
         	{
-            	proposals.addAll(varProposals);	
+            	proposals.addAll(varProposals);
         	}
-        	
+
         	List<ICompletionProposal> resProposals = computeReservedWordCompletionProposals(viewer, offset);
         	if (resProposals != null)
         	{
-            	proposals.addAll(resProposals);	
+            	proposals.addAll(resProposals);
         	}
-        	
+
         	List<ICompletionProposal> uvarProposals = computeUserVariableCompletionProposals(viewer, offset);
         	if (uvarProposals != null)
         	{
-            	proposals.addAll(uvarProposals);	
+            	proposals.addAll(uvarProposals);
         	}
-        	
+
         }
-        
+
         // Get the template Proposals from the super class
-        
-        return (null == proposals || proposals.size() == 0) ? null : proposals.toArray(new ICompletionProposal[proposals.size()]);
+
+        return (proposals.size() == 0) ? null : proposals.toArray(new ICompletionProposal[proposals.size()]);
     }
 
-    
+
     /**
      * Determines the portion of the word that has already been entered.
-     * 
+     *
      * @param viewer  viewer being edited
      * @param offset  Offset into the document where content assist is desired.
      * @return Portion of the word that has already been entered.
      */
-    public List<ICompletionProposal> computeCMakeVariableCompletionProposals( final ITextViewer viewer, 
+    public List<ICompletionProposal> computeCMakeVariableCompletionProposals( final ITextViewer viewer,
     																     final int offset) {
 		final IDocument doc = viewer.getDocument();
 		List<ICompletionProposal> proposals = null;
@@ -309,7 +306,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 
     /**
      * Determine possible commands that start with the specified prefix.
-     * 
+     *
      * @param prefix  Prefix for commands
      * @return Commands that begin with the specified prefix.
      */
@@ -318,7 +315,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         final List<CMakeVariable> possibles = new ArrayList<CMakeVariable>();
         final Collection<CMakeVariable> cmakeVariables = CMakeVariables.getCommands();
         final String upperPrefix = prefix.toUpperCase();
-        
+
         /* VERY important that the list is kept in alphabetical order otherwise
          * this little block of code will only pick up the first match and not
          * all possible matches
@@ -332,18 +329,18 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                 break;
             }
         }
-        
+
         return possibles;
     }
-    
+
     /**
      * Determines the portion of the word that has already been entered.
-     * 
+     *
      * @param viewer  viewer being edited
      * @param offset  Offset into the document where content assist is desired.
      * @return Portion of the word that has already been entered.
      */
-    public List<ICompletionProposal> computeUserVariableCompletionProposals( final ITextViewer viewer, 
+    public List<ICompletionProposal> computeUserVariableCompletionProposals( final ITextViewer viewer,
     																         final int offset) {
 		final IDocument doc = viewer.getDocument();
 		List<ICompletionProposal> proposals = null;
@@ -369,10 +366,10 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 
 		return proposals;
 	}
-    
+
     /**
      * Determine possible commands that start with the specified prefix.
-     * 
+     *
      * @param prefix  Prefix for commands
      * @return Commands that begin with the specified prefix.
      */
@@ -386,7 +383,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
             possibles.addAll(userVariables);
             return possibles;
         }
-        for (CMakeUserVariable userVariable : userVariables) { 
+        for (CMakeUserVariable userVariable : userVariables) {
                 String name = userVariable.getName();
                 if (name.startsWith(prefix)) {
                     possibles.add(userVariable);
@@ -394,13 +391,13 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         }
         return possibles;
     }
-    
 
-    
+
+
     /**
-     * 
-     * @param viewer 
-     * @param offset 
+     *
+     * @param viewer
+     * @param offset
      * @return List of completion proposals.
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
      */
@@ -409,11 +406,11 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
     {
         final IDocument doc = viewer.getDocument();
         List<ICompletionProposal> proposals = null;
-        
+
         if (EditorUtils.inArguments(doc, offset)) {
             final String prefix = getPrefix(doc, offset);
             final List<CMakeReservedWord> reservedWords = findPossibleReservedWords(prefix);
-            
+
             if (!StringUtils.isBlank(prefix) && !reservedWords.isEmpty()) {
                 final boolean isLowercase = Character.isLowerCase(prefix.charAt(0));
                 final int replacementOffset = offset - prefix.length();
@@ -429,13 +426,13 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 				}
             }
         }
-        
+
         return proposals;
     }
-    
+
     /**
      * Determine possible commands that start with the specified prefix.
-     * 
+     *
      * @param prefix  Prefix for commands
      * @return Commands that begin with the specified prefix.
      */
@@ -445,7 +442,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
             new ArrayList<CMakeReservedWord>();
         final Collection<CMakeReservedWord> commands = CMakeReservedWords.getCommands();
         final String lowerPrefix = prefix.toUpperCase();
-        
+
         for (CMakeReservedWord command : commands) {
                 final String name = command.getName();
                 if (name.startsWith(lowerPrefix)) {
@@ -457,9 +454,9 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         }
         return possibles;
     }
-    
+
 /**
- * 
+ *
  * @param viewer
  * @param offset
  * @return Return list of property Completion proposals
@@ -469,11 +466,11 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
     {
         final IDocument doc = viewer.getDocument();
         List<ICompletionProposal> proposals = null;
-        
+
         if (EditorUtils.inArguments(doc, offset)) {
             final String prefix = getPrefix(doc, offset);
             final List<CMakeProperty> properties = findPossibleProperties(prefix);
-            
+
             if (!StringUtils.isBlank(prefix) && !properties.isEmpty()) {
                 final boolean isLowercase = Character.isLowerCase(prefix.charAt(0));
                 final int replacementOffset = offset - prefix.length();
@@ -490,13 +487,13 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 				}
             }
         }
-        
+
         return proposals;
     }
-    
+
     /**
      * Determine possible commands that start with the specified prefix.
-     * 
+     *
      * @param prefix  Prefix for commands
      * @return Commands that begin with the specified prefix.
      */
@@ -506,7 +503,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
             new ArrayList<CMakeProperty>();
         final Collection<CMakeProperty> commands = CMakeProperties.getCommands();
         final String lowerPrefix = prefix.toUpperCase();
-        
+
         for (CMakeProperty command : commands) {
             if (!command.isDeprecated()) {
                 final String name = command.getName();
@@ -518,11 +515,11 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                 }
             }
         }
-        
+
         return possibles;
     }
-    
-    
+
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeContextInformation(org.eclipse.jface.text.ITextViewer, int)
@@ -537,12 +534,12 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         if (cmd != null) {
             final String[] usages = cmd.getUsages();
             final IContextInformation[] contexts = new IContextInformation[usages.length];
-            
+
             int i = 0;
             for (String usage : usages) {
                 contexts[i++] = new ContextInformation(cmd.getName(), usage);
             }
-            
+
             return contexts;
         }
         */
@@ -579,10 +576,10 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
     {
         return new char[] { '(', };
     }
-    
+
     /**
      * Determines the portion of the word that has already been entered.
-     * 
+     *
      * @param doc  Document being edited
      * @param offset  Offset into the document where content assist is desired.
      * @return Portion of the word that has already been entered.
@@ -604,17 +601,17 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         catch (final BadLocationException e) {
             CMakeEditorPlugin.logError(this, e);
         }
-        
+
         return "";      //$NON-NLS-1$
     }
-    
+
     /**
-     * 
+     *
      * @param prefix
      * @param templates
      * @return
      */
-    private List<ICompletionProposal> findPossibleTemplates(String prefix, 
+    private List<ICompletionProposal> findPossibleTemplates(String prefix,
     														ICompletionProposal[] templates)
     {
         List<ICompletionProposal> possibles = new ArrayList<ICompletionProposal>();
@@ -626,14 +623,14 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         		}
 			}
         }
-       return (null == possibles || possibles.size() == 0) ? null : possibles;
+       return (possibles.size() == 0) ? null : possibles;
     }
-    
-    
-    
+
+
+
     /**
      * Determine possible commands that start with the specified prefix.
-     * 
+     *
      * @param prefix  Prefix for commands
      * @return Commands that begin with the specified prefix.
      */
@@ -642,7 +639,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         final List<CMakeCommand> possibles = new ArrayList<CMakeCommand>();
         final Collection<CMakeCommand> commands = CMakeCommands.getCommands();
         final String lowerPrefix = prefix.toLowerCase();
-        
+
         for (CMakeCommand command : commands) {
             if (!command.isDeprecated()) {
                 final String name = command.getName();
@@ -654,7 +651,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                 }
             }
         }
-        
+
         return possibles;
     }
 
@@ -676,7 +673,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
     {
         final IDocument doc = textViewer.getDocument();
         String description = null;
-        
+
         if (hoverRegion != null) {
             try {
                 final String word = doc.get(hoverRegion.getOffset(),
@@ -690,7 +687,7 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                 CMakeEditorPlugin.logError(this, e);
             }
         }
-        
+
         return description;
     }
 
@@ -702,14 +699,14 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
                                   final int offset)
     {
         IRegion region = null;
-        
+
         try {
             region = textViewer.getDocument().getPartition(offset);
         }
         catch (final BadLocationException e) {
             CMakeEditorPlugin.logError(this, e);
         }
-        
+
         return region;
     }
 
