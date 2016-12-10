@@ -54,15 +54,16 @@
    </extension>
    
    
-   <extension point="org.eclipse.core.runtime.contentTypes">
+   <extension point="org.eclipse.core.contenttype.contentTypes">
       <content-type
             base-type="org.eclipse.core.runtime.text"
-            file-extensions="cmake"
+            file-extensions="cmake,ctest"
             file-names="CMakeLists.txt,CMakeLists.txt.in"
             id="com.cthing.cmakeed.CMakeFileType"
             name="%content-type.name"
-            priority="normal"/>
-   </extension>
+            priority="normal">
+    </content-type>
+ </extension>
    
    <extension point="org.eclipse.ui.preferencePages">
       <page
@@ -301,7 +302,4 @@ message(STATUS "${variable}: $${${variable}}")
 >
     </viewerContribution>
  </extension>
-
-
-
 </plugin>
