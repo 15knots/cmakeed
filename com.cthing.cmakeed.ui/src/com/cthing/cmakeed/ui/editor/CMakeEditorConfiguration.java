@@ -5,10 +5,6 @@
 
 package com.cthing.cmakeed.ui.editor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
@@ -19,6 +15,7 @@ import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.source.ISourceViewer;
 //import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
+
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 
 /**
