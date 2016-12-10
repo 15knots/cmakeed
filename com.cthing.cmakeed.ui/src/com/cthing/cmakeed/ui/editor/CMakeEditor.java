@@ -110,7 +110,7 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
      * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#getAdapter(java.lang.Class)
      */
     @Override
-    public Object getAdapter(final java.lang.Class key)
+    public Object getAdapter(@SuppressWarnings("rawtypes") final java.lang.Class key)
     {
         if (key.equals(ISourceViewer.class)) {
             return getSourceViewer();

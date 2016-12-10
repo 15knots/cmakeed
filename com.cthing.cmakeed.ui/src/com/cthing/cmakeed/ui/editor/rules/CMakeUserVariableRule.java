@@ -16,7 +16,6 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.IWordDetector;
 import org.eclipse.jface.text.rules.Token;
 
-import com.cthing.cmakeed.core.commands.CMakeCommand;
 import com.cthing.cmakeed.core.uservariables.CMakeUserVariable;
 import com.cthing.cmakeed.core.uservariables.CMakeUserVariables;
 import com.cthing.cmakeed.ui.editor.CMakeNameDetector;
@@ -32,15 +31,15 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
  //   private boolean findDeprecated;
     private IWordDetector detector = new CMakeNameDetector();
     private StringBuilder buffer = new StringBuilder();
-    
+
     /**
      * Maps the an IDocument to a list of user defined variables
      */
     public static Map<IDocument, CMakeUserVariables> userVariableMap;
-    
+
     /**
      * Constructor for the class.
-     * 
+     *
      * @param commandToken  Token to return if a CMake command is found
      */
     public CMakeUserVariableRule(final IToken commandToken)
@@ -51,7 +50,7 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
         	CMakeUserVariableRule.userVariableMap = new LinkedHashMap<IDocument, CMakeUserVariables>();
         }
     }
-    
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.jface.text.rules.IRule#evaluate(org.eclipse.jface.text.rules.ICharacterScanner)
@@ -73,9 +72,9 @@ public class CMakeUserVariableRule implements IRule, IPredicateRule
                 if (EditorUtils.startOfWord(doc, offset)) {
                     this.buffer.setLength(0);
                     // Read the word into the buffer
-                    for (int ch = scanner.read(); 
-                        ch != ICharacterScanner.EOF && this.detector.isWordPart((char) ch); 
-                        ch = scanner.read()) 
+                    for (int ch = scanner.read();
+                        ch != ICharacterScanner.EOF && this.detector.isWordPart((char) ch);
+                        ch = scanner.read())
                     {
                         this.buffer.append((char) ch);
                     }
