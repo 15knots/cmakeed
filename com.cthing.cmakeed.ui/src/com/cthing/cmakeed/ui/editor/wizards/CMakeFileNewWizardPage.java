@@ -4,14 +4,10 @@
  */
 
 /**
- * This code is a work in progress and should currently not be used. 
+ * This code is a work in progress and should currently not be used.
  */
 package com.cthing.cmakeed.ui.editor.wizards;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,9 +17,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.text.templates.Template;
 import org.eclipse.jface.viewers.ISelection;
@@ -90,7 +84,7 @@ public class CMakeFileNewWizardPage extends WizardPage {
 
 	/**
 	 * Constructor for CMakeFileNewWizardPage.
-	 * 
+	 *
 	 * @param selection
 	 */
 	public CMakeFileNewWizardPage(ISelection selection) {
@@ -184,7 +178,7 @@ public class CMakeFileNewWizardPage extends WizardPage {
 
 			private void setDefaultValues() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
@@ -200,7 +194,7 @@ public class CMakeFileNewWizardPage extends WizardPage {
 		// Package Group
 		label = new Label(container, SWT.NULL);
 		label.setText("&Group:");
-	
+
 		// empty label for the last row.
 		label = new Label(container, SWT.NULL);
 
@@ -358,7 +352,7 @@ public class CMakeFileNewWizardPage extends WizardPage {
 		 * (unlike version and releasetags). Names should not include any
 		 * numeric operators ('<', '>','=') as future versions of rpm may need
 		 * to reserve characters other than '-'.
-		 * 
+		 *
 		 */
 		String packageName = nameText.getText();
 		if (packageName.indexOf(" ") != -1 || packageName.indexOf("<") != -1
