@@ -73,6 +73,17 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
 		setDocumentProvider(provider);
 	}
 
+    @Override
+    protected String[] collectContextMenuPreferencePages() {
+      String[] inheritedPages= super.collectContextMenuPreferencePages();
+      int length= 2;
+      String[] result= new String[inheritedPages.length + length];
+      result[0]= "com.cthing.cmakeed.ui.prefs.PrefPage"; //$NON-NLS-1$
+      result[1]= "com.cthing.cmakeed.ui.prefs.TemplatesPreferencePage"; //$NON-NLS-1$
+      System.arraycopy(inheritedPages, 0, result, length, inheritedPages.length);
+      return result;
+    }
+
     /**
      * {@inheritDoc}
      * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#createPartControl(org.eclipse.swt.widgets.Composite)
