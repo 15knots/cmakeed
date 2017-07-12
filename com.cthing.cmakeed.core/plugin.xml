@@ -1266,38 +1266,47 @@
                  name="%commands-extension-point.name" 
                  schema="schema/commands.exsd"/> 
   <extension point="com.cthing.cmakeed.core.commands"> 
+  <command name="add_compile_options"
+         desc="Adds options to the compilation of source files."
+         deprecated="false" >
+    <usage value="(option...)" />
+  </command>
   <command name="add_custom_command"
          desc="Add a custom build rule to the generated build system."
          deprecated="false" >
-    <usage value="(OUTPUT output1 [output2 ...] COMMAND command1 [ARGS] [args1...] [COMMAND command2 [ARGS] [args2...] ...] [MAIN_DEPENDENCY depend] [DEPENDS [depends...]] [IMPLICIT_DEPENDS lang1 depend1 ...] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM] [APPEND])" />
-    <usage value="(TARGET target PRE_BUILD | PRE_LINK | POST_BUILD COMMAND command1 [ARGS] [args1...] [COMMAND command2 [ARGS] [args2...] ...] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM])" />
+    <usage value="(OUTPUT output1 [output2...] COMMAND command1 [ARGS] [args1...] [COMMAND command2 [ARGS] [args2...]...] [MAIN_DEPENDENCY depend][DEPENDS [depends...]] [BYPRODUCTS [files...]] [IMPLICIT_DEPENDS lang1 depend1 [lang2 depend2]...] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM] [APPEND] [USES_TERMINAL])" />
+    <usage value="(TARGET target PRE_BUILD | PRE_LINK | POST_BUILD COMMAND command1 [ARGS] [args1...] [COMMAND command2 [ARGS] [args2...]...] [BYPRODUCTS [files...]] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM] [USES_TERMINAL])" />
   </command>
   <command name="add_custom_target"
          desc="Add a target with no output so it will always be built."
          deprecated="false" >
-    <usage value="(Name [ALL] [command1 [args1...]] [COMMAND command2 [args2...] ...] [DEPENDS depend depend depend ... ] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM] [SOURCES src1 [src2...]])" />
+    <usage value="(Name [ALL] [command1 [args1...]] [COMMAND command2 [args2...]...] [DEPENDS depend depend depend... ] [BYPRODUCTS [files...]] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM] [SOURCES src1 [src2...]])" />
   </command>
   <command name="add_definitions"
          desc="Adds -D define flags to the compilation of source files."
          deprecated="false" >
-    <usage value="(-DFOO -DBAR ...)" />
+    <usage value="(-DFOO -DBAR...)" />
   </command>
   <command name="add_dependencies"
          desc="Add a dependency between top-level targets."
          deprecated="false" >
-    <usage value="(target-name depend-target1 depend-target2 ...)" />
+    <usage value="(target [target-dependency]...)" />
   </command>
   <command name="add_executable"
          desc="Add an executable to the project using the specified source files."
          deprecated="false" >
-    <usage value="(name [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] source1 source2 ... sourceN)" />
-    <usage value="(name IMPORTED)" />
+    <usage value="(name [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] source1 [source2...])" />
+    <usage value="(name IMPORTED) [GLOBAL]" />
+    <usage value="(name ALIAS target)" />
   </command>
   <command name="add_library"
          desc="Add a library to the project using the specified source files."
          deprecated="false" >
-    <usage value="(name [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] source1 source2 ... sourceN)" />
-    <usage value="(name SHARED|STATIC|MODULE|UNKNOWN IMPORTED)" />
+    <usage value="(name [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] source1 [source2...])" />
+    <usage value="(name SHARED|STATIC|MODULE|UNKNOWN IMPORTED [GLOBAL])" />
+    <usage value="(name OBJECT source1 [source2...])" />
+    <usage value="(name ALIAS target)" />
+    <usage value="(name INTERFACE [IMPORTED [GLOBAL]])" />
   </command>
   <command name="add_subdirectory"
          desc="Add a subdirectory to the build."
@@ -1305,11 +1314,10 @@
     <usage value="(source_dir [binary_dir] [EXCLUDE_FROM_ALL])" />
   </command>
   <command name="add_test"
-         desc="Add a test to the project with the specified arguments."
+         desc="Add a test to the project to be run by ctest(1)."
          deprecated="false" >
-    <usage value="(testname Exename arg1 arg2 ... )" />
-    <usage value="(NAME name [CONFIGURATIONS [Debug|Release|...]] [WORKING_DIRECTORY dir] COMMAND command [arg1 [arg2 ...]])" />
-    <usage value="(NAME mytest COMMAND testDriver --config $CONFIGURATION --exe $TARGET_FILE:myexe)" />
+    <usage value="(NAME name COMMAND command [arg...] [CONFIGURATIONS config...] [WORKING_DIRECTORY dir])" />
+    <usage value="(testname Exename [arg...])" />
   </command>
   <command name="aux_source_directory"
          desc="Find all source files in a directory."
@@ -1324,7 +1332,7 @@
   <command name="build_command"
          desc="Get the command line to build this project."
          deprecated="false" >
-    <usage value="(variable [CONFIGURATION config] [PROJECT_NAME projname] [TARGET target])" />
+    <usage value="(variable [CONFIGURATION config] [TARGET target] [PROJECT_NAME projname])" />
     <usage value="(cachevariable makecommand)" />
   </command>
   <command name="build_name"
@@ -1332,10 +1340,20 @@
          deprecated="true" >
     <usage value="(variable)" />
   </command>
+  <command name="cmake_host_system_information"
+         desc="Query host system specific information."
+         deprecated="false" >
+    <usage value="(RESULT variable QUERY key...)" />
+  </command>
   <command name="cmake_minimum_required"
          desc="Set the minimum required version of cmake for a project."
          deprecated="false" >
-    <usage value="(VERSION major[.minor[.patch[.tweak]]] [FATAL_ERROR])" />
+    <usage value="(VERSION major.minor[.patch[.tweak]] [FATAL_ERROR])" />
+  </command>
+  <command name="cmake_parse_arguments"
+         desc="Processes the arguments and defines a set of variables which hold the values of the respective options."
+         deprecated="false" >
+    <usage value="(prefix options one_value_keywords multi_value_keywords args...)" />
   </command>
   <command name="cmake_policy"
          desc="Manage CMake Policy settings."
@@ -1350,7 +1368,12 @@
   <command name="configure_file"
          desc="Copy a file to another location and modify its contents."
          deprecated="false" >
-    <usage value="(input output [COPYONLY] [ESCAPE_QUOTES] [@ONLY])" />
+    <usage value="(input output [COPYONLY] [ESCAPE_QUOTES] [@ONLY] [NEWLINE_STYLE [UNIX|DOS|WIN32|LF|CRLF] ])" />
+  </command>
+  <command name="continue"
+         desc="Continue to the top of enclosing foreach or while loop."
+         deprecated="false" >
+    <usage value="()" />
   </command>
   <command name="create_test_sourcelist"
          desc="Create a test driver and source list for building test programs."
@@ -1420,7 +1443,8 @@
   <command name="export"
          desc="Export targets from the build tree for use by outside projects."
          deprecated="false" >
-    <usage value="(TARGETS [target1 [target2 [...]]] [NAMESPACE namespace] [APPEND] FILE filename)" />
+    <usage value="(EXPORT export-name [NAMESPACE namespace] [FILE filename])" />
+    <usage value="(TARGETS [target1 [target2 [...]]] [NAMESPACE namespace] [APPEND] FILE filename [EXPORT_LINK_INTERFACE_LIBRARIES])" />
     <usage value="(PACKAGE name)" />
   </command>
   <command name="export_library_dependencies"
@@ -1433,73 +1457,69 @@
          deprecated="false" >
     <usage value="(WRITE name 'message to write'... )" />
     <usage value="(APPEND name 'message to write'... )" />
-    <usage value="(READ name variable [LIMIT numBytes] [OFFSET offset] [HEX])" />
-    <usage value="(STRINGS name variable [LIMIT_COUNT num] [LIMIT_INPUT numBytes] [LIMIT_OUTPUT numBytes] [LENGTH_MINIMUM numBytes] [LENGTH_MAXIMUM numBytes] [NEWLINE_CONSUME] [REGEX regex] [NO_HEX_CONVERSION])" />
-    <usage value="(GLOB variable [RELATIVE path] [globbing expressions]...)" />
-    <usage value="(GLOB_RECURSE variable [RELATIVE path] [FOLLOW_SYMLINKS] [globbing expressions]...)" />
+    <usage value="(READ name variable [OFFSET offset] [LIMIT numBytes] [HEX])" />
+    <usage value="(MD5|SHA1|SHA224|SHA256|SHA384|SHA512 filename variable)" />
+    <usage value="(GLOB variable [LIST_DIRECTORIES true|false] [RELATIVE path] [globbing expressions]...)" />
+    <usage value="(GLOB_RECURSE variable [FOLLOW_SYMLINKS] [LIST_DIRECTORIES true|false] [RELATIVE path] [globbing expressions]...)" />
     <usage value="(RENAME oldname newname)" />
-    <usage value="(REMOVE [1 ...])" />
-    <usage value="(REMOVE_RECURSE [1 ...])" />
-    <usage value="(MAKE_DIRECTORY [directory1 directory2 ...])" />
-    <usage value="(RELATIVE_PATH variable directory )" />
+    <usage value="(REMOVE [file...])" />
+    <usage value="(REMOVE_RECURSE [file...])" />
+    <usage value="(MAKE_DIRECTORY [directory...])" />
+    <usage value="(RELATIVE_PATH variable directory file)" />
     <usage value="(TO_CMAKE_PATH path result)" />
     <usage value="(TO_NATIVE_PATH path result)" />
-    <usage value="(DOWNLOAD url [INACTIVITY_TIMEOUT timeout] [TIMEOUT timeout] [STATUS status] [LOG log] [SHOW_PROGRESS] [EXPECTED_MD5 sum])" />
+    <usage value="(DOWNLOAD url [INACTIVITY_TIMEOUT timeout] [TIMEOUT timeout] [STATUS status] [LOG log] [SHOW_PROGRESS] [EXPECTED_HASH ALGO=value] [EXPECTED_MD5 sum] [TLS_VERIFY ON|OFF] [TLS_CAINFO file])" />
     <usage value="(UPLOAD name url [INACTIVITY_TIMEOUT timeout] [TIMEOUT timeout] [STATUS status] [LOG log] [SHOW_PROGRESS])" />
-    <usage value="(STRINGS my.txt my)" />
-    <usage value="(COPY|INSTALL s... DESTINATION dir [FILE_PERMISSIONS permissions...] [DIRECTORY_PERMISSIONS permissions...] [NO_SOURCE_PERMISSIONS] [USE_SOURCE_PERMISSIONS] [FILES_MATCHING] [[PATTERN pattern | REGEX regex] [EXCLUDE] [PERMISSIONS permissions...]] [...])" />
+    <usage value="(STRINGS filename variable [LENGTH_MAXIMUM max-len] [LENGTH_MINIMUM min-len] [LIMIT_COUNT max-num] [LIMIT_INPUT max-in] [LIMIT_OUTPUT max-out] [NEWLINE_CONSUME] [NO_HEX_CONVERSION] [REGEX regex] [ENCODING encoding-type] [])" />
+    <usage value="(TIMESTAMP filename variable [format] [UTC])" />
+    <usage value="(GENERATE OUTPUT output-file INPUT &lt;input-file|CONTENT content&gt; [CONDITION expression])" />
+    <usage value="(COPY|INSTALL file... DESTINATION dir [FILE_PERMISSIONS permissions...] [DIRECTORY_PERMISSIONS permissions...] [NO_SOURCE_PERMISSIONS] [USE_SOURCE_PERMISSIONS] [FILES_MATCHING] [[PATTERN pattern | REGEX regex] [EXCLUDE] [PERMISSIONS permissions...]] [...])" />
+    <usage value="(LOCK path [DIRECTORY] [RELEASE] [GUARD &lt;FUNCTION|FILE|PROCESS&gt;] [RESULT_VARIABLE variable] [TIMEOUT seconds])" />
   </command>
   <command name="find_file"
          desc="Find the full path to a file."
          deprecated="false" >
-    <usage value="(VAR name1 [path1 path2 ...])" />
-    <usage value="( VAR name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
-    <usage value="(VAR NAMES name PATHS paths... NO_DEFAULT_PATH)" />
-    <usage value="(VAR NAMES name)" />
+    <usage value="(variable name [path1 path2...])" />
+    <usage value="(variable name | NAMES name1 [name2...] [HINTS path1 [path2... ENV var]] [PATHS path1 [path2... ENV var]] [PATH_SUFFIXES suffix1 [suffix2...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])" />
   </command>
   <command name="find_library"
          desc="Find a library."
          deprecated="false" >
-    <usage value="(VAR name1 [path1 path2 ...])" />
-    <usage value="( VAR name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
-    <usage value="(VAR NAMES name PATHS paths... NO_DEFAULT_PATH)" />
-    <usage value="(VAR NAMES name)" />
+    <usage value="(variable name1 [path1 path2...])" />
+    <usage value="(variable name | NAMES name1 [name2...] [HINTS path1 [path2... ENV var]] [PATHS path1 [path2... ENV var]] [PATH_SUFFIXES suffix1 [suffix2...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
   </command>
   <command name="find_package"
          desc="Load settings for an external project."
          deprecated="false" >
-    <usage value="(package [version] [EXACT] [QUIET] [[REQUIRED|COMPONENTS] [components...]] [NO_POLICY_SCOPE])" />
-    <usage value="(package [version] [EXACT] [QUIET] [[REQUIRED|COMPONENTS] [components...]] [NO_MODULE] [NO_POLICY_SCOPE] [NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]] [PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])" />
-    <usage value="(package [major[.minor]] [EXACT] [REQUIRED|QUIET])" />
-    <usage value="(package PATHS paths... NO_DEFAULT_PATH)" />
-    <usage value="(package)" />
+    <usage value="(package [version] [EXACT] [QUIET] [MODULE] [REQUIRED] [[REQUIRED|COMPONENTS] [components...]] [NO_POLICY_SCOPE])" />
+    <usage value="(package [version] [EXACT] [QUIET] [REQUIRED] [[COMPONENTS] [components...]] [CONFIG|NO_MODULE] [NO_POLICY_SCOPE] [NAMES name1 [name2...]] [CONFIGS config1 [config2...]] [HINTS path1 [path2... ]] [PATHS path1 [path2... ]] [PATH_SUFFIXES suffix1 [suffix2...]] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])" />
   </command>
   <command name="find_path"
          desc="Find the directory containing a file."
          deprecated="false" >
-    <usage value="(VAR name1 [path1 path2 ...])" />
-    <usage value="( VAR name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
-    <usage value="(VAR NAMES name PATHS paths... NO_DEFAULT_PATH)" />
-    <usage value="(VAR NAMES name)" />
+    <usage value="(variable name1 [path1 path2...])" />
+    <usage value="(variable name | NAMES name1 [name2...] [HINTS path1 [path2... ENV var]] [PATHS path1 [path2... ENV var]] [PATH_SUFFIXES suffix1 [suffix2...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
   </command>
   <command name="find_program"
          desc="Find an executable program."
          deprecated="false" >
-    <usage value="(VAR name1 [path1 path2 ...])" />
-    <usage value="( VAR name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
-    <usage value="(VAR NAMES name PATHS paths... NO_DEFAULT_PATH)" />
-    <usage value="(VAR NAMES name)" />
+    <usage value="(variable name1 [path1 path2...])" />
+    <usage value="(variable name | NAMES name1 [name2...] [HINTS path1 [path2... ENV var]] [PATHS path1 [path2... ENV var]] [PATH_SUFFIXES suffix1 [suffix2...]] [DOC 'cache documentation string'] [NO_DEFAULT_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_CMAKE_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )" />
+  </command>
+  <command name=""
+         desc=""
+         deprecated="false" >
+    <usage value="()" />
   </command>
   <command name="fltk_wrap_ui"
          desc="Create FLTK user interfaces Wrappers."
          deprecated="false" >
-    <usage value="(resultingLibraryName source1 source2 ... sourceN )" />
+    <usage value="(resultingLibraryName source1 [source2...] )" />
   </command>
   <command name="foreach"
          desc="Evaluate a group of commands for each value in a list."
          deprecated="false" >
-    <usage value="(loop_var arg1 arg2 ...) COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... end" />
-    <usage value="(loop_var)" />
+    <usage value="(loop_var arg1 arg2...) COMMAND1(ARGS...) COMMAND2(ARGS...) ... endforeach(loop_var)" />
     <usage value="(loop_var RANGE total)" />
     <usage value="(loop_var RANGE start stop [step])" />
     <usage value="(loop_var IN [LISTS [list1 [...]]] [ITEMS [item1 [...]]])" />
@@ -1507,13 +1527,12 @@
   <command name="function"
          desc="Start recording a function for later invocation as a command."
          deprecated="false" >
-    <usage value="(name [arg1 [arg2 [arg3 ...]]]) COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... end" />
-    <usage value="(name)" />
+    <usage value="(name [arg1 [arg2 [arg3...]]]) COMMAND1(ARGS...) COMMAND2(ARGS...) ... endfunction(name)" />
   </command>
   <command name="get_cmake_property"
          desc="Get a property of the CMake instance."
          deprecated="false" >
-    <usage value="(VAR property)" />
+    <usage value="(variable property)" />
   </command>
   <command name="get_directory_property"
          desc="Get a property of DIRECTORY scope."
@@ -1524,8 +1543,9 @@
   <command name="get_filename_component"
          desc="Get a specific component of a full filename."
          deprecated="false" >
-    <usage value="(VAR FileName PATH|ABSOLUTE|NAME|EXT|NAME_WE|REALPATH [CACHE])" />
-    <usage value="(VAR FileName PROGRAM [PROGRAM_ARGS ARG_VAR] [CACHE])" />
+    <usage value="(var FileName DIRECTORY | NAME | EXT | NAME_WE | PATH [CACHE])" />
+    <usage value="(var FileName ABSOLUTE | REALPATH [BASE_DIR base_dir] [CACHE])" />
+    <usage value="(var FileName PROGRAM [PROGRAM_ARGS arg_var] [CACHE])" />
   </command>
   <command name="get_property"
          desc="Get a property."
@@ -1535,26 +1555,26 @@
   <command name="get_source_file_property"
          desc="Get a property for a source file."
          deprecated="false" >
-    <usage value="(VAR file property)" />
+    <usage value="(variable file property)" />
   </command>
   <command name="get_target_property"
          desc="Get a property from a target."
          deprecated="false" >
-    <usage value="(VAR target property)" />
+    <usage value="(variable target property)" />
   </command>
   <command name="get_test_property"
          desc="Get a property of the test."
          deprecated="false" >
-    <usage value="(test property VAR)" />
+    <usage value="(test property variable)" />
   </command>
   <command name="if"
          desc="Conditionally execute a group of commands."
          deprecated="false" >
-    <usage value="(expression) # then section. COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... else" />
-    <usage value="(expression2) # else section. COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... else(expression) # else section. COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... end" />
+    <usage value="(expression) # then section. COMMAND1(ARGS...) COMMAND2(ARGS...) ... else" />
+    <usage value="(expression2) # else section. COMMAND1(ARGS...) COMMAND2(ARGS...) ... else(expression) # else section. COMMAND1(ARGS...) COMMAND2(ARGS...)... end" />
     <usage value="(expression)" />
     <usage value="(constant)" />
-    <usage value="(variable)" />
+    <usage value="(variable|string)" />
     <usage value="(NOT expression)" />
     <usage value="(expr1 AND expr2)" />
     <usage value="(expr1 OR expr2)" />
@@ -1579,59 +1599,53 @@
     <usage value="(variable|string VERSION_GREATER variable|string)" />
     <usage value="(DEFINED variable)" />
     <usage value="((expression) AND (expression OR (expression)))" />
-    <usage value="(${var2})" />
-    <usage value="(var1)" />
-    <usage value="(var2)" />
-  </command>
-  <command name="include"
-         desc="Read CMake listfile code from the given file."
-         deprecated="false" >
-    <usage value="(file|module [OPTIONAL] [RESULT_VARIABLE VAR] [NO_POLICY_SCOPE])" />
+    <usage value="(TEST test-name)" />
+    <usage value="(variable|string IN_LIST variable)" />
   </command>
   <command name="include_directories"
          desc="Add include directories to the build."
          deprecated="false" >
-    <usage value="([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)" />
+    <usage value="([AFTER|BEFORE] [SYSTEM] dir1 dir2...)" />
   </command>
   <command name="include_external_msproject"
          desc="Include an external Microsoft project file in a workspace."
          deprecated="false" >
-    <usage value="(projectname location dep1 dep2 ...)" />
+    <usage value="(projectname location [TYPE projectTypeGUID] [GUID projectGUID] [PLATFORM platformName] dep1 dep2...)" />
   </command>
   <command name="include_regular_expression"
          desc="Set the regular expression used for dependency checking."
          deprecated="false" >
     <usage value="(regex_match [regex_complain])" />
   </command>
+  <command name="include"
+         desc="Read CMake listfile code from the given file."
+         deprecated="false" >
+    <usage value="(file|module [OPTIONAL] [RESULT_VARIABLE variable] [NO_POLICY_SCOPE])" />
+  </command>
   <command name="install"
          desc="Specify rules to run at install time."
          deprecated="false" >
-    <usage value="(TARGETS targets... [EXPORT export-name] [[ARCHIVE|LIBRARY|RUNTIME|FRAMEWORK|BUNDLE| PRIVATE_HEADER|PUBLIC_HEADER|RESOURCE] [DESTINATION dir] [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [OPTIONAL] [NAMELINK_ONLY|NAMELINK_SKIP] ] [...])" />
-    <usage value="(TARGETS myExe mySharedLib myStaticLib RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib/static)" />
-    <usage value="(TARGETS mySharedLib DESTINATION /some/full/path)" />
+    <usage value="(TARGETS targets... [EXPORT export-name] [[ARCHIVE|LIBRARY|RUNTIME|FRAMEWORK|BUNDLE|PRIVATE_HEADER|PUBLIC_HEADER|RESOURCE] [DESTINATION dir] [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [OPTIONAL] [NAMELINK_ONLY|NAMELINK_SKIP] ] [...]) [INCLUDES DESTINATION [dir...]]" />
     <usage value="(FILES files... DESTINATION dir [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [RENAME name] [OPTIONAL])" />
     <usage value="(PROGRAMS files... DESTINATION dir [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [RENAME name] [OPTIONAL])" />
     <usage value="(DIRECTORY dirs... DESTINATION dir [FILE_PERMISSIONS permissions...] [DIRECTORY_PERMISSIONS permissions...] [USE_SOURCE_PERMISSIONS] [OPTIONAL] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component] [FILES_MATCHING] [[PATTERN pattern | REGEX regex] [EXCLUDE] [PERMISSIONS permissions...]] [...])" />
-    <usage value="(DIRECTORY src/ DESTINATION include/myproj FILES_MATCHING PATTERN '*.h')" />
-    <usage value="(DIRECTORY icons scripts/ DESTINATION share/myproj PATTERN 'CVS' EXCLUDE PATTERN 'scripts/*' PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ)" />
-    <usage value="([[SCRIPT file] [CODE code]] [...])" />
-    <usage value="(CODE 'MESSAGE(\'Sample message.\')')" />
-    <usage value="(EXPORT export-name DESTINATION dir [NAMESPACE namespace] [FILE name.cmake] [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT component])" />
+    <usage value="([[SCRIPT file] | [CODE code]] [COMPONENT component] [...])" />
+    <usage value="(EXPORT export-name DESTINATION dir [NAMESPACE namespace] [FILE name.cmake] [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [EXPORT_LINK_INTERFACE_LIBRARIES] [COMPONENT component])" />
     <usage value="(TARGETS myexe EXPORT myproj DESTINATION bin)" />
     <usage value="(EXPORT myproj NAMESPACE mp_ DESTINATION lib/myproj)" />
   </command>
   <command name="install_files"
          desc="Deprecated.  Use the install(FILES ) command instead."
          deprecated="true" >
-    <usage value="(dir extension file file ...)" />
+    <usage value="(dir extension file file...)" />
     <usage value="(dir regexp)" />
-    <usage value="(dir FILES file file ...)" />
+    <usage value="(dir FILES file file...)" />
   </command>
   <command name="install_programs"
          desc="Deprecated. Use the install(PROGRAMS ) command instead."
          deprecated="true" >
-    <usage value="(dir file1 file2 [file3 ...])" />
-    <usage value="(dir FILES file1 [file2 ...])" />
+    <usage value="(dir file1 file2 [file3...])" />
+    <usage value="(dir FILES file1 [file2...])" />
     <usage value="(dir regexp)" />
   </command>
   <command name="install_targets"
@@ -1642,43 +1656,42 @@
   <command name="link_directories"
          desc="Specify directories in which the linker will look for libraries."
          deprecated="false" >
-    <usage value="(directory1 directory2 ...)" />
+    <usage value="(directory1 directory2...)" />
   </command>
   <command name="link_libraries"
          desc="Deprecated. Use the target_link_libraries() command instead."
          deprecated="true" >
-    <usage value="(library1 debug | optimized library2 ...)" />
+    <usage value="([item1 [item2 [...]]] [[debug|optimized|general] item]...)" />
   </command>
   <command name="list"
          desc="List operations."
          deprecated="false" >
-    <usage value="(LENGTH  output variable)" />
-    <usage value="(GET  element index [element index ...] output variable)" />
-    <usage value="(APPEND  element [element ...])" />
-    <usage value="(FIND  value output variable)" />
-    <usage value="(INSERT  element_index element [element ...])" />
-    <usage value="(REMOVE_ITEM  value [value ...])" />
-    <usage value="(REMOVE_AT  index [index ...])" />
-    <usage value="(REMOVE_DUPLICATES )" />
-    <usage value="(REVERSE )" />
-    <usage value="(SORT )" />
+    <usage value="(LENGTH list output-variable)" />
+    <usage value="(GET list element-index [element-index...] output-variable)" />
+    <usage value="(APPEND list [element...])" />
+    <usage value="(FIND list value output.variable)" />
+    <usage value="(INSERT list element-index element [element...])" />
+    <usage value="(REMOVE_ITEM list value [value...])" />
+    <usage value="(REMOVE_AT list index [index...])" />
+    <usage value="(REMOVE_DUPLICATES list)" />
+    <usage value="(REVERSE list)" />
+    <usage value="(SORT list)" />
   </command>
   <command name="load_cache"
          desc="Load in the values from another project's CMake cache."
          deprecated="false" >
     <usage value="(pathToCacheFile READ_WITH_PREFIX prefix entry1...)" />
-    <usage value="(pathToCacheFile [EXCLUDE entry1...] [INCLUDE_INTERNALS entry1...])" />
+    <usage value="(pathToCacheFile [EXCLUDE entry...] [INCLUDE_INTERNALS entry...])" />
   </command>
   <command name="load_command"
          desc="Load a command into a running CMake."
          deprecated="false" >
-    <usage value="(COMMAND_NAME loc1 [loc2 ...])" />
+    <usage value="(COMMAND_NAME loc1 [loc2...])" />
   </command>
   <command name="macro"
          desc="Start recording a macro for later invocation as a command."
          deprecated="false" >
-    <usage value="(name [arg1 [arg2 [arg3 ...]]]) COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... end" />
-    <usage value="(name)" />
+    <usage value="(name [arg1 [arg2 [arg3...]]]) COMMAND1(ARGS...) COMMAND2(ARGS...) ... endmacro(name)" />
   </command>
   <command name="make_directory"
          desc="Deprecated. Use the file(MAKE_DIRECTORY ) command instead."
@@ -1688,22 +1701,22 @@
   <command name="mark_as_advanced"
          desc="Mark cmake cached variables as advanced."
          deprecated="false" >
-    <usage value="([CLEAR|FORCE] VAR VAR2 VAR...)" />
+    <usage value="([CLEAR|FORCE] variable [variable...])" />
   </command>
   <command name="math"
          desc="Mathematical expressions."
          deprecated="false" >
-    <usage value="(EXPR output variable  expression)" />
+    <usage value="(EXPR output-variable expression)" />
   </command>
   <command name="message"
          desc="Display a message to the user."
          deprecated="false" >
-    <usage value="([STATUS|WARNING|AUTHOR_WARNING|FATAL_ERROR|SEND_ERROR] ' to display' ...)" />
+    <usage value="([STATUS|WARNING|AUTHOR_WARNING|FATAL_ERROR|SEND_ERROR|DEPRECATION] 'message to display'...)" />
   </command>
   <command name="option"
          desc="Provides an option that the user can optionally select."
          deprecated="false" >
-    <usage value="(_variable 'help string describing ' [initial value])" />
+    <usage value="(variable 'help string describing option' [initial-value])" />
   </command>
   <command name="output_required_files"
          desc="Deprecated.  Approximate C preprocessor dependency scanning."
@@ -1711,29 +1724,30 @@
     <usage value="(srcfile outputfile)" />
   </command>
   <command name="project"
-         desc="Set a name for the entire project."
+         desc="Set a name, version, and enable languages for the entire project."
          deprecated="false" >
-    <usage value="(name [languageName1 languageName2 ... ] )" />
+    <usage value="(name [LANGUAGES] [language-name...] )" />
+    <usage value="(name [VERSION major[.minor[.patch[.tweak]]]] [LANGUAGES language-name...] )" />
   </command>
   <command name="qt_wrap_cpp"
          desc="Create Qt Wrappers."
          deprecated="false" >
-    <usage value="(resultingLibraryName DestName SourceLists ...)" />
+    <usage value="(resultingLibraryName DestName SourceLists...)" />
   </command>
   <command name="qt_wrap_ui"
          desc="Create Qt user interfaces Wrappers."
          deprecated="false" >
-    <usage value="(resultingLibraryName HeadersDestName SourcesDestName SourceLists ...)" />
+    <usage value="(resultingLibraryName HeadersDestName SourcesDestName SourceLists...)" />
   </command>
   <command name="remove"
          desc="Deprecated. Use the list(REMOVE_ITEM ) command instead."
          deprecated="true" >
-    <usage value="(VAR VALUE VALUE ...)" />
+    <usage value="(variable VALUE VALUE...)" />
   </command>
   <command name="remove_definitions"
-         desc="Removes -D define flags added by add_definitions."
+         desc="Removes -D define flags added by add_definitions()."
          deprecated="false" >
-    <usage value="(-DFOO -DBAR ...)" />
+    <usage value="(-DFOO -DBAR...)" />
   </command>
   <command name="return"
          desc="Return from a file, directory or function."
@@ -1743,15 +1757,15 @@
   <command name="separate_arguments"
          desc="Parse space-separated arguments into a semicolon-separated list."
          deprecated="false" >
-    <usage value="(var UNIX|WINDOWS_COMMAND 'args')" />
+    <usage value="(var UNIX_COMMAND|WINDOWS_COMMAND 'args')" />
     <usage value="(VARIABLE)" />
   </command>
   <command name="set"
-         desc="Set a CMAKE variable to a given value."
+         desc="Set a normal, cache, or environment variable to a given value."
          deprecated="false" >
-    <usage value="(variable value [[CACHE type docstring [FORCE]] | PARENT_SCOPE])" />
-    <usage value="(variable value1 ... valueN)" />
-    <usage value="( ENV{PATH} /home/martink )" />
+    <usage value="(normal-var value) [PARENT_SCOPE])" />
+    <usage value="(cache-entry CACHE BOOL|FILEPATH|PATH|STRING|INTERNAL docstring [FORCE])" />
+    <usage value="(ENV{env-var} value1)" />
   </command>
   <command name="set_directory_properties"
          desc="Set a property of the directory."
@@ -1761,17 +1775,23 @@
   <command name="set_property"
          desc="Set a named property in a given scope."
          deprecated="false" >
-    <usage value="(GLOBAL | DIRECTORY [dir] | TARGET [target1 [target2 ...]] | SOURCE [src1 [src2 ...]] | TEST [test1 [test2 ...]] | CACHE [entry1 [entry2 ...]] [APPEND] [APPEND_STRING] PROPERTY name [value1 [value2 ...]])" />
+    <usage value="(GLOBAL [APPEND] [APPEND_STRING] PROPERTY name [value1 [value2...]])" />
+    <usage value="(DIRECTORY [dir] [APPEND] [APPEND_STRING] PROPERTY name [value1 [value2...]])" />
+    <usage value="(TARGET [target1 [target2...]] [APPEND] [APPEND_STRING] PROPERTY name [value1 [value2...]])" />
+    <usage value="(SOURCE [src1 [src2...]] [APPEND] [APPEND_STRING] PROPERTY name [value1 [value2...]])" />
+    <usage value="(INSTALL [file1 [file2 ...]] [APPEND] [APPEND_STRING] PROPERTY name [value1 [value2...]])" />
+    <usage value="(TEST [test1 [test2...]] [APPEND] [APPEND_STRING] PROPERTY name [value1 [value2...]])" />
+    <usage value="(CACHE [entry1 [entry2...]] [APPEND] [APPEND_STRING] PROPERTY name [value1 [value2...]])" />
   </command>
   <command name="set_source_files_properties"
          desc="Source files can have properties that affect how they are built."
          deprecated="false" >
-    <usage value="([file1 [file2 [...]]] PROPERTIES prop1 value1 [prop2 value2 [...]])" />
+    <usage value="([file1 [file2...]] PROPERTIES prop1 value1 [prop2 value2 [...]])" />
   </command>
   <command name="set_target_properties"
          desc="Targets can have properties that affect how they are built."
          deprecated="false" >
-    <usage value="(target1 target2 ... PROPERTIES prop1 value1 prop2 value2 ...)" />
+    <usage value="(target1 target2... PROPERTIES prop1 value1 prop2 value2...)" />
   </command>
   <command name="set_tests_properties"
          desc="Set a property of the tests."
@@ -1786,66 +1806,98 @@
   <command name="source_group"
          desc="Define a grouping for sources in the makefile."
          deprecated="false" >
-    <usage value="(name [REGULAR_EXPRESSION regex] [FILES src1 src2 ...])" />
-    <usage value="(outer\\inner ...)" />
-    <usage value="(name regex)" />
+    <usage value="(name [FILES src1...] [REGULAR_EXPRESSION regex])" />
   </command>
   <command name="string"
          desc="String operations."
          deprecated="false" >
-    <usage value="(REGEX MATCH regular_expression output variable input [input...])" />
-    <usage value="(REGEX MATCHALL regular_expression output variable input [input...])" />
-    <usage value="(REGEX REPLACE regular_expression replace_expression output variable input [input...])" />
-    <usage value="(REPLACE match_ replace_ output variable input [input...])" />
-    <usage value="(COMPARE EQUAL 1 2 output variable)" />
-    <usage value="(COMPARE NOTEQUAL 1 2 output variable)" />
-    <usage value="(COMPARE LESS 1 2 output variable)" />
-    <usage value="(COMPARE GREATER 1 2 output variable)" />
-    <usage value="(ASCII number [number ...] output variable)" />
-    <usage value="(CONFIGURE 1 output variable [@ONLY] [ESCAPE_QUOTES])" />
-    <usage value="(TOUPPER 1 output variable)" />
-    <usage value="(TOLOWER 1 output variable)" />
-    <usage value="(LENGTH  output variable)" />
-    <usage value="(SUBSTRING  begin length output variable)" />
-    <usage value="(STRIP  output variable)" />
-    <usage value="(RANDOM [LENGTH length] [ALPHABET alphabet] [RANDOM_SEED seed] output variable)" />
-    <usage value="(FIND  sub output variable [REVERSE])" />
+    <usage value="(FIND string substring output-variable [REVERSE])" />
+    <usage value="(REPLACE match-string replace-string output-variable input [input...])" />
+    <usage value="(REGEX MATCH regular_expression output-variable input [input...])" />
+    <usage value="(REGEX MATCHALL regular_expression output-variable input [input...])" />
+    <usage value="(REGEX REPLACE regular_expression output-variable input [input...])" />
+    <usage value="(APPEND var [input...])" />
+    <usage value="(CONCAT var [input...])" />
+    <usage value="(TOUPPER string output-variable)" />
+    <usage value="(TOLOWER string output-variable)" />
+    <usage value="(LENGTH string output-variable)" />
+    <usage value="(SUBSTRING string begin length output-variable)" />
+    <usage value="(STRIP string output-variable)" />
+    <usage value="(GENEX_STRIP string output-variable)" />
+    <usage value="(COMPARE EQUAL string1 string2 output-variable)" />
+    <usage value="(COMPARE NOTEQUAL string1 string2 output-variable)" />
+    <usage value="(COMPARE LESS string1 string2 output-variable)" />
+    <usage value="(COMPARE GREATER string1 string2 output-variable)" />
+    <usage value="(MD5|SHA1|SHA224|SHA256|SHA384|SHA512 output-variable input)" />
+    <usage value="(ASCII number [number...] output-variable)" />
+    <usage value="(CONFIGURE string output-variable [@ONLY] [ESCAPE_QUOTES])" />
+    <usage value="(RANDOM [LENGTH length] [ALPHABET alphabet] [RANDOM_SEED seed] output-variable)" />
+    <usage value="(TIMESTAMP output-variable [format-string] [UTC])" />
+    <usage value="(MAKE_C_IDENTIFIER string output-variable)" />
+    <usage value="(UUID output-variable NAMESPACE namespace NAME name TYPE MD5|SHA1 [UPPER])" />
   </command>
   <command name="subdir_depends"
          desc="Deprecated.  Does nothing."
          deprecated="true" >
-    <usage value="(subdir dep1 dep2 ...)" />
+    <usage value="(subdir dep1 dep2...)" />
   </command>
   <command name="subdirs"
          desc="Deprecated. Use the add_subdirectory() command instead."
          deprecated="true" >
-    <usage value="(dir1 dir2 ...[EXCLUDE_FROM_ALL exclude_dir1 exclude_dir2 ...] [PREORDER] )" />
+    <usage value="(dir1 dir2...[EXCLUDE_FROM_ALL exclude_dir1 exclude_dir2...] [PREORDER] )" />
+  </command>
+  <command name="target_compile_definitions"
+         desc="Add compile definitions to a target.."
+         deprecated="false" >
+    <usage value="(target PRIVATE|PUBLIC|INTERFACE [items1...] [[INTERFACE|PUBLIC|PRIVATE [items2...]...])" />
+  </command>
+  <command name="target_compile_features"
+         desc="Add expected compiler features to a target."
+         deprecated="false" >
+    <usage value="(target PRIVATE|PUBLIC|INTERFACE feature [feature...])" />
+  </command>
+  <command name="target_compile_options"
+         desc="Add compile options to a target."
+         deprecated="false" >
+    <usage value="(target [BEFORE] INTERFACE|PUBLIC|PRIVATE [items1...] [[INTERFACE|PUBLIC|PRIVATE [items2...]...])" />
+  </command>
+  <command name="target_include_directories"
+         desc="Add include directories to a target."
+         deprecated="false" >
+    <usage value="(target [SYSTEM] [BEFORE] INTERFACE|PUBLIC|PRIVATE [items1...] [[INTERFACE|PUBLIC|PRIVATE [items2...]...])" />
   </command>
   <command name="target_link_libraries"
-         desc="Link a target to given libraries."
+         desc="Specify libraries or flags to use when linking a given target and/or its dependents."
          deprecated="false" >
-    <usage value="(target [item1 [item2 [...]]] [[debug|optimized|general] item] ...)" />
-    <usage value="(target LINK_INTERFACE_LIBRARIES [[debug|optimized|general] lib] ...)" />
-    <usage value="(A B)" />
-    <usage value="(B A) add_executable(main main.c)" />
-    <usage value="(main A)" />
+    <usage value="(target ... item1 [item2...])" />
+    <usage value="(target LINK_PRIVATE|LINK_PUBLIC lib... [LINK_PRIVATE|LINK_PUBLIC lib...]...)" />
+    <usage value="(target LINK_INTERFACE_LIBRARIES item...)" />
+  </command>
+  <command name="target_sources"
+         desc="Specify sources to use when compiling a given target."
+         deprecated="false" >
+    <usage value="(target INTERFACE|PUBLIC|PRIVATE [item1...] [INTERFACE|PUBLIC|PRIVATE [item2...]]...)" />
   </command>
   <command name="try_compile"
          desc="Try building some code."
          deprecated="false" >
-    <usage value="(RESULT_VAR bindir srcdir projectName [targetName] [CMAKE_FLAGS flags...] [OUTPUT_VARIABLE var])" />
-    <usage value="(RESULT_VAR bindir srcfile [CMAKE_FLAGS flags...] [COMPILE_DEFINITIONS flags...] [OUTPUT_VARIABLE var] [COPY_FILE fileName])" />
+    <usage value="(result_var bindir srcdir projectName [targetName] [CMAKE_FLAGS flags...] [OUTPUT_VARIABLE var])" />
+    <usage value="(result_var bindir srcfile|SOURCES srcfile... [CMAKE_FLAGS flags...] [COMPILE_DEFINITIONS flags...] [LINK_LIBRARIES libs...] [OUTPUT_VARIABLE var] [COPY_FILE fileName [COPY_FILE_ERROR var]])" />
   </command>
   <command name="try_run"
          desc="Try compiling and then running some code."
          deprecated="false" >
-    <usage value="(RUN_RESULT_VAR COMPILE_RESULT_VAR bindir srcfile [CMAKE_FLAGS Flags] [COMPILE_DEFINITIONS flags] [COMPILE_OUTPUT_VARIABLE comp] [RUN_OUTPUT_VARIABLE run] [OUTPUT_VARIABLE var] [ARGS arg1 arg2...])" />
+    <usage value="(run_result_var compile_result_var bindir srcfile [CMAKE_FLAGS flags] [COMPILE_DEFINITIONS defs] [COMPILE_OUTPUT_VARIABLE comp] [RUN_OUTPUT_VARIABLE run] [OUTPUT_VARIABLE var] [ARGS args...])" />
   </command>
   <command name="unset"
          desc="Unset a variable, cache variable, or environment variable."
          deprecated="false" >
-    <usage value="(variable [CACHE])" />
-    <usage value="(ENV{LD_LIBRARY_PATH})" />
+    <usage value="(variable [CACHE | PARENT_SCOPE])" />
+  </command>
+  <command name="variable_watch"
+         desc="Watch the CMake variable for change."
+         deprecated="false" >
+    <usage value="(variable [command-to-execute])" />
   </command>
   <command name="use_mangled_mesa"
          desc="Copy mesa headers for use in combination with system GL."
@@ -1855,12 +1907,12 @@
   <command name="utility_source"
          desc="Specify the source tree of a third-party utility."
          deprecated="true" >
-    <usage value="(cache_entry executable_name path_to_source [file1 file2 ...])" />
+    <usage value="(cache_entry executable_name path_to_source [file1 file2...])" />
   </command>
   <command name="variable_requires"
          desc="Deprecated. Use the if() command instead."
          deprecated="true" >
-    <usage value="(TEST_VARIABLE RESULT_VARIABLE REQUIRED_VARIABLE1 REQUIRED_VARIABLE2 ...)" />
+    <usage value="(TEST_VARIABLE RESULT_VARIABLE REQUIRED_VARIABLE1 REQUIRED_VARIABLE2...)" />
   </command>
   <command name="variable_watch"
          desc="Watch the CMake variable for change."
@@ -1870,7 +1922,7 @@
   <command name="while"
          desc="Evaluate a group of commands while a condition is true"
          deprecated="false" >
-    <usage value="(condition) COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... end" />
+    <usage value="(condition) COMMAND1(ARGS...) COMMAND2(ARGS...) ... endwhile(condition)" />
     <usage value="(condition)" />
   </command>
   <command name="write_file"
