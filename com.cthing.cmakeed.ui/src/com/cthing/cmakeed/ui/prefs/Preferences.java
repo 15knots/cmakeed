@@ -14,11 +14,6 @@ public final class Preferences
 {
     /** Use UPPER CASE for CMake commands */
     public static final String UPPER_CASE_COMMANDS = "upperCaseCommands";      //$NON-NLS-1$
-    /** Use spaces instead of tabs key.
-     * @deprecated use {@link org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants} instead
-     */
-    @Deprecated
-    public static final String SPACES_FOR_TABS = "spacesForTabsPref";      //$NON-NLS-1$
     /** CMake command text descriptor key. */
     public static final String COMMAND = "command";             //$NON-NLS-1$
     /** Deprecated CMake command text descriptor key. */

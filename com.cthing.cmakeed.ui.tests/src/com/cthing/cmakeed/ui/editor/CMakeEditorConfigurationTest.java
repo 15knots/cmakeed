@@ -9,6 +9,7 @@ import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 
+import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.EditorTestCase;
 
 /**
@@ -24,7 +25,7 @@ public class CMakeEditorConfigurationTest extends EditorTestCase
     public CMakeEditorConfigurationTest()
     {
     }
-    
+
     /**
      * {@inheritDoc}
      * @see com.cthing.cmakeed.ui.EditorTestCase#setUp()
@@ -34,7 +35,8 @@ public class CMakeEditorConfigurationTest extends EditorTestCase
     {
         super.setUp();
 
-        this.conf = new CMakeEditorConfiguration(new ColorMgr());
+        this.conf = new CMakeEditorConfiguration(new ColorMgr(),
+            CMakeEditorPlugin.getDefault().getPreferenceStore());
     }
 
     /**
@@ -47,7 +49,7 @@ public class CMakeEditorConfigurationTest extends EditorTestCase
         assertNotNull(contentTypes);
         assertEquals(CMakePartitionScanner.CMAKE_CONTENT_TYPES, contentTypes);
     }
-    
+
     /**
      * Tests the getIndentPrefixes method.
      */
@@ -58,7 +60,7 @@ public class CMakeEditorConfigurationTest extends EditorTestCase
         assertNotNull(prefixes);
         assertTrue(prefixes.length > 0);
     }
-    
+
     /**
      * Tests the getContentAssist method.
      */
@@ -67,7 +69,7 @@ public class CMakeEditorConfigurationTest extends EditorTestCase
         final IContentAssistant ca = this.conf.getContentAssistant(getViewer());
         assertNotNull(ca);
     }
-    
+
     /**
      * Tests the getTextHover method.
      */
@@ -76,16 +78,16 @@ public class CMakeEditorConfigurationTest extends EditorTestCase
         ITextHover hover = this.conf.getTextHover(getViewer(),
                 CMakePartitionScanner.COMMAND_CONTENT_TYPE);
         assertNotNull(hover);
-        
+
         hover = this.conf.getTextHover(getViewer(),
                 CMakePartitionScanner.DEPRECATED_COMMAND_CONTENT_TYPE);
         assertNotNull(hover);
-        
+
         hover = this.conf.getTextHover(getViewer(),
                 CMakePartitionScanner.COMMENT_CONTENT_TYPE);
         assertNull(hover);
     }
-    
+
     /**
      * Tests the getPresentationReconciler method.
      */

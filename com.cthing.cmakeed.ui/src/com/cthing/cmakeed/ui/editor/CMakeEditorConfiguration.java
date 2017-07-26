@@ -5,6 +5,7 @@
 
 package com.cthing.cmakeed.ui.editor;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
@@ -29,10 +30,12 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
      * Constructor for the class.
      *
      * @param colorMgr  Manager for the text editor colors.
+     *
+     * @param preferenceStore       the preference store used to initialize this configuration
      */
-    public CMakeEditorConfiguration(final ColorMgr colorMgr)
+    public CMakeEditorConfiguration(final ColorMgr colorMgr, IPreferenceStore preferenceStore)
     {
-        super(CMakeEditorPlugin.getDefault().getPreferenceStore());
+        super(preferenceStore);
         this.scannerMgr = new CMakeScannerMgr(colorMgr);
     }
 
