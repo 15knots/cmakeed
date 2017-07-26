@@ -36,20 +36,6 @@ public class Initializer extends AbstractPreferenceInitializer
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
 
-        store.setDefault(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS, true);
-        // migrate SPACES_FOR_TABS --> EDITOR_SPACES_FOR_TABS..
-        final String spacesForTabsOldKey = Preferences.SPACES_FOR_TABS;
-        if(store.contains(spacesForTabsOldKey)){
-          final boolean spaceForTabs = store.getBoolean(spacesForTabsOldKey);
-          // remove old value
-          store.setDefault(spacesForTabsOldKey,true);
-          store.setToDefault(spacesForTabsOldKey);
-          store.setValue(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS,
-            spaceForTabs);
-        }
-
-        store.setDefault(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH, 8);
-
         PreferenceConverter.setDefault(store,
                 Preferences.getColorKey(Preferences.COMMAND), new RGB(0, 0, 128));
         store.setDefault(Preferences.getStyleKey(Preferences.COMMAND), SWT.NONE);

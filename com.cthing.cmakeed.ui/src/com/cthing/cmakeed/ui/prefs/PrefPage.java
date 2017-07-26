@@ -26,8 +26,6 @@ import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -36,12 +34,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.dialogs.PreferencesUtil;
-import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
-
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.Messages;
 
@@ -54,8 +49,6 @@ public class PrefPage extends PreferencePage
     private Map<String, RGB> colorMap = new HashMap<String, RGB>();
     private Map<String, Integer> styleMap = new HashMap<String, Integer>();
     private Button upperCaseCommandsB;
-    private Text tabWidthField;
-    private Button spacesForTabsB;
     private ListViewer textAttrViewer;
     private ColorSelector colorB;
     private Button boldB;
@@ -84,45 +77,6 @@ public class PrefPage extends PreferencePage
         // Header
         final Control control = createHeader(topComp);
         control.setLayoutData(new GridData());
-
-        // displayed tab width
-        final Composite tabWidthComp = new Composite(topComp, SWT.NONE);
-        tabWidthComp.setLayoutData(new GridData());
-        tabWidthComp.setLayout(new GridLayout(2, false));
-
-        final Label tabWidthL = new Label(tabWidthComp, SWT.NONE);
-        tabWidthL.setLayoutData(new GridData());
-        tabWidthL.setText(Messages.getString("PreferencePage.TabWidth")); //$NON-NLS-1$
-        this.tabWidthField = new Text(tabWidthComp, SWT.SINGLE);
-        this.tabWidthField.setLayoutData(new GridData());
-        this.tabWidthField.setTextLimit(3);
-        this.tabWidthField.addVerifyListener(new VerifyListener() {
-          public void verifyText(VerifyEvent e) {
-              /* Notice how we combine the old and new below */
-              String currentText = ((Text)e.widget).getText();
-              String tabsTxt =  currentText.substring(0, e.start) + e.text + currentText.substring(e.end);
-              try{
-                  int tabs = Integer.valueOf(tabsTxt);
-                  if(tabs <0){
-                      e.doit = false;
-                  }
-              }
-              catch(NumberFormatException ex){
-                  if(!tabsTxt.equals(""))
-                      e.doit = false;
-              }
-          }
-      });
-        // Spaces for tabs
-        final Composite spacesComp = new Composite(topComp, SWT.NONE);
-        spacesComp.setLayoutData(new GridData());
-        spacesComp.setLayout(new GridLayout(2, false));
-
-        this.spacesForTabsB = new Button(spacesComp, SWT.CHECK);
-        this.spacesForTabsB.setLayoutData(new GridData());
-        final Label spacesForTabsL = new Label(spacesComp, SWT.NONE);
-        spacesForTabsL.setLayoutData(new GridData());
-        spacesForTabsL.setText(Messages.getString("PreferencePage.SpacesForTabs")); //$NON-NLS-1$
 
         // Capitalization Preferences
         final Composite upperCaseCommandsComp = new Composite(topComp, SWT.NONE);
@@ -292,9 +246,6 @@ public class PrefPage extends PreferencePage
             this.textAttrViewer.getList().showSelection();
 
             final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
-            this.tabWidthField.setText(String.valueOf(store.getInt(
-                AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH)));
-            this.spacesForTabsB.setSelection(store.getBoolean(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS));
             this.upperCaseCommandsB.setSelection(store.getBoolean(Preferences.UPPER_CASE_COMMANDS));
 
             readTextPrefs();
@@ -392,9 +343,6 @@ public class PrefPage extends PreferencePage
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
 
-        this.tabWidthField.setText(String.valueOf(store.getDefaultInt(
-            AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH)));
-        this.spacesForTabsB.setSelection(store.getDefaultBoolean(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS));
         this.upperCaseCommandsB.setSelection(store.getDefaultBoolean(Preferences.UPPER_CASE_COMMANDS));
 
         for (String baseKey : Preferences.TEXT_KEYS) {
@@ -417,15 +365,6 @@ public class PrefPage extends PreferencePage
     public boolean performOk()
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
-        try{
-          int tabs = Integer.valueOf(this.tabWidthField.getText());
-          store.setValue(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH, tabs);
-        }
-        catch(NumberFormatException ignore){
-          // ignore, our verify listener handles this
-        }
-
-        store.setValue(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS, this.spacesForTabsB.getSelection());
         store.setValue(Preferences.UPPER_CASE_COMMANDS, this.upperCaseCommandsB.getSelection());
 
         writeTextPrefs();
