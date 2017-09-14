@@ -8,7 +8,7 @@
   <version>1.0.0</version>
   <packaging>pom</packaging>
 
-  <url>https://sourceforge.net/projects/cmakeed/</url>
+  <url>https://github.com/15knots/cmakeed</url>
   <inceptionYear>2007</inceptionYear>
   <licenses>
     <license>
@@ -17,6 +17,7 @@
       COMMON PUBLIC LICENSE ("AGREEMENT").  ANY USE, REPRODUCTION OR DISTRIBUTION
       OF THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
       </comments>
+      <url>https://opensource.org/licenses/CPL-1.0</url>
     </license>
   </licenses>
 
@@ -53,12 +54,12 @@
   </modules>
 
   <scm>
-    <url>https://svn.code.sf.net/p/cmakeed/code/trunk cmakeed-code</url>
-    <connection>scm:svn://svn.code.sf.net/p/cmakeed/code/trunk cmakeed-code</connection>
-    <developerConnection>scm:svn+ssh://weberworks@svn.code.sf.net/p/cmakeed/code/trunk cmakeed-code</developerConnection>
+    <url>https://github.com/15knots/cmakeed.git</url>
+    <connection>scm:git:https://github.com/15knots/cmakeed.git</connection>
+    <developerConnection>scm:git:https://github.com/15knots/cmakeed.git</developerConnection>
   </scm>
   <issueManagement>
-    <url>https://sourceforge.net/p/cmakeed/_list/tickets</url>
+    <url>https://github.com/15knots/cmakeed/issues</url>
   </issueManagement>
 
   <properties>
