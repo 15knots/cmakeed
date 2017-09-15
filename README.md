@@ -31,7 +31,7 @@ TBD
 ### Changes
 - New maintainer: Martin Weber.
 - Build with maven and tycho.
-- Binaries are hosted as zipped p2 repositories on [bintray.com}(https://bintray.com/15knots/p2-zip/cmakeed) now.
+- Binaries are hosted as zipped p2 repositories on [bintray.com](https://bintray.com/15knots/p2-zip/cmakeed) now.
 - Newer version of CMake Editor will be detected by Eclipse`s 'Check for Updates' mechanism.
 - Fixed issue #4: Undo History gets cleared on save.
 - Fixed feature #7: also consider ctest files.
