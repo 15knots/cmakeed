@@ -11,10 +11,22 @@ Requires Java 6 or higher and Eclipse 3.8 or higher.
 Screenshots can be found at the <a href="https://marketplace.eclipse.org/content/cmake-editor#group-screenshots">Eclipse Marketplace</a>.
 
 # Installation Instructions
-TBD
+The plugin may be installed
+- from the [Eclipse Marketplace](https://marketplace.eclipse.org/content/cmake-editor#group-metrics-tab),
+- by dragging this button [![Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2983824 "Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client") into your running Eclipse workbench, or
+- using the "Install New Software..." dialog and entering the update site URL listed below.
+
+### Update Site
+This composite update site contains the latest release as well as selected older releases: 
+https://raw.githubusercontent.com/15knots/cmakeed/master/cmakeed-update/ .
+Individual releases can be found at [bintray.com](https://bintray.com/15knots/p2-zip/cmakeed#files).
 
 ---
 # Release History
+
+## 1.?.? 
+### Changes
+- Project hosting moved from [Sourceforge](https://sourceforge.net/projects/cmakeed) to Github.
 
 ## 1.4.0 (2017-07-29)
 ### Changes
