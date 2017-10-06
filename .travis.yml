@@ -8,7 +8,7 @@ jdk:
 - openjdk7
 
 script:
-- mvn -Prelease -f com.cthing.cmakeed-parent/pom.xml verify
+- mvn -Prelease -f parent/pom.xml verify
 
 after_success:
 - set -e
