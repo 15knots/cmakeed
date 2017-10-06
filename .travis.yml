@@ -5,7 +5,7 @@ env:
 
 language: java
 jdk:
-- openjdk6
+- openjdk7
 
 script:
 - mvn -Prelease -f com.cthing.cmakeed-parent/pom.xml verify
