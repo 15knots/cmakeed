@@ -3,25 +3,23 @@
       id="com.cthing.cmakeed.feature"
       label="CMake Editor"
       version="1.4.0"
-      provider-name="C Thing Software/BlueQuartz Software">
+      provider-name="Martin Weber/C Thing Software/BlueQuartz Software">
 
    <description url="http://cmakeed.sourceforge.net">
       The CMakeEd plug-in provides an editor for CMake files. The plug-in
-registers an editor for files named CMakeLists.txt, CMakeLists.txt.in, *cmake and *.cmake.in
+registers an editor for files named CMakeLists.txt, CMakeLists.txt.in,
+*.cmake, *.ctest and *.cmake.in
    </description>
 
    <copyright>
       Copyright 2007 C Thing Software. All rights reserved.
-Copyright 2008, 2009 BlueQuartz Software. All rights Reserved.
+	Copyright 2008, 2009 BlueQuartz Software. All rights Reserved.
+	Copyright 2016 Martin Weber. All rights Reserved.
    </copyright>
 
    <license url="http://www.eclipse.org/legal/cpl-v10.html">
       This plug-in is licensed under the terms of the Common Public License - v 1.0. A copy of the license is available from http://www.eclipse.org/legal/cpl-v10.html.
    </license>
-
-   <url>
-      <update label="CMakeEd Update Site" url="http://downloads.sourceforge.net/project/cmakeed/eclipse/"/>
-   </url>
 
    <plugin
          id="com.cthing.cmakeed.core"
