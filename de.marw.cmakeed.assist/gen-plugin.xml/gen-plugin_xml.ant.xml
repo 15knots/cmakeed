@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="gen-plugin.xml" default="all">
+  <description>Processes the xml files containing cmake`s documentation into Eclipse extension point datafor the cmake editor plugin
+    </description>
+
+  <property name="plugin.xml" location="${basedir}/../plugin.xml" description="location of generated file" />
+
+  <property name="out.dir" value="${basedir}/../target" />
+  <property name="cmake.src.root" location="../../cmake" description="root directory of the CMake sources" />
+  <property name="cmake.build.root" location="${cmake.src.root}/build" description="root directory of the CMake build" />
+
+  <path id="saxon9">
+    <pathelement location="/usr/share/java/saxon9.jar" />
+  </path>
+
+  <!-- ================================= 
+          target: all
+         ================================= -->
+  <target name="all" depends="-stage1" />
+
+  <!-- ================================= 
+          target: clean              
+         ================================= -->
+  <target name="clean" description="clean generated files">
+    <delete dir="${out.dir}" />
+  </target>
+
+  <target name="-stage1" depends="-stage1.uptodate" unless="stage1.uptodate" description="Stage one">
+    <echo message="Writing ${plugin.xml}" />
+    <concat destfile="${plugin.xml}" force="no" append="true">
+      <header>&lt;?xml version="1.0" encoding="UTF-8"?&gt;${line.separator}
+        &lt;?eclipse version="3.4"?&gt;${line.separator}
+        &lt;!-- Do not edit, generated with gen-plugin_xml.ant.xml --&gt;${line.separator}
+        &lt;plugin&gt;${line.separator}
+      </header>
+      <footer>&lt;/plugin&gt;</footer>
+      <fileset dir="${out.dir}" includes="*-stage1.xml" />
+      <filterchain>
+        <ignoreblank />
+      </filterchain>
+    </concat>
+  </target>
+
+  <target name="-stage1.uptodate" depends="-commands.stage1, -reswords.stage1, -properties.stage1, -variables.stage1">
+    <uptodate property="stage1.uptodate" targetfile="${plugin.xml}">
+      <srcresources>
+        <fileset dir="${out.dir}" includes="*-stage1.xml" />
+        <fileset file="${ant.file}" />
+      </srcresources>
+    </uptodate>
+  </target>
+
+  <!-- #################################################################### -->
+  <!-- command documentation processing -->
+  <!-- #################################################################### -->
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: -commands.stage1
+    - - - - - - - - - - - - - - - - - -->
+  <target name="-commands.stage1" depends="-commands.stage1.uptodate" unless="commands.stage1.uptodate">
+    <!-- Initialize  work area   -->
+    <mkdir dir="${out.dir}/command" />
+
+    <echo>Processing documentation files for commands...</echo>
+
+    <!-- transform cmake commands documentation files -->
+    <xslt style="xsl/commands.xsl" basedir="${cmake.build.root}/xml/command" includes="*.xml" destdir="${out.dir}/command" extension=".xml" force="true">
+      <factory name="net.sf.saxon.TransformerFactoryImpl" />
+      <classpath refid="saxon9" />
+    </xslt>
+    <!-- concatenate all files into one -->
+    <concat destfile="${out.dir}/commands-stage1.xml" force="no">
+      <header>&lt;extension point="com.cthing.cmakeed.core.commands" &gt;${line.separator}</header>
+      <footer>&lt;/extension&gt;${line.separator}</footer>
+      <fileset dir="${out.dir}/command" includes="*.xml" />
+      <filterchain>
+        <ignoreblank />
+      </filterchain>
+    </concat>
+  </target>
+
+  <target name="-commands.stage1.uptodate">
+    <uptodate property="commands.stage1.uptodate" targetfile="${out.dir}/commands-stage1.xml">
+      <srcresources>
+        <fileset dir="${cmake.build.root}/xml/command" includes="*.xml" />
+        <fileset dir="${basedir}" includes="xsl/commands.xsl" />
+      </srcresources>
+    </uptodate>
+  </target>
+
+  <!-- #################################################################### -->
+  <!-- command reserved word documentation processing -->
+  <!-- #################################################################### -->
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: -reswords.stage1
+    - - - - - - - - - - - - - - - - - -->
+  <target name="-reswords.stage1" depends="-reswords.stage1.uptodate" unless="reswords.stage1.uptodate">
+    <!-- concatetenate all files into one -->
+    <concat destfile="${out.dir}/reswords-stage1.xml" force="no">
+      <header>&lt;extension point="com.cthing.cmakeed.core.reservedwords" &gt;${line.separator}</header>
+      <footer>&lt;/extension&gt;${line.separator}</footer>
+      <fileset dir="${out.dir}" includes="reswords-stage0.xml" />
+      <filterchain>
+        <sortfilter />
+        <uniqfilter />
+      </filterchain>
+    </concat>
+  </target>
+
+  <target name="-reswords.stage1.uptodate" depends="-reswords.stage0">
+    <uptodate property="reswords.stage1.uptodate" targetfile="${out.dir}/reswords-stage1.xml">
+      <srcresources>
+        <fileset dir="${out.dir}" includes="reswords-stage0.xml" />
+        <fileset dir="${basedir}" includes="xsl/reswords.xsl" />
+      </srcresources>
+    </uptodate>
+  </target>
+
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: -reswords.stage0
+    - - - - - - - - - - - - - - - - - -->
+  <target name="-reswords.stage0" depends="-reswords.stage0.uptodate" unless="reswords.stage0.uptodate">
+    <!-- Initialize  work area   -->
+    <mkdir dir="${out.dir}/resword" />
+
+    <echo>Processing documentation files for command reserved words...</echo>
+
+    <!-- transform cmake commands documentation files -->
+    <xslt style="xsl/reswords.xsl" basedir="${cmake.build.root}/xml/command" includes="*.xml" destdir="${out.dir}/resword" extension=".xml" force="true">
+      <factory name="net.sf.saxon.TransformerFactoryImpl" />
+      <classpath refid="saxon9" />
+    </xslt>
+    <!-- concatenate all files into one -->
+    <concat destfile="${out.dir}/reswords-stage0.xml" force="no">
+      <fileset dir="${out.dir}/resword" includes="*.xml" />
+      <filterchain>
+        <ignoreblank />
+      </filterchain>
+    </concat>
+  </target>
+
+  <target name="-reswords.stage0.uptodate">
+    <uptodate property="reswords.stage0.uptodate" targetfile="${out.dir}/reswords-stage0.xml">
+      <srcresources>
+        <fileset dir="${cmake.build.root}/xml/command" includes="*.xml" />
+        <fileset dir="${basedir}" includes="xsl/reswords.xsl" />
+      </srcresources>
+    </uptodate>
+  </target>
+
+  <!-- #################################################################### -->
+  <!-- variable documentation processing -->
+  <!-- #################################################################### -->
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: -variables.stage1
+    - - - - - - - - - - - - - - - - - -->
+  <target name="-variables.stage1" depends="-variables.stage1.uptodate" unless="variables.stage1.uptodate">
+    <!-- Initialize  work area   -->
+    <mkdir dir="${out.dir}/variable" />
+
+    <echo>Processing documentation files for variables...</echo>
+
+    <!-- transform cmake variables documentation files -->
+    <xslt style="xsl/variables.xsl" basedir="${cmake.build.root}/xml/variable" includes="*.xml" destdir="${out.dir}/variable" extension=".xml" force="true">
+    </xslt>
+    <!-- concatenate all files into one -->
+    <concat destfile="${out.dir}/variables-stage1.xml" force="no">
+      <header>&lt;extension point="com.cthing.cmakeed.core.variables" &gt;${line.separator}</header>
+      <footer>&lt;/extension&gt;${line.separator}</footer>
+      <fileset dir="${out.dir}/variable" includes="*.xml" />
+      <filterchain>
+        <ignoreblank />
+      </filterchain>
+    </concat>
+  </target>
+
+  <target name="-variables.stage1.uptodate">
+    <uptodate property="variables.stage1.uptodate" targetfile="${out.dir}/variables-stage1.xml">
+      <srcresources>
+        <fileset dir="${cmake.build.root}/xml/variable" includes="*.xml" />
+        <fileset dir="${basedir}" includes="xsl/variables.xsl" />
+      </srcresources>
+    </uptodate>
+  </target>
+
+  <!-- #################################################################### -->
+  <!-- property documentation processing -->
+  <!-- #################################################################### -->
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: -properties.stage1
+    - - - - - - - - - - - - - - - - - -->
+  <target name="-properties.stage1" depends="-properties.stage1.uptodate" unless="properties.stage1.uptodate">
+    <!-- Initialize  work area   -->
+    <mkdir dir="${out.dir}/property" />
+
+    <echo>Processing documentation files for properties...</echo>
+
+    <!-- transform cmake properties documentation files -->
+    <xslt style="xsl/properties.xsl" basedir="${cmake.build.root}/xml" includes="prop_*/*.xml" destdir="${out.dir}/property" extension=".xml" force="true">
+      <mapper type="flatten" />
+    </xslt>
+
+    <!-- concatenate all files into one -->
+    <concat destfile="${out.dir}/properties-stage1.xml" force="no">
+      <header>&lt;extension point="com.cthing.cmakeed.core.properties" &gt;${line.separator}</header>
+      <footer>&lt;/extension&gt;${line.separator}</footer>
+      <fileset dir="${out.dir}/property" includes="*.xml" />
+      <filterchain>
+        <ignoreblank />
+      </filterchain>
+    </concat>
+  </target>
+
+  <target name="-properties.stage1.uptodate">
+    <uptodate property="properties.stage1.uptodate" targetfile="${out.dir}/properties-stage1.xml">
+      <srcresources>
+        <fileset dir="${cmake.build.root}/xml" includes="prop_*/*.xml" />
+        <fileset dir="${basedir}" includes="xsl/properties.xsl" />
+      </srcresources>
+    </uptodate>
+  </target>
+</project>

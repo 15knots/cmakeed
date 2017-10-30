@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.ant.AntLaunchConfigurationType">
+<booleanAttribute key="org.eclipse.ant.ui.DEFAULT_VM_INSTALL" value="false"/>
+<stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${project}"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/de.marw.cmakeed.assist/gen-plugin.xml/gen-plugin_xml.ant.xml"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.ant.ui.AntClasspathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.ant.internal.launching.remote.InternalAntRunner"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="de.marw.cmakeed.assist"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.ant.ui.AntClasspathProvider"/>
+<mapAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_PROPERTIES">
+<mapEntry key="cmake.src.root" value="${system_property:user.home}/devel/fremd/cmake"/>
+<mapEntry key="eclipse.pdebuild.home" value="/home/weber/bin/eclipse/plugins/org.eclipse.pde.build_3.9.300.v20170515-0912/."/>
+<mapEntry key="eclipse.pdebuild.scripts" value="/home/weber/bin/eclipse/plugins/org.eclipse.pde.build_3.9.300.v20170515-0912/scripts"/>
+<mapEntry key="eclipse.pdebuild.templates" value="/home/weber/bin/eclipse/plugins/org.eclipse.pde.build_3.9.300.v20170515-0912/templates"/>
+</mapAttribute>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE" value="${none}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/de.marw.cmakeed.assist/gen-plugin.xml/gen-plugin_xml.ant.xml}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/de.marw.cmakeed.assist/gen-plugin.xml}"/>
+<stringAttribute key="process_factory_id" value="org.eclipse.ant.ui.remoteAntProcessFactory"/>
+</launchConfiguration>

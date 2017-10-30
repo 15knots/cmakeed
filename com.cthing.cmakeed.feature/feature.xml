@@ -35,4 +35,11 @@ registers an editor for files named CMakeLists.txt, CMakeLists.txt.in,
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="de.marw.cmakeed.assist"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

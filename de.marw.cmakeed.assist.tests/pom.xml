@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.cthing.cmakeed</groupId>
+    <artifactId>cmakeed-parent</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../parent</relativePath>
+  </parent>
+
+  <artifactId>de.marw.cmakeed.assist.tests</artifactId>
+  <version>1.0.0</version>
+  <packaging>eclipse-test-plugin</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-surefire-plugin</artifactId>
+        <configuration>
+          <useUIHarness>true</useUIHarness>
+          <!-- skip for now, since workbench startup currently fails. TODO   -->
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
