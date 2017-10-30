@@ -7,7 +7,7 @@
 
   <xsl:template match="/">
     <xsl:if test="not(function-available('ends-with'))">
-      <xsl:message terminate="yes" select="'XPATH 2 is required to process this file!'" />
+      <xsl:message terminate="yes" ><xsl:value-of select="'XPATH 2 is required to process this file!'" /></xsl:message>
     </xsl:if>
 
     <xsl:apply-templates />
