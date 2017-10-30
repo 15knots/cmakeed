@@ -1,13 +1,21 @@
 /* *****************************************************************************
  * Copyright 2007 C Thing Software
- * All Rights Reserved.
+ * Copyright 2017 Martin Weber
+ *  * All Rights Reserved.
  ******************************************************************************/
 
 package com.cthing.cmakeed.core.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Collection;
 
-import junit.framework.TestCase;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import com.cthing.cmakeed.core.utils.StringUtils;
 
@@ -15,18 +23,14 @@ import com.cthing.cmakeed.core.utils.StringUtils;
  * Tests the CMakeCommands class.
  */
 @SuppressWarnings("nls")
-public class CMakeCommandsTest extends TestCase
+public class CMakeCommandsTest
 {
-    /**
-     * Default constructor for the class.
-     */
-    public CMakeCommandsTest()
-    {
-    }
 
     /**
      * Tests the command collection access method.
      */
+    @Test
+    @Ignore("Tested in plugin de.mare.cmakeed.assist.test")
     public void testGetCommands()
     {
         final Collection<CMakeCommand> cmds = CMakeCommands.getCommands();
@@ -37,6 +41,8 @@ public class CMakeCommandsTest extends TestCase
     /**
      * Tests the command access method.
      */
+    @Test
+    @Ignore("Tested in plugin de.mare.cmakeed.assist.test")
     public void testGetCommand()
     {
         final CMakeCommand cmd1 = CMakeCommands.getCommand("SET");
