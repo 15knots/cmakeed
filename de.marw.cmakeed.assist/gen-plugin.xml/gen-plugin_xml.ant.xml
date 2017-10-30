@@ -161,6 +161,8 @@
 
     <!-- transform cmake variables documentation files -->
     <xslt style="xsl/variables.xsl" basedir="${cmake.build.root}/xml/variable" includes="*.xml" destdir="${out.dir}/variable" extension=".xml" force="true">
+      <factory name="net.sf.saxon.TransformerFactoryImpl" />
+      <classpath refid="saxon9" />
     </xslt>
     <!-- concatenate all files into one -->
     <concat destfile="${out.dir}/variables-stage1.xml" force="no">
@@ -196,6 +198,8 @@
 
     <!-- transform cmake properties documentation files -->
     <xslt style="xsl/properties.xsl" basedir="${cmake.build.root}/xml" includes="prop_*/*.xml" destdir="${out.dir}/property" extension=".xml" force="true">
+      <factory name="net.sf.saxon.TransformerFactoryImpl" />
+      <classpath refid="saxon9" />
       <mapper type="flatten" />
     </xslt>
 

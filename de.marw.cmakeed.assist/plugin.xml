@@ -501,8 +501,8 @@
 <property name="ENABLE_EXPORTS" desc="Specify whether an executable exports symbols for loadable modules."/>
 <property name="ENVIRONMENT" desc="Specify environment variables that should be defined for running a test."/>
 <property name="EXCLUDE_FROM_ALL" desc="Exclude the target from the all target."/>
-<property name="EXCLUDE_FROM_DEFAULT_BUILD" desc="Exclude target from &quot;Build Solution&quot;."/>
-<property name="EXCLUDE_FROM_DEFAULT_BUILD_&lt;CONFIG&gt;" desc="Per-configuration version of target exclusion from &quot;Build Solution&quot;."/>
+<property name="EXCLUDE_FROM_DEFAULT_BUILD" desc="Exclude target from &#34;Build Solution&#34;."/>
+<property name="EXCLUDE_FROM_DEFAULT_BUILD_&lt;CONFIG&gt;" desc="Per-configuration version of target exclusion from &#34;Build Solution&#34;."/>
 <property name="EXPORT_NAME" desc="Exported name for target files."/>
 <property name="EXTERNAL_OBJECT" desc="If set to true then this is an object file."/>
 <property name="EchoString" desc="A message to be displayed when the target is built."/>
@@ -545,11 +545,11 @@
 <property name="IMPORTED_LINK_INTERFACE_MULTIPLICITY_&lt;CONFIG&gt;" desc="&lt;CONFIG&gt;-specific version of IMPORTED_LINK_INTERFACE_MULTIPLICITY."/>
 <property name="IMPORTED_LOCATION" desc="Full path to the main file on disk for an IMPORTED target."/>
 <property name="IMPORTED_LOCATION_&lt;CONFIG&gt;" desc="&lt;CONFIG&gt;-specific version of IMPORTED_LOCATION property."/>
-<property name="IMPORTED_NO_SONAME" desc="Specifies that an IMPORTED shared library target has no &quot;soname&quot;."/>
+<property name="IMPORTED_NO_SONAME" desc="Specifies that an IMPORTED shared library target has no &#34;soname&#34;."/>
 <property name="IMPORTED_NO_SONAME_&lt;CONFIG&gt;" desc="&lt;CONFIG&gt;-specific version of IMPORTED_NO_SONAME property."/>
 <property name="IMPORTED_OBJECTS" desc=";-list of absolute paths to the object files on disk for an imported object library."/>
 <property name="IMPORTED_OBJECTS_&lt;CONFIG&gt;" desc="&lt;CONFIG&gt;-specific version of IMPORTED_OBJECTS property."/>
-<property name="IMPORTED_SONAME" desc="The &quot;soname&quot; of an IMPORTED target of shared library type."/>
+<property name="IMPORTED_SONAME" desc="The &#34;soname&#34; of an IMPORTED target of shared library type."/>
 <property name="IMPORTED_SONAME_&lt;CONFIG&gt;" desc="&lt;CONFIG&gt;-specific version of IMPORTED_SONAME property."/>
 <property name="IMPORT_PREFIX" desc="What comes before the import library name."/>
 <property name="IMPORT_SUFFIX" desc="What comes after the import library name."/>
@@ -577,11 +577,66 @@
 <property name="KEEP_EXTENSION" desc="Make the output file have the same extension as the source file."/>
 <property name="LABELS" desc="Specify a list of text labels associated with a target."/>
 <property name="LANGUAGE" desc="What programming language is the file."/>
-<property name="&lt;LANG&gt;_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="&lt;LANG&gt;_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="&lt;LANG&gt;_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
-<property name="&lt;LANG&gt;_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="&lt;LANG&gt;_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="ASM_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-ATT_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-MASM_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-NASM_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="C_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CSharp_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CUDA_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CXX_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Fortran_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Java_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="RC_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Swift_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-ATT_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-MASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-NASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="C_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CSharp_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CUDA_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CXX_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Fortran_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Java_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="RC_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Swift_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-ATT_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-MASM_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-NASM_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="C_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="CSharp_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="CUDA_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="CXX_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="Fortran_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="Java_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="RC_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="Swift_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-ATT_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-MASM_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-NASM_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="C_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CSharp_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CUDA_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="CXX_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Fortran_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Java_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="RC_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="Swift_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="ASM-ATT_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="ASM-MASM_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="ASM-NASM_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="C_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="CSharp_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="CUDA_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="CXX_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="Fortran_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="Java_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="RC_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="Swift_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="LIBRARY_OUTPUT_DIRECTORY" desc="Output directory in which to build LIBRARY target files."/>
 <property name="LIBRARY_OUTPUT_DIRECTORY_&lt;CONFIG&gt;" desc="Per-configuration output directory for LIBRARY target files."/>
 <property name="LIBRARY_OUTPUT_NAME" desc="Output name for LIBRARY target files."/>
@@ -614,7 +669,7 @@
 <property name="MEASUREMENT" desc="Specify a CDASH measurement and value to be reported for a test."/>
 <property name="MODIFIED" desc="Internal management property. Do not set or get."/>
 <property name="NAME" desc="Logical name for the target."/>
-<property name="NO_SONAME" desc="Whether to set &quot;soname&quot; when linking a shared library."/>
+<property name="NO_SONAME" desc="Whether to set &#34;soname&#34; when linking a shared library."/>
 <property name="NO_SYSTEM_FROM_IMPORTED" desc="Do not treat includes from IMPORTED target interfaces as SYSTEM."/>
 <property name="OBJECT_DEPENDS" desc="Additional files on which a compiled object file depends."/>
 <property name="OBJECT_OUTPUTS" desc="Additional outputs for a Makefile rule."/>
@@ -1081,7 +1136,7 @@
 <variable name="CMAKE_ANDROID_NATIVE_LIB_DIRECTORIES" desc="Default value for the ANDROID_NATIVE_LIB_DIRECTORIES target property. See that target property for additional information."/>
 <variable name="CMAKE_ANDROID_NDK" desc="When Cross Compiling for Android with the NDK, this variable holds the absolute path to the root directory of the NDK. The directory must contain a platforms subdirectory holding the android-&lt;api&gt; directories."/>
 <variable name="CMAKE_ANDROID_NDK_DEPRECATED_HEADERS" desc="When Cross Compiling for Android with the NDK, this variable may be set to specify whether to use the deprecated per-api-level headers instead of the unified headers."/>
-<variable name="CMAKE_ANDROID_NDK_TOOLCHAIN_HOST_TAG" desc="When Cross Compiling for Android with the NDK, this variable provides the NDK's &quot;host tag&quot; used to construct the path to prebuilt toolchains that run on the host."/>
+<variable name="CMAKE_ANDROID_NDK_TOOLCHAIN_HOST_TAG" desc="When Cross Compiling for Android with the NDK, this variable provides the NDK's &#34;host tag&#34; used to construct the path to prebuilt toolchains that run on the host."/>
 <variable name="CMAKE_ANDROID_NDK_TOOLCHAIN_VERSION" desc="When Cross Compiling for Android with the NDK, this variable may be set to specify the version of the toolchain to be used as the compiler. The variable must be set to one of these forms:"/>
 <variable name="CMAKE_ANDROID_PROCESS_MAX" desc="Default value for the ANDROID_PROCESS_MAX target property. See that target property for additional information."/>
 <variable name="CMAKE_ANDROID_PROGUARD" desc="Default value for the ANDROID_PROGUARD target property. See that target property for additional information."/>
@@ -1158,7 +1213,7 @@
 <variable name="CMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT" desc="This cache variable is used by the Eclipse project generator. See cmake-generators(7)."/>
 <variable name="CMAKE_ECLIPSE_MAKE_ARGUMENTS" desc="This cache variable is used by the Eclipse project generator. See cmake-generators(7)."/>
 <variable name="CMAKE_ECLIPSE_VERSION" desc="This cache variable is used by the Eclipse project generator. See cmake-generators(7)."/>
-<variable name="CMAKE_EDIT_COMMAND" desc="Full path to cmake-gui(1) or ccmake(1). Defined only for Makefile Generators when not using an &quot;extra&quot; generator for an IDE."/>
+<variable name="CMAKE_EDIT_COMMAND" desc="Full path to cmake-gui(1) or ccmake(1). Defined only for Makefile Generators when not using an &#34;extra&#34; generator for an IDE."/>
 <variable name="CMAKE_ENABLE_EXPORTS" desc="Specify whether an executable exports symbols for loadable modules."/>
 <variable name="CMAKE_ERROR_DEPRECATED" desc="Whether to issue errors for deprecated functionality."/>
 <variable name="CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION" desc="Ask cmake_install.cmake script to error out as soon as a file with absolute INSTALL DESTINATION is encountered."/>
@@ -1228,61 +1283,666 @@
 <variable name="CMAKE_IOS_INSTALL_COMBINED" desc="Default value for IOS_INSTALL_COMBINED of targets."/>
 <variable name="CMAKE_JOB_POOL_COMPILE" desc="This variable is used to initialize the JOB_POOL_COMPILE property on all the targets. See JOB_POOL_COMPILE for additional information."/>
 <variable name="CMAKE_JOB_POOL_LINK" desc="This variable is used to initialize the JOB_POOL_LINK property on all the targets. See JOB_POOL_LINK for additional information."/>
-<variable name="CMAKE_&lt;LANG&gt;_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
-<variable name="CMAKE_&lt;LANG&gt;_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
-<variable name="CMAKE_&lt;LANG&gt;_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
-<variable name="CMAKE_&lt;LANG&gt;_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
-<variable name="CMAKE_&lt;LANG&gt;_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
-<variable name="CMAKE_&lt;LANG&gt;_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
-<variable name="CMAKE_&lt;LANG&gt;_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER" desc="The full path to the compiler for LANG."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_ABI" desc="An internal variable subject to change."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_ID" desc="Compiler identification string."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILER_VERSION" desc="Compiler version string."/>
-<variable name="CMAKE_&lt;LANG&gt;_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
-<variable name="CMAKE_&lt;LANG&gt;_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_&lt;LANG&gt;_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
-<variable name="CMAKE_&lt;LANG&gt;_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
-<variable name="CMAKE_&lt;LANG&gt;_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS" desc="Flags for all build types."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
-<variable name="CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
-<variable name="CMAKE_&lt;LANG&gt;_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
-<variable name="CMAKE_&lt;LANG&gt;_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
-<variable name="CMAKE_&lt;LANG&gt;_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
-<variable name="CMAKE_&lt;LANG&gt;_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
-<variable name="CMAKE_&lt;LANG&gt;_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
-<variable name="CMAKE_&lt;LANG&gt;_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
-<variable name="CMAKE_&lt;LANG&gt;_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
-<variable name="CMAKE_&lt;LANG&gt;_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
-<variable name="CMAKE_&lt;LANG&gt;_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
-<variable name="CMAKE_&lt;LANG&gt;_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_&lt;LANG&gt;_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
-<variable name="CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
-<variable name="CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
-<variable name="CMAKE_&lt;LANG&gt;_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
-<variable name="CMAKE_&lt;LANG&gt;_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
-<variable name="CMAKE_&lt;LANG&gt;_PLATFORM_ID" desc="An internal variable subject to change."/>
-<variable name="CMAKE_&lt;LANG&gt;_SIMULATE_ID" desc="Identification string of &quot;simulated&quot; compiler."/>
-<variable name="CMAKE_&lt;LANG&gt;_SIMULATE_VERSION" desc="Version string of &quot;simulated&quot; compiler."/>
-<variable name="CMAKE_&lt;LANG&gt;_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
-<variable name="CMAKE_&lt;LANG&gt;_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
-<variable name="CMAKE_&lt;LANG&gt;_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
-<variable name="CMAKE_&lt;LANG&gt;_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
-<variable name="CMAKE_&lt;LANG&gt;_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_ASM_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_ASM-ATT_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_ASM-MASM_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_ASM-NASM_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_C_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_CSharp_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_CUDA_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_CXX_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_Fortran_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_Java_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_RC_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_Swift_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
+<variable name="CMAKE_ASM_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_ASM-ATT_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_ASM-MASM_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_ASM-NASM_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_C_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_CSharp_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_CUDA_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_CXX_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_Fortran_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_Java_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_RC_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_Swift_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_ASM_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_ASM-ATT_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_ASM-MASM_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_ASM-NASM_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_C_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_CSharp_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_CUDA_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_CXX_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_Fortran_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_Java_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_RC_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_Swift_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_ASM_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_ASM-ATT_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_ASM-MASM_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_ASM-NASM_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_C_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_CSharp_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_CUDA_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_CXX_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_Fortran_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_Java_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_RC_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_Swift_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
+<variable name="CMAKE_ASM_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_ASM-ATT_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_ASM-MASM_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_ASM-NASM_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_C_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_CSharp_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_CUDA_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_CXX_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_Fortran_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_Java_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_RC_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_Swift_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
+<variable name="CMAKE_ASM_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_ASM-ATT_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_ASM-MASM_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_ASM-NASM_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_C_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_CSharp_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_CUDA_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_CXX_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_Fortran_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_Java_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_RC_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_Swift_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
+<variable name="CMAKE_ASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-ATT_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-MASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-NASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_C_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CSharp_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CUDA_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CXX_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Fortran_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Java_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_RC_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Swift_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_ASM-ATT_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_ASM-MASM_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_ASM-NASM_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_C_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_CSharp_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_CUDA_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_CXX_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_Fortran_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_Java_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_RC_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_Swift_COMPILER" desc="The full path to the compiler for LANG."/>
+<variable name="CMAKE_ASM_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_C_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CSharp_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CUDA_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CXX_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Fortran_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Java_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_RC_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Swift_COMPILER_ABI" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_C_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_CSharp_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_CUDA_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_CXX_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_Fortran_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_Java_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_RC_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_Swift_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_CSharp_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_CUDA_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_Fortran_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_Java_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_RC_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_Swift_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
+<variable name="CMAKE_ASM_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_C_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_CSharp_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_CUDA_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_CXX_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_Fortran_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_Java_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_RC_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_Swift_COMPILER_ID" desc="Compiler identification string."/>
+<variable name="CMAKE_ASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_C_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CSharp_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CUDA_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CXX_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Fortran_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Java_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_RC_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Swift_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_C_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_CSharp_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_CUDA_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_CXX_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_Fortran_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_Java_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_RC_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_Swift_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_ASM_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_C_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_CSharp_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_CUDA_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_CXX_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_Fortran_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_Java_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_RC_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_Swift_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_C_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_CSharp_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_CUDA_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_CXX_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_Fortran_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_Java_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_RC_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_Swift_COMPILER_TARGET" desc="The target for cross-compiling, if supported."/>
+<variable name="CMAKE_ASM_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_C_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_CSharp_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_CUDA_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_CXX_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_Fortran_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_Java_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_RC_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_Swift_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_ASM_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_ASM-ATT_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_ASM-MASM_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_ASM-NASM_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_C_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_CSharp_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_CUDA_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_CXX_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_Fortran_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_Java_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_RC_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_Swift_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_ASM_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-ATT_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-MASM_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-NASM_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_C_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CSharp_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CUDA_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CXX_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Fortran_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Java_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_RC_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Swift_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_ASM-ATT_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_ASM-MASM_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_ASM-NASM_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_C_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_CSharp_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_CUDA_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_CXX_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_Fortran_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_Java_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_RC_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_Swift_CREATE_SHARED_LIBRARY" desc="Rule variable to create a shared library."/>
+<variable name="CMAKE_ASM_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_ASM-ATT_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_ASM-MASM_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_ASM-NASM_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_C_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_CSharp_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_CUDA_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_CXX_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_Fortran_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_Java_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_RC_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_Swift_CREATE_SHARED_MODULE" desc="Rule variable to create a shared module."/>
+<variable name="CMAKE_ASM_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_ASM-ATT_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_ASM-MASM_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_ASM-NASM_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_C_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_CSharp_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_CUDA_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_CXX_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_Fortran_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_Java_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_RC_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_Swift_CREATE_STATIC_LIBRARY" desc="Rule variable to create a static library."/>
+<variable name="CMAKE_ASM_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_ASM-ATT_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_ASM-MASM_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_ASM-NASM_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_C_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_CSharp_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_CUDA_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_CXX_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_Fortran_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_Java_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_RC_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_Swift_FLAGS" desc="Flags for all build types."/>
+<variable name="CMAKE_ASM_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_C_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_CSharp_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_CUDA_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_CXX_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_Fortran_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_Java_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_RC_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_Swift_FLAGS_DEBUG" desc="Flags for Debug build type or configuration."/>
+<variable name="CMAKE_ASM_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_C_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CSharp_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CUDA_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CXX_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Fortran_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Java_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_RC_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Swift_FLAGS_DEBUG_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_DEBUG cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_C_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CSharp_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CUDA_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CXX_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Fortran_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Java_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_RC_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Swift_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_C_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_CSharp_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_CUDA_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_CXX_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_Fortran_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_Java_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_RC_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_Swift_FLAGS_MINSIZEREL" desc="Flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_ASM_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_C_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CSharp_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CUDA_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CXX_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Fortran_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Java_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_RC_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Swift_FLAGS_MINSIZEREL_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_MINSIZEREL cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_C_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_CSharp_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_CUDA_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_CXX_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_Fortran_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_Java_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_RC_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_Swift_FLAGS_RELEASE" desc="Flags for Release build type or configuration."/>
+<variable name="CMAKE_ASM_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_C_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CSharp_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CUDA_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CXX_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Fortran_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Java_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_RC_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Swift_FLAGS_RELEASE_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELEASE cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_C_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_CSharp_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_CUDA_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_CXX_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_Fortran_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_Java_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_RC_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_Swift_FLAGS_RELWITHDEBINFO" desc="Flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_ASM_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_C_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CSharp_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CUDA_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Fortran_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Java_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_RC_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Swift_FLAGS_RELWITHDEBINFO_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_RELWITHDEBINFO cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_ASM-ATT_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_ASM-MASM_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_ASM-NASM_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_C_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_CSharp_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_CUDA_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_CXX_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_Fortran_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_Java_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_RC_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_Swift_GHS_KERNEL_FLAGS_DEBUG" desc="GHS kernel flags for Debug build type or configuration."/>
+<variable name="CMAKE_ASM_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_ASM-ATT_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_ASM-MASM_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_ASM-NASM_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_C_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_CSharp_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_CUDA_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_CXX_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_Fortran_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_Java_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_RC_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_Swift_GHS_KERNEL_FLAGS_MINSIZEREL" desc="GHS kernel flags for MinSizeRel build type or configuration."/>
+<variable name="CMAKE_ASM_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_ASM-ATT_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_ASM-MASM_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_ASM-NASM_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_C_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_CSharp_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_CUDA_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_CXX_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_Fortran_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_Java_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_RC_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_Swift_GHS_KERNEL_FLAGS_RELEASE" desc="GHS kernel flags for Release build type or configuration."/>
+<variable name="CMAKE_ASM_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_ASM-ATT_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_ASM-MASM_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_ASM-NASM_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_C_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_CSharp_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_CUDA_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_CXX_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_Fortran_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_Java_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_RC_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_Swift_GHS_KERNEL_FLAGS_RELWITHDEBINFO" desc="GHS kernel flags for RelWithDebInfo type or configuration."/>
+<variable name="CMAKE_ASM_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_ASM-ATT_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_ASM-MASM_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_ASM-NASM_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_C_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_CSharp_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_CUDA_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_CXX_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_Fortran_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_Java_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_RC_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_Swift_IGNORE_EXTENSIONS" desc="File extensions that should be ignored by the build."/>
+<variable name="CMAKE_ASM_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_ASM-ATT_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_ASM-MASM_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_ASM-NASM_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_CSharp_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_CUDA_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_Fortran_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_Java_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_RC_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_Swift_IMPLICIT_INCLUDE_DIRECTORIES" desc="Directories implicitly searched by the compiler for header files."/>
+<variable name="CMAKE_ASM_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-ATT_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-MASM_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-NASM_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_C_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CSharp_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Fortran_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Java_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_RC_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Swift_IMPLICIT_LINK_DIRECTORIES" desc="Implicit linker search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-ATT_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-MASM_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-NASM_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_C_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CSharp_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CUDA_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Fortran_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Java_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_RC_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Swift_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES" desc="Implicit linker framework search path detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-ATT_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-MASM_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-NASM_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_C_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CSharp_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CUDA_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CXX_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Fortran_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Java_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_RC_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Swift_IMPLICIT_LINK_LIBRARIES" desc="Implicit link libraries and flags detected for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-ATT_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-MASM_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-NASM_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_C_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CSharp_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CUDA_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CXX_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Fortran_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Java_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_RC_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Swift_INCLUDE_WHAT_YOU_USE" desc="Default value for &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-ATT_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-MASM_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-NASM_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_C_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_CSharp_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_CUDA_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_CXX_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_Fortran_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_Java_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_RC_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_Swift_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name detected for &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_ASM-ATT_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_ASM-MASM_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_ASM-NASM_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_C_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_CSharp_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_CUDA_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_CXX_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_Fortran_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_Java_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_RC_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_Swift_LINKER_PREFERENCE" desc="Preference value for linker language selection."/>
+<variable name="CMAKE_ASM_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_ASM-ATT_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_ASM-MASM_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_ASM-NASM_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_C_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_CSharp_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_CUDA_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_CXX_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_Fortran_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_Java_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_RC_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_Swift_LINKER_PREFERENCE_PROPAGATES" desc="True if CMAKE_&lt;LANG&gt;_LINKER_PREFERENCE propagates across targets."/>
+<variable name="CMAKE_ASM_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_ASM-ATT_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_ASM-MASM_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_ASM-NASM_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_C_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_CSharp_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_CUDA_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_CXX_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_Fortran_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_Java_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_RC_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_Swift_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_ASM_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_ASM-ATT_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_ASM-MASM_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_ASM-NASM_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_C_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_CSharp_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_CUDA_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_CXX_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_Fortran_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_Java_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_RC_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_Swift_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
+<variable name="CMAKE_ASM_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-ATT_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-MASM_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-NASM_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_C_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CSharp_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CUDA_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CXX_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Fortran_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Java_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_RC_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Swift_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_ASM-ATT_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_ASM-MASM_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_ASM-NASM_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_C_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_CSharp_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_CUDA_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_CXX_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_Fortran_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_Java_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_RC_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_Swift_SIMULATE_ID" desc="Identification string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_ASM_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_ASM-ATT_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_ASM-MASM_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_ASM-NASM_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_C_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_CSharp_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_CUDA_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_CXX_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_Fortran_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_Java_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_RC_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_Swift_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
+<variable name="CMAKE_ASM_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-ATT_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-MASM_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-NASM_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_C_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CSharp_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CUDA_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_CXX_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Fortran_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Java_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_RC_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_Swift_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_ASM-ATT_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_ASM-MASM_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_ASM-NASM_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_C_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_CSharp_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_CUDA_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_CXX_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_Fortran_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_Java_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_RC_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_Swift_SOURCE_FILE_EXTENSIONS" desc="Extensions of source files for the given language."/>
+<variable name="CMAKE_ASM_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_ASM-ATT_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_ASM-MASM_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_ASM-NASM_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_C_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_CSharp_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_CUDA_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_Fortran_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_Java_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_RC_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_Swift_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
+<variable name="CMAKE_ASM_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_ASM-ATT_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_ASM-MASM_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_ASM-NASM_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_C_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_CSharp_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_CUDA_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_CXX_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_Fortran_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_Java_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_RC_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_Swift_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
+<variable name="CMAKE_ASM_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_ASM-ATT_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_ASM-MASM_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_ASM-NASM_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_C_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_CSharp_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_CUDA_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_CXX_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_Fortran_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_Java_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_RC_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
+<variable name="CMAKE_Swift_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_LIBRARY_ARCHITECTURE" desc="Target architecture library directory name, if detected."/>
 <variable name="CMAKE_LIBRARY_ARCHITECTURE_REGEX" desc="Regex matching possible target architecture library directory names."/>
 <variable name="CMAKE_LIBRARY_OUTPUT_DIRECTORY" desc="Where to put all the LIBRARY target files when built."/>
@@ -1376,7 +2036,7 @@
 <variable name="CMAKE_SYSTEM_PROCESSOR" desc="The name of the CPU CMake is building for."/>
 <variable name="CMAKE_SYSTEM_PROGRAM_PATH" desc=";-list of directories specifying a search path for the find_program() command. By default this contains the standard directories for the current system. It is not intended to be modified by the project; use CMAKE_PROGRAM_PATH for this. See also CMAKE_SYSTEM_PREFIX_PATH."/>
 <variable name="CMAKE_SYSTEM_VERSION" desc="The version of the operating system for which CMake is to build. See the CMAKE_SYSTEM_NAME variable for the OS name."/>
-<variable name="CMAKE_Swift_LANGUAGE_VERSION" desc="Set to the Swift language version number. If not set, the legacy &quot;2.3&quot; version is assumed."/>
+<variable name="CMAKE_Swift_LANGUAGE_VERSION" desc="Set to the Swift language version number. If not set, the legacy &#34;2.3&#34; version is assumed."/>
 <variable name="CMAKE_TOOLCHAIN_FILE" desc="Path to toolchain file supplied to cmake(1)."/>
 <variable name="CMAKE_TRY_COMPILE_CONFIGURATION" desc="Build configuration used for try_compile() and try_run() projects."/>
 <variable name="CMAKE_TRY_COMPILE_PLATFORM_VARIABLES" desc="List of variables that the try_compile() command source file signature must propagate into the test project in order to target the same platform as the host project."/>
