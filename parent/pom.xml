@@ -50,6 +50,8 @@
     <module>../com.cthing.cmakeed.feature</module>
     <module>../com.cthing.cmakeed.core.tests</module>
     <module>../com.cthing.cmakeed.ui.tests</module>
+    <module>../de.marw.cmakeed.assist</module>
+    <module>../de.marw.cmakeed.assist.tests</module>
     <module>../com.cthing.cmakeed.site</module>
   </modules>
 
