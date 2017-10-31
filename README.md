@@ -24,13 +24,14 @@ Individual releases can be found at [bintray.com](https://bintray.com/15knots/p2
 ---
 # Release History
 
-## 1.?.? 
+## 1.5.0 (2017-10-31)
 ### Changes
 - Project hosting moved from [Sourceforge](https://sourceforge.net/projects/cmakeed) to Github.
+- Enhancement #1: Updated syntax highlighting data and tool tips to cmake 3.9.4.
 
 ## 1.4.0 (2017-07-29)
 ### Changes
-- Update code completion for cmake commands to cmake version 3.5.2 (part of issue #7)
+- Update code completion for cmake commands to cmake version 3.5.2 (part of SF issue #7)
 - Editor now respects the preference settings from General|Editors|Text Edtors preference page.
 
 ## 1.3.0 (2016-12-12)
