@@ -27,7 +27,7 @@
 
   <target name="-stage1" depends="-stage1.uptodate" unless="stage1.uptodate" description="Stage one">
     <echo message="Writing ${plugin.xml}" />
-    <concat destfile="${plugin.xml}" force="no" append="true">
+    <concat destfile="${plugin.xml}" force="no" append="false">
       <header>&lt;?xml version="1.0" encoding="UTF-8"?&gt;${line.separator}
         &lt;?eclipse version="3.4"?&gt;${line.separator}
         &lt;!-- Do not edit, generated with gen-plugin_xml.ant.xml --&gt;${line.separator}
