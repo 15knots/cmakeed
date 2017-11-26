@@ -145,7 +145,7 @@
 <usage value="(Executable [directory in which to run] [ARGS &lt;arguments to executable&gt;] [OUTPUT_VARIABLE &lt;var&gt;] [RETURN_VALUE &lt;var&gt;])"/>
 </command>
 <command name="execute_process" desc="Execute one or more child processes.">
-<usage value="(COMMAND &lt;cmd1&gt; [args1...]] [COMMAND &lt;cmd2&gt; [args2...] [...]] [WORKING_DIRECTORY &lt;directory&gt;] [TIMEOUT &lt;seconds&gt;] [RESULT_VARIABLE &lt;variable&gt;] [OUTPUT_VARIABLE &lt;variable&gt;] [ERROR_VARIABLE &lt;variable&gt;] [INPUT_FILE &lt;file&gt;] [OUTPUT_FILE &lt;file&gt;] [ERROR_FILE &lt;file&gt;] [OUTPUT_QUIET] [ERROR_QUIET] [OUTPUT_STRIP_TRAILING_WHITESPACE] [ERROR_STRIP_TRAILING_WHITESPACE] [ENCODING &lt;name&gt;])"/>
+<usage value="(COMMAND &lt;cmd1&gt; [args1...]] [COMMAND &lt;cmd2&gt; [args2...] [...]] [WORKING_DIRECTORY &lt;directory&gt;] [TIMEOUT &lt;seconds&gt;] [RESULT_VARIABLE &lt;variable&gt;] [RESULTS_VARIABLE &lt;variable&gt;] [OUTPUT_VARIABLE &lt;variable&gt;] [ERROR_VARIABLE &lt;variable&gt;] [INPUT_FILE &lt;file&gt;] [OUTPUT_FILE &lt;file&gt;] [ERROR_FILE &lt;file&gt;] [OUTPUT_QUIET] [ERROR_QUIET] [OUTPUT_STRIP_TRAILING_WHITESPACE] [ERROR_STRIP_TRAILING_WHITESPACE] [ENCODING &lt;name&gt;])"/>
 </command>
 <command name="export" desc="Export targets from the build tree for use by outside projects.">
 <usage value="(EXPORT &lt;export-name&gt; [NAMESPACE &lt;namespace&gt;] [FILE &lt;filename&gt;])"/>
@@ -212,6 +212,9 @@
 </command>
 <command name="include_external_msproject" desc="Include an external Microsoft project file in a workspace.">
 <usage value="(projectname location [TYPE projectTypeGUID] [GUID projectGUID] [PLATFORM platformName] dep1 dep2 ...)"/>
+</command>
+<command name="include_guard" desc="Provides an include guard for the file currently being processed by CMake.">
+<usage value="([DIRECTORY|GLOBAL])"/>
 </command>
 <command name="include_regular_expression" desc="Set the regular expression used for dependency checking.">
 <usage value="(regex_match [regex_complain])"/>
@@ -322,6 +325,7 @@
 <usage value="(REGEX MATCHALL &lt;regular_expression&gt; &lt;output variable&gt; &lt;input&gt; [&lt;input&gt;...])"/>
 <usage value="(REGEX REPLACE &lt;regular_expression&gt; &lt;replace_expression&gt; &lt;output variable&gt; &lt;input&gt; [&lt;input&gt;...])"/>
 <usage value="(APPEND &lt;string variable&gt; [&lt;input&gt;...])"/>
+<usage value="(PREPEND &lt;string variable&gt; [&lt;input&gt;...])"/>
 <usage value="(CONCAT &lt;output variable&gt; [&lt;input&gt;...])"/>
 <usage value="(TOLOWER &lt;string1&gt; &lt;output variable&gt;)"/>
 <usage value="(TOUPPER &lt;string1&gt; &lt;output variable&gt;)"/>
@@ -429,8 +433,9 @@
 <property name="AUTOGEN_TARGETS_FOLDER" desc="Name of FOLDER for *_autogen targets that are added automatically by CMake for targets for which AUTOMOC is enabled."/>
 <property name="AUTOGEN_TARGET_DEPENDS" desc="Target dependencies of the corresponding _autogen target."/>
 <property name="AUTOMOC" desc="Should the target be processed with automoc (for Qt projects)."/>
+<property name="AUTOMOC_COMPILER_PREDEFINES" desc="Boolean value used by AUTOMOC to determine if the compiler pre definitions file moc_predefs.h should be generated."/>
 <property name="AUTOMOC_DEPEND_FILTERS" desc="Filter definitions used by AUTOMOC to extract file names from source code as additional dependencies for the moc file."/>
-<property name="Example" desc="Consider a file FOO.hpp holds a custom macro OBJ_JSON_FILE and we want the moc file to depend on the macro`s file name argument:"/>
+<property name="AUTOMOC_MACRO_NAMES" desc="A ;-list list of macro names used by AUTOMOC to determine if a C++ file needs to be processed by moc."/>
 <property name="AUTOMOC_MOC_OPTIONS" desc="Additional options for moc when using AUTOMOC"/>
 <property name="AUTOMOC_SOURCE_GROUP" desc="Name of the source_group() for AUTOMOC generated files."/>
 <property name="AUTOMOC_TARGETS_FOLDER" desc="Name of FOLDER for *_autogen targets that are added automatically by CMake for targets for which AUTOMOC is enabled."/>
@@ -511,9 +516,9 @@
 <property name="FIND_LIBRARY_USE_LIB64_PATHS" desc="Whether find_library() should automatically search lib64 directories."/>
 <property name="FIND_LIBRARY_USE_LIBX32_PATHS" desc="Whether the find_library() command should automatically search libx32 directories."/>
 <property name="FIND_LIBRARY_USE_OPENBSD_VERSIONING" desc="Whether find_library() should find OpenBSD-style shared libraries."/>
-<property name="FIXTURES_CLEANUP" desc="Specifies a list of fixtures for which the test is to be treated as a cleanup test."/>
-<property name="FIXTURES_REQUIRED" desc="Specifies a list of fixtures the test requires. Fixture names are case sensitive."/>
-<property name="FIXTURES_SETUP" desc="Specifies a list of fixtures for which the test is to be treated as a setup test."/>
+<property name="FIXTURES_CLEANUP" desc="Specifies a list of fixtures for which the test is to be treated as a cleanup test. These fixture names are distinct from test case names and are not required to have any similarity to the names of tests associated with them."/>
+<property name="FIXTURES_REQUIRED" desc="Specifies a list of fixtures the test requires. Fixture names are case sensitive and they are not required to have any similarity to test names."/>
+<property name="FIXTURES_SETUP" desc="Specifies a list of fixtures for which the test is to be treated as a setup test. These fixture names are distinct from test case names and are not required to have any similarity to the names of tests associated with them."/>
 <property name="FOLDER" desc="Set the folder name. Use to organize targets in an IDE."/>
 <property name="FRAMEWORK" desc="Build SHARED or STATIC library as Framework Bundle on the OS X and iOS."/>
 <property name="FRAMEWORK_VERSION" desc="Version of a framework created using the FRAMEWORK target property (e.g. A)."/>
@@ -589,18 +594,30 @@
 <property name="Java_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
 <property name="RC_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
 <property name="Swift_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="ASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="ASM-ATT_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="ASM-MASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="ASM-NASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="C_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="CSharp_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="CUDA_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="CXX_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="Fortran_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="Java_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="RC_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<property name="Swift_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="ASM-ATT_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="ASM-MASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="ASM-NASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="C_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="CSharp_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="CUDA_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="CXX_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="Fortran_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="Java_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="RC_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="Swift_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<property name="ASM_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-ATT_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-MASM_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="ASM-NASM_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="C_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="CSharp_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="CUDA_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="CXX_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="Fortran_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="Java_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="RC_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
+<property name="Swift_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="ASM_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="ASM-ATT_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="ASM-MASM_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -670,7 +687,7 @@
 <property name="MODIFIED" desc="Internal management property. Do not set or get."/>
 <property name="NAME" desc="Logical name for the target."/>
 <property name="NO_SONAME" desc="Whether to set &#34;soname&#34; when linking a shared library."/>
-<property name="NO_SYSTEM_FROM_IMPORTED" desc="Do not treat includes from IMPORTED target interfaces as SYSTEM."/>
+<property name="NO_SYSTEM_FROM_IMPORTED" desc="Do not treat include directories from the interfaces of consumed Imported Targets as SYSTEM."/>
 <property name="OBJECT_DEPENDS" desc="Additional files on which a compiled object file depends."/>
 <property name="OBJECT_OUTPUTS" desc="Additional outputs for a Makefile rule."/>
 <property name="OSX_ARCHITECTURES" desc="Target specific architectures for OS X."/>
@@ -691,7 +708,7 @@
 <property name="PREFIX" desc="What comes before the library name."/>
 <property name="PRE_INSTALL_SCRIPT" desc="Deprecated install support."/>
 <property name="PRIVATE_HEADER" desc="Specify private header files in a FRAMEWORK shared library target."/>
-<property name="PROCESSORS" desc="How many process slots this test requires"/>
+<property name="PROCESSORS" desc="Set to specify how many process slots this test requires."/>
 <property name="PROJECT_LABEL" desc="Change the name of a target in an IDE."/>
 <property name="PUBLIC_HEADER" desc="Specify public header files in a FRAMEWORK shared library target."/>
 <property name="REPORT_UNDEFINED_PROPERTIES" desc="If set, report any undefined properties to this file."/>
@@ -725,7 +742,8 @@
 <property name="TARGET_ARCHIVES_MAY_BE_SHARED_LIBS" desc="Set if shared libraries may be named like archives."/>
 <property name="TARGET_MESSAGES" desc="Specify whether to report the completion of each target."/>
 <property name="TARGET_SUPPORTS_SHARED_LIBS" desc="Does the target platform support shared libraries."/>
-<property name="TEST_INCLUDE_FILE" desc="A cmake file that will be included when ctest is run."/>
+<property name="TEST_INCLUDE_FILE" desc="Deprecated. Use TEST_INCLUDE_FILES instead." deprecated="true"/>
+<property name="TEST_INCLUDE_FILES" desc="A list of cmake files that will be included when ctest is run."/>
 <property name="TIMEOUT" desc="How many seconds to allow for this test."/>
 <property name="TIMEOUT_AFTER_MATCH" desc="Change a test's timeout duration after a matching line is encountered in its output."/>
 <property name="TYPE" desc="The type of the target."/>
@@ -741,6 +759,7 @@
 <property name="VS_DEPLOYMENT_CONTENT" desc="Mark a source file as content for deployment with a Windows Phone or Windows Store application when built with a Visual Studio generator. The value must evaluate to either 1 or 0 and may use generator expressions to make the choice based on the build configuration. The .vcxproj file entry for the source file will be marked either DeploymentContent or ExcludedFromBuild for values 1 and 0, respectively."/>
 <property name="VS_DEPLOYMENT_LOCATION" desc="Specifies the deployment location for a content source file with a Windows Phone or Windows Store application when built with a Visual Studio generator. This property is only applicable when using VS_DEPLOYMENT_CONTENT. The value represent the path relative to the app package and applies to all configurations."/>
 <property name="VS_DESKTOP_EXTENSIONS_VERSION" desc="Visual Studio Windows 10 Desktop Extensions Version"/>
+<property name="VS_DOTNET_REFERENCEPROP_&lt;refname&gt;_TAG_&lt;tagname&gt;" desc="Defines an XML property &lt;tagname&gt; for a .NET reference &lt;refname&gt;."/>
 <property name="VS_DOTNET_REFERENCES" desc="Visual Studio managed project .NET references"/>
 <property name="VS_DOTNET_REFERENCES_COPY_LOCAL" desc="Sets the Copy Local property for all .NET hint references in the target"/>
 <property name="VS_DOTNET_REFERENCE_&lt;refname&gt;" desc="Visual Studio managed project .NET reference with name &lt;refname&gt; and hint path."/>
@@ -765,7 +784,9 @@
 <property name="VS_SHADER_ENTRYPOINT" desc="Specifies the name of the entry point for the shader of a .hlsl source file."/>
 <property name="VS_SHADER_FLAGS" desc="Set additional VS shader flags of a .hlsl source file."/>
 <property name="VS_SHADER_MODEL" desc="Specifies the shader model of a .hlsl source file. Some shader types can only be used with recent shader models"/>
+<property name="VS_SHADER_OUTPUT_HEADER_FILE" desc="Set filename for output header file containing object code of a .hlsl source file."/>
 <property name="VS_SHADER_TYPE" desc="Set the VS shader type of a .hlsl source file."/>
+<property name="VS_SHADER_VARIABLE_NAME" desc="Set name of variable in header file containing object code of a .hlsl source file."/>
 <property name="VS_STARTUP_PROJECT" desc="Specify the default startup project in a Visual Studio solution."/>
 <property name="VS_TOOL_OVERRIDE" desc="Override the default Visual Studio tool that will be applied to the source file with a new tool not based on the extension of the file."/>
 <property name="VS_USER_PROPS" desc="Sets the user props file to be included in the visual studio C++ project file. The standard path is $(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props, which is in most cases the same as %LOCALAPPDATA%\\Microsoft\\MSBuild\\v4.0\\Microsoft.Cpp.Win32.user.props or %LOCALAPPDATA%\\Microsoft\\MSBuild\\v4.0\\Microsoft.Cpp.x64.user.props."/>
@@ -1043,6 +1064,7 @@
 <reservedword name="REMOVE_RECURSE"/>
 <reservedword name="REQUIRED"/>
 <reservedword name="RESOURCE"/>
+<reservedword name="RESULTS_VARIABLE"/>
 <reservedword name="RESULT_VAR"/>
 <reservedword name="RESULT_VARIABLE"/>
 <reservedword name="RETRY_COUNT"/>
@@ -1116,7 +1138,7 @@
 </extension>
 <extension point="com.cthing.cmakeed.core.variables" >
 <variable name="ANDROID" desc="Set to 1 when the target system (CMAKE_SYSTEM_NAME) is Android."/>
-<variable name="APPLE" desc="True if running on OS X."/>
+<variable name="APPLE" desc="Set to True when the target system is an Apple platform (macOS, iOS, tvOS or watchOS)."/>
 <variable name="BORLAND" desc="True if the Borland compiler is being used."/>
 <variable name="BUILD_SHARED_LIBS" desc="Global flag to cause add_library() to create shared libraries if on."/>
 <variable name="CMAKE_ABSOLUTE_DESTINATION_FILES" desc="List of files which have been installed using an ABSOLUTE DESTINATION path."/>
@@ -1152,13 +1174,16 @@
 <variable name="CMAKE_ARGC" desc="Number of command line arguments passed to CMake in script mode."/>
 <variable name="CMAKE_ARGV0" desc="Command line argument passed to CMake in script mode."/>
 <variable name="CMAKE_AUTOMOC" desc="Whether to handle moc automatically for Qt targets."/>
+<variable name="CMAKE_AUTOMOC_COMPILER_PREDEFINES" desc="This variable is used to initialize the AUTOMOC_COMPILER_PREDEFINES property on all the targets. See that target property for additional information."/>
 <variable name="CMAKE_AUTOMOC_DEPEND_FILTERS" desc="Filter definitions used by CMAKE_AUTOMOC to extract file names from source code as additional dependencies for the moc file."/>
+<variable name="CMAKE_AUTOMOC_MACRO_NAMES" desc="A ;-list list of macro names used by CMAKE_AUTOMOC to determine if a C++ file needs to be processed by moc."/>
+<variable name="Example" desc="Let CMake know that source files that contain CUSTOM_MACRO must be moc processed as well:"/>
 <variable name="CMAKE_AUTOMOC_MOC_OPTIONS" desc="Additional options for moc when using CMAKE_AUTOMOC."/>
 <variable name="CMAKE_AUTOMOC_RELAXED_MODE" desc="Switch between strict and relaxed automoc mode."/>
 <variable name="CMAKE_AUTORCC" desc="Whether to handle rcc automatically for Qt targets."/>
-<variable name="CMAKE_AUTORCC_OPTIONS" desc="Whether to handle rcc automatically for Qt targets."/>
+<variable name="CMAKE_AUTORCC_OPTIONS" desc="Additional options for rcc when using CMAKE_AUTORCC."/>
 <variable name="CMAKE_AUTOUIC" desc="Whether to handle uic automatically for Qt targets."/>
-<variable name="CMAKE_AUTOUIC_OPTIONS" desc="Whether to handle uic automatically for Qt targets."/>
+<variable name="CMAKE_AUTOUIC_OPTIONS" desc="Additional options for uic when using CMAKE_AUTOUIC."/>
 <variable name="CMAKE_AUTOUIC_SEARCH_PATHS" desc="Search path list used by CMAKE_AUTOUIC to find included .ui files."/>
 <variable name="CMAKE_BACKWARDS_COMPATIBILITY" desc="Deprecated. See CMake Policy CMP0001 documentation." deprecated="true"/>
 <variable name="CMAKE_BINARY_DIR" desc="The path to the top level of the build tree."/>
@@ -1173,6 +1198,7 @@
 <variable name="CMAKE_CACHE_PATCH_VERSION" desc="Patch version of CMake used to create the CMakeCache.txt file"/>
 <variable name="CMAKE_CFG_INTDIR" desc="Build-time reference to per-configuration output subdirectory."/>
 <variable name="CMAKE_CL_64" desc="Discouraged. Use CMAKE_SIZEOF_VOID_P instead."/>
+<variable name="CMAKE_CODEBLOCKS_EXCLUDE_EXTERNAL_FILES" desc="Change the way the CodeBlocks generator creates project files."/>
 <variable name="CMAKE_CODELITE_USE_TARGETS" desc="Change the way the CodeLite generator creates projectfiles."/>
 <variable name="CMAKE_COLOR_MAKEFILE" desc="Enables color output when using the Makefile Generators."/>
 <variable name="CMAKE_COMMAND" desc="The full path to the cmake(1) executable."/>
@@ -1188,6 +1214,7 @@
 <variable name="CMAKE_CROSSCOMPILING_EMULATOR" desc="This variable is only used when CMAKE_CROSSCOMPILING is on. It should point to a command on the host system that can run executable built for the target system."/>
 <variable name="CMAKE_CTEST_COMMAND" desc="Full path to ctest(1) command installed with CMake."/>
 <variable name="CMAKE_CUDA_EXTENSIONS" desc="Default value for CUDA_EXTENSIONS property of targets."/>
+<variable name="CMAKE_CUDA_HOST_COMPILER" desc="Executable to use when compiling host code when compiling CUDA language files. Maps to the nvcc -ccbin option. Will only be used by CMake on the first configuration to determine a valid host compiler for CUDA. After a valid host compiler has been found, this value is read-only."/>
 <variable name="CMAKE_CUDA_STANDARD" desc="Default value for CUDA_STANDARD property of targets."/>
 <variable name="CMAKE_CUDA_STANDARD_REQUIRED" desc="Default value for CUDA_STANDARD_REQUIRED property of targets."/>
 <variable name="CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES" desc="When the CUDA language has been enabled, this provides a ;-list of include directories provided by the CUDA Toolkit. The value may be useful for C++ source files to include CUDA headers."/>
@@ -1207,6 +1234,7 @@
 <variable name="CMAKE_DEBUG_POSTFIX" desc="See variable CMAKE_&lt;CONFIG&gt;_POSTFIX."/>
 <variable name="CMAKE_DEBUG_TARGET_PROPERTIES" desc="Enables tracing output for target properties."/>
 <variable name="CMAKE_DEPENDS_IN_PROJECT_ONLY" desc="When set to TRUE in a directory, the build system produced by the Makefile Generators is set up to only consider dependencies on source files that appear either in the source or in the binary directories. Changes to source files outside of these directories will not cause rebuilds."/>
+<variable name="CMAKE_DIRECTORY_LABELS" desc="Specify labels for the current directory."/>
 <variable name="CMAKE_DISABLE_FIND_PACKAGE_&lt;PackageName&gt;" desc="Variable for disabling find_package() calls."/>
 <variable name="CMAKE_DL_LIBS" desc="Name of library containing dlopen and dlclose."/>
 <variable name="CMAKE_ECLIPSE_GENERATE_LINKED_RESOURCES" desc="This cache variable is used by the Eclipse project generator. See cmake-generators(7)."/>
@@ -1231,7 +1259,7 @@
 <variable name="CMAKE_FIND_LIBRARY_CUSTOM_LIB_SUFFIX" desc="Specify a &lt;suffix&gt; to tell the find_library() command to search in a lib&lt;suffix&gt; directory before each lib directory that would normally be searched."/>
 <variable name="CMAKE_FIND_LIBRARY_PREFIXES" desc="Prefixes to prepend when looking for libraries."/>
 <variable name="CMAKE_FIND_LIBRARY_SUFFIXES" desc="Suffixes to append when looking for libraries."/>
-<variable name="CMAKE_FIND_NO_INSTALL_PREFIX" desc="Ignore the CMAKE_INSTALL_PREFIX when searching for assets."/>
+<variable name="CMAKE_FIND_NO_INSTALL_PREFIX" desc="Exclude the values of the CMAKE_INSTALL_PREFIX and CMAKE_STAGING_PREFIX variables from CMAKE_SYSTEM_PREFIX_PATH. CMake adds these project-destination prefixes to CMAKE_SYSTEM_PREFIX_PATH by default in order to support building a series of dependent packages and installing them into a common prefix. Set CMAKE_FIND_NO_INSTALL_PREFIX to TRUE to suppress this behavior."/>
 <variable name="CMAKE_FIND_PACKAGE_NAME" desc="Defined by the find_package() command while loading a find module to record the caller-specified package name. See command documentation for details."/>
 <variable name="CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY" desc="Skip User Package Registry in find_package() calls."/>
 <variable name="CMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY" desc="Skip System Package Registry in find_package() calls."/>
@@ -1403,6 +1431,18 @@
 <variable name="CMAKE_Java_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
 <variable name="CMAKE_RC_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
 <variable name="CMAKE_Swift_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
+<variable name="CMAKE_ASM_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_C_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CSharp_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CUDA_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CXX_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Fortran_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Java_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_RC_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Swift_COMPILER_ARCHITECTURE_ID" desc="An internal variable subject to change."/>
 <variable name="CMAKE_ASM_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_EXTERNAL_TOOLCHAIN" desc="The external toolchain for cross-compiling, if supported."/>
@@ -1427,18 +1467,18 @@
 <variable name="CMAKE_Java_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_RC_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_Swift_COMPILER_ID" desc="Compiler identification string."/>
-<variable name="CMAKE_ASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_ASM-ATT_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_ASM-MASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_ASM-NASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_C_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_CSharp_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_CUDA_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_CXX_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_Fortran_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_Java_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_RC_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_Swift_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_C_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_CSharp_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_CUDA_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_CXX_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_Fortran_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_Java_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_RC_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
+<variable name="CMAKE_Swift_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, or CUDA."/>
 <variable name="CMAKE_ASM_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
@@ -1451,6 +1491,18 @@
 <variable name="CMAKE_Java_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_RC_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_Swift_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
+<variable name="CMAKE_ASM_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_C_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_CSharp_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_CUDA_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_CXX_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_Fortran_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_Java_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_RC_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
+<variable name="CMAKE_Swift_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_ASM_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -1487,6 +1539,18 @@
 <variable name="CMAKE_Java_COMPILER_VERSION" desc="Compiler version string."/>
 <variable name="CMAKE_RC_COMPILER_VERSION" desc="Compiler version string."/>
 <variable name="CMAKE_Swift_COMPILER_VERSION" desc="Compiler version string."/>
+<variable name="CMAKE_ASM_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_C_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CSharp_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CUDA_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CXX_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Fortran_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Java_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_RC_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Swift_COMPILER_VERSION_INTERNAL" desc="An internal variable subject to change."/>
 <variable name="CMAKE_ASM_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
 <variable name="CMAKE_ASM-ATT_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
 <variable name="CMAKE_ASM-MASM_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
@@ -1499,6 +1563,18 @@
 <variable name="CMAKE_Java_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
 <variable name="CMAKE_RC_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
 <variable name="CMAKE_Swift_COMPILE_OBJECT" desc="Rule variable to compile a single object file."/>
+<variable name="CMAKE_ASM_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-ATT_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-MASM_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-NASM_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_C_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CSharp_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CUDA_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CXX_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Fortran_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Java_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_RC_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Swift_CPPCHECK" desc="Default value for &lt;LANG&gt;_CPPCHECK target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
 <variable name="CMAKE_ASM_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
 <variable name="CMAKE_ASM-ATT_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
 <variable name="CMAKE_ASM-MASM_CPPLINT" desc="Default value for &lt;LANG&gt;_CPPLINT target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
@@ -1973,6 +2049,7 @@
 <variable name="CMAKE_MODULE_LINKER_FLAGS_&lt;CONFIG&gt;_INIT" desc="Value used to initialize the CMAKE_MODULE_LINKER_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_MODULE_LINKER_FLAGS_INIT" desc="Value used to initialize the CMAKE_MODULE_LINKER_FLAGS cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_MODULE_PATH" desc=";-list of directories specifying a search path for CMake modules to be loaded by the the include() or find_package() commands before checking the default modules that come with CMake. By default it is empty, it is intended to be set by the project."/>
+<variable name="CMAKE_MSVCIDE_RUN_PATH" desc="Extra PATH locations that should be used when executing add_custom_command() or add_custom_target() when using the Visual Studio 9 2008 (or above) generator. This allows for running commands and using dll's that the IDE environment is not aware of."/>
 <variable name="CMAKE_NINJA_OUTPUT_PATH_PREFIX" desc="Set output files path prefix for the Ninja generator."/>
 <variable name="CMAKE_NOT_USING_CONFIG_FLAGS" desc="Skip _BUILD_TYPE flags if true."/>
 <variable name="CMAKE_NO_BUILTIN_CHRPATH" desc="Do not use the builtin ELF editor to fix RPATHs on installation."/>
@@ -2119,6 +2196,7 @@
 <variable name="CTEST_GIT_UPDATE_OPTIONS" desc="Specify the CTest GITUpdateOptions setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_HG_COMMAND" desc="Specify the CTest HGCommand setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_HG_UPDATE_OPTIONS" desc="Specify the CTest HGUpdateOptions setting in a ctest(1) dashboard client script."/>
+<variable name="CTEST_LABELS_FOR_SUBPROJECTS" desc="Specify the CTest LabelsForSubprojects setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_MEMORYCHECK_COMMAND" desc="Specify the CTest MemoryCheckCommand setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_MEMORYCHECK_COMMAND_OPTIONS" desc="Specify the CTest MemoryCheckCommandOptions setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_MEMORYCHECK_SANITIZER_OPTIONS" desc="Specify the CTest MemoryCheckSanitizerOptions setting in a ctest(1) dashboard client script."/>
@@ -2176,8 +2254,8 @@
 <variable name="PROJECT_VERSION_MINOR" desc="Second version number component of the PROJECT_VERSION variable as set by the project() command."/>
 <variable name="PROJECT_VERSION_PATCH" desc="Third version number component of the PROJECT_VERSION variable as set by the project() command."/>
 <variable name="PROJECT_VERSION_TWEAK" desc="Fourth version number component of the PROJECT_VERSION variable as set by the project() command."/>
-<variable name="UNIX" desc="True for UNIX and UNIX like operating systems."/>
-<variable name="WIN32" desc="True on Windows systems, including Win64."/>
+<variable name="UNIX" desc="Set to True when the target system is UNIX or UNIX-like (e.g. APPLE and CYGWIN). The CMAKE_SYSTEM_NAME variable should be queried if a more specific understanding of the target system is required."/>
+<variable name="WIN32" desc="Set to True when the target system is Windows, including Win64."/>
 <variable name="WINCE" desc="True when the CMAKE_SYSTEM_NAME variable is set to WindowsCE."/>
 <variable name="WINDOWS_PHONE" desc="True when the CMAKE_SYSTEM_NAME variable is set to WindowsPhone."/>
 <variable name="WINDOWS_STORE" desc="True when the CMAKE_SYSTEM_NAME variable is set to WindowsStore."/>
