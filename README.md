@@ -24,6 +24,10 @@ Individual releases can be found at [bintray.com](https://bintray.com/15knots/p2
 ---
 # Release History
 
+## 1.6.0 (2017-??-??)
+### Changes
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.10.0.
+
 ## 1.5.0 (2017-10-31)
 ### Changes
 - Project hosting moved from [Sourceforge](https://sourceforge.net/projects/cmakeed) to Github.
