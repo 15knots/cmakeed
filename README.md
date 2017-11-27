@@ -24,7 +24,7 @@ Individual releases can be found at [bintray.com](https://bintray.com/15knots/p2
 ---
 # Release History
 
-## 1.6.0 (2017-??-??)
+## 1.6.0 (2017-11-27)
 ### Changes
 - Enhancement: Updated syntax highlighting data and tool tips to cmake 3.10.0.
 
