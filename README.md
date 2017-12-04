@@ -21,6 +21,12 @@ This composite update site contains the latest release as well as selected older
 https://raw.githubusercontent.com/15knots/cmakeed/master/cmakeed-update/ .
 Individual releases can be found at [bintray.com](https://bintray.com/15knots/p2-zip/cmakeed#files).
 
+### Debug and Build
+This project uses Apache maven as its build system.
+To build from a command-line, run `mvn -f ./parent/pom.xml verify` in the root directory of the project source files.
+
+There is a run configuration for eclipse to invoke maven `build cmakeed` plus a launch configuration to debug the plugin: `CmakeEd`.
+
 ---
 # Release History
 
