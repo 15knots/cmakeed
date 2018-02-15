@@ -16,7 +16,7 @@
   <!-- ================================= 
           target: all
          ================================= -->
-  <target name="all" depends="-stage1" />
+  <target name="all" depends="-noDTD, -stage1" />
 
   <!-- ================================= 
           target: clean              
@@ -50,6 +50,25 @@
     </uptodate>
   </target>
 
+  <target name="-noDTD">
+    <!-- Initialize  work area   -->
+    <mkdir dir="${out.dir}/noDTD" />
+    <echo>Removing DTDs from files...</echo>
+    <!-- remove DTD refs to disable download of DTD on each input file (useful if stackoverflow is offline) -->
+    <copy todir="${out.dir}/noDTD">
+      <fileset dir="${cmake.build.root}/xml">
+        <include name="command/*" />
+        <include name="variable/*" />
+        <include name="prop_*/*" />
+      </fileset>
+      <filterchain>
+        <linecontains negate="true">
+          <contains value='http://docutils.sourceforge.net/docs/ref/' />
+        </linecontains>
+      </filterchain>
+    </copy>
+  </target>
+
   <!-- #################################################################### -->
   <!-- command documentation processing -->
   <!-- #################################################################### -->
@@ -63,9 +82,11 @@
     <echo>Processing documentation files for commands...</echo>
 
     <!-- transform cmake commands documentation files -->
-    <xslt style="xsl/commands.xsl" basedir="${cmake.build.root}/xml/command" includes="*.xml" destdir="${out.dir}/command" extension=".xml" force="true">
+    <xslt style="xsl/commands.xsl" basedir="${out.dir}/noDTD/command" includes="*.xml" destdir="${out.dir}/command" extension=".xml" force="true">
       <factory name="net.sf.saxon.TransformerFactoryImpl" />
       <classpath refid="saxon9" />
+      <xmlcatalog>
+      </xmlcatalog>
     </xslt>
     <!-- concatenate all files into one -->
     <concat destfile="${out.dir}/commands-stage1.xml" force="no">
@@ -81,7 +102,7 @@
   <target name="-commands.stage1.uptodate">
     <uptodate property="commands.stage1.uptodate" targetfile="${out.dir}/commands-stage1.xml">
       <srcresources>
-        <fileset dir="${cmake.build.root}/xml/command" includes="*.xml" />
+        <fileset dir="${out.dir}/noDTD/command" includes="*.xml" />
         <fileset dir="${basedir}" includes="xsl/commands.xsl" />
       </srcresources>
     </uptodate>
@@ -125,7 +146,7 @@
     <echo>Processing documentation files for command reserved words...</echo>
 
     <!-- transform cmake commands documentation files -->
-    <xslt style="xsl/reswords.xsl" basedir="${cmake.build.root}/xml/command" includes="*.xml" destdir="${out.dir}/resword" extension=".xml" force="true">
+    <xslt style="xsl/reswords.xsl" basedir="${out.dir}/noDTD/command" includes="*.xml" destdir="${out.dir}/resword" extension=".xml" force="true">
       <factory name="net.sf.saxon.TransformerFactoryImpl" />
       <classpath refid="saxon9" />
     </xslt>
@@ -141,7 +162,7 @@
   <target name="-reswords.stage0.uptodate">
     <uptodate property="reswords.stage0.uptodate" targetfile="${out.dir}/reswords-stage0.xml">
       <srcresources>
-        <fileset dir="${cmake.build.root}/xml/command" includes="*.xml" />
+        <fileset dir="${out.dir}/noDTD/command" includes="*.xml" />
         <fileset dir="${basedir}" includes="xsl/reswords.xsl" />
       </srcresources>
     </uptodate>
@@ -160,7 +181,7 @@
     <echo>Processing documentation files for variables...</echo>
 
     <!-- transform cmake variables documentation files -->
-    <xslt style="xsl/variables.xsl" basedir="${cmake.build.root}/xml/variable" includes="*.xml" destdir="${out.dir}/variable" extension=".xml" force="true">
+    <xslt style="xsl/variables.xsl" basedir="${out.dir}/noDTD/variable" includes="*.xml" destdir="${out.dir}/variable" extension=".xml" force="true">
       <factory name="net.sf.saxon.TransformerFactoryImpl" />
       <classpath refid="saxon9" />
     </xslt>
@@ -178,7 +199,7 @@
   <target name="-variables.stage1.uptodate">
     <uptodate property="variables.stage1.uptodate" targetfile="${out.dir}/variables-stage1.xml">
       <srcresources>
-        <fileset dir="${cmake.build.root}/xml/variable" includes="*.xml" />
+        <fileset dir="${out.dir}/noDTD/variable" includes="*.xml" />
         <fileset dir="${basedir}" includes="xsl/variables.xsl" />
       </srcresources>
     </uptodate>
@@ -197,7 +218,7 @@
     <echo>Processing documentation files for properties...</echo>
 
     <!-- transform cmake properties documentation files -->
-    <xslt style="xsl/properties.xsl" basedir="${cmake.build.root}/xml" includes="prop_*/*.xml" destdir="${out.dir}/property" extension=".xml" force="true">
+    <xslt style="xsl/properties.xsl" basedir="${out.dir}/noDTD" includes="prop_*/*.xml" destdir="${out.dir}/property" extension=".xml" force="true">
       <factory name="net.sf.saxon.TransformerFactoryImpl" />
       <classpath refid="saxon9" />
       <mapper type="flatten" />
@@ -217,7 +238,7 @@
   <target name="-properties.stage1.uptodate">
     <uptodate property="properties.stage1.uptodate" targetfile="${out.dir}/properties-stage1.xml">
       <srcresources>
-        <fileset dir="${cmake.build.root}/xml" includes="prop_*/*.xml" />
+        <fileset dir="${out.dir}/noDTD" includes="prop_*/*.xml" />
         <fileset dir="${basedir}" includes="xsl/properties.xsl" />
       </srcresources>
     </uptodate>
