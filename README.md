@@ -30,6 +30,10 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ---
 # Release History
 
+## 1.7.0 (2018-03-31)
+### Changes
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.11.0.
+
 ## 1.6.0 (2017-11-27)
 ### Changes
 - Enhancement: Updated syntax highlighting data and tool tips to cmake 3.10.0.
