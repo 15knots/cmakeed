@@ -3,6 +3,9 @@
         <!-- Do not edit, generated with gen-plugin_xml.ant.xml -->
         <plugin>
 <extension point="com.cthing.cmakeed.core.commands" >
+<command name="add_compile_definitions" desc="Adds preprocessor definitions to the compilation of source files.">
+<usage value="(&lt;definition&gt; ...)"/>
+</command>
 <command name="add_compile_options" desc="Adds options to the compilation of source files.">
 <usage value="(&lt;option&gt; ...)"/>
 </command>
@@ -21,11 +24,14 @@
 </command>
 <command name="add_executable" desc="Add an executable to the project using the specified source files.">
 <usage value="(&lt;name&gt; [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] [source1] [source2 ...])"/>
+<usage value="(&lt;name&gt; IMPORTED [GLOBAL])"/>
+<usage value="(&lt;name&gt; ALIAS &lt;target&gt;)"/>
 </command>
 <command name="add_library" desc="Add a library to the project using the specified source files.">
 <usage value="(&lt;name&gt; [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] [source1] [source2 ...])"/>
 <usage value="(&lt;name&gt; &lt;SHARED|STATIC|MODULE|OBJECT|UNKNOWN&gt; IMPORTED [GLOBAL])"/>
 <usage value="(&lt;name&gt; OBJECT &lt;src&gt;...)"/>
+<usage value="(... $&lt;TARGET_OBJECTS:objlib&gt; ...) add_executable(... $&lt;TARGET_OBJECTS:objlib&gt; ...)"/>
 <usage value="(&lt;name&gt; ALIAS &lt;target&gt;)"/>
 <usage value="(&lt;name&gt; INTERFACE [IMPORTED [GLOBAL]])"/>
 </command>
@@ -34,6 +40,8 @@
 </command>
 <command name="add_test" desc="Add a test to the project to be run by ctest(1).">
 <usage value="(NAME &lt;name&gt; COMMAND &lt;command&gt; [&lt;arg&gt;...] [CONFIGURATIONS &lt;config&gt;...] [WORKING_DIRECTORY &lt;dir&gt;])"/>
+<usage value="(NAME mytest COMMAND testDriver --config $&lt;CONFIGURATION&gt; --exe $&lt;TARGET_FILE:myexe&gt;)"/>
+<usage value="(&lt;name&gt; &lt;command&gt; [&lt;arg&gt;...])"/>
 </command>
 <command name="aux_source_directory" desc="Find all source files in a directory.">
 <usage value="(&lt;dir&gt; &lt;variable&gt;)"/>
@@ -43,6 +51,7 @@
 </command>
 <command name="build_command" desc="Get a command line to build the current project. This is mainly intended for internal use by the CTest module.">
 <usage value="(&lt;variable&gt; [CONFIGURATION &lt;config&gt;] [TARGET &lt;target&gt;] [PROJECT_NAME &lt;projname&gt;] # legacy, causes warning )"/>
+<usage value="(&lt;cachevariable&gt; &lt;makecommand&gt;)"/>
 </command>
 <command name="build_name" desc="Disallowed. See CMake Policy CMP0036.">
 <usage value="(variable)"/>
@@ -51,19 +60,21 @@
 <usage value="(RESULT &lt;variable&gt; QUERY &lt;key&gt; ...)"/>
 </command>
 <command name="cmake_minimum_required" desc="Set the minimum required version of cmake for a project and update Policy Settings to match the version given:">
-<usage value="(VERSION major.minor[.patch[.tweak]] [FATAL_ERROR])"/>
+<usage value="(VERSION &lt;min&gt;[...&lt;max&gt;] [FATAL_ERROR])"/>
 </command>
 <command name="cmake_parse_arguments" desc="cmake_parse_arguments is intended to be used in macros or functions for parsing the arguments given to that macro or function. It processes the arguments and defines a set of variables which hold the values of the respective options.">
 <usage value="(&lt;prefix&gt; &lt;options&gt; &lt;one_value_keywords&gt; &lt;multi_value_keywords&gt; args...) cmake_parse_arguments(PARSE_ARGV N &lt;prefix&gt; &lt;options&gt; &lt;one_value_keywords&gt; &lt;multi_value_keywords&gt;)"/>
+<usage value="(MY_INSTALL &#34;${options}&#34; &#34;${oneValueArgs}&#34; &#34;${multiValueArgs}&#34; ${ARGN} ) # ..."/>
 </command>
 <command name="cmake_policy" desc="Manage CMake Policy settings. See the cmake-policies(7) manual for defined policies.">
-<usage value="(VERSION major.minor[.patch[.tweak]])"/>
+<usage value="(VERSION &lt;min&gt;[...&lt;max&gt;])"/>
 <usage value="(SET CMP&lt;NNNN&gt; NEW) cmake_policy(SET CMP&lt;NNNN&gt; OLD)"/>
 <usage value="(GET CMP&lt;NNNN&gt; &lt;variable&gt;)"/>
 <usage value="(PUSH) cmake_policy(POP)"/>
 </command>
 <command name="configure_file" desc="Copy a file to another location and modify its contents.">
 <usage value="(&lt;input&gt; &lt;output&gt; [COPYONLY] [ESCAPE_QUOTES] [@ONLY] [NEWLINE_STYLE [UNIX|DOS|WIN32|LF|CRLF] ])"/>
+<usage value="(foo.h.in foo.h @ONLY)"/>
 </command>
 <command name="continue" desc="Continue to the top of enclosing foreach or while loop.">
 <usage value="()"/>
@@ -94,9 +105,11 @@
 </command>
 <command name="ctest_sleep" desc="sleeps for some amount of time">
 <usage value="(&lt;seconds&gt;)"/>
+<usage value="(&lt;time1&gt; &lt;duration&gt; &lt;time2&gt;)"/>
 </command>
 <command name="ctest_start" desc="Starts the testing for a given model">
-<usage value="(Model [TRACK &lt;track&gt;] [APPEND] [source [binary]] [QUIET])"/>
+<usage value="(&lt;model&gt; [&lt;source&gt; [&lt;binary&gt;]] [TRACK &lt;track&gt;] [QUIET]) ctest_start([&lt;model&gt; [&lt;source&gt; [&lt;binary&gt;]]] [TRACK &lt;track&gt;] APPEND [QUIET])"/>
+<usage value="(Experimental path/to/source path/to/binary TRACK SomeTrack QUIET APPEND) ctest_start(TRACK SomeTrack Experimental QUIET path/to/source APPEND path/to/binary) ctest_start(APPEND QUIET Experimental path/to/source TRACK SomeTrack path/to/binary)"/>
 </command>
 <command name="ctest_submit" desc="Perform the CTest Submit Step as a Dashboard Client.">
 <usage value="([PARTS &lt;part&gt;...] [FILES &lt;file&gt;...] [HTTPHEADER &lt;header&gt;] [RETRY_COUNT &lt;count&gt;] [RETRY_DELAY &lt;delay&gt;] [RETURN_VALUE &lt;result-var&gt;] [QUIET] )"/>
@@ -149,33 +162,67 @@
 </command>
 <command name="export" desc="Export targets from the build tree for use by outside projects.">
 <usage value="(EXPORT &lt;export-name&gt; [NAMESPACE &lt;namespace&gt;] [FILE &lt;filename&gt;])"/>
+<usage value="(TARGETS [target1 [target2 [...]]] [NAMESPACE &lt;namespace&gt;] [APPEND] FILE &lt;filename&gt; [EXPORT_LINK_INTERFACE_LIBRARIES])"/>
+<usage value="(PACKAGE &lt;name&gt;)"/>
+<usage value="(TARGETS [target1 [target2 [...]]] [ANDROID_MK &lt;filename&gt;])"/>
 </command>
 <command name="export_library_dependencies" desc="Disallowed. See CMake Policy CMP0033.">
 <usage value="(&lt;file&gt; [APPEND])"/>
 </command>
 <command name="file" desc="File manipulation command.">
+<usage value="(READ &lt;filename&gt; &lt;variable&gt; [OFFSET &lt;offset&gt;] [LIMIT &lt;max-in&gt;] [HEX])"/>
+<usage value="(STRINGS &lt;filename&gt; &lt;variable&gt; [&lt;options&gt;...])"/>
+<usage value="(STRINGS myfile.txt myfile)"/>
+<usage value="(&lt;HASH&gt; &lt;filename&gt; &lt;variable&gt;)"/>
+<usage value="(TIMESTAMP &lt;filename&gt; &lt;variable&gt; [&lt;format&gt;] [UTC])"/>
 <usage value="(WRITE &lt;filename&gt; &lt;content&gt;...) file(APPEND &lt;filename&gt; &lt;content&gt;...)"/>
+<usage value="(TOUCH [&lt;files&gt;...]) file(TOUCH_NOCREATE [&lt;files&gt;...])"/>
+<usage value="(GENERATE OUTPUT output-file &lt;INPUT input-file|CONTENT content&gt; [CONDITION expression])"/>
+<usage value="(GLOB &lt;variable&gt; [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] [&lt;globbing-expressions&gt;...]) file(GLOB_RECURSE &lt;variable&gt; [FOLLOW_SYMLINKS] [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] [&lt;globbing-expressions&gt;...])"/>
+<usage value="s with extension cxx *.vt? - match all files with extension vta,...,vtz f[3-5].txt - match files f3.txt, f4.txt, f5.txt"/>
+<usage value="s in /dir and subdirectories"/>
+<usage value="(RENAME &lt;oldname&gt; &lt;newname&gt;)"/>
+<usage value="(REMOVE [&lt;files&gt;...]) file(REMOVE_RECURSE [&lt;files&gt;...])"/>
+<usage value="(MAKE_DIRECTORY [&lt;directories&gt;...])"/>
+<usage value="(&lt;COPY|INSTALL&gt; &lt;files&gt;... DESTINATION &lt;dir&gt; [FILE_PERMISSIONS &lt;permissions&gt;...] [DIRECTORY_PERMISSIONS &lt;permissions&gt;...] [NO_SOURCE_PERMISSIONS] [USE_SOURCE_PERMISSIONS] [FILES_MATCHING] [[PATTERN &lt;pattern&gt; | REGEX &lt;regex&gt;] [EXCLUDE] [PERMISSIONS &lt;permissions&gt;...]] [...])"/>
+<usage value="(RELATIVE_PATH &lt;variable&gt; &lt;directory&gt; &lt;file&gt;)"/>
+<usage value="(TO_CMAKE_PATH &#34;&lt;path&gt;&#34; &lt;variable&gt;) file(TO_NATIVE_PATH &#34;&lt;path&gt;&#34; &lt;variable&gt;)"/>
+<usage value="(DOWNLOAD &lt;url&gt; &lt;file&gt; [&lt;options&gt;...]) file(UPLOAD &lt;file&gt; &lt;url&gt; [&lt;options&gt;...])"/>
+<usage value="(LOCK &lt;path&gt; [DIRECTORY] [RELEASE] [GUARD &lt;FUNCTION|FILE|PROCESS&gt;] [RESULT_VARIABLE &lt;variable&gt;] [TIMEOUT &lt;seconds&gt;])"/>
 </command>
 <command name="find_file" desc="A short-hand signature is:">
 <usage value=" (&lt;VAR&gt; name1 [path1 path2 ...])"/>
+<usage value=" ( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value=" (&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_file (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="find_library" desc="A short-hand signature is:">
 <usage value=" (&lt;VAR&gt; name1 [path1 path2 ...])"/>
+<usage value=" ( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value=" (&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_library (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="find_package" desc="Load settings for an external project.">
 <usage value="(&lt;package&gt; [version] [EXACT] [QUIET] [MODULE] [REQUIRED] [[COMPONENTS] [components...]] [OPTIONAL_COMPONENTS components...] [NO_POLICY_SCOPE])"/>
+<usage value="(&lt;package&gt; [version] [EXACT] [QUIET] [REQUIRED] [[COMPONENTS] [components...]] [CONFIG|NO_MODULE] [NO_POLICY_SCOPE] [NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]] [PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] # Deprecated; does nothing. [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])"/>
+<usage value="(&lt;package&gt; [major[.minor]] [EXACT] [REQUIRED|QUIET])"/>
+<usage value=" (&lt;package&gt; PATHS paths... NO_DEFAULT_PATH) find_package (&lt;package&gt;)"/>
 </command>
 <command name="find_path" desc="A short-hand signature is:">
 <usage value=" (&lt;VAR&gt; name1 [path1 path2 ...])"/>
+<usage value=" ( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value=" (&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_path (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="find_program" desc="A short-hand signature is:">
 <usage value=" (&lt;VAR&gt; name1 [path1 path2 ...])"/>
+<usage value=" ( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value=" (&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_program (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="fltk_wrap_ui" desc="Create FLTK user interfaces Wrappers.">
 <usage value="(resultingLibraryName source1 source2 ... sourceN )"/>
 </command>
 <command name="foreach" desc="Evaluate a group of commands for each value in a list.">
 <usage value="(loop_var arg1 arg2 ...) COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... endforeach(loop_var)"/>
+<usage value="(loop_var RANGE total) foreach(loop_var RANGE start stop [step])"/>
+<usage value="(loop_var IN [LISTS [list1 [...]]] [ITEMS [item1 [...]]])"/>
 </command>
 <command name="function" desc="Start recording a function for later invocation as a command:">
 <usage value="(&lt;name&gt; [arg1 [arg2 [arg3 ...]]]) COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... endfunction(&lt;name&gt;)"/>
@@ -185,9 +232,12 @@
 </command>
 <command name="get_directory_property" desc="Get a property of DIRECTORY scope.">
 <usage value="(&lt;variable&gt; [DIRECTORY &lt;dir&gt;] &lt;prop-name&gt;)"/>
+<usage value="(&lt;variable&gt; [DIRECTORY &lt;dir&gt;] DEFINITION &lt;var-name&gt;)"/>
 </command>
 <command name="get_filename_component" desc="Get a specific component of a full filename.">
 <usage value="(&lt;VAR&gt; &lt;FileName&gt; &lt;COMP&gt; [CACHE])"/>
+<usage value="(&lt;VAR&gt; &lt;FileName&gt; &lt;COMP&gt; [BASE_DIR &lt;BASE_DIR&gt;] [CACHE])"/>
+<usage value="(&lt;VAR&gt; &lt;FileName&gt; PROGRAM [PROGRAM_ARGS &lt;ARG_VAR&gt;] [CACHE])"/>
 </command>
 <command name="get_property" desc="Get a property.">
 <usage value="(&lt;variable&gt; &lt;GLOBAL | DIRECTORY [dir] | TARGET &lt;target&gt; | SOURCE &lt;source&gt; | INSTALL &lt;file&gt; | TEST &lt;test&gt; | CACHE &lt;entry&gt; | VARIABLE&gt; PROPERTY &lt;name&gt; [SET | DEFINED | BRIEF_DOCS | FULL_DOCS])"/>
@@ -203,6 +253,9 @@
 </command>
 <command name="if" desc="Conditionally execute a group of commands.">
 <usage value="(expression) # then section. COMMAND1(ARGS ...) COMMAND2(ARGS ...) #... elseif(expression2) # elseif section. COMMAND1(ARGS ...) COMMAND2(ARGS ...) #... else(expression) # else section. COMMAND1(ARGS ...) COMMAND2(ARGS ...) #... endif(expression)"/>
+<usage value="(${var2})"/>
+<usage value="(var1)"/>
+<usage value="(var2)"/>
 </command>
 <command name="include" desc="Load and run CMake code from a file or module.">
 <usage value="(&lt;file|module&gt; [OPTIONAL] [RESULT_VARIABLE &lt;VAR&gt;] [NO_POLICY_SCOPE])"/>
@@ -220,17 +273,25 @@
 <usage value="(regex_match [regex_complain])"/>
 </command>
 <command name="install" desc="Specify rules to run at install time.">
-<usage value="(TARGETS targets... [EXPORT &lt;export-name&gt;] [[ARCHIVE|LIBRARY|RUNTIME|OBJECTS|FRAMEWORK|BUNDLE| PRIVATE_HEADER|PUBLIC_HEADER|RESOURCE] [DESTINATION &lt;dir&gt;] [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT &lt;component&gt;] [OPTIONAL] [EXCLUDE_FROM_ALL] [NAMELINK_ONLY|NAMELINK_SKIP] ] [...] [INCLUDES DESTINATION [&lt;dir&gt; ...]] )"/>
+<usage value="(TARGETS targets... [EXPORT &lt;export-name&gt;] [[ARCHIVE|LIBRARY|RUNTIME|OBJECTS|FRAMEWORK|BUNDLE| PRIVATE_HEADER|PUBLIC_HEADER|RESOURCE] [DESTINATION &lt;dir&gt;] [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT &lt;component&gt;] [NAMELINK_COMPONENT &lt;component&gt;] [OPTIONAL] [EXCLUDE_FROM_ALL] [NAMELINK_ONLY|NAMELINK_SKIP] ] [...] [INCLUDES DESTINATION [&lt;dir&gt; ...]] )"/>
+<usage value="(TARGETS myExe mySharedLib myStaticLib RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib/static) install(TARGETS mySharedLib DESTINATION /some/full/path)"/>
 <usage value="(&lt;FILES|PROGRAMS&gt; files... DESTINATION &lt;dir&gt; [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT &lt;component&gt;] [RENAME &lt;name&gt;] [OPTIONAL] [EXCLUDE_FROM_ALL])"/>
 <usage value="(DIRECTORY dirs... DESTINATION &lt;dir&gt; [FILE_PERMISSIONS permissions...] [DIRECTORY_PERMISSIONS permissions...] [USE_SOURCE_PERMISSIONS] [OPTIONAL] [MESSAGE_NEVER] [CONFIGURATIONS [Debug|Release|...]] [COMPONENT &lt;component&gt;] [EXCLUDE_FROM_ALL] [FILES_MATCHING] [[PATTERN &lt;pattern&gt; | REGEX &lt;regex&gt;] [EXCLUDE] [PERMISSIONS permissions...]] [...])"/>
+<usage value="(DIRECTORY src/ DESTINATION include/myproj FILES_MATCHING PATTERN &#34;*.h&#34;)"/>
+<usage value="(DIRECTORY icons scripts/ DESTINATION share/myproj PATTERN &#34;CVS&#34; EXCLUDE PATTERN &#34;scripts/*&#34; PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ)"/>
 <usage value="([[SCRIPT &lt;file&gt;] [CODE &lt;code&gt;]] [COMPONENT &lt;component&gt;] [EXCLUDE_FROM_ALL] [...])"/>
-<usage value="(EXPORT &lt;export-name&gt; DESTINATION &lt;dir&gt; [NAMESPACE &lt;namespace&gt;] [[FILE &lt;name&gt;.cmake]| [EXPORT_ANDROID_MK &lt;name&gt;.mk]] [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [EXPORT_LINK_INTERFACE_LIBRARIES] [COMPONENT &lt;component&gt;] [EXCLUDE_FROM_ALL])"/>
+<usage value="(CODE &#34;MESSAGE(\&#34;Sample install message.\&#34;)&#34;)"/>
+<usage value="(EXPORT &lt;export-name&gt; DESTINATION &lt;dir&gt; [NAMESPACE &lt;namespace&gt;] [[FILE &lt;name&gt;.cmake]| [PERMISSIONS permissions...] [CONFIGURATIONS [Debug|Release|...]] [EXPORT_LINK_INTERFACE_LIBRARIES] [COMPONENT &lt;component&gt;] [EXCLUDE_FROM_ALL]) install(EXPORT_ANDROID_MK &lt;export-name&gt; DESTINATION &lt;dir&gt; [...])"/>
+<usage value="(TARGETS myexe EXPORT myproj DESTINATION bin) install(EXPORT myproj NAMESPACE mp_ DESTINATION lib/myproj) install(EXPORT_ANDROID_MK myexp DESTINATION share/ndk-modules)"/>
 </command>
 <command name="install_files" desc="Deprecated. Use the install(FILES) command instead." deprecated="true">
 <usage value="(&lt;dir&gt; extension file file ...)"/>
+<usage value="(&lt;dir&gt; regexp)"/>
+<usage value="(&lt;dir&gt; FILES file file ...)"/>
 </command>
 <command name="install_programs" desc="Deprecated. Use the install(PROGRAMS) command instead." deprecated="true">
 <usage value="(&lt;dir&gt; file1 file2 [file3 ...]) install_programs(&lt;dir&gt; FILES file1 [file2 ...])"/>
+<usage value="(&lt;dir&gt; regexp)"/>
 </command>
 <command name="install_targets" desc="Deprecated. Use the install(TARGETS) command instead." deprecated="true">
 <usage value="(&lt;dir&gt; [RUNTIME_DIRECTORY dir] target target)"/>
@@ -242,16 +303,39 @@
 <usage value="([item1 [item2 [...]]] [[debug|optimized|general] &lt;item&gt;] ...)"/>
 </command>
 <command name="list" desc="List operations.">
-<usage value="(LENGTH &lt;list&gt; &lt;output variable&gt;) list(GET &lt;list&gt; &lt;element index&gt; [&lt;element index&gt; ...] &lt;output variable&gt;) list(APPEND &lt;list&gt; [&lt;element&gt; ...]) list(FILTER &lt;list&gt; &lt;INCLUDE|EXCLUDE&gt; REGEX &lt;regular_expression&gt;) list(FIND &lt;list&gt; &lt;value&gt; &lt;output variable&gt;) list(INSERT &lt;list&gt; &lt;element_index&gt; &lt;element&gt; [&lt;element&gt; ...]) list(REMOVE_ITEM &lt;list&gt; &lt;value&gt; [&lt;value&gt; ...]) list(REMOVE_AT &lt;list&gt; &lt;index&gt; [&lt;index&gt; ...]) list(REMOVE_DUPLICATES &lt;list&gt;) list(REVERSE &lt;list&gt;) list(SORT &lt;list&gt;)"/>
+<usage value="(LENGTH &lt;list&gt; &lt;output variable&gt;)"/>
+<usage value="(GET &lt;list&gt; &lt;element index&gt; [&lt;element index&gt; ...] &lt;output variable&gt;)"/>
+<usage value="(JOIN &lt;list&gt; &lt;glue&gt; &lt;output variable&gt;)"/>
+<usage value="(SUBLIST &lt;list&gt; &lt;begin&gt; &lt;length&gt; &lt;output variable&gt;)"/>
+<usage value="(FIND &lt;list&gt; &lt;value&gt; &lt;output variable&gt;)"/>
+<usage value="(APPEND &lt;list&gt; [&lt;element&gt; ...])"/>
+<usage value="(FILTER &lt;list&gt; &lt;INCLUDE|EXCLUDE&gt; REGEX &lt;regular_expression&gt;)"/>
+<usage value="(INSERT &lt;list&gt; &lt;element_index&gt; &lt;element&gt; [&lt;element&gt; ...])"/>
+<usage value="(REMOVE_ITEM &lt;list&gt; &lt;value&gt; [&lt;value&gt; ...])"/>
+<usage value="(REMOVE_AT &lt;list&gt; &lt;index&gt; [&lt;index&gt; ...])"/>
+<usage value="(REMOVE_DUPLICATES &lt;list&gt;)"/>
+<usage value="(TRANSFORM &lt;list&gt; &lt;ACTION&gt; [&lt;SELECTOR&gt;] [OUTPUT_VARIABLE &lt;output variable&gt;])"/>
+<usage value="(TRANSFORM &lt;list&gt; &lt;APPEND|PREPEND&gt; &lt;value&gt; ...)"/>
+<usage value="(TRANSFORM &lt;list&gt; &lt;TOLOWER|TOUPPER&gt; ...)"/>
+<usage value="(TRANSFORM &lt;list&gt; STRIP ...)"/>
+<usage value="(TRANSFORM &lt;list&gt; GENEX_STRIP ...)"/>
+<usage value="(TRANSFORM &lt;list&gt; REPLACE &lt;regular_expression&gt; &lt;replace_expression&gt; ...)"/>
+<usage value="(TRANSFORM &lt;list&gt; &lt;ACTION&gt; AT &lt;index&gt; [&lt;index&gt; ...] ...)"/>
+<usage value="(TRANSFORM &lt;list&gt; &lt;ACTION&gt; FOR &lt;start&gt; &lt;stop&gt; [&lt;step&gt;] ...)"/>
+<usage value="(TRANSFORM &lt;list&gt; &lt;ACTION&gt; REGEX &lt;regular_expression&gt; ...)"/>
+<usage value="(REVERSE &lt;list&gt;)"/>
+<usage value="(SORT &lt;list&gt;)"/>
 </command>
 <command name="load_cache" desc="Load in the values from another project's CMake cache.">
 <usage value="(pathToCacheFile READ_WITH_PREFIX prefix entry1...)"/>
+<usage value="(pathToCacheFile [EXCLUDE entry1...] [INCLUDE_INTERNALS entry1...])"/>
 </command>
 <command name="load_command" desc="Disallowed. See CMake Policy CMP0031.">
 <usage value="(COMMAND_NAME &lt;loc1&gt; [loc2 ...])"/>
 </command>
 <command name="macro" desc="Start recording a macro for later invocation as a command:">
 <usage value="(&lt;name&gt; [arg1 [arg2 [arg3 ...]]]) COMMAND1(ARGS ...) COMMAND2(ARGS ...) ... endmacro(&lt;name&gt;)"/>
+<usage value="(_BAR) foreach(arg IN LISTS ARGN) [...] endforeach() endmacro() function(_FOO) _bar(x y z) endfunction() _foo(a b c)"/>
 </command>
 <command name="make_directory" desc="Deprecated. Use the file(MAKE_DIRECTORY) command instead." deprecated="true">
 <usage value="(directory)"/>
@@ -264,6 +348,7 @@
 </command>
 <command name="message" desc="Display a message to the user.">
 <usage value="([&lt;mode&gt;] &#34;message to display&#34; ...)"/>
+<usage value="."/>
 </command>
 <command name="option" desc="Provides an option that the user can optionally select.">
 <usage value="(&lt;option_variable&gt; &#34;help string describing option&#34; [initial value])"/>
@@ -271,8 +356,8 @@
 <command name="output_required_files" desc="Disallowed. See CMake Policy CMP0032.">
 <usage value="(srcfile outputfile)"/>
 </command>
-<command name="project" desc="Set a name, version, and enable languages for the entire project.">
-<usage value="(&lt;PROJECT-NAME&gt; [LANGUAGES] [&lt;language-name&gt;...]) project(&lt;PROJECT-NAME&gt; [VERSION &lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;tweak&gt;]]]] [DESCRIPTION &lt;project-description-string&gt;] [LANGUAGES &lt;language-name&gt;...])"/>
+<command name="project" desc="Sets project details such as name, version, etc. and enables languages.">
+<usage value="(&lt;PROJECT-NAME&gt; [LANGUAGES] [&lt;language-name&gt;...]) project(&lt;PROJECT-NAME&gt; [VERSION &lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;tweak&gt;]]]] [DESCRIPTION &lt;project-description-string&gt;] [HOMEPAGE_URL &lt;url-string&gt;] [LANGUAGES &lt;language-name&gt;...])"/>
 </command>
 <command name="qt_wrap_cpp" desc="Create Qt Wrappers.">
 <usage value="(resultingLibraryName DestName SourceLists ...)"/>
@@ -291,6 +376,7 @@
 </command>
 <command name="separate_arguments" desc="Parse space-separated arguments into a semicolon-separated list.">
 <usage value="(&lt;var&gt; &lt;NATIVE|UNIX|WINDOWS&gt;_COMMAND &#34;&lt;args&gt;&#34;)"/>
+<usage value="(&lt;var&gt;)"/>
 </command>
 <command name="set" desc="Set a normal, cache, or environment variable to a given value. See the cmake-language(7) variables documentation for the scopes and interaction of normal variables and cache entries.">
 <usage value="(&lt;variable&gt; &lt;value&gt;... [PARENT_SCOPE])"/>
@@ -317,6 +403,9 @@
 </command>
 <command name="source_group" desc="Define a grouping for source files in IDE project generation. There are two different signatures to create source groups.">
 <usage value="(&lt;name&gt; [FILES &lt;src&gt;...] [REGULAR_EXPRESSION &lt;regex&gt;]) source_group(TREE &lt;root&gt; [PREFIX &lt;prefix&gt;] [FILES &lt;src&gt;...])"/>
+<usage value="(outer\\inner ...) source_group(TREE &lt;root&gt; PREFIX sources\\inc ...)"/>
+<usage value="(&lt;name&gt; &lt;regex&gt;)"/>
+<usage value="(&lt;name&gt; REGULAR_EXPRESSION &lt;regex&gt;)"/>
 </command>
 <command name="string" desc="String operations.">
 <usage value="(FIND &lt;string&gt; &lt;substring&gt; &lt;output variable&gt; [REVERSE])"/>
@@ -327,6 +416,7 @@
 <usage value="(APPEND &lt;string variable&gt; [&lt;input&gt;...])"/>
 <usage value="(PREPEND &lt;string variable&gt; [&lt;input&gt;...])"/>
 <usage value="(CONCAT &lt;output variable&gt; [&lt;input&gt;...])"/>
+<usage value="(JOIN &lt;glue&gt; &lt;output variable&gt; [&lt;input&gt;...])"/>
 <usage value="(TOLOWER &lt;string1&gt; &lt;output variable&gt;)"/>
 <usage value="(TOUPPER &lt;string1&gt; &lt;output variable&gt;)"/>
 <usage value="(LENGTH &lt;string&gt; &lt;output variable&gt;)"/>
@@ -337,6 +427,7 @@
 <usage value="(&lt;HASH&gt; &lt;output variable&gt; &lt;input&gt;)"/>
 <usage value="(ASCII &lt;number&gt; [&lt;number&gt; ...] &lt;output variable&gt;)"/>
 <usage value="(CONFIGURE &lt;string1&gt; &lt;output variable&gt; [@ONLY] [ESCAPE_QUOTES])"/>
+<usage value="(MAKE_C_IDENTIFIER &lt;input string&gt; &lt;output variable&gt;)"/>
 <usage value="(RANDOM [LENGTH &lt;length&gt;] [ALPHABET &lt;alphabet&gt;] [RANDOM_SEED &lt;seed&gt;] &lt;output variable&gt;)"/>
 <usage value="(TIMESTAMP &lt;output variable&gt; [&lt;format string&gt;] [UTC])"/>
 <usage value="(UUID &lt;output variable&gt; NAMESPACE &lt;namespace&gt; NAME &lt;name&gt; TYPE &lt;MD5|SHA1&gt; [UPPER])"/>
@@ -349,6 +440,7 @@
 </command>
 <command name="target_compile_definitions" desc="Add compile definitions to a target.">
 <usage value="(&lt;target&gt; &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...] [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])"/>
+<usage value="(foo PUBLIC FOO) target_compile_definitions(foo PUBLIC -DFOO) # -D removed target_compile_definitions(foo PUBLIC &#34;&#34; FOO) # &#34;&#34; ignored target_compile_definitions(foo PUBLIC -D FOO) # -D becomes &#34;&#34;, then ignored"/>
 </command>
 <command name="target_compile_features" desc="Add expected compiler features to a target.">
 <usage value="(&lt;target&gt; &lt;PRIVATE|PUBLIC|INTERFACE&gt; &lt;feature&gt; [...])"/>
@@ -358,6 +450,7 @@
 </command>
 <command name="target_include_directories" desc="Add include directories to a target.">
 <usage value="(&lt;target&gt; [SYSTEM] [BEFORE] &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...] [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])"/>
+<usage value="(mylib PUBLIC $&lt;BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/mylib&gt; $&lt;INSTALL_INTERFACE:include/mylib&gt; # &lt;prefix&gt;/include/mylib )"/>
 </command>
 <command name="target_link_libraries" desc="Specify libraries or flags to use when linking a given target and/or its dependents. Usage requirements from linked library targets will be propagated. Usage requirements of a target's dependencies affect compilation of its own sources.">
 <usage value="(&lt;target&gt; ... &lt;item&gt;... ...)"/>
@@ -365,6 +458,10 @@
 <usage value="(&lt;target&gt; &lt;item&gt;...)"/>
 <usage value="(&lt;target&gt; &lt;LINK_PRIVATE|LINK_PUBLIC&gt; &lt;lib&gt;... [&lt;LINK_PRIVATE|LINK_PUBLIC&gt; &lt;lib&gt;...]...)"/>
 <usage value="(&lt;target&gt; LINK_INTERFACE_LIBRARIES &lt;item&gt;...)"/>
+<usage value="(obj PUBLIC A)"/>
+<usage value="(B PUBLIC obj)"/>
+<usage value="(main B)"/>
+<usage value="(obj2 PUBLIC obj) add_executable(main2 main2.c) target_link_libraries(main2 obj2)"/>
 <usage value="(A B) target_link_libraries(B A) add_executable(main main.c) target_link_libraries(main A)"/>
 </command>
 <command name="target_sources" desc="Add sources to a target.">
@@ -379,6 +476,7 @@
 </command>
 <command name="unset" desc="Unset a variable, cache variable, or environment variable.">
 <usage value="(&lt;variable&gt; [CACHE | PARENT_SCOPE])"/>
+<usage value="(ENV{LD_LIBRARY_PATH})"/>
 </command>
 <command name="use_mangled_mesa" desc="Disallowed. See CMake Policy CMP0030.">
 <usage value="(PATH_TO_MESA OUTPUT_DIRECTORY)"/>
@@ -458,6 +556,7 @@
 <property name="CMAKE_CONFIGURE_DEPENDS" desc="Tell CMake about additional input files to the configuration process. If any named file is modified the build system will re-run CMake to re-configure the file and generate the build system again."/>
 <property name="CMAKE_CXX_KNOWN_FEATURES" desc="List of C++ features known to this version of CMake."/>
 <property name="CMAKE_C_KNOWN_FEATURES" desc="List of C features known to this version of CMake."/>
+<property name="COMMON_LANGUAGE_RUNTIME" desc="By setting this target property, the target is configured to build with C++/CLI support."/>
 <property name="COMPATIBLE_INTERFACE_BOOL" desc="Properties which must be compatible with their link interface"/>
 <property name="COMPATIBLE_INTERFACE_NUMBER_MAX" desc="Properties whose maximum value from the link interface will be used."/>
 <property name="COMPATIBLE_INTERFACE_NUMBER_MIN" desc="Properties whose maximum value from the link interface will be used."/>
@@ -498,9 +597,11 @@
 <property name="DEFINE_SYMBOL" desc="Define a symbol when compiling this target's sources."/>
 <property name="DEFINITIONS" desc="For CMake 2.4 compatibility only. Use COMPILE_DEFINITIONS instead."/>
 <property name="DEPENDS" desc="Specifies that this test should only be run after the specified list of tests."/>
-<property name="DEPLOYMENT_REMOTE_DIRECTORY" desc="Set the WinCE project RemoteDirectory in DeploymentTool and RemoteExecutable in DebuggerTool in .vcproj files generated by the Visual Studio 9 2008 and Visual Studio 8 2005 generators. This is useful when you want to debug on remote WinCE device. For example:"/>
+<property name="DEPLOYMENT_REMOTE_DIRECTORY" desc="Set the WinCE project RemoteDirectory in DeploymentTool and RemoteExecutable in DebuggerTool in .vcproj files generated by the Visual Studio 9 2008 generator. This is useful when you want to debug on remote WinCE device. For example:"/>
 <property name="DISABLED" desc="If set to true, the test will be skipped and its status will be 'Not Run'. A DISABLED test will not be counted in the total number of tests and its completion status will be reported to CDash as 'Disabled'."/>
 <property name="DISABLED_FEATURES" desc="List of features which are disabled during the CMake run."/>
+<property name="DOTNET_TARGET_FRAMEWORK_VERSION" desc="Specify the .NET target framework version."/>
+<property name="ECLIPSE_EXTRA_CPROJECT_CONTENTS" desc="Additional contents to be inserted into the generated Eclipse cproject file."/>
 <property name="ECLIPSE_EXTRA_NATURES" desc="List of natures to add to the generated Eclipse project file."/>
 <property name="ENABLED_FEATURES" desc="List of features which are enabled during the CMake run."/>
 <property name="ENABLED_LANGUAGES" desc="Read-only property that contains the list of currently enabled languages"/>
@@ -510,6 +611,7 @@
 <property name="EXCLUDE_FROM_DEFAULT_BUILD" desc="Exclude target from &#34;Build Solution&#34;."/>
 <property name="EXCLUDE_FROM_DEFAULT_BUILD_&lt;CONFIG&gt;" desc="Per-configuration version of target exclusion from &#34;Build Solution&#34;."/>
 <property name="EXPORT_NAME" desc="Exported name for target files."/>
+<property name="EXPORT_PROPERTIES" desc="List additional properties to export for a target."/>
 <property name="EXTERNAL_OBJECT" desc="If set to true then this is an object file."/>
 <property name="EchoString" desc="A message to be displayed when the target is built."/>
 <property name="FAIL_REGULAR_EXPRESSION" desc="If the output matches this regular expression the test will fail."/>
@@ -536,6 +638,7 @@
 <property name="HELPSTRING" desc="Help associated with entry in GUIs."/>
 <property name="IMPLICIT_DEPENDS_INCLUDE_TRANSFORM" desc="Specify #include line transforms for dependencies in a target."/>
 <property name="IMPORTED" desc="Read-only indication of whether a target is IMPORTED."/>
+<property name="IMPORTED_COMMON_LANGUAGE_RUNTIME" desc="Property to define if the target uses C++/CLI."/>
 <property name="IMPORTED_CONFIGURATIONS" desc="Configurations provided for an IMPORTED target."/>
 <property name="IMPORTED_GLOBAL" desc="Indication of whether an IMPORTED target is globally visible."/>
 <property name="IMPORTED_IMPLIB" desc="Full path to the import library for an IMPORTED target."/>
@@ -710,7 +813,8 @@
 <property name="PREFIX" desc="What comes before the library name."/>
 <property name="PRE_INSTALL_SCRIPT" desc="Deprecated install support."/>
 <property name="PRIVATE_HEADER" desc="Specify private header files in a FRAMEWORK shared library target."/>
-<property name="PROCESSORS" desc="Set to specify how many process slots this test requires."/>
+<property name="PROCESSORS" desc="Set to specify how many process slots this test requires. If not set, the default is 1 processor."/>
+<property name="PROCESSOR_AFFINITY" desc="Set to a true value to ask CTest to launch the test process with CPU affinity for a fixed set of processors. If enabled and supported for the current platform, CTest will choose a set of processors to place in the CPU affinity mask when launching the test process. The number of processors in the set is determined by the PROCESSORS test property or the number of processors available to CTest, whichever is smaller. The set of processors chosen will be disjoint from the processors assigned to other concurrently running tests that also have the PROCESSOR_AFFINITY property enabled."/>
 <property name="PROJECT_LABEL" desc="Change the name of a target in an IDE."/>
 <property name="PUBLIC_HEADER" desc="Specify public header files in a FRAMEWORK shared library target."/>
 <property name="REPORT_UNDEFINED_PROPERTIES" desc="If set, report any undefined properties to this file."/>
@@ -744,6 +848,7 @@
 <property name="TARGET_ARCHIVES_MAY_BE_SHARED_LIBS" desc="Set if shared libraries may be named like archives."/>
 <property name="TARGET_MESSAGES" desc="Specify whether to report the completion of each target."/>
 <property name="TARGET_SUPPORTS_SHARED_LIBS" desc="Does the target platform support shared libraries."/>
+<property name="TESTS" desc="List of tests."/>
 <property name="TEST_INCLUDE_FILE" desc="Deprecated. Use TEST_INCLUDE_FILES instead." deprecated="true"/>
 <property name="TEST_INCLUDE_FILES" desc="A list of cmake files that will be included when ctest is run."/>
 <property name="TIMEOUT" desc="How many seconds to allow for this test."/>
@@ -757,6 +862,7 @@
 <property name="VS_CONFIGURATION_TYPE" desc="Visual Studio project configuration type."/>
 <property name="VS_COPY_TO_OUT_DIR" desc="Sets the &lt;CopyToOutputDirectory&gt; tag for a source file in a Visual Studio project file. Valid values are Never, Always and PreserveNewest."/>
 <property name="VS_CSHARP_&lt;tagname&gt;" desc="Visual Studio and CSharp source-file-specific configuration."/>
+<property name="VS_DEBUGGER_COMMAND" desc="Sets the local debugger command for Visual Studio C++ targets. This is defined in &lt;LocalDebuggerCommand&gt; in the Visual Studio project file."/>
 <property name="VS_DEBUGGER_WORKING_DIRECTORY" desc="Sets the local debugger working directory for Visual Studio C++ targets. This is defined in &lt;LocalDebuggerWorkingDirectory&gt; in the Visual Studio project file."/>
 <property name="VS_DEPLOYMENT_CONTENT" desc="Mark a source file as content for deployment with a Windows Phone or Windows Store application when built with a Visual Studio generator. The value must evaluate to either 1 or 0 and may use generator expressions to make the choice based on the build configuration. The .vcxproj file entry for the source file will be marked either DeploymentContent or ExcludedFromBuild for values 1 and 0, respectively."/>
 <property name="VS_DEPLOYMENT_LOCATION" desc="Specifies the deployment location for a content source file with a Windows Phone or Windows Store application when built with a Visual Studio generator. This property is only applicable when using VS_DEPLOYMENT_CONTENT. The value represent the path relative to the app package and applies to all configurations."/>
@@ -788,6 +894,7 @@
 <property name="VS_SHADER_ENTRYPOINT" desc="Specifies the name of the entry point for the shader of a .hlsl source file."/>
 <property name="VS_SHADER_FLAGS" desc="Set additional VS shader flags of a .hlsl source file."/>
 <property name="VS_SHADER_MODEL" desc="Specifies the shader model of a .hlsl source file. Some shader types can only be used with recent shader models"/>
+<property name="VS_SHADER_OBJECT_FILE_NAME" desc="Specifies a file name for the compiled shader object file for an .hlsl source file. This adds the -Fo flag to the command line for the FxCompiler tool."/>
 <property name="VS_SHADER_OUTPUT_HEADER_FILE" desc="Set filename for output header file containing object code of a .hlsl source file."/>
 <property name="VS_SHADER_TYPE" desc="Set the VS shader type of a .hlsl source file."/>
 <property name="VS_SHADER_VARIABLE_NAME" desc="Set name of variable in header file containing object code of a .hlsl source file."/>
@@ -814,6 +921,7 @@
 </extension>
 <extension point="com.cthing.cmakeed.core.reservedwords" >
 <reservedword name="@ONLY"/>
+<reservedword name="ACTION"/>
 <reservedword name="AFTER"/>
 <reservedword name="ALGO"/>
 <reservedword name="ALIAS"/>
@@ -823,20 +931,19 @@
 <reservedword name="ANSI"/>
 <reservedword name="APPEND"/>
 <reservedword name="APPEND_STRING"/>
-<reservedword name="ARCHIVE"/>
 <reservedword name="ARGC"/>
 <reservedword name="ARGN"/>
 <reservedword name="ARGS"/>
 <reservedword name="ARGV"/>
 <reservedword name="ARG_VAR"/>
 <reservedword name="ASM"/>
+<reservedword name="AT"/>
 <reservedword name="AUTO"/>
 <reservedword name="BASE_DIR"/>
 <reservedword name="BEFORE"/>
 <reservedword name="BRIEF_DOCS"/>
 <reservedword name="BUILD"/>
 <reservedword name="BUILD_INTERFACE"/>
-<reservedword name="BUNDLE"/>
 <reservedword name="BYPRODUCTS"/>
 <reservedword name="CACHE"/>
 <reservedword name="CAPTURE_CMAKE_ERROR"/>
@@ -859,11 +966,11 @@
 <reservedword name="COMPILE_RESULT_VAR"/>
 <reservedword name="COMPONENT"/>
 <reservedword name="COMPONENTS"/>
-<reservedword name="CONDITION"/>
 <reservedword name="CONFIG"/>
 <reservedword name="CONFIGS"/>
 <reservedword name="CONFIGURATION"/>
 <reservedword name="CONFIGURATIONS"/>
+<reservedword name="CONFIGURE_DEPENDS"/>
 <reservedword name="CONTENT"/>
 <reservedword name="COPY"/>
 <reservedword name="COPYONLY"/>
@@ -902,7 +1009,6 @@
 <reservedword name="EXCLUDE_LABEL"/>
 <reservedword name="EXISTS"/>
 <reservedword name="EXPECTED_HASH"/>
-<reservedword name="EXPECTED_MD"/>
 <reservedword name="EXPORT"/>
 <reservedword name="EXPORT_ANDROID_MK"/>
 <reservedword name="EXPORT_LINK_INTERFACE_LIBRARIES"/>
@@ -917,17 +1023,16 @@
 <reservedword name="FILES_MATCHING"/>
 <reservedword name="FILE_PERMISSIONS"/>
 <reservedword name="FILTER"/>
-<reservedword name="FIND"/>
 <reservedword name="FLAGS"/>
 <reservedword name="FOLLOW_SYMLINKS"/>
 <reservedword name="FOO_ENABLE"/>
+<reservedword name="FOR"/>
 <reservedword name="FORCE"/>
-<reservedword name="FRAMEWORK"/>
 <reservedword name="FULL_DOCS"/>
 <reservedword name="FUNCTION"/>
 <reservedword name="GENERATE"/>
 <reservedword name="GENERATED"/>
-<reservedword name="GET"/>
+<reservedword name="GENEX_STRIP"/>
 <reservedword name="GLOB"/>
 <reservedword name="GLOBAL"/>
 <reservedword name="GLOB_RECURSE"/>
@@ -940,13 +1045,11 @@
 <reservedword name="HASH"/>
 <reservedword name="HEX"/>
 <reservedword name="HINTS"/>
+<reservedword name="HOMEPAGE_URL"/>
 <reservedword name="HTTPHEADER"/>
 <reservedword name="IGNORE"/>
-<reservedword name="IGNORED"/>
 <reservedword name="IMPORTED"/>
-<reservedword name="INACTIVITY_TIMEOUT"/>
 <reservedword name="INCLUDE"/>
-<reservedword name="INCLUDES"/>
 <reservedword name="INCLUDE_INTERNALS"/>
 <reservedword name="INCLUDE_LABEL"/>
 <reservedword name="INHERITED"/>
@@ -955,46 +1058,34 @@
 <reservedword name="INSERT"/>
 <reservedword name="INSTALL"/>
 <reservedword name="INSTALL_INTERFACE"/>
-<reservedword name="INSTALL_PREFIX"/>
 <reservedword name="INTERFACE"/>
 <reservedword name="INTERNAL"/>
 <reservedword name="IS_NEWER_THAN"/>
 <reservedword name="ITEMS"/>
+<reservedword name="JOIN"/>
 <reservedword name="LABELS"/>
 <reservedword name="LANGUAGES"/>
-<reservedword name="LENGTH"/>
-<reservedword name="LENGTH_MAXIMUM"/>
-<reservedword name="LENGTH_MINIMUM"/>
 <reservedword name="LESS"/>
 <reservedword name="LESS_EQUAL"/>
 <reservedword name="LF"/>
-<reservedword name="LIBRARY"/>
-<reservedword name="LIMIT_COUNT"/>
-<reservedword name="LIMIT_INPUT"/>
-<reservedword name="LIMIT_OUTPUT"/>
 <reservedword name="LINK_INTERFACE_LIBRARIES"/>
 <reservedword name="LINK_PRIVATE"/>
 <reservedword name="LINK_PUBLIC"/>
 <reservedword name="LISTS"/>
 <reservedword name="LIST_DIRECTORIES"/>
 <reservedword name="LOCK"/>
-<reservedword name="LOG"/>
 <reservedword name="MACOSX_BUNDLE"/>
 <reservedword name="MATCHES"/>
 <reservedword name="MD"/>
 <reservedword name="MESSAGE_NEVER"/>
 <reservedword name="MODULE"/>
 <reservedword name="NAME"/>
-<reservedword name="NAMELINK_ONLY"/>
-<reservedword name="NAMELINK_SKIP"/>
 <reservedword name="NAMES"/>
 <reservedword name="NAMESPACE"/>
 <reservedword name="NAMES_PER_DIR"/>
 <reservedword name="NATIVE_COMMAND"/>
 <reservedword name="NETRC"/>
-<reservedword name="NETRC_FILE"/>
 <reservedword name="NEW"/>
-<reservedword name="NEWLINE_CONSUME"/>
 <reservedword name="NEWLINE_STYLE"/>
 <reservedword name="NEW_PROCESS"/>
 <reservedword name="NO"/>
@@ -1003,13 +1094,11 @@
 <reservedword name="NOTFOUND"/>
 <reservedword name="NO_CMAKE_FIND_ROOT_PATH"/>
 <reservedword name="NO_DEFAULT_PATH"/>
-<reservedword name="NO_HEX_CONVERSION"/>
 <reservedword name="NO_MODULE"/>
 <reservedword name="NO_POLICY_SCOPE"/>
 <reservedword name="NO_SOURCE_PERMISSIONS"/>
 <reservedword name="NUMBER_ERRORS"/>
 <reservedword name="NUMBER_WARNINGS"/>
-<reservedword name="OBJECTS"/>
 <reservedword name="OEM"/>
 <reservedword name="OFF"/>
 <reservedword name="OLD"/>
@@ -1051,10 +1140,10 @@
 <reservedword name="POST_BUILD"/>
 <reservedword name="PREFIX"/>
 <reservedword name="PREORDER"/>
+<reservedword name="PREPEND"/>
 <reservedword name="PRE_BUILD"/>
 <reservedword name="PRE_LINK"/>
 <reservedword name="PRIVATE"/>
-<reservedword name="PRIVATE_HEADER"/>
 <reservedword name="PROCESS"/>
 <reservedword name="PROGRAM"/>
 <reservedword name="PROGRAMS"/>
@@ -1062,9 +1151,9 @@
 <reservedword name="PROJECT_NAME"/>
 <reservedword name="PROPERTY"/>
 <reservedword name="PUBLIC"/>
-<reservedword name="PUBLIC_HEADER"/>
 <reservedword name="PUSH"/>
 <reservedword name="QUIET"/>
+<reservedword name="RANDOM_SEED"/>
 <reservedword name="REGEX"/>
 <reservedword name="REGULAR_EXPRESSION"/>
 <reservedword name="RELATIVE"/>
@@ -1073,8 +1162,8 @@
 <reservedword name="REMOVE_DUPLICATES"/>
 <reservedword name="REMOVE_ITEM"/>
 <reservedword name="REMOVE_RECURSE"/>
+<reservedword name="REPLACE"/>
 <reservedword name="REQUIRED"/>
-<reservedword name="RESOURCE"/>
 <reservedword name="RESULTS_VARIABLE"/>
 <reservedword name="RESULT_VAR"/>
 <reservedword name="RESULT_VARIABLE"/>
@@ -1082,30 +1171,32 @@
 <reservedword name="RETRY_DELAY"/>
 <reservedword name="RETURN_VALUE"/>
 <reservedword name="REVERSE"/>
-<reservedword name="RUNTIME"/>
 <reservedword name="RUNTIME_DIRECTORY"/>
 <reservedword name="RUN_OUTPUT_VARIABLE"/>
 <reservedword name="RUN_RESULT_VAR"/>
 <reservedword name="SCHEDULE_RANDOM"/>
 <reservedword name="SCRIPT"/>
+<reservedword name="SELECTOR"/>
 <reservedword name="SET"/>
+<reservedword name="SHA"/>
 <reservedword name="SHARED"/>
-<reservedword name="SHOW_PROGRESS"/>
+<reservedword name="SHELL"/>
 <reservedword name="SORT"/>
 <reservedword name="SOURCE"/>
 <reservedword name="SOURCES"/>
 <reservedword name="SSL"/>
 <reservedword name="START"/>
 <reservedword name="STATIC"/>
-<reservedword name="STATUS"/>
 <reservedword name="STOP_TIME"/>
 <reservedword name="STREQUAL"/>
 <reservedword name="STRGREATER"/>
 <reservedword name="STRGREATER_EQUAL"/>
 <reservedword name="STRIDE"/>
+<reservedword name="STRIP"/>
 <reservedword name="STRLESS"/>
 <reservedword name="STRLESS_EQUAL"/>
 <reservedword name="SYSTEM"/>
+<reservedword name="TAG"/>
 <reservedword name="TARGET"/>
 <reservedword name="TARGETS"/>
 <reservedword name="TARGET_OBJECTS"/>
@@ -1114,17 +1205,19 @@
 <reservedword name="TEST_VARIABLE"/>
 <reservedword name="TIMEOUT"/>
 <reservedword name="TLS"/>
-<reservedword name="TLS_CAINFO"/>
 <reservedword name="TLS_VERIFY"/>
+<reservedword name="TOLOWER"/>
+<reservedword name="TOUPPER"/>
 <reservedword name="TO_CMAKE_PATH"/>
 <reservedword name="TO_NATIVE_PATH"/>
+<reservedword name="TRACK"/>
 <reservedword name="TREE"/>
 <reservedword name="TRUE"/>
 <reservedword name="TYPE"/>
 <reservedword name="UNIX"/>
 <reservedword name="UNIX_COMMAND"/>
 <reservedword name="UPLOAD"/>
-<reservedword name="USERPWD"/>
+<reservedword name="UPPER"/>
 <reservedword name="USES_TERMINAL"/>
 <reservedword name="USE_SOURCE_PERMISSIONS"/>
 <reservedword name="UTC"/>
@@ -1250,6 +1343,7 @@
 <variable name="CMAKE_DIRECTORY_LABELS" desc="Specify labels for the current directory."/>
 <variable name="CMAKE_DISABLE_FIND_PACKAGE_&lt;PackageName&gt;" desc="Variable for disabling find_package() calls."/>
 <variable name="CMAKE_DL_LIBS" desc="Name of library containing dlopen and dlclose."/>
+<variable name="CMAKE_DOTNET_TARGET_FRAMEWORK_VERSION" desc="Default value for DOTNET_TARGET_FRAMEWORK_VERSION property of targets."/>
 <variable name="CMAKE_ECLIPSE_GENERATE_LINKED_RESOURCES" desc="This cache variable is used by the Eclipse project generator. See cmake-generators(7)."/>
 <variable name="CMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT" desc="This cache variable is used by the Eclipse project generator. See cmake-generators(7)."/>
 <variable name="CMAKE_ECLIPSE_MAKE_ARGUMENTS" desc="This cache variable is used by the Eclipse project generator. See cmake-generators(7)."/>
@@ -1284,6 +1378,7 @@
 <variable name="CMAKE_FIND_ROOT_PATH_MODE_LIBRARY" desc="This variable controls whether the CMAKE_FIND_ROOT_PATH and CMAKE_SYSROOT are used by find_library()."/>
 <variable name="CMAKE_FIND_ROOT_PATH_MODE_PACKAGE" desc="This variable controls whether the CMAKE_FIND_ROOT_PATH and CMAKE_SYSROOT are used by find_package()."/>
 <variable name="CMAKE_FIND_ROOT_PATH_MODE_PROGRAM" desc="This variable controls whether the CMAKE_FIND_ROOT_PATH and CMAKE_SYSROOT are used by find_program()."/>
+<variable name="CMAKE_FOLDER" desc="Set the folder name. Use to organize targets in an IDE."/>
 <variable name="CMAKE_FRAMEWORK_PATH" desc=";-list of directories specifying a search path for OS X frameworks used by the find_library(), find_package(), find_path(), and find_file() commands."/>
 <variable name="CMAKE_Fortran_FORMAT" desc="Set to FIXED or FREE to indicate the Fortran source layout."/>
 <variable name="CMAKE_Fortran_MODDIR_DEFAULT" desc="Fortran default module output directory."/>
@@ -1298,7 +1393,7 @@
 <variable name="CMAKE_HOME_DIRECTORY" desc="Path to top of source tree."/>
 <variable name="CMAKE_HOST_APPLE" desc="True for Apple OS X operating systems."/>
 <variable name="CMAKE_HOST_SOLARIS" desc="True for Oracle Solaris operating systems."/>
-<variable name="CMAKE_HOST_SYSTEM" desc="Composit Name of OS CMake is being run on."/>
+<variable name="CMAKE_HOST_SYSTEM" desc="Composite Name of OS CMake is being run on."/>
 <variable name="CMAKE_HOST_SYSTEM_NAME" desc="Name of the OS CMake is running on."/>
 <variable name="CMAKE_HOST_SYSTEM_PROCESSOR" desc="The name of the CPU CMake is running on."/>
 <variable name="CMAKE_HOST_SYSTEM_VERSION" desc="The OS version CMake is running on."/>
@@ -1399,18 +1494,18 @@
 <variable name="CMAKE_Java_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_RC_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_Swift_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
-<variable name="CMAKE_ASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_ASM-ATT_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_ASM-MASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_ASM-NASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_C_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_CSharp_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_CUDA_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_CXX_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_Fortran_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_Java_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_RC_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
-<variable name="CMAKE_Swift_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-ATT_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-MASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_ASM-NASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_C_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CSharp_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CUDA_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_CXX_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Fortran_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Java_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_RC_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
+<variable name="CMAKE_Swift_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C or CXX."/>
 <variable name="CMAKE_ASM_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_ASM-ATT_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_ASM-MASM_COMPILER" desc="The full path to the compiler for LANG."/>
@@ -2097,13 +2192,13 @@
 <variable name="CMAKE_MATCH_COUNT" desc="The number of matches with the last regular expression."/>
 <variable name="CMAKE_MATCH_&lt;n&gt;" desc="Capture group &lt;n&gt; matched by the last regular expression, for groups 0 through 9. Group 0 is the entire match. Groups 1 through 9 are the subexpressions captured by () syntax."/>
 <variable name="CMAKE_MFC_FLAG" desc="Tell cmake to use MFC for an executable or dll."/>
-<variable name="CMAKE_MINIMUM_REQUIRED_VERSION" desc="Version specified to cmake_minimum_required() command"/>
+<variable name="CMAKE_MINIMUM_REQUIRED_VERSION" desc="The &lt;min&gt; version of CMake given to the most recent call to the cmake_minimum_required(VERSION) command."/>
 <variable name="CMAKE_MINOR_VERSION" desc="Second version number component of the CMAKE_VERSION variable."/>
 <variable name="CMAKE_MODULE_LINKER_FLAGS" desc="Linker flags to be used to create modules."/>
 <variable name="CMAKE_MODULE_LINKER_FLAGS_&lt;CONFIG&gt;" desc="Flags to be used when linking a module."/>
 <variable name="CMAKE_MODULE_LINKER_FLAGS_&lt;CONFIG&gt;_INIT" desc="Value used to initialize the CMAKE_MODULE_LINKER_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_MODULE_LINKER_FLAGS_INIT" desc="Value used to initialize the CMAKE_MODULE_LINKER_FLAGS cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
-<variable name="CMAKE_MODULE_PATH" desc=";-list of directories specifying a search path for CMake modules to be loaded by the the include() or find_package() commands before checking the default modules that come with CMake. By default it is empty, it is intended to be set by the project."/>
+<variable name="CMAKE_MODULE_PATH" desc=";-list of directories specifying a search path for CMake modules to be loaded by the include() or find_package() commands before checking the default modules that come with CMake. By default it is empty, it is intended to be set by the project."/>
 <variable name="CMAKE_MSVCIDE_RUN_PATH" desc="Extra PATH locations that should be used when executing add_custom_command() or add_custom_target() when using the Visual Studio 9 2008 (or above) generator. This allows for running commands and using dll's that the IDE environment is not aware of."/>
 <variable name="CMAKE_NETRC" desc="This variable is used to initialize the NETRC option for file(DOWNLOAD) and file(UPLOAD) commands and the module ExternalProject. See those commands for additional information."/>
 <variable name="CMAKE_NETRC_FILE" desc="This variable is used to initialize the NETRC_FILE option for file(DOWNLOAD) and file(UPLOAD) commands and the module ExternalProject. See those commands for additional information."/>
@@ -2124,9 +2219,15 @@
 <variable name="CMAKE_POSITION_INDEPENDENT_CODE" desc="Default value for POSITION_INDEPENDENT_CODE of targets."/>
 <variable name="CMAKE_PREFIX_PATH" desc=";-list of directories specifying installation prefixes to be searched by the find_package(), find_program(), find_library(), find_file(), and find_path() commands. Each command will add appropriate subdirectories (like bin, lib, or include) as specified in its own documentation."/>
 <variable name="CMAKE_PROGRAM_PATH" desc=";-list of directories specifying a search path for the find_program() command. By default it is empty, it is intended to be set by the project. See also CMAKE_SYSTEM_PROGRAM_PATH and CMAKE_PREFIX_PATH."/>
-<variable name="CMAKE_PROJECT_DESCRIPTION" desc="The description of the current project."/>
-<variable name="CMAKE_PROJECT_NAME" desc="The name of the current project."/>
+<variable name="CMAKE_PROJECT_DESCRIPTION" desc="The description of the top level project."/>
+<variable name="CMAKE_PROJECT_HOMEPAGE_URL" desc="The homepage URL of the top level project."/>
+<variable name="CMAKE_PROJECT_NAME" desc="The name of the top level project."/>
 <variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE" desc="A CMake language file or module to be included by the project() command. This is intended for injecting custom code into project builds without modifying their source."/>
+<variable name="CMAKE_PROJECT_VERSION" desc="The version of the top level project."/>
+<variable name="CMAKE_PROJECT_VERSION_MAJOR" desc="The major version of the top level project."/>
+<variable name="CMAKE_PROJECT_VERSION_MINOR" desc="The minor version of the top level project."/>
+<variable name="CMAKE_PROJECT_VERSION_PATCH" desc="The patch version of the top level project."/>
+<variable name="CMAKE_PROJECT_VERSION_TWEAK" desc="The tweak version of the top level project."/>
 <variable name="CMAKE_RANLIB" desc="Name of randomizing tool for static libraries."/>
 <variable name="CMAKE_ROOT" desc="Install directory for running cmake."/>
 <variable name="CMAKE_RUNTIME_OUTPUT_DIRECTORY" desc="Where to put all the RUNTIME target files when built."/>
@@ -2156,6 +2257,7 @@
 <variable name="CMAKE_STATIC_LINKER_FLAGS_INIT" desc="Value used to initialize the CMAKE_STATIC_LINKER_FLAGS cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_SUBLIME_TEXT_2_ENV_SETTINGS" desc="This variable contains a list of env vars as a list of tokens with the syntax var=value."/>
 <variable name="CMAKE_SUBLIME_TEXT_2_EXCLUDE_BUILD_TREE" desc="If this variable evaluates to ON at the end of the top-level CMakeLists.txt file, the Sublime Text 2 extra generator excludes the build tree from the .sublime-project if it is inside the source tree."/>
+<variable name="CMAKE_SUPPRESS_REGENERATION" desc="If CMAKE_SUPPRESS_REGENERATION is OFF, which is default, then CMake adds a special target on which all other targets depend that checks the build system and optionally re-runs CMake to regenerate the build system when the target specification source changes."/>
 <variable name="CMAKE_SYSROOT" desc="Path to pass to the compiler in the --sysroot flag."/>
 <variable name="CMAKE_SYSROOT_COMPILE" desc="Path to pass to the compiler in the --sysroot flag when compiling source files. This is the same as CMAKE_SYSROOT but is used only for compiling sources and not linking."/>
 <variable name="CMAKE_SYSROOT_LINK" desc="Path to pass to the compiler in the --sysroot flag when linking. This is the same as CMAKE_SYSROOT but is used only for linking and not compiling sources."/>
@@ -2182,16 +2284,24 @@
 <variable name="CMAKE_VERBOSE_MAKEFILE" desc="Enable verbose output from Makefile builds."/>
 <variable name="CMAKE_VERSION" desc="The CMake version string as three non-negative integer components separated by . and possibly followed by - and other information. The first two components represent the feature level and the third component represents either a bug-fix level or development date."/>
 <variable name="CMAKE_VISIBILITY_INLINES_HIDDEN" desc="Default value for the VISIBILITY_INLINES_HIDDEN target property when a target is created."/>
-<variable name="CMAKE_VS_DEVENV_COMMAND" desc="The generators for Visual Studio 8 2005 and above set this variable to the devenv.com command installed with the corresponding Visual Studio version. Note that this variable may be empty on Visual Studio Express editions because they do not provide this tool."/>
+<variable name="CMAKE_VS_DEVENV_COMMAND" desc="The generators for Visual Studio 9 2008 and above set this variable to the devenv.com command installed with the corresponding Visual Studio version. Note that this variable may be empty on Visual Studio Express editions because they do not provide this tool."/>
 <variable name="CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD" desc="Include INSTALL target to default build."/>
 <variable name="CMAKE_VS_INCLUDE_PACKAGE_TO_DEFAULT_BUILD" desc="Include PACKAGE target to default build."/>
-<variable name="CMAKE_VS_INTEL_Fortran_PROJECT_VERSION" desc="When generating for Visual Studio 8 2005 or greater with the Intel Fortran plugin installed, this specifies the .vfproj project file format version. This is intended for internal use by CMake and should not be used by project code."/>
+<variable name="CMAKE_VS_INTEL_Fortran_PROJECT_VERSION" desc="When generating for Visual Studio 9 2008 or greater with the Intel Fortran plugin installed, this specifies the .vfproj project file format version. This is intended for internal use by CMake and should not be used by project code."/>
 <variable name="CMAKE_VS_MSBUILD_COMMAND" desc="The generators for Visual Studio 10 2010 and above set this variable to the MSBuild.exe command installed with the corresponding Visual Studio version."/>
 <variable name="CMAKE_VS_NsightTegra_VERSION" desc="When using a Visual Studio generator with the CMAKE_SYSTEM_NAME variable set to Android, this variable contains the version number of the installed NVIDIA Nsight Tegra Visual Studio Edition."/>
 <variable name="CMAKE_VS_PLATFORM_NAME" desc="Visual Studio target platform name."/>
 <variable name="CMAKE_VS_PLATFORM_TOOLSET" desc="Visual Studio Platform Toolset name."/>
 <variable name="CMAKE_VS_PLATFORM_TOOLSET_CUDA" desc="NVIDIA CUDA Toolkit version whose Visual Studio toolset to use."/>
 <variable name="CMAKE_VS_PLATFORM_TOOLSET_HOST_ARCHITECTURE" desc="Visual Studio preferred tool architecture."/>
+<variable name="CMAKE_VS_PLATFORM_TOOLSET_VERSION" desc="Visual Studio Platform Toolset version."/>
+<variable name="CMAKE_VS_SDK_EXCLUDE_DIRECTORIES" desc="This variable allows to override Visual Studio default Exclude Directories."/>
+<variable name="CMAKE_VS_SDK_EXECUTABLE_DIRECTORIES" desc="This variable allows to override Visual Studio default Executable Directories."/>
+<variable name="CMAKE_VS_SDK_INCLUDE_DIRECTORIES" desc="This variable allows to override Visual Studio default Include Directories."/>
+<variable name="CMAKE_VS_SDK_LIBRARY_DIRECTORIES" desc="This variable allows to override Visual Studio default Library Directories."/>
+<variable name="CMAKE_VS_SDK_LIBRARY_WINRT_DIRECTORIES" desc="This variable allows to override Visual Studio default Library WinRT Directories."/>
+<variable name="CMAKE_VS_SDK_REFERENCE_DIRECTORIES" desc="This variable allows to override Visual Studio default Reference Directories."/>
+<variable name="CMAKE_VS_SDK_SOURCE_DIRECTORIES" desc="This variable allows to override Visual Studio default Source Directories."/>
 <variable name="CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION" desc="Visual Studio Windows Target Platform Version."/>
 <variable name="CMAKE_WARN_DEPRECATED" desc="Whether to issue warnings for deprecated functionality."/>
 <variable name="CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION" desc="Ask cmake_install.cmake script to warn each time a file with absolute INSTALL DESTINATION is encountered."/>
@@ -2297,8 +2407,11 @@
 <variable name="MSVC80" desc="Discouraged. Use the MSVC_VERSION variable instead."/>
 <variable name="MSVC90" desc="Discouraged. Use the MSVC_VERSION variable instead."/>
 <variable name="MSVC_IDE" desc="True when using the Microsoft Visual C++ IDE."/>
+<variable name="MSVC_TOOLSET_VERSION" desc="The toolset version of Microsoft Visual C/C++ being used if any. If MSVC-like is being used, this variable is set based on the version of the compiler as given by the MSVC_VERSION variable."/>
 <variable name="MSVC_VERSION" desc="The version of Microsoft Visual C/C++ being used if any. If a compiler simulating Visual C++ is being used, this variable is set to the toolset version simulated as given by the _MSC_VER preprocessor definition."/>
 <variable name="&lt;PROJECT-NAME&gt;_BINARY_DIR" desc="Top level binary directory for the named project."/>
+<variable name="&lt;PROJECT-NAME&gt;_DESCRIPTION" desc="Value given to the DESCRIPTION option of the most recent call to the project() command with project name &lt;PROJECT-NAME&gt;, if any."/>
+<variable name="&lt;PROJECT-NAME&gt;_HOMEPAGE_URL" desc="Value given to the HOMEPAGE_URL option of the most recent call to the project() command with project name &lt;PROJECT-NAME&gt;, if any."/>
 <variable name="&lt;PROJECT-NAME&gt;_SOURCE_DIR" desc="Top level source directory for the named project."/>
 <variable name="&lt;PROJECT-NAME&gt;_VERSION" desc="Value given to the VERSION option of the most recent call to the project() command with project name &lt;PROJECT-NAME&gt;, if any."/>
 <variable name="&lt;PROJECT-NAME&gt;_VERSION_MAJOR" desc="First version number component of the &lt;PROJECT-NAME&gt;_VERSION variable as set by the project() command."/>
@@ -2307,6 +2420,7 @@
 <variable name="&lt;PROJECT-NAME&gt;_VERSION_TWEAK" desc="Fourth version number component of the &lt;PROJECT-NAME&gt;_VERSION variable as set by the project() command."/>
 <variable name="PROJECT_BINARY_DIR" desc="Full path to build directory for project."/>
 <variable name="PROJECT_DESCRIPTION" desc="Short project description given to the project command."/>
+<variable name="PROJECT_HOMEPAGE_URL" desc="The homepage URL of the project."/>
 <variable name="PROJECT_NAME" desc="Name of the project given to the project command."/>
 <variable name="PROJECT_SOURCE_DIR" desc="Top level source directory for the current project."/>
 <variable name="PROJECT_VERSION" desc="Value given to the VERSION option of the most recent call to the project() command, if any."/>

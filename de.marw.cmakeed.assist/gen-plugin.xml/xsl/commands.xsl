@@ -31,17 +31,19 @@
         <xsl:attribute name="deprecated" select="'true'" />
       </xsl:if>
       <xsl:apply-templates
-        select="/document/section/literal_block[1]|/document/section/section/literal_block[1]|section/section/literal_block[1]">
+        select="literal_block|section[@ids!='synopsis']/literal_block|section/section/literal_block">
         <xsl:with-param name="command" select="$name" tunnel="yes" />
       </xsl:apply-templates>
     </xsl:element>
     <xsl:value-of select="'&#10;'" />
   </xsl:template>
 
+
   <!-- assume the first literal_block in any section contains a usage description -->
   <xsl:template
-    match="/document/section/literal_block|/document/section/section/literal_block|section/section/literal_block">
+    match="literal_block">
     <xsl:param name="command" tunnel="yes" />
+      <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message>
     <xsl:variable name="text" select="normalize-space(text())" />
     <!-- remove command name from usage description -->
     <xsl:variable name="text2" select="substring-after($text,$command)" />
