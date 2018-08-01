@@ -14,6 +14,7 @@ import org.eclipse.jface.text.rules.Token;
 
 import com.cthing.cmakeed.ui.editor.rules.ArgsCloseRule;
 import com.cthing.cmakeed.ui.editor.rules.ArgsOpenRule;
+import com.cthing.cmakeed.ui.editor.rules.BracketCommentRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakeCommandRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakePropertyRule;
 import com.cthing.cmakeed.ui.editor.rules.CMakeReservedWordRule;
@@ -50,10 +51,10 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
 
     private CMakeUserVariableRule userVariableRule;
     private CMakeUserVariableRule variableReference;
-    
+
     /** Array of all partition types. */
     public static final String[] CMAKE_CONTENT_TYPES = new String[] {
-        IDocument.DEFAULT_CONTENT_TYPE, 
+        IDocument.DEFAULT_CONTENT_TYPE,
         COMMENT_CONTENT_TYPE,
         VARREF_CONTENT_TYPE,
         STRING_CONTENT_TYPE,
@@ -73,8 +74,9 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     public CMakePartitionScanner()
     {
     	userVariableRule = new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE));
-    	variableReference = new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE)); 
+    	variableReference = new CMakeUserVariableRule(new Token(USER_VARIABLE_CONTENT_TYPE));
          IPredicateRule[] preds = new IPredicateRule[] {
+             new BracketCommentRule(),
                 new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
                 new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
                 new CMakeCommandRule(new Token(DEPRECATED_COMMAND_CONTENT_TYPE), true),
@@ -92,13 +94,14 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
 
         setPredicateRules(preds);
     }
-    
+
     /**
      * Resets the list of predicate rules to NOT include the User Variable rule.
      */
     public void removeUserVariableRule()
     {
         IPredicateRule[] preds = new IPredicateRule[] {
+                new BracketCommentRule(),
                 new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
                 new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
                 new CMakeCommandRule(new Token(DEPRECATED_COMMAND_CONTENT_TYPE), true),
@@ -113,13 +116,14 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
             };
         setPredicateRules(preds);
     }
-    
+
     /**
      * Resets the list of predicate rules to NOT include the User Variable rule.
      */
     public void setDefaultScannerRules()
     {
         IPredicateRule[] preds = new IPredicateRule[] {
+                new BracketCommentRule(),
                 new EndOfLineRule("#", new Token(COMMENT_CONTENT_TYPE)),    //$NON-NLS-1$
                 new CMakeCommandRule(new Token(COMMAND_CONTENT_TYPE), false),
                 new CMakeCommandRule(new Token(DEPRECATED_COMMAND_CONTENT_TYPE), true),
@@ -135,26 +139,26 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
             };
         setPredicateRules(preds);
     }
-    
+
     /**
      * Obtains the document being scanned.
-     * 
+     *
      * @return Document being scanned.
      */
     public IDocument getDocument()
     {
         return this.fDocument;
     }
-    
+
     public int getOffset()
     {
         return fOffset;
     }
-    
+
     /**
      * Indicates whether the specified content type represents a user variable
      * partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      comment partition.
@@ -163,11 +167,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return USER_VARIABLE_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents the default
      * partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents the
      *      default partition.
@@ -176,11 +180,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return IDocument.DEFAULT_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a comment
      * partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      comment partition.
@@ -189,11 +193,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return COMMENT_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a variable
      * reference partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      variable reference partition.
@@ -202,11 +206,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return VARREF_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a string
      * partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      string partition.
@@ -215,11 +219,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return STRING_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a command
      * or deprecated command partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      any type of command partition.
@@ -228,11 +232,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return isCommand(contentType) || isDepCommand(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a command
      * partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      command partition.
@@ -241,11 +245,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return COMMAND_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a property
      * partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      property partition.
@@ -254,11 +258,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return PROPERTY_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a cmake variable
      * partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      cmake variable partition.
@@ -267,11 +271,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return CMAKE_DEFINED_VARIABLE_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a cmake reserved
      * word partition
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      cmake variable partition.
@@ -280,11 +284,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return RESERVED_WORD_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents a deprecated
      * command partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents a
      *      deprecated command partition.
@@ -293,11 +297,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return DEPRECATED_COMMAND_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents an arguments
      * open partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents an
      *      arguments open partition.
@@ -306,11 +310,11 @@ public class CMakePartitionScanner extends RuleBasedPartitionScanner
     {
         return ARGS_OPEN_CONTENT_TYPE.equals(contentType);
     }
-    
+
     /**
      * Indicates whether the specified content type represents an arguments
      * close partition.
-     * 
+     *
      * @param contentType  Partition content type.
      * @return <code>true</code> if the specified content type represents an
      *      arguments close partition.
