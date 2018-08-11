@@ -267,4 +267,20 @@ message(STATUS "${variable}: $${${variable}}")
           </command>
     </menuContribution>
  </extension>
+ <extension
+       point="org.eclipse.ui.preferenceTransfer">
+    <transfer
+          id="com.cthing.cmakeed.ui.transfer"
+          name="CMake Editor Preferences">
+       <mapping
+             scope="instance">
+          <entry
+                node="com.cthing.cmakeed.ui">
+	</entry>
+       </mapping>
+       <description>
+          Syntax highligting, uppercasing preferences and code templates.
+       </description>
+    </transfer>
+ </extension>
 </plugin>
