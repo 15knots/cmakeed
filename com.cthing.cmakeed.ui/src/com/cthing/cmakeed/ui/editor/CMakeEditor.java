@@ -1,6 +1,7 @@
 /* *****************************************************************************
  * Copyright 2007 C Thing Software
  * Copyright 2008 BlueQuartz Software
+ * Copyright 2018 Martin Weber
  * All Rights Reserved.
  ******************************************************************************/
 
@@ -19,9 +20,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.ForwardingDocumentProvider;
+import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
-import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
-import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.ContentAssistAction;
 import org.eclipse.ui.texteditor.IDocumentProvider;
@@ -34,7 +34,7 @@ import com.cthing.cmakeed.ui.prefs.Preferences;
 /**
  * Editor for CMake files.
  */
-public class CMakeEditor extends AbstractDecoratedTextEditor
+public class CMakeEditor extends TextEditor
                          implements IPropertyChangeListener
 {
     private StyledText text;
@@ -90,6 +90,14 @@ public class CMakeEditor extends AbstractDecoratedTextEditor
         action.setActionDefinitionId(id);
         setAction("ContentAssistProposal", action);                 //$NON-NLS-1$
         markAsStateDependentAction("ContentAssistProposal", true);  //$NON-NLS-1$
+    }
+
+    /* (non-Javadoc)
+     * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#initializeKeyBindingScopes()
+     */
+    @Override
+    protected void initializeKeyBindingScopes() {
+      setKeyBindingScopes(new String[] { "com.cthing.cmakeed.ui.cmakeEditorScope" });  //$NON-NLS-1$
     }
 
     /**

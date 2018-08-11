@@ -41,21 +41,6 @@ public class CMakeEditorPlugin extends AbstractUIPlugin
     }
 
     /**
-     *
-     * @return
-     */
-    public static IEditorPart getActiveEditor() {
-        IWorkbenchWindow window = getDefault().getWorkbench().getActiveWorkbenchWindow();
-        if (window != null) {
-            IWorkbenchPage page = window.getActivePage();
-            if (page != null) {
-                return page.getActiveEditor();
-            }
-        }
-        return null;
-    }
-
-    /**
      * {@inheritDoc}
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      */

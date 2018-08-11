@@ -1,5 +1,6 @@
 /* *****************************************************************************
  * Copyright 2007 C Thing Software
+ * Copyright 2018 Martin Weber
  * All Rights Reserved.
  ******************************************************************************/
 
@@ -7,7 +8,6 @@ package com.cthing.cmakeed.ui.editor;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -18,12 +18,16 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
+import com.cthing.cmakeed.ui.editor.handlers.ToggleCommentHandler;
 
 /**
  * Configures add-ons for the CMake document editor.
  */
 public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
 {
+  private static final String[] DEFAULT_PREFIXES = new String[] { String.valueOf(ToggleCommentHandler.COMMENT_CHAR),
+      "" }; // $NON-NLS-2$
+
     private CMakeScannerMgr scannerMgr;
 
     /**
@@ -144,18 +148,9 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
         return assistant;
     }
 
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getTextHover(org.eclipse.jface.text.source.ISourceViewer, java.lang.String, int)
-     */
-    @Override
-    public ITextHover getTextHover(final ISourceViewer sourceViewer,
-                                   final String contentType)
-    {
-      //  if (CMakePartitionScanner.isAnyCommand(contentType)) {
-            return new CMakeEditorTextHover();
-     //   }
-    //    return null;
-    }
+  @Override
+  public String[] getDefaultPrefixes(ISourceViewer sourceViewer, String contentType) {
+    return CMakeEditorConfiguration.DEFAULT_PREFIXES;
+  }
 
 }

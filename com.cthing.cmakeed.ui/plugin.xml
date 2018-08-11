@@ -21,7 +21,7 @@
   
     <extension point="org.eclipse.ui.contexts">
       <context
-            name="CMakeEd Context"
+            name="Editing CMake Source"
             id="com.cthing.cmakeed.ui.cmakeEditorScope"
             parentId="org.eclipse.ui.textEditorScope">
       </context>
@@ -31,7 +31,7 @@
    <extension point="org.eclipse.ui.editors">
       <editor
             class="com.cthing.cmakeed.ui.editor.CMakeEditor"
-            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="cmake,ctest"
             icon="icons/CMakeLogo.gif"
@@ -218,88 +218,53 @@ message(STATUS "${variable}: $${${variable}}")
  <extension
        point="org.eclipse.ui.commands">
        <category
-          name="CMakeEd Commands"
-          description="CMakeEd Commands"
+          name="CMakeEd"
           id="cmakeed.category"/>
        <command
-          categoryId="cmakeed.category"
-          name="Block Comment"
-          id="com.cthing.cmakeed.ui.Comment.Command"/>
-       <command
-          categoryId="cmakeed.category"
-          name="Block UnComment"
-          id="com.cthing.cmakeed.ui.UnComment.Command"/>
+             categoryId="cmakeed.category"
+             defaultHandler="com.cthing.cmakeed.ui.editor.handlers.ToggleCommentHandler"
+             description="Comment/Uncomment selected lines"
+             id="com.cthing.cmakeed.ui.ToggleComment.Command"
+             name="Toggle Comment">
+       </command>
  </extension>
 <!-- =========================================================================== -->
 <!-- Key Bindings                                                                -->
 <!-- =========================================================================== -->  
  <extension point="org.eclipse.ui.bindings">
     <key
-         sequence="M1+/"
-         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-         contextId="org.eclipse.ui.textEditorScope"
-         commandId="com.cthing.cmakeed.ui.Comment.Command"
-         />
-             <key
-         sequence="M1+M3+/"
-         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-         contextId="org.eclipse.ui.textEditorScope"
-         commandId="com.cthing.cmakeed.ui.UnComment.Command"
-         />
+          commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
+          contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
+          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+          sequence="M1+/"/>
+    <key
+          commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
+          contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
+          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+          sequence="M1+7"/>
+    <key
+          commandId="org.eclipse.ui.edit.text.shiftLeft"
+          contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
+          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+          sequence="M1+SHIFT+TAB">
+    </key>
+    <key
+          commandId="org.eclipse.ui.edit.text.shiftRight"
+          contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
+          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+          sequence="SHIFT+TAB">
+    </key>
  </extension>
 
-<!-- =========================================================================== -->
-<!-- Action set for command bindings                                             -->
-<!-- =========================================================================== -->  
- <extension point="org.eclipse.ui.actionSets">
-
-    <actionSet
-          label="CMakeEd Commands"
-          description="CMakeEd Editor Commands"
-          visible="true"
-          id="com.cthing.cmakeed.actionSet">
-        <menu id="com.cthing.cmakeed.ui"
-              label="CMakeEd"
-              path="edit/additions">
-        </menu>
-        <action id="com.cthing.cmakeed.ui.Comment.Command"
-                 label="Comment Section"
-                 class="com.cthing.cmakeed.ui.editor.actions.CMakeEditorCommentActionDelegate"
-                 definitionId="com.cthing.cmakeed.ui.Comment.Command"
-                 menubarPath="edit/com.cthing.cmakeed.ui/slot1"
-                 />
-        <menu id="com.cthing.cmakeed.ui"
-              label="CMakeEd"
-              path="edit/additions">
-        </menu>
-        <action id="com.cthing.cmakeed.ui.UnComment.Command"
-                 label="Uncomment Section"
-                 class="com.cthing.cmakeed.ui.editor.actions.CMakeEditorUnCommentActionDelegate"
-                 definitionId="com.cthing.cmakeed.ui.UnComment.Command"
-                 menubarPath="edit/com.cthing.cmakeed.ui/slot2"
-                 /> 
-    </actionSet>
- </extension>      
-
-<!-- =========================================================================== -->
-<!-- Editor menu actions                                                         -->
-<!-- =========================================================================== --> 
  <extension
-       id="com.cthing.cmakeed.ui.editor.popupMenu"
-       point="org.eclipse.ui.popupMenus">
-    <viewerContribution
-          id="com.cthing.cmakeed.ui.editor.viewerContribution"
-          targetID="#CMakeEditorContext">
-
-       <action
-             class="com.cthing.cmakeed.ui.editor.actions.CMakeEditorCommentActionDelegate"
-             id="com.cthing.cmakeed.ui.editor.toggleCommentAction"
-             label="Toggle Comments"
-             menubarPath="edit"
-             tooltip="Add or Remove Comments"
-             definitionId="com.cthing.cmakeed.ui.Comment.Command">
-       </action>
->
-    </viewerContribution>
+       point="org.eclipse.ui.menus">
+    <menuContribution
+          allPopups="false"
+          locationURI="popup:com.cthing.cmakeed.ui.editor.CMakeEditor.EditorContext?after=group.edit">
+          <command
+                commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
+                mnemonic="C">
+          </command>
+    </menuContribution>
  </extension>
 </plugin>
