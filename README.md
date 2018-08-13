@@ -30,6 +30,13 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ---
 # Release History
 
+## 1.8.0 (2018-08-13)
+### Changes
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.12.1.
+- Fixed issue #4: Menu 'Edit | CMakeEd' is always visible. Removed comment actions from Edit menu.
+Added 'Toggle Comment', 'Shift Left', 'Shift Right' actions to editor context menu incl. accelerators.
+- Fixed issue #6: Multiline comment using bracket comment does not work.
+
 ## 1.7.0 (2018-03-31)
 ### Changes
 - Enhancement: Updated syntax highlighting data and tool tips to cmake 3.11.0.
