@@ -8,6 +8,7 @@ package com.cthing.cmakeed.ui.editor;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -147,6 +148,14 @@ public class CMakeEditorConfiguration extends TextSourceViewerConfiguration
 
         return assistant;
     }
+
+  /* (non-Javadoc)
+     * @see org.eclipse.ui.editors.text.TextSourceViewerConfiguration#getTextHover(org.eclipse.jface.text.source.ISourceViewer, java.lang.String)
+     */
+  @Override
+  public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
+    return new CMakeEditorTextHover();
+  }
 
   @Override
   public String[] getDefaultPrefixes(ISourceViewer sourceViewer, String contentType) {
