@@ -6,5 +6,6 @@ Bundle-Version: 1.1.6
 Bundle-Vendor: %Bundle-Vendor
 Fragment-Host: com.cthing.cmakeed.core
 Bundle-Localization: plugin
-Require-Bundle: org.junit;bundle-version="4.10.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: junit.framework,
+ org.junit

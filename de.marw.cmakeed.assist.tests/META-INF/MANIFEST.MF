@@ -5,6 +5,6 @@ Bundle-SymbolicName: de.marw.cmakeed.assist.tests
 Bundle-Version: 1.0.0
 Bundle-Vendor: Martin Weber
 Fragment-Host: de.marw.cmakeed.assist;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit,
  com.cthing.cmakeed.core

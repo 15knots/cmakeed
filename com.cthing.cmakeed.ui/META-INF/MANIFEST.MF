@@ -14,11 +14,13 @@ Require-Bundle: com.cthing.cmakeed.core,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.help
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.cthing.cmakeed.ui.editor,
  org.eclipse.core.resources,
  org.eclipse.ui.dialogs,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.eclipse.ui.plugin,
+ org.osgi.framework
 Export-Package: com.cthing.cmakeed.ui,
  com.cthing.cmakeed.ui.editor,
  com.cthing.cmakeed.ui.editor.handlers,
