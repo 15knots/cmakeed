@@ -17,9 +17,6 @@ import org.eclipse.jface.text.ITextHoverExtension;
 import org.eclipse.jface.text.ITextHoverExtension2;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Region;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.editors.text.EditorsUI;
@@ -35,7 +32,7 @@ import com.cthing.cmakeed.core.variables.CMakeVariables;
 
 /**
  * @author Michael Jackson for BlueQuartz Software
- *
+ * @author Martin Weber
  */
 public class CMakeEditorTextHover implements ITextHover, ITextHoverExtension, ITextHoverExtension2
 {
@@ -132,17 +129,24 @@ public class CMakeEditorTextHover implements ITextHover, ITextHoverExtension, IT
    */
   public IInformationControlCreator getHoverControlCreator() {
     if (hoverControlCreator == null)
-      hoverControlCreator= new HoverControlCreator();
+      hoverControlCreator= new HoverControlCreator(false);
     return hoverControlCreator;
   }
 
-  private static final class HoverControlCreator extends AbstractReusableInformationControlCreator
-      implements IPropertyChangeListener {
+  /////////////////////////////////////////////////////////////////////////////
+  /**
+   * @author Martin Weber
+   */
+  private static final class HoverControlCreator extends AbstractReusableInformationControlCreator {
 
-    private static final String BG_KEY = "org.eclipse.ui.workbench.HOVER_BACKGROUND";//$NON-NLS-1$
-    private static final String FG_KEY = "org.eclipse.ui.workbench.HOVER_FOREGROUND";//$NON-NLS-1$
+    private final boolean createEnriched;
 
-    private DefaultInformationControl iControl;
+    /**
+     * @param createEnriched
+     */
+    public HoverControlCreator(boolean createEnriched) {
+      this.createEnriched = createEnriched;
+    }
 
     /*
      * (non-Javadoc)
@@ -152,36 +156,47 @@ public class CMakeEditorTextHover implements ITextHover, ITextHoverExtension, IT
      */
     @Override
     protected IInformationControl doCreateInformationControl(Shell parent) {
-      iControl = new DefaultInformationControl(parent, EditorsUI.getTooltipAffordanceString());
-      JFaceResources.getColorRegistry().addListener(this);
-      setHoverColors();
-      return iControl;
+      if(createEnriched)
+        return new InformationControl(parent, true);
+      else
+        return new InformationControl(parent, EditorsUI.getTooltipAffordanceString());
+    }
+  } // HoverControlCreator
+
+  /**
+   * Used when the control gets enriched.
+   *
+   * @author Martin Weber
+   */
+  private static final class InformationControl extends DefaultInformationControl {
+    private static final String BG_KEY = "org.eclipse.ui.workbench.HOVER_BACKGROUND";//$NON-NLS-1$
+    private static final String FG_KEY = "org.eclipse.ui.workbench.HOVER_FOREGROUND";//$NON-NLS-1$
+
+    private InformationControl(Shell parent, String statusFieldText) {
+      super(parent, statusFieldText);
+      init();
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent event) {
-      String property = event.getProperty();
-      if (iControl != null && (property.equals(BG_KEY) || property.equals(FG_KEY))) {
-        setHoverColors();
-      }
+    private InformationControl(Shell parent, boolean isResizeable) {
+      super(parent, isResizeable);
+      init();
     }
 
-    private void setHoverColors() {
+    private void init() {
       ColorRegistry registry = JFaceResources.getColorRegistry();
       final Color foreground = registry.get(FG_KEY);
       if (foreground != null)
-        iControl.setForegroundColor(foreground);
+        setForegroundColor(foreground);
       final Color background = registry.get(BG_KEY);
       if (background != null)
-        iControl.setBackgroundColor(background);
+        setBackgroundColor(background);
     }
 
+    /** Overwritten to return a control which is resizeable. */
     @Override
-    public void widgetDisposed(DisposeEvent e) {
-      super.widgetDisposed(e);
-      // Called when active editor is closed.
-      JFaceResources.getColorRegistry().removeListener(this);
+    public IInformationControlCreator getInformationPresenterControlCreator() {
+      return new HoverControlCreator(true);
     }
-  }
+  } // InformationControl
 
 }
