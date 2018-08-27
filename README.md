@@ -34,9 +34,10 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ---
 # Release History
 
-## 1.9.0 (2018-08-??)
+## 1.9.0 (2018-08-27)
 ### Changes
 - Enhancement: Information text hover in the editor.
+- Requires Eclipse 4.5.2 and Java 8 to run.
 
 ## 1.8.0 (2018-08-13)
 ### Changes
