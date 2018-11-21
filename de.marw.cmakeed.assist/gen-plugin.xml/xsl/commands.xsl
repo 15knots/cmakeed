@@ -46,7 +46,7 @@
       <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message>
     <xsl:variable name="text" select="normalize-space(text())" />
     <!-- remove command name from usage description -->
-    <xsl:variable name="text2" select="substring-after($text,$command)" />
+    <xsl:variable name="text2" select="normalize-space(substring-after($text,$command))" />
     <!--
       <xsl:message terminate="no"
       select="concat('DESC #',$text,'# : ',string(string-length($command)))" />
@@ -56,9 +56,6 @@
     <xsl:choose>
     <!-- skip useless usages -->
     <xsl:when test="$text2=''"/>
-<!-- 
- <xsl:when test="$text2='()'"/>
- -->    
     <xsl:otherwise>
       <xsl:value-of select="'&#10;'" />
       <xsl:element name="usage">
