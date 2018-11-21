@@ -18,7 +18,7 @@
     <!-- assume the first paragraph element contains the description -->
     <xsl:variable name="descr" select="normalize-space(paragraph[1][text()])" />
     <!-- first word in description marks deprecated command -->
-    <xsl:variable name="deprecated" select="starts-with($descr, 'Deprecated.')" />
+    <xsl:variable name="deprecated" select="starts-with($descr, 'Deprecated.') or starts-with($descr, 'Disallowed.')" />
 
     <!-- construct an element for cmakeed:
       < name=".." desc=".." deprecated=".." />
