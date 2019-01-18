@@ -15,34 +15,32 @@ public class CMakeUserVariable
 {
     private String name;
 
-    
+
     /**
      * Constructor for the class.
-     * 
+     *
      * @param name  Name of the user defined cmake variable
-     * @param description  Description of the user defined cmake variable
-     * @param deprecated  <code>true</code> if the user defined cmake variable has been deprecated.
      */
     public CMakeUserVariable(final String name)
     {
         if (StringUtils.isBlank(name)) {
             throw new IllegalArgumentException("name cannot be blank."); //$NON-NLS-1$
         }
-        
+
         this.name = name;
-        
+
     }
-  
+
     /**
      * Provides the name of the user defined cmake variable.
-     * 
+     *
      * @return The user defined cmake variable name.
      */
     public String getName()
     {
         return this.name;
     }
-    
+
     /**
      * {@inheritDoc}
      * @see java.lang.Object#toString()
@@ -78,9 +76,9 @@ public class CMakeUserVariable
         if ((obj == null) || (getClass() != obj.getClass())) {
             return false;
         }
-        
+
         final CMakeUserVariable other = (CMakeUserVariable)obj;
-        
+
         if (this.name == null) {
             if (other.name != null) {
                 return false;
@@ -89,7 +87,7 @@ public class CMakeUserVariable
         else if (!this.name.equals(other.name) ) {
             return false;
         }
-        
+
         return true;
     }
 

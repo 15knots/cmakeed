@@ -168,7 +168,6 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
 	/**
 	 *
 	 * @param imageType
-	 * @return
 	 */
 	protected Image getCustomImage(final String imageType)
 	{
@@ -609,12 +608,9 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
      *
      * @param prefix
      * @param templates
-     * @return
      */
-    private List<ICompletionProposal> findPossibleTemplates(String prefix,
-    														ICompletionProposal[] templates)
-    {
-        List<ICompletionProposal> possibles = new ArrayList<ICompletionProposal>();
+  private List<ICompletionProposal> findPossibleTemplates(String prefix, ICompletionProposal[] templates)    {
+        List<ICompletionProposal> possibles = new ArrayList<>();
         if (templates.length > 0)
         {
         	for (int i = 0; i < templates.length; i++) {
@@ -664,10 +660,6 @@ public class CMakeContentAssistantProcessor extends TemplateCompletionProcessor
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jface.text.ITextHover#getHoverInfo(org.eclipse.jface.text.ITextViewer, org.eclipse.jface.text.IRegion)
-     */
     public String getHoverInfo(final ITextViewer textViewer,
                                final IRegion hoverRegion)
     {

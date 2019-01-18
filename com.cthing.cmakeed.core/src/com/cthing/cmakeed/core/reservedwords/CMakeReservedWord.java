@@ -15,34 +15,32 @@ public class CMakeReservedWord
 {
     private String name;
 
-    
+
     /**
      * Constructor for the class.
-     * 
+     *
      * @param name  Name of the command
-     * @param description  Description of the command
-     * @param deprecated  <code>true</code> if the command has been deprecated.
      */
     public CMakeReservedWord(final String name)
     {
         if (StringUtils.isBlank(name)) {
             throw new IllegalArgumentException("name cannot be blank."); //$NON-NLS-1$
         }
-        
+
         this.name = name;
-        
+
     }
-  
+
     /**
      * Provides the name of the command.
-     * 
+     *
      * @return The command name.
      */
     public String getName()
     {
         return this.name;
     }
-    
+
     /**
      * {@inheritDoc}
      * @see java.lang.Object#toString()
@@ -78,9 +76,9 @@ public class CMakeReservedWord
         if ((obj == null) || (getClass() != obj.getClass())) {
             return false;
         }
-        
+
         final CMakeReservedWord other = (CMakeReservedWord)obj;
-        
+
         if (this.name == null) {
             if (other.name != null) {
                 return false;
@@ -89,7 +87,7 @@ public class CMakeReservedWord
         else if (!this.name.toUpperCase().equals(other.name.toUpperCase())) {
             return false;
         }
-        
+
         return true;
     }
 

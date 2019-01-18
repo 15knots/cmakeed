@@ -19,7 +19,7 @@ public class ClassUtilsTest extends TestCase
     public ClassUtilsTest()
     {
     }
-    
+
     /**
      * Tests the getShortClassName method.
      */
@@ -27,12 +27,12 @@ public class ClassUtilsTest extends TestCase
     {
         assertEquals("ClassUtilsTest", ClassUtils.getShortClassName(getClass()));
         assertEquals("String", ClassUtils.getShortClassName(String.class));
-        assertEquals("[null]", ClassUtils.getShortClassName((Class)null));
+        assertEquals("[null]", ClassUtils.getShortClassName((Class<?>)null));
         assertEquals("List", ClassUtils.getShortClassName("java.util.List"));
         assertEquals("List", ClassUtils.getShortClassName("List"));
         assertEquals("[null]", ClassUtils.getShortClassName((String)null));
     }
-    
+
     /**
      * Tests the getMethodName methods.
      */

@@ -38,6 +38,7 @@ public class CMakeCommandTest extends TestCase
     /**
      * Tests the properties of the class set in the constructor.
      */
+    @SuppressWarnings("unused")
     public void testCtorProperties()
     {
         final CMakeCommand cmd = new CMakeCommand(NAME, DESC, DEPRECATED);

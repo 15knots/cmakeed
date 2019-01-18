@@ -42,20 +42,6 @@ import com.cthing.cmakeed.ui.editor.CMakeEditorUI;
 
 public class CMakeFileNewWizardPage extends WizardPage {
 
-	private static final String NAME = "package_name";
-
-	private static final String VERSION = "1.0";
-
-	private static final String SUMMARY = "Summary of the package";
-
-	private static final String GROUP = "Amusements/Games";
-
-	private static final String LICENSE = "GPL";
-
-	private static final String URL = "http://";
-
-	private static final String SOURCE0 = "archive_name-%{version}";
-
 	private Text projectText;
 
 	private Text nameText;

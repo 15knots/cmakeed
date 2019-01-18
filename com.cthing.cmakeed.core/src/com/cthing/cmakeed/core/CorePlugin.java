@@ -22,7 +22,7 @@ public class CorePlugin extends Plugin
 
     // The shared instance
     private static CorePlugin plugin;
-    
+
     /**
      * Default constructor for the class.
      */
@@ -61,10 +61,10 @@ public class CorePlugin extends Plugin
     {
         return plugin;
     }
-    
+
     /**
      * Logs an informational message to the plugin log.
-     * 
+     *
      * @param obj  Object issuing the message.
      * @param message  Message to be logged.
      */
@@ -72,10 +72,10 @@ public class CorePlugin extends Plugin
     {
         log(obj, 3, IStatus.INFO, message, null);
     }
-    
+
     /**
      * Logs an error message to the plugin log.
-     * 
+     *
      * @param obj  Object issuing the message.
      * @param e  Exception; may be <code>null</code>
      */
@@ -83,10 +83,10 @@ public class CorePlugin extends Plugin
     {
         log(obj, 4, IStatus.ERROR, e.getMessage(), e);
     }
-    
+
     /**
      * Logs an error message to the plugin log.
-     * 
+     *
      * @param obj  Object issuing the message.
      * @param message  Error message; may be <code>null</code>.
      * @param e  Exception; may be <code>null</code>
@@ -96,10 +96,10 @@ public class CorePlugin extends Plugin
     {
         log(obj, 3, IStatus.ERROR, message, e);
     }
-    
+
     /**
      * Logs a plugin message.
-     * 
+     *
      * @param obj  Object issuing the message
      * @param callLevel  Stack level to identify calling method
      * @param severity  One of the IStatus message severity codes
@@ -111,14 +111,14 @@ public class CorePlugin extends Plugin
                             final Throwable e)
     {
         final StringBuilder msg = new StringBuilder();
-        msg.append(ClassUtils.getShortClassName((obj instanceof Class) ? (Class)obj : obj.getClass()));
+        msg.append(ClassUtils.getShortClassName((obj instanceof Class) ? (Class<?>)obj : obj.getClass()));
         msg.append("."); //$NON-NLS-1$
         msg.append(ClassUtils.getMethodName(callLevel));
         msg.append(": "); //$NON-NLS-1$
         if (message != null) {
             msg.append(message);
         }
-        
+
         final Status status = new Status(severity, PLUGIN_ID, severity,
                                          msg.toString(), e);
         plugin.getLog().log(status);
