@@ -14,26 +14,17 @@ import com.cthing.cmakeed.ui.editor.CMakeEditorUI;
  */
 public class TemplatesPreferencePage extends TemplatePreferencePage {
 
-	/**
-	 * 
-	 */
-	public TemplatesPreferencePage() {
-		setPreferenceStore(CMakeEditorUI.getDefault().getPreferenceStore());
-		setTemplateStore(CMakeEditorUI.getDefault().getTemplateStore());
-		setContextTypeRegistry(CMakeEditorUI.getDefault().getContextTypeRegistry());
-	}
+  /**
+   *
+   */
+  public TemplatesPreferencePage() {
+    final CMakeEditorUI editorUI = CMakeEditorUI.getDefault();
+    setPreferenceStore(editorUI.getPreferenceStore());
+    setTemplateStore(editorUI.getTemplateStore());
+    setContextTypeRegistry(editorUI.getContextTypeRegistry());
+  }
 
 	protected boolean isShowFormatterSetting() {
 		return false;
 	}
-
-
-	public boolean performOk() {
-		boolean ok= super.performOk();
-
-		CMakeEditorUI.getDefault().savePluginPreferences();
-
-		return ok;
-	}
-
 }

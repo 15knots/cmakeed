@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -94,10 +93,6 @@ public class CMakeEditorUI  {
 
 	public IPreferenceStore getPreferenceStore() {
 		return CMakeEditorPlugin.getDefault().getPreferenceStore();
-	}
-
-	public void savePluginPreferences() {
-		CMakeEditorPlugin.getDefault().savePluginPreferences();
 	}
 
 }
