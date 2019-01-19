@@ -1,5 +1,6 @@
 /* *****************************************************************************
  * Copyright 2007 C Thing Software
+ * Copyright 2019 Martin Weber
  * All Rights Reserved.
  ******************************************************************************/
 
@@ -26,6 +27,7 @@ import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -37,6 +39,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.dialogs.PreferencesUtil;
+
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.Messages;
 
@@ -49,6 +52,8 @@ public class PrefPage extends PreferencePage
     private Map<String, RGB> colorMap = new HashMap<String, RGB>();
     private Map<String, Integer> styleMap = new HashMap<String, Integer>();
     private Button upperCaseCommandsB;
+    private Button bracketB;
+    private ColorSelector bracketColorB;
     private ListViewer textAttrViewer;
     private ColorSelector colorB;
     private Button boldB;
@@ -89,6 +94,40 @@ public class PrefPage extends PreferencePage
         upperCaseCommandsL.setLayoutData(new GridData());
         upperCaseCommandsL.setText(Messages.getString("PreferencePage.UpperCaseCommands")); //$NON-NLS-1$
 
+    {
+      // matching bracket highlighting
+      final Composite bracketComp = new Composite(topComp, SWT.NONE);
+      bracketComp.setLayoutData(new GridData());
+      bracketComp.setLayout(new GridLayout(2, false));
+
+      this.bracketB = new Button(bracketComp, SWT.CHECK);
+      this.bracketB.setLayoutData(new GridData());
+      final Label bracketL = new Label(bracketComp, SWT.NONE);
+      bracketL.setLayoutData(new GridData());
+      bracketL.setText(Messages.getString("PreferencePage.BracketHighlighting")); //$NON-NLS-1$
+
+      // Empty first column
+      @SuppressWarnings("unused")
+      Label align = new Label(bracketComp, SWT.LEAD);
+      final Composite colorComp = new Composite(bracketComp, SWT.NONE);
+      colorComp.setLayoutData(new GridData());
+      colorComp.setLayout(new GridLayout(2, false));
+      final Label colorL = new Label(colorComp, SWT.NONE);
+      colorL.setLayoutData(new GridData(SWT.END, SWT.NONE, false, false));
+      colorL.setText(Messages.getString("PreferencePage.Color")); //$NON-NLS-1$
+
+      this.bracketColorB = new ColorSelector(colorComp);
+      this.bracketColorB.getButton().setLayoutData(new GridData());
+      this.bracketB.addSelectionListener(new SelectionListener() {
+        public void widgetSelected(SelectionEvent e) {
+          boolean enabled = bracketB.getSelection();
+          bracketColorB.setEnabled(enabled);
+        }
+
+        public void widgetDefaultSelected(SelectionEvent e) {
+        }
+      });
+    }
         // Text attributes
         final Composite textComp = new Composite(topComp, SWT.NONE);
         textComp.setLayoutData(new GridData());
@@ -247,6 +286,9 @@ public class PrefPage extends PreferencePage
 
             final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
             this.upperCaseCommandsB.setSelection(store.getBoolean(Preferences.UPPER_CASE_COMMANDS));
+            this.bracketB.setSelection(store.getBoolean(Preferences.MATCHING_BRACKETS_ON));
+            this.bracketColorB.setColorValue(PreferenceConverter.getColor(store,
+                Preferences.MATCHING_BRACKETS_COLOR));
 
             readTextPrefs();
             writeTextUI();
@@ -344,6 +386,9 @@ public class PrefPage extends PreferencePage
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
 
         this.upperCaseCommandsB.setSelection(store.getDefaultBoolean(Preferences.UPPER_CASE_COMMANDS));
+        this.bracketB.setSelection(store.getDefaultBoolean(Preferences.MATCHING_BRACKETS_ON));
+        this.bracketColorB.setColorValue(PreferenceConverter.getDefaultColor(store,
+            Preferences.MATCHING_BRACKETS_COLOR));
 
         for (String baseKey : Preferences.TEXT_KEYS) {
             this.colorMap.put(baseKey, PreferenceConverter.getDefaultColor(store,
@@ -366,6 +411,8 @@ public class PrefPage extends PreferencePage
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         store.setValue(Preferences.UPPER_CASE_COMMANDS, this.upperCaseCommandsB.getSelection());
+        store.setValue(Preferences.MATCHING_BRACKETS_ON, this.bracketB.getSelection());
+        PreferenceConverter.setValue(store, Preferences.MATCHING_BRACKETS_COLOR, this.bracketColorB.getColorValue());
 
         writeTextPrefs();
         return super.performOk();

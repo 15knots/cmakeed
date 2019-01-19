@@ -11,6 +11,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.IDocumentExtension3;
+import org.eclipse.jface.text.source.DefaultCharacterPairMatcher;
+import org.eclipse.jface.text.source.ICharacterPairMatcher;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -26,6 +29,7 @@ import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.ContentAssistAction;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
+import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.Messages;
@@ -37,6 +41,9 @@ import com.cthing.cmakeed.ui.prefs.Preferences;
 public class CMakeEditor extends TextEditor
                          implements IPropertyChangeListener
 {
+  /** the brackets to match */
+  private static final char[] matchChars = { '(', ')', '[', ']', '<', '>' };
+
     private StyledText text;
     private ColorMgr colorMgr;
 
@@ -194,13 +201,25 @@ public class CMakeEditor extends TextEditor
     }
 
     /**
-     * Get the spefile source viewer, this method is useful for test cases.
+     * Get the source viewer, this method is useful for test cases.
      *
      * @return
-     *      the specfile source viewer
+     *      the source viewer
      */
     public SourceViewer getCMakeEditorSourceViewer() {
         return (SourceViewer) getSourceViewer();
     }
 
+  @Override
+  protected void configureSourceViewerDecorationSupport(SourceViewerDecorationSupport support) {
+    super.configureSourceViewerDecorationSupport(support);
+
+    ICharacterPairMatcher matcher = new DefaultCharacterPairMatcher(matchChars,
+        IDocumentExtension3.DEFAULT_PARTITIONING);
+    support.setCharacterPairMatcher(matcher);
+    support.setMatchingCharacterPainterPreferenceKeys(Preferences.MATCHING_BRACKETS_ON,
+        Preferences.MATCHING_BRACKETS_COLOR);
+    // track bracket highlighting in the preference store
+    support.install(CMakeEditorPlugin.getDefault().getPreferenceStore());
+  }
 }

@@ -1,5 +1,6 @@
 /* *****************************************************************************
  * Copyright 2007 C Thing Software
+ * Copyright 2019 Martin Weber
  * All Rights Reserved.
  ******************************************************************************/
 
@@ -36,6 +37,10 @@ public final class Preferences
     public static final String COLOR = "Color";     //$NON-NLS-1$
     /** Text style sub key. */
     public static final String STYLE = "Style";     //$NON-NLS-1$
+    /** preference key for the matching character painter */
+    public static final String MATCHING_BRACKETS_ON = "matchBrackets";
+    /** preference key for the color used by the matching character painter */
+    public static final String MATCHING_BRACKETS_COLOR = "matchingBracketsColor";
 
     /** All text attribute related keys.  */
     public static final String[] TEXT_KEYS = new String[] {

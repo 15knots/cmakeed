@@ -1,5 +1,6 @@
 /* *****************************************************************************
  * Copyright 2007 C Thing Software
+ * Copyright 2019 Martin Weber
  * All Rights Reserved.
  ******************************************************************************/
 
@@ -72,5 +73,7 @@ public class Initializer extends AbstractPreferenceInitializer
                 Preferences.getColorKey(Preferences.CMAKE_USER_VARIABLE), new RGB(52,89,129));
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_USER_VARIABLE), SWT.NONE);
 
+        store.setDefault(Preferences.MATCHING_BRACKETS_ON, true);
+        store.setDefault(Preferences.MATCHING_BRACKETS_COLOR, "254,222,0");
     }
 }
