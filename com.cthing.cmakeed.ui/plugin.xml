@@ -84,10 +84,6 @@
       <initializer class="com.cthing.cmakeed.ui.prefs.Initializer"/>
    </extension>
    
-   <extension
-         point="org.eclipse.help.toc">
-      <toc file="toc.xml" primary="true"/>
-   </extension>
    
 <!-- =========================================================================== -->
 <!-- Templates                                                                   -->
