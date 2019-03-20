@@ -16,7 +16,9 @@
   <!-- ================================= 
           target: all
          ================================= -->
-  <target name="all" depends="-noDTD, -stage1" />
+  <target name="all" depends="-noDTD, -stage1" >
+    <xmlvalidate file="${plugin.xml}" lenient="true" warn="true"/>
+  </target>
 
   <!-- ================================= 
           target: clean              
@@ -39,6 +41,7 @@
         <ignoreblank />
       </filterchain>
     </concat>
+    <xmlvalidate file="${plugin.xml}" lenient="true"/>
   </target>
 
   <target name="-stage1.uptodate" depends="-commands.stage1, -reswords.stage1, -properties.stage1, -variables.stage1">

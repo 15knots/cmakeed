@@ -36,7 +36,7 @@
     <!-- assume the first paragraph element contains the description -->
     <xsl:variable name="descr" select="paragraph[1][text()]" />
     <!-- first word in description marks deprecated properties -->
-    <xsl:variable name="deprecated" select="starts-with($descr, 'Deprecated.')" />
+    <xsl:variable name="deprecated" select="starts-with($descr, 'Deprecated ')" />
 
     <!-- expand names like '&lt;LANG&gt;_*' for all languages -->
     <xsl:analyze-string regex="(&lt;LANG&gt;)([A-Z_]*[A-Z])"

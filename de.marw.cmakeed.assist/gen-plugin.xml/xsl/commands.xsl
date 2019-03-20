@@ -18,7 +18,7 @@
     <!-- assume the first paragraph element contains the description -->
     <xsl:variable name="descr" select="normalize-space(paragraph[1][text()])" />
     <!-- first word in description marks deprecated command -->
-    <xsl:variable name="deprecated" select="starts-with($descr, 'Deprecated.') or starts-with($descr, 'Disallowed.')" />
+    <xsl:variable name="deprecated" select="starts-with($descr, 'Deprecated ') or starts-with($descr, 'Disallowed ')" />
 
     <!-- construct an element for cmakeed:
       < name=".." desc=".." deprecated=".." />
@@ -31,19 +31,17 @@
         <xsl:attribute name="deprecated" select="'true'" />
       </xsl:if>
       <xsl:apply-templates
-        select="literal_block|section[@ids!='synopsis']/literal_block|section/section/literal_block">
+        select="literal_block|section[@ids!='synopsis' and @ids!='example' and @ids!='arguments' and @ids!='invocation' and @ids!='argument-caveats id2']/literal_block|section/section/literal_block">
         <xsl:with-param name="command" select="$name" tunnel="yes" />
       </xsl:apply-templates>
     </xsl:element>
     <xsl:value-of select="'&#10;'" />
   </xsl:template>
 
-
-  <!-- assume the first literal_block in any section contains a usage description -->
-  <xsl:template
-    match="literal_block">
+  <!-- literal_block in any section contains a usage description -->
+  <xsl:template match="literal_block[@language='cmake' or not(@language)]">
     <xsl:param name="command" tunnel="yes" />
-      <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message>
+    <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message>
     <xsl:variable name="text" select="normalize-space(text())" />
     <!-- remove command name from usage description -->
     <xsl:variable name="text2" select="normalize-space(substring-after($text,$command))" />

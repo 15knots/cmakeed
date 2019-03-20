@@ -36,7 +36,7 @@
     <!-- assume the first paragraph element contains the description -->
     <xsl:variable name="descr" select="paragraph[1][text()]" />
     <!-- first word in description marks deprecated variables -->
-    <xsl:variable name="deprecated" select="starts-with($descr, 'Deprecated.')" />
+    <xsl:variable name="deprecated" select="starts-with($descr, 'Deprecated')" />
 
     <!-- expand names like 'CMAKE_&lt;LANG&gt;_*' for all languages -->
     <xsl:analyze-string regex="([A-Z][A-Z_]*?)(&lt;LANG&gt;)([A-Z_]*[A-Z])"
