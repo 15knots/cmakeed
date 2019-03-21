@@ -34,7 +34,7 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ---
 # Release History
 
-## 1.11.0 (unreleased)
+## 1.11.0 (2019-03-21)
 ### Changes
 - Removed bundled cmake documentation (#8).
 - Added matching bracket highlighting.
