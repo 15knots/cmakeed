@@ -3,7 +3,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/15knots/cmakeed.svg)](https://github.com/15knots/cmakeed/issues)
 
 An Eclipse plug-in for editing CMake files such as CMakeLists.txt. Provides syntax coloring, CMake command content assist, 
-and the CMake command reference incorporated into the Eclipse help system.
+and code templates.
 
 Requires Java 8 or higher and Eclipse 4.5.2 or higher.
 
