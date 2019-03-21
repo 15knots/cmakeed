@@ -38,7 +38,7 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ### Changes
 - Removed bundled cmake documentation (#8).
 - Added matching bracket highlighting.
-
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.15.0.
 
 ## 1.10.0 (2018-11-22)
 ### Changes
