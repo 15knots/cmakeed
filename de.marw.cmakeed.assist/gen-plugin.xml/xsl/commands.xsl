@@ -41,7 +41,7 @@
   <!-- literal_block in any section contains a usage description -->
   <xsl:template match="literal_block[@language='cmake' or not(@language)]">
     <xsl:param name="command" tunnel="yes" />
-    <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message>
+<!--     <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message> -->
     <xsl:variable name="text" select="normalize-space(text())" />
     <!-- remove command name from usage description -->
     <xsl:variable name="text2" select="normalize-space(substring-after($text,$command))" />
@@ -53,8 +53,10 @@
     -->
     <xsl:choose>
     <!-- skip useless usages -->
+    <xsl:when test="not(starts-with($text, $command))"/>
     <xsl:when test="$text2=''"/>
     <xsl:otherwise>
+      <xsl:message terminate="no" >#<xsl:value-of select="$text" />#</xsl:message>
       <xsl:value-of select="'&#10;'" />
       <xsl:element name="usage">
         <xsl:attribute name="value" select="$text2" />
