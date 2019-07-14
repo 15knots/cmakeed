@@ -15,9 +15,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-
 import com.cthing.cmakeed.core.commands.CMakeCommand;
 import com.cthing.cmakeed.core.commands.CMakeCommands;
 import com.cthing.cmakeed.core.properties.CMakeProperties;

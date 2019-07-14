@@ -40,14 +40,14 @@ public class EditorTestCase extends TestCase
     private IDocument document;
     private CMakeEditor editor;
     private ISourceViewer viewer;
-    
+
     /**
      * Default constructor for the class.
      */
     public EditorTestCase()
     {
     }
-    
+
     /**
      * @return The CMakeLists.txt file.
      */
@@ -55,7 +55,7 @@ public class EditorTestCase extends TestCase
     {
         return this.file;
     }
-    
+
     /**
      * @return The document containing the CMakeLists.txt file.
      */
@@ -98,18 +98,18 @@ public class EditorTestCase extends TestCase
                     project.create(null);
                     project.open(null);
                 }
-                
+
                 final URL url = FileLocator.resolve(getClass().getResource(TEST_CMAKE_FILE));
                 final IPath location = new Path(url.getPath());
                 this.file = project.getFile(location.lastSegment());
                 this.file.createLink(location, IResource.REPLACE, null);
-                
+
                 final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                 final IEditorPart ed = IDE.openEditor(page, this.file);
-                
+
                 if (ed instanceof CMakeEditor) {
                     this.editor = (CMakeEditor)ed;
-                    this.viewer = (ISourceViewer)this.editor.getAdapter(ISourceViewer.class);
+                    this.viewer = this.editor.getAdapter(ISourceViewer.class);
                     this.document = this.viewer.getDocument();
                 }
                 else {

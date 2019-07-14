@@ -23,7 +23,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -49,8 +49,8 @@ import com.cthing.cmakeed.ui.Messages;
 public class PrefPage extends PreferencePage
                             implements IWorkbenchPreferencePage
 {
-    private Map<String, RGB> colorMap = new HashMap<String, RGB>();
-    private Map<String, Integer> styleMap = new HashMap<String, Integer>();
+    private Map<String, RGB> colorMap = new HashMap<>();
+    private Map<String, Integer> styleMap = new HashMap<>();
     private Button upperCaseCommandsB;
     private Button bracketB;
     private ColorSelector bracketColorB;
@@ -151,7 +151,7 @@ public class PrefPage extends PreferencePage
             }
         });
         this.textAttrViewer.setContentProvider(new ArrayContentProvider());
-        this.textAttrViewer.setSorter(new ViewerSorter() {
+        this.textAttrViewer.setComparator(new ViewerComparator() {
             @Override
             public int compare(final Viewer viewer, final Object obj1,
                                final Object obj2)

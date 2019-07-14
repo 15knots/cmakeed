@@ -1,7 +1,7 @@
 /* *****************************************************************************
  * Copyright 2007 C Thing Software
  * Copyright 2008 BlueQuartz Software
- * Copyright 2018 Martin Weber
+ * Copyright 2018-2019 Martin Weber
  * All Rights Reserved.
  ******************************************************************************/
 
@@ -112,14 +112,15 @@ public class CMakeEditor extends TextEditor
      * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#getAdapter(java.lang.Class)
      */
     @Override
-    public Object getAdapter(@SuppressWarnings("rawtypes") final java.lang.Class key)
+    @SuppressWarnings("unchecked")
+    public <T> T getAdapter(final java.lang.Class<T> key)
     {
         if (key.equals(ISourceViewer.class)) {
-            return getSourceViewer();
+            return (T) getSourceViewer();
         }
 
         if (key.equals(StyledText.class)) {
-            return this.text;
+            return (T) this.text;
         }
 
         return super.getAdapter(key);
