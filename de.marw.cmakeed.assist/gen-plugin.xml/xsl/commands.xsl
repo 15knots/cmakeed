@@ -31,7 +31,16 @@
         <xsl:attribute name="deprecated" select="'true'" />
       </xsl:if>
       <xsl:apply-templates
-        select="literal_block|section[@ids!='synopsis' and @ids!='example' and @ids!='arguments' and @ids!='invocation' and @ids!='argument-caveats id2']/literal_block|section/section/literal_block">
+        select="literal_block|section/section/literal_block">
+        <xsl:with-param name="command" select="$name" tunnel="yes" />
+      </xsl:apply-templates>
+      <xsl:apply-templates
+        select="section[@ids!='synopsis' and @ids!='example' and @ids!='arguments' and @ids!='invocation' and @ids!='argument-caveats id2']/literal_block">
+        <xsl:with-param name="command" select="$name" tunnel="yes" />
+      </xsl:apply-templates>
+	  <!-- for project command -->
+      <xsl:apply-templates
+        select="section[@ids='synopsis']/literal_block[@language='cmake']">
         <xsl:with-param name="command" select="$name" tunnel="yes" />
       </xsl:apply-templates>
     </xsl:element>
@@ -55,6 +64,10 @@
     <!-- skip useless usages -->
     <xsl:when test="not(starts-with($text, $command))"/>
     <xsl:when test="$text2=''"/>
+    <xsl:when test="starts-with($text,'if(var')"/>
+    <xsl:when test="contains($text2,'libfoo')"/>
+    <xsl:when test="contains($text2,'myExe')"/>
+    <xsl:when test="contains($text2,'myexe')"/>
     <xsl:otherwise>
       <xsl:message terminate="no" >#<xsl:value-of select="$text" />#</xsl:message>
       <xsl:value-of select="'&#10;'" />
