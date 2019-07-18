@@ -10,6 +10,6 @@
   </parent>
 
   <artifactId>com.cthing.cmakeed.feature</artifactId>
-  <version>1.11.0</version>
+  <version>1.12.0</version>
   <packaging>eclipse-feature</packaging>
 </project>
