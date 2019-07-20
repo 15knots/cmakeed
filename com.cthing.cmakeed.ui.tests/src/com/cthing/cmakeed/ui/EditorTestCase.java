@@ -109,7 +109,7 @@ public class EditorTestCase extends TestCase
 
                 if (ed instanceof CMakeEditor) {
                     this.editor = (CMakeEditor)ed;
-                    this.viewer = this.editor.getAdapter(ISourceViewer.class);
+                    this.viewer = (ISourceViewer) this.editor.getAdapter(ISourceViewer.class);
                     this.document = this.viewer.getDocument();
                 }
                 else {

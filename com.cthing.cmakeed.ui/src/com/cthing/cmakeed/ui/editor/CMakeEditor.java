@@ -112,15 +112,14 @@ public class CMakeEditor extends TextEditor
      * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#getAdapter(java.lang.Class)
      */
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getAdapter(final java.lang.Class<T> key)
+    public Object getAdapter(@SuppressWarnings("rawtypes") final java.lang.Class key)
     {
         if (key.equals(ISourceViewer.class)) {
-            return (T) getSourceViewer();
+            return getSourceViewer();
         }
 
         if (key.equals(StyledText.class)) {
-            return (T) this.text;
+            return this.text;
         }
 
         return super.getAdapter(key);
