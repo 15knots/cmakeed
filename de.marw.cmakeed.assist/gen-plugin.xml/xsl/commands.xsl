@@ -68,6 +68,7 @@
     <xsl:when test="contains($text2,'libfoo')"/>
     <xsl:when test="contains($text2,'myExe')"/>
     <xsl:when test="contains($text2,'myexe')"/>
+    <xsl:when test="contains($text2,'mypro')"/>
     <xsl:otherwise>
       <xsl:message terminate="no" >#<xsl:value-of select="$text" />#</xsl:message>
       <xsl:value-of select="'&#10;'" />
