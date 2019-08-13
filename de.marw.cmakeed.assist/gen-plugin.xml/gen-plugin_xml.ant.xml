@@ -98,6 +98,7 @@
       <fileset dir="${out.dir}/command" includes="*.xml" />
       <filterchain>
         <ignoreblank />
+        <sortfilter />
       </filterchain>
     </concat>
   </target>
@@ -158,6 +159,7 @@
       <fileset dir="${out.dir}/resword" includes="*.xml" />
       <filterchain>
         <ignoreblank />
+        <sortfilter />
       </filterchain>
     </concat>
   </target>
@@ -195,6 +197,7 @@
       <fileset dir="${out.dir}/variable" includes="*.xml" />
       <filterchain>
         <ignoreblank />
+        <sortfilter />
       </filterchain>
     </concat>
   </target>
@@ -234,6 +237,7 @@
       <fileset dir="${out.dir}/property" includes="*.xml" />
       <filterchain>
         <ignoreblank />
+        <sortfilter />
       </filterchain>
     </concat>
   </target>
