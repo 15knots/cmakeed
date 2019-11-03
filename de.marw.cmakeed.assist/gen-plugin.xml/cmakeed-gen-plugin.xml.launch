@@ -15,9 +15,6 @@
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.ant.ui.AntClasspathProvider"/>
 <mapAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_PROPERTIES">
 <mapEntry key="cmake.src.root" value="${system_property:user.home}/devel/fremd/cmake"/>
-<mapEntry key="eclipse.pdebuild.home" value="/home/weber/bin/eclipse/plugins/org.eclipse.pde.build_3.9.300.v20170515-0912/."/>
-<mapEntry key="eclipse.pdebuild.scripts" value="/home/weber/bin/eclipse/plugins/org.eclipse.pde.build_3.9.300.v20170515-0912/scripts"/>
-<mapEntry key="eclipse.pdebuild.templates" value="/home/weber/bin/eclipse/plugins/org.eclipse.pde.build_3.9.300.v20170515-0912/templates"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE" value="${none}"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/de.marw.cmakeed.assist/gen-plugin.xml/gen-plugin_xml.ant.xml}"/>
