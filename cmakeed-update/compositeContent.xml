@@ -4,10 +4,10 @@
   type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
   <properties size='2'>
     <!-- get new time w/ `date +%s000` -->
-    <property name='p2.timestamp' value='1575212701000' />
+    <property name='p2.timestamp' value='1585418848000' />
     <property name='p2.name' value='cmakeed Update' />
   </properties>
   <children size='1'>
-    <child location='jar:https://dl.bintray.com/15knots/p2-zip/CMakeEd-1.13.0.zip!/' />
+    <child location='jar:https://dl.bintray.com/15knots/p2-zip/CMakeEd-1.14.0.zip!/' />
   </children>
 </repository>
