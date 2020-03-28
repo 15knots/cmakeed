@@ -34,23 +34,27 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ---
 # Release History
 
+## 1.14.0 (2020-03-28)
+### Changes
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.17.
+
 ## 1.13.0 (2019-12-01)
 ### Changes
-- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.16.0.
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.16.
 
 ## 1.12.0 (2019-07-20)
 ### Changes
-- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.15.0.
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.15.
 
 ## 1.11.0 (2019-03-21)
 ### Changes
 - Removed bundled cmake documentation (#8).
 - Added matching bracket highlighting.
-- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.14.0.
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.14.
 
 ## 1.10.0 (2018-11-22)
 ### Changes
-- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.13.0.
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.13.
 
 ## 1.9.0 (2018-08-27)
 ### Changes
@@ -59,18 +63,18 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 
 ## 1.8.0 (2018-08-13)
 ### Changes
-- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.12.1.
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.12.
 - Fixed issue #4: Menu 'Edit | CMakeEd' is always visible. Removed comment actions from Edit menu.
 Added 'Toggle Comment', 'Shift Left', 'Shift Right' actions to editor context menu incl. accelerators.
 - Fixed issue #6: Multiline comment using bracket comment does not work.
 
 ## 1.7.0 (2018-03-31)
 ### Changes
-- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.11.0.
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.11.
 
 ## 1.6.0 (2017-11-27)
 ### Changes
-- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.10.0.
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.10.
 
 ## 1.5.0 (2017-10-31)
 ### Changes
