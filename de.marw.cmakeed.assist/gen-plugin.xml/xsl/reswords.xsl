@@ -37,7 +37,7 @@
   <!-- Our best guess here is, that a reserved word is enclosed by a literal-tag. We exclude tags with
     attributes here, since they mostly are references to cmake vars or props. -->
   <xsl:template
-    match="/document/section/paragraph//literal[not(@*)] | /document/section/definition_list//literal[not(@*)] |/document/section/section/paragraph//literal[not(@*)]">
+    match="/document/section/paragraph//literal[not(@*)] | /document/section/definition_list//literal[not(@*)] | /document/section/section/definition_list//literal[not(@*)] | /document/section/section/paragraph//literal[not(@*)]">
     <xsl:param name="command" tunnel="yes" />
     <xsl:variable name="literal" select="normalize-space(text())" />
 
