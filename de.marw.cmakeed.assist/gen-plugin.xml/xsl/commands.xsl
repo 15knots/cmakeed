@@ -65,10 +65,15 @@
     <xsl:when test="not(starts-with($text, $command))"/>
     <xsl:when test="$text2=''"/>
     <xsl:when test="starts-with($text,'if(var')"/>
+    <xsl:when test="starts-with($text2,'(...')"/>
+    <xsl:when test="starts-with($text2,'(Experimental ')"/>
+    <xsl:when test="starts-with($text2,'(foo ')"/>
     <xsl:when test="contains($text2,'libfoo')"/>
     <xsl:when test="contains($text2,'myExe')"/>
     <xsl:when test="contains($text2,'myexe')"/>
+    <xsl:when test="contains($text2,'mylib')"/>
     <xsl:when test="contains($text2,'mypro')"/>
+    <xsl:when test="contains($text2,'myTarget')"/>
     <xsl:otherwise>
       <xsl:message terminate="no" >#<xsl:value-of select="$text" />#</xsl:message>
       <xsl:value-of select="'&#10;'" />
