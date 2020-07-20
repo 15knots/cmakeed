@@ -108,6 +108,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </license>
 
    <url>
+      <discovery label="cmakeed Update" url="https://raw.githubusercontent.com/15knots/cmakeed/master/cmakeed-update/"/>
       <discovery label="cmake4eclipse Updates" url="https://raw.githubusercontent.com/15knots/cmake4eclipse/master/releng/comp-update/:"/>
    </url>
 

@@ -3,8 +3,8 @@
 For the rest of this document `$CMAKESRC` refers to the location of the cmake sources.
 
 ## Preparation
-- Make sure, package `python-Sphinx` (if on openSUSE) is installed:
- - `sudo zypper install --no-recommends  python-Sphinx` 
+- Make sure, package `python3-Sphinx` (if on openSUSE) is installed:
+ - `sudo zypper install --no-recommends  python3-Sphinx` 
 - Make sure, `ant` is installed, it is needed to run the transformations.
 - Make sure, an XPATH 2 compatible XSLT transformer is in stalled, currently saxon9.
  - On openSUSE run `sudo zypper in saxon9`.
