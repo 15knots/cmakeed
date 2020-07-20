@@ -31,7 +31,6 @@
 <usage value="(&lt;name&gt; [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] [source1] [source2 ...])"/>
 <usage value="(&lt;name&gt; &lt;SHARED|STATIC|MODULE|OBJECT|UNKNOWN&gt; IMPORTED [GLOBAL])"/>
 <usage value="(&lt;name&gt; OBJECT &lt;src&gt;...)"/>
-<usage value="(... $&lt;TARGET_OBJECTS:objlib&gt; ...) add_executable(... $&lt;TARGET_OBJECTS:objlib&gt; ...)"/>
 <usage value="(&lt;name&gt; ALIAS &lt;target&gt;)"/>
 <usage value="(&lt;name&gt; INTERFACE [IMPORTED [GLOBAL]])"/>
 </command>
@@ -60,6 +59,10 @@
 </command>
 <command name="cmake_host_system_information" desc="Query host system specific information.">
 <usage value="(RESULT &lt;variable&gt; QUERY &lt;key&gt; ...)"/>
+</command>
+<command name="cmake_language" desc="Call meta-operations on CMake commands.">
+<usage value="(CALL &lt;command&gt; [&lt;args&gt;...])"/>
+<usage value="(EVAL CODE &lt;code&gt;...)"/>
 </command>
 <command name="cmake_minimum_required" desc="Require a minimum version of cmake.">
 <usage value="(VERSION &lt;min&gt;[...&lt;max&gt;] [FATAL_ERROR])"/>
@@ -109,14 +112,13 @@
 </command>
 <command name="ctest_start" desc="Starts the testing for a given model">
 <usage value="(&lt;model&gt; [&lt;source&gt; [&lt;binary&gt;]] [GROUP &lt;group&gt;] [QUIET]) ctest_start([&lt;model&gt; [&lt;source&gt; [&lt;binary&gt;]]] [GROUP &lt;group&gt;] APPEND [QUIET])"/>
-<usage value="(Experimental path/to/source path/to/binary GROUP SomeGroup QUIET APPEND) ctest_start(GROUP SomeGroup Experimental QUIET path/to/source APPEND path/to/binary) ctest_start(APPEND QUIET Experimental path/to/source GROUP SomeGroup path/to/binary)"/>
 </command>
 <command name="ctest_submit" desc="Perform the CTest Submit Step as a Dashboard Client.">
 <usage value="([PARTS &lt;part&gt;...] [FILES &lt;file&gt;...] [SUBMIT_URL &lt;url&gt;] [BUILD_ID &lt;result-var&gt;] [HTTPHEADER &lt;header&gt;] [RETRY_COUNT &lt;count&gt;] [RETRY_DELAY &lt;delay&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [QUIET] )"/>
 <usage value="(CDASH_UPLOAD &lt;file&gt; [CDASH_UPLOAD_TYPE &lt;type&gt;] [SUBMIT_URL &lt;url&gt;] [HTTPHEADER &lt;header&gt;] [RETRY_COUNT &lt;count&gt;] [RETRY_DELAY &lt;delay&gt;] [RETURN_VALUE &lt;result-var&gt;] [QUIET])"/>
 </command>
 <command name="ctest_test" desc="Perform the CTest Test Step as a Dashboard Client.">
-<usage value="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL &lt;level&gt;] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [QUIET] )"/>
+<usage value="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL &lt;level&gt;] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_ON_FAILURE] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [QUIET] )"/>
 </command>
 <command name="ctest_update" desc="Perform the CTest Update Step as a Dashboard Client.">
 <usage value="([SOURCE &lt;source-dir&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [QUIET])"/>
@@ -158,7 +160,7 @@
 <usage value="(Executable [directory in which to run] [ARGS &lt;arguments to executable&gt;] [OUTPUT_VARIABLE &lt;var&gt;] [RETURN_VALUE &lt;var&gt;])"/>
 </command>
 <command name="execute_process" desc="Execute one or more child processes.">
-<usage value="(COMMAND &lt;cmd1&gt; [&lt;arguments&gt;] [COMMAND &lt;cmd2&gt; [&lt;arguments&gt;]]... [WORKING_DIRECTORY &lt;directory&gt;] [TIMEOUT &lt;seconds&gt;] [RESULT_VARIABLE &lt;variable&gt;] [RESULTS_VARIABLE &lt;variable&gt;] [OUTPUT_VARIABLE &lt;variable&gt;] [ERROR_VARIABLE &lt;variable&gt;] [INPUT_FILE &lt;file&gt;] [OUTPUT_FILE &lt;file&gt;] [ERROR_FILE &lt;file&gt;] [OUTPUT_QUIET] [ERROR_QUIET] [COMMAND_ECHO &lt;where&gt;] [OUTPUT_STRIP_TRAILING_WHITESPACE] [ERROR_STRIP_TRAILING_WHITESPACE] [ENCODING &lt;name&gt;])"/>
+<usage value="(COMMAND &lt;cmd1&gt; [&lt;arguments&gt;] [COMMAND &lt;cmd2&gt; [&lt;arguments&gt;]]... [WORKING_DIRECTORY &lt;directory&gt;] [TIMEOUT &lt;seconds&gt;] [RESULT_VARIABLE &lt;variable&gt;] [RESULTS_VARIABLE &lt;variable&gt;] [OUTPUT_VARIABLE &lt;variable&gt;] [ERROR_VARIABLE &lt;variable&gt;] [INPUT_FILE &lt;file&gt;] [OUTPUT_FILE &lt;file&gt;] [ERROR_FILE &lt;file&gt;] [OUTPUT_QUIET] [ERROR_QUIET] [COMMAND_ECHO &lt;where&gt;] [OUTPUT_STRIP_TRAILING_WHITESPACE] [ERROR_STRIP_TRAILING_WHITESPACE] [ENCODING &lt;name&gt;] [ECHO_OUTPUT_VARIABLE] [ECHO_ERROR_VARIABLE])"/>
 </command>
 <command name="export" desc="Export targets from the build tree for use by outside projects.">
 <usage value="(EXPORT &lt;export-name&gt; [NAMESPACE &lt;namespace&gt;] [FILE &lt;filename&gt;])"/>
@@ -179,6 +181,7 @@
 <usage value="(WRITE &lt;filename&gt; &lt;content&gt;...) file(APPEND &lt;filename&gt; &lt;content&gt;...)"/>
 <usage value="(TOUCH [&lt;files&gt;...]) file(TOUCH_NOCREATE [&lt;files&gt;...])"/>
 <usage value="(GENERATE OUTPUT output-file &lt;INPUT input-file|CONTENT content&gt; [CONDITION expression])"/>
+<usage value="(CONFIGURE OUTPUT output-file CONTENT content [ESCAPE_QUOTES] [@ONLY] [NEWLINE_STYLE [UNIX|DOS|WIN32|LF|CRLF] ])"/>
 <usage value="(GLOB &lt;variable&gt; [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] [&lt;globbing-expressions&gt;...]) file(GLOB_RECURSE &lt;variable&gt; [FOLLOW_SYMLINKS] [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] [&lt;globbing-expressions&gt;...])"/>
 <usage value="(RENAME &lt;oldname&gt; &lt;newname&gt;)"/>
 <usage value="(REMOVE [&lt;files&gt;...]) file(REMOVE_RECURSE [&lt;files&gt;...])"/>
@@ -191,15 +194,17 @@
 <usage value="(TO_CMAKE_PATH &#34;&lt;path&gt;&#34; &lt;variable&gt;) file(TO_NATIVE_PATH &#34;&lt;path&gt;&#34; &lt;variable&gt;)"/>
 <usage value="(DOWNLOAD &lt;url&gt; &lt;file&gt; [&lt;options&gt;...]) file(UPLOAD &lt;file&gt; &lt;url&gt; [&lt;options&gt;...])"/>
 <usage value="(LOCK &lt;path&gt; [DIRECTORY] [RELEASE] [GUARD &lt;FUNCTION|FILE|PROCESS&gt;] [RESULT_VARIABLE &lt;variable&gt;] [TIMEOUT &lt;seconds&gt;])"/>
+<usage value="(ARCHIVE_CREATE OUTPUT &lt;archive&gt; PATHS &lt;paths&gt;... [FORMAT &lt;format&gt;] [COMPRESSION &lt;compression&gt;] [MTIME &lt;mtime&gt;] [VERBOSE])"/>
+<usage value="(ARCHIVE_EXTRACT INPUT &lt;archive&gt; [DESTINATION &lt;dir&gt;] [PATTERNS &lt;patterns&gt;...] [LIST_ONLY] [VERBOSE])"/>
 </command>
 <command name="find_file" desc="A short-hand signature is:">
 <usage value="(&lt;VAR&gt; name1 [path1 path2 ...])"/>
-<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
 <usage value="(&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_file (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="find_library" desc="A short-hand signature is:">
 <usage value="(&lt;VAR&gt; name1 [path1 path2 ...])"/>
-<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
 <usage value="(&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_library (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="find_package" desc="Find an external project, and load its settings.">
@@ -209,12 +214,12 @@
 </command>
 <command name="find_path" desc="A short-hand signature is:">
 <usage value="(&lt;VAR&gt; name1 [path1 path2 ...])"/>
-<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
 <usage value="(&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_path (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="find_program" desc="A short-hand signature is:">
 <usage value="(&lt;VAR&gt; name1 [path1 path2 ...])"/>
-<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS path1 [path2 ... ENV var]] [PATHS path1 [path2 ... ENV var]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
 <usage value="(&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_program (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="fltk_wrap_ui" desc="Create FLTK user interfaces Wrappers.">
@@ -243,13 +248,13 @@
 <usage value="(&lt;var&gt; &lt;FileName&gt; PROGRAM [PROGRAM_ARGS &lt;arg_var&gt;] [CACHE])"/>
 </command>
 <command name="get_property" desc="Get a property.">
-<usage value="(&lt;variable&gt; &lt;GLOBAL | DIRECTORY [&lt;dir&gt;] | TARGET &lt;target&gt; | SOURCE &lt;source&gt; | INSTALL &lt;file&gt; | TEST &lt;test&gt; | CACHE &lt;entry&gt; | VARIABLE &gt; PROPERTY &lt;name&gt; [SET | DEFINED | BRIEF_DOCS | FULL_DOCS])"/>
+<usage value="(&lt;variable&gt; &lt;GLOBAL | DIRECTORY [&lt;dir&gt;] | TARGET &lt;target&gt; | SOURCE &lt;source&gt; | [DIRECTORY &lt;dir&gt; | TARGET_DIRECTORY &lt;target&gt;] | INSTALL &lt;file&gt; | TEST &lt;test&gt; | CACHE &lt;entry&gt; | VARIABLE &gt; PROPERTY &lt;name&gt; [SET | DEFINED | BRIEF_DOCS | FULL_DOCS])"/>
 </command>
 <command name="get_source_file_property" desc="Get a property for a source file.">
-<usage value="(VAR file property)"/>
+<usage value="(&lt;variable&gt; &lt;file&gt; [DIRECTORY &lt;dir&gt; | TARGET_DIRECTORY &lt;target&gt;] &lt;property&gt;)"/>
 </command>
 <command name="get_target_property" desc="Get a property from a target.">
-<usage value="(VAR target property)"/>
+<usage value="(&lt;VAR&gt; target property)"/>
 </command>
 <command name="get_test_property" desc="Get a property of the test.">
 <usage value="(test property VAR)"/>
@@ -380,10 +385,10 @@
 <usage value="(PROPERTIES prop1 value1 [prop2 value2] ...)"/>
 </command>
 <command name="set_property" desc="Set a named property in a given scope.">
-<usage value="(&lt;GLOBAL | DIRECTORY [&lt;dir&gt;] | TARGET [&lt;target1&gt; ...] | SOURCE [&lt;src1&gt; ...] | INSTALL [&lt;file1&gt; ...] | TEST [&lt;test1&gt; ...] | CACHE [&lt;entry1&gt; ...] &gt; [APPEND] [APPEND_STRING] PROPERTY &lt;name&gt; [value1 ...])"/>
+<usage value="(&lt;GLOBAL | DIRECTORY [&lt;dir&gt;] | TARGET [&lt;target1&gt; ...] | SOURCE [&lt;src1&gt; ...] [DIRECTORY &lt;dirs&gt; ...] | [TARGET_DIRECTORY &lt;targets&gt; ...] INSTALL [&lt;file1&gt; ...] | TEST [&lt;test1&gt; ...] | CACHE [&lt;entry1&gt; ...] &gt; [APPEND] [APPEND_STRING] PROPERTY &lt;name&gt; [&lt;value1&gt; ...])"/>
 </command>
 <command name="set_source_files_properties" desc="Source files can have properties that affect how they are built.">
-<usage value="([file1 [file2 [...]]] PROPERTIES prop1 value1 [prop2 value2 [...]])"/>
+<usage value="(&lt;files&gt; ... [DIRECTORY &lt;dirs&gt; ...] [TARGET_DIRECTORY &lt;targets&gt; ...] PROPERTIES &lt;prop1&gt; &lt;value1&gt; [&lt;prop2&gt; &lt;value2&gt;] ...)"/>
 </command>
 <command name="set_target_properties" desc="Targets can have properties that affect how they are built.">
 <usage value="(target1 target2 ... PROPERTIES prop1 value1 prop2 value2 ...)"/>
@@ -396,7 +401,7 @@
 </command>
 <command name="source_group" desc="Define a grouping for source files in IDE project generation. There are two different signatures to create source groups.">
 <usage value="(&lt;name&gt; [FILES &lt;src&gt;...] [REGULAR_EXPRESSION &lt;regex&gt;]) source_group(TREE &lt;root&gt; [PREFIX &lt;prefix&gt;] [FILES &lt;src&gt;...])"/>
-<usage value="(outer\\inner ...) source_group(TREE &lt;root&gt; PREFIX sources\\inc ...)"/>
+<usage value="(base/subdir ...) source_group(outer\\inner ...) source_group(TREE &lt;root&gt; PREFIX sources\\inc ...)"/>
 <usage value="(&lt;name&gt; &lt;regex&gt;)"/>
 <usage value="(&lt;name&gt; REGULAR_EXPRESSION &lt;regex&gt;)"/>
 </command>
@@ -420,6 +425,7 @@
 <usage value="(COMPARE LESS &lt;string1&gt; &lt;string2&gt; &lt;output_variable&gt;) string(COMPARE GREATER &lt;string1&gt; &lt;string2&gt; &lt;output_variable&gt;) string(COMPARE EQUAL &lt;string1&gt; &lt;string2&gt; &lt;output_variable&gt;) string(COMPARE NOTEQUAL &lt;string1&gt; &lt;string2&gt; &lt;output_variable&gt;) string(COMPARE LESS_EQUAL &lt;string1&gt; &lt;string2&gt; &lt;output_variable&gt;) string(COMPARE GREATER_EQUAL &lt;string1&gt; &lt;string2&gt; &lt;output_variable&gt;)"/>
 <usage value="(&lt;HASH&gt; &lt;output_variable&gt; &lt;input&gt;)"/>
 <usage value="(ASCII &lt;number&gt; [&lt;number&gt; ...] &lt;output_variable&gt;)"/>
+<usage value="(HEX &lt;string&gt; &lt;output_variable&gt;)"/>
 <usage value="(CONFIGURE &lt;string&gt; &lt;output_variable&gt; [@ONLY] [ESCAPE_QUOTES])"/>
 <usage value="(MAKE_C_IDENTIFIER &lt;string&gt; &lt;output_variable&gt;)"/>
 <usage value="(RANDOM [LENGTH &lt;length&gt;] [ALPHABET &lt;alphabet&gt;] [RANDOM_SEED &lt;seed&gt;] &lt;output_variable&gt;)"/>
@@ -434,7 +440,6 @@
 </command>
 <command name="target_compile_definitions" desc="Add compile definitions to a target.">
 <usage value="(&lt;target&gt; &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...] [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])"/>
-<usage value="(foo PUBLIC FOO) target_compile_definitions(foo PUBLIC -DFOO) # -D removed target_compile_definitions(foo PUBLIC &#34;&#34; FOO) # &#34;&#34; ignored target_compile_definitions(foo PUBLIC -D FOO) # -D becomes &#34;&#34;, then ignored"/>
 </command>
 <command name="target_compile_features" desc="Add expected compiler features to a target.">
 <usage value="(&lt;target&gt; &lt;PRIVATE|PUBLIC|INTERFACE&gt; &lt;feature&gt; [...])"/>
@@ -444,7 +449,6 @@
 </command>
 <command name="target_include_directories" desc="Add include directories to a target.">
 <usage value="(&lt;target&gt; [SYSTEM] [BEFORE] &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...] [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])"/>
-<usage value="(mylib PUBLIC $&lt;BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/mylib&gt; $&lt;INSTALL_INTERFACE:include/mylib&gt; # &lt;prefix&gt;/include/mylib )"/>
 </command>
 <command name="target_link_directories" desc="Add link directories to a target.">
 <usage value="(&lt;target&gt; [BEFORE] &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...] [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])"/>
@@ -461,8 +465,6 @@
 </command>
 <command name="target_precompile_headers" desc="Add a list of header files to precompile.">
 <usage value="(&lt;target&gt; &lt;INTERFACE|PUBLIC|PRIVATE&gt; [header1...] [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [header2...] ...])"/>
-<usage value="(myTarget PUBLIC project_header.h &#34;$&lt;$&lt;COMPILE_LANGUAGE:CXX&gt;:cxx_only.h&gt;&#34; PRIVATE [[&#34;other_header.h&#34;]] &lt;unordered_map&gt; )"/>
-<usage value="(mylib PRIVATE &#34;$&lt;$&lt;COMPILE_LANGUAGE:C&gt;:&lt;stddef.h$&lt;ANGLE-R&gt;&gt;&#34; &#34;$&lt;$&lt;COMPILE_LANGUAGE:CXX&gt;:&lt;cstddef$&lt;ANGLE-R&gt;&gt;&#34; )"/>
 <usage value="(&lt;target&gt; REUSE_FROM &lt;other_target&gt;)"/>
 </command>
 <command name="target_sources" desc="Add sources to a target.">
@@ -507,6 +509,7 @@
 <property name="ADVANCED" desc="True if entry should be hidden by default in GUIs."/>
 <property name="AIX_EXPORT_ALL_SYMBOLS" desc="On AIX, CMake automatically exports all symbols from shared libraries, and from executables with the ENABLE_EXPORTS target property set. Explicitly disable this boolean property to suppress the behavior and export no symbols by default. In this case it is expected that the project will use other means to export some symbols."/>
 <property name="ALIASED_TARGET" desc="Name of target aliased by this target."/>
+<property name="ALIAS_GLOBAL" desc="Read-only property indicating of whether an ALIAS target is globally visible."/>
 <property name="ALLOW_DUPLICATE_CUSTOM_TARGETS" desc="Allow duplicate custom targets to be created."/>
 <property name="ANDROID_ANT_ADDITIONAL_OPTIONS" desc="Set the additional options for Android Ant build system. This is a string value containing all command line options for the Ant build. This property is initialized by the value of the CMAKE_ANDROID_ANT_ADDITIONAL_OPTIONS variable if it is set when a target is created."/>
 <property name="ANDROID_API" desc="When Cross Compiling for Android with NVIDIA Nsight Tegra Visual Studio Edition, this property sets the Android target API version (e.g. 15). The version number must be a positive decimal integer. This property is initialized by the value of the CMAKE_ANDROID_API variable if it is set when a target is created."/>
@@ -621,6 +624,7 @@
 <property name="CSharp_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="CSharp_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
 <property name="CSharp_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
+<property name="CUDA_ARCHITECTURES" desc="List of architectures to generate device code for."/>
 <property name="CUDA_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
 <property name="CUDA_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, OBJC, OBJCXX, or CUDA."/>
 <property name="CUDA_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -688,6 +692,7 @@
 <property name="FIXTURES_SETUP" desc="Specifies a list of fixtures for which the test is to be treated as a setup test. These fixture names are distinct from test case names and are not required to have any similarity to the names of tests associated with them."/>
 <property name="FOLDER" desc="Set the folder name. Use to organize targets in an IDE."/>
 <property name="FRAMEWORK" desc="Build SHARED or STATIC library as Framework Bundle on the macOS and iOS."/>
+<property name="FRAMEWORK_MULTI_CONFIG_POSTFIX_&lt;CONFIG&gt;" desc="Postfix to append to the framework file name for configuration &lt;CONFIG&gt;, when using a multi-config generator (like Xcode and Ninja Multi-Config)."/>
 <property name="FRAMEWORK_VERSION" desc="Version of a framework created using the FRAMEWORK target property (e.g. A)."/>
 <property name="Fortran_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
 <property name="Fortran_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, OBJC, OBJCXX, or CUDA."/>
@@ -696,6 +701,7 @@
 <property name="Fortran_FORMAT" desc="Set to FIXED or FREE to indicate the Fortran source layout."/>
 <property name="Fortran_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
 <property name="Fortran_MODULE_DIRECTORY" desc="Specify output directory for Fortran modules provided by the target."/>
+<property name="Fortran_PREPROCESS" desc="Control whether the Fortran source file should be unconditionally preprocessed."/>
 <property name="Fortran_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="GENERATED" desc="Is this source file generated as part of the build or CMake process."/>
 <property name="GENERATOR_FILE_NAME" desc="Generator’s file for this target."/>
@@ -786,7 +792,7 @@
 <property name="LINK_INTERFACE_MULTIPLICITY" desc="Repetition count for STATIC libraries with cyclic dependencies."/>
 <property name="LINK_INTERFACE_MULTIPLICITY_&lt;CONFIG&gt;" desc="Per-configuration repetition count for cycles of STATIC libraries."/>
 <property name="LINK_LIBRARIES" desc="List of direct link dependencies."/>
-<property name="LINK_OPTIONS" desc="List of options to use for the link step of shared library, module and executable targets. Targets that are static libraries need to use the STATIC_LIBRARY_OPTIONS target property."/>
+<property name="LINK_OPTIONS" desc="List of options to use for the link step of shared library, module and executable targets as well as the device link step. Targets that are static libraries need to use the STATIC_LIBRARY_OPTIONS target property."/>
 <property name="LINK_SEARCH_END_STATIC" desc="End a link line such that static system libraries are used."/>
 <property name="LINK_SEARCH_START_STATIC" desc="Assume the linker looks for static libraries by default."/>
 <property name="LINK_WHAT_YOU_USE" desc="This is a boolean option that when set to TRUE will automatically run ldd -r -u on the target after it is linked. In addition, the linker flag -Wl,--no-as-needed will be passed to the target with the link command so that all libraries specified on the command line will be linked into the target. This will result in the link producing a list of libraries that provide no symbols used by this target but are being linked to it. This is only applicable to executable and shared library targets and will only work when ld and ldd accept the flags used."/>
@@ -825,6 +831,7 @@
 <property name="PACKAGES_NOT_FOUND" desc="List of packages which were not found during the CMake run."/>
 <property name="PARENT_DIRECTORY" desc="Source directory that added current subdirectory."/>
 <property name="PASS_REGULAR_EXPRESSION" desc="The output must match this regular expression for the test to pass."/>
+<property name="PCH_WARN_INVALID" desc="When this property is set to true, the precompile header compiler options will contain a compiler flag which should warn about invalid precompiled headers e.g. -Winvalid-pch for GNU compiler."/>
 <property name="PDB_NAME" desc="Output name for the MS debug symbol .pdb file generated by the linker for an executable or shared library target."/>
 <property name="PDB_NAME_&lt;CONFIG&gt;" desc="Per-configuration output name for the MS debug symbol .pdb file generated by the linker for an executable or shared library target."/>
 <property name="PDB_OUTPUT_DIRECTORY" desc="Output directory for the MS debug symbols .pdb file generated by the linker for an executable or shared library target."/>
@@ -848,7 +855,7 @@
 <property name="RC_INCLUDE_WHAT_YOU_USE" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
 <property name="RC_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="REPORT_UNDEFINED_PROPERTIES" desc="If set, report any undefined properties to this file."/>
-<property name="REQUIRED_FILES" desc="List of files required to run the test."/>
+<property name="REQUIRED_FILES" desc="List of files required to run the test. The filenames are relative to the test WORKING_DIRECTORY unless an absolute path is specified."/>
 <property name="RESOURCE" desc="Specify resource files in a FRAMEWORK or BUNDLE."/>
 <property name="RESOURCE_GROUPS" desc="Specify resources required by a test, grouped in a way that is meaningful to the test. See resource allocation for more information on how this property integrates into the CTest resource allocation feature."/>
 <property name="RESOURCE_LOCK" desc="Specify a list of resources that are locked by this test."/>
@@ -900,10 +907,12 @@
 <property name="TIMEOUT" desc="How many seconds to allow for this test."/>
 <property name="TIMEOUT_AFTER_MATCH" desc="Change a test’s timeout duration after a matching line is encountered in its output."/>
 <property name="TYPE" desc="The type of the target."/>
-<property name="UNITY_BUILD" desc="When this property is set to true, the target source files will be combined into batches for faster compilation. This is done by creating a (set of) unity sources which #include the original sources, then compiling these unity sources instead of the originals. This is known as a Unity or Jumbo build. The UNITY_BUILD_BATCH_SIZE property controls the upper limit on how many sources can be combined per unity source file."/>
+<property name="UNITY_BUILD" desc="When this property is set to true, the target source files will be combined into batches for faster compilation. This is done by creating a (set of) unity sources which #include the original sources, then compiling these unity sources instead of the originals. This is known as a Unity or Jumbo build."/>
 <property name="UNITY_BUILD_BATCH_SIZE" desc="Specifies the maximum number of source files that can be combined into any one unity source file when unity builds are enabled by the UNITY_BUILD target property. The original source files will be distributed across as many unity source files as necessary to honor this limit."/>
 <property name="UNITY_BUILD_CODE_AFTER_INCLUDE" desc="Code snippet which is included verbatim by the UNITY_BUILD feature just after every #include statement in the generated unity source files. For example:"/>
 <property name="UNITY_BUILD_CODE_BEFORE_INCLUDE" desc="Code snippet which is included verbatim by the UNITY_BUILD feature just before every #include statement in the generated unity source files. For example:"/>
+<property name="UNITY_BUILD_MODE" desc="CMake provides different algorithms for selecting which sources are grouped together into a bucket. Selection is decided by this property, which has the following acceptable values:"/>
+<property name="UNITY_GROUP" desc="This property controls which bucket the source will be part of when the UNITY_BUILD_MODE is set to GROUP."/>
 <property name="USE_FOLDERS" desc="Use the FOLDER target property to organize targets into folders."/>
 <property name="VALUE" desc="Value of a cache entry."/>
 <property name="VARIABLES" desc="List of variables defined in the current directory."/>
@@ -940,6 +949,7 @@
 <property name="VS_MOBILE_EXTENSIONS_VERSION" desc="Visual Studio Windows 10 Mobile Extensions Version"/>
 <property name="VS_NO_SOLUTION_DEPLOY" desc="Specify that the target should not be marked for deployment to a Windows CE or Windows Phone device in the generated Visual Studio solution."/>
 <property name="VS_PACKAGE_REFERENCES" desc="Visual Studio package references for nuget."/>
+<property name="VS_PLATFORM_TOOLSET" desc="Overrides the platform toolset used to build a target."/>
 <property name="VS_PROJECT_IMPORT" desc="Visual Studio managed project imports"/>
 <property name="VS_RESOURCE_GENERATOR" desc="This property allows to specify the resource generator to be used on this file. It defaults to PublicResXFileCodeGenerator if not set."/>
 <property name="VS_SCC_AUXPATH" desc="Visual Studio Source Code Control Aux Path."/>
@@ -947,6 +957,7 @@
 <property name="VS_SCC_PROJECTNAME" desc="Visual Studio Source Code Control Project."/>
 <property name="VS_SCC_PROVIDER" desc="Visual Studio Source Code Control Provider."/>
 <property name="VS_SDK_REFERENCES" desc="Visual Studio project SDK references. Specify a semicolon-separated list of SDK references to be added to a generated Visual Studio project, e.g. Microsoft.AdMediatorWindows81, Version=1.0."/>
+<property name="VS_SETTINGS" desc="Set any item metadata on a non-built file."/>
 <property name="VS_SHADER_DISABLE_OPTIMIZATIONS" desc="Disable compiler optimizations for an .hlsl source file. This adds the -Od flag to the command line for the FxCompiler tool. Specify the value true for this property to disable compiler optimizations."/>
 <property name="VS_SHADER_ENABLE_DEBUG" desc="Enable debugging information for an .hlsl source file. This adds the -Zi flag to the command line for the FxCompiler tool. Specify the value true to generate debugging information for the compiled shader."/>
 <property name="VS_SHADER_ENTRYPOINT" desc="Specifies the name of the entry point for the shader of a .hlsl source file."/>
@@ -956,6 +967,8 @@
 <property name="VS_SHADER_OUTPUT_HEADER_FILE" desc="Set filename for output header file containing object code of a .hlsl source file."/>
 <property name="VS_SHADER_TYPE" desc="Set the Visual Studio shader type of a .hlsl source file."/>
 <property name="VS_SHADER_VARIABLE_NAME" desc="Set name of variable in header file containing object code of a .hlsl source file."/>
+<property name="VS_SOLUTION_DEPLOY" desc="Specify that the target should be marked for deployment when not targeting Windows CE, Windows Phone or a Windows Store application."/>
+<property name="VS_SOURCE_SETTINGS_&lt;tool&gt;" desc="Set any item metadata on all non-built files that use &lt;tool&gt;."/>
 <property name="VS_STARTUP_PROJECT" desc="Specify the default startup project in a Visual Studio solution."/>
 <property name="VS_TOOL_OVERRIDE" desc="Override the default Visual Studio tool that will be applied to the source file with a new tool not based on the extension of the file."/>
 <property name="VS_USER_PROPS" desc="Sets the user props file to be included in the visual studio C++ project file. The standard path is $(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props, which is in most cases the same as %LOCALAPPDATA%\\Microsoft\\MSBuild\\v4.0\\Microsoft.Cpp.Win32.user.props or %LOCALAPPDATA%\\Microsoft\\MSBuild\\v4.0\\Microsoft.Cpp.x64.user.props."/>
@@ -995,7 +1008,7 @@
 <property name="XCODE_SCHEME_THREAD_SANITIZER_STOP" desc="Whether to enable Thread Sanitizer - Pause on issues in the Diagnostics section of the generated Xcode scheme."/>
 <property name="XCODE_SCHEME_UNDEFINED_BEHAVIOUR_SANITIZER" desc="Whether to enable Undefined Behavior Sanitizer in the Diagnostics section of the generated Xcode scheme."/>
 <property name="XCODE_SCHEME_UNDEFINED_BEHAVIOUR_SANITIZER_STOP" desc="Whether to enable Undefined Behavior Sanitizer option Pause on issues in the Diagnostics section of the generated Xcode scheme."/>
-<property name="XCODE_SCHEME_WORKING_DIRECTORY" desc="Specify the Working Directory a of the Run and Profile action in the generated Xcode scheme. In case the value contains generator expressions those are evaluated."/>
+<property name="XCODE_SCHEME_WORKING_DIRECTORY" desc="Specify the Working Directory of the Run and Profile actions in the generated Xcode scheme. In case the value contains generator expressions those are evaluated."/>
 <property name="XCODE_SCHEME_ZOMBIE_OBJECTS" desc="Whether to enable Zombie Objects in the Diagnostics section of the generated Xcode scheme."/>
 <property name="XCTEST" desc="This target is a XCTest CFBundle on the Mac."/>
 </extension>
@@ -1033,6 +1046,7 @@
 <reservedword name="BUNDLE"/>
 <reservedword name="BUNDLE_EXECUTABLE"/>
 <reservedword name="BYPRODUCTS"/>
+<reservedword name="BZ"/>
 <reservedword name="CACHE"/>
 <reservedword name="CAPTURE_CMAKE_ERROR"/>
 <reservedword name="CASE"/>
@@ -1062,6 +1076,7 @@
 <reservedword name="COMPILE_OUTPUT_VARIABLE"/>
 <reservedword name="COMPONENT"/>
 <reservedword name="COMPONENTS"/>
+<reservedword name="COMPRESSION"/>
 <reservedword name="CONDITION"/>
 <reservedword name="CONFIG"/>
 <reservedword name="CONFIGS"/>
@@ -1098,6 +1113,7 @@
 <reservedword name="DESCRIPTION"/>
 <reservedword name="DESTDIR"/>
 <reservedword name="DESTINATION"/>
+<reservedword name="DEVICE_LINK"/>
 <reservedword name="DIR"/>
 <reservedword name="DIRECTORIES"/>
 <reservedword name="DIRECTORY"/>
@@ -1105,6 +1121,8 @@
 <reservedword name="DOC"/>
 <reservedword name="DOS"/>
 <reservedword name="DOWNLOAD"/>
+<reservedword name="ECHO_ERROR_VARIABLE"/>
+<reservedword name="ECHO_OUTPUT_VARIABLE"/>
 <reservedword name="ENCODING"/>
 <reservedword name="END"/>
 <reservedword name="ENV"/>
@@ -1141,7 +1159,6 @@
 <reservedword name="FILES_MATCHING"/>
 <reservedword name="FILE_PERMISSIONS"/>
 <reservedword name="FILTER"/>
-<reservedword name="FIND"/>
 <reservedword name="FIND_COMPONENTS"/>
 <reservedword name="FIND_QUIETLY"/>
 <reservedword name="FIND_REQUIRED"/>
@@ -1158,6 +1175,7 @@
 <reservedword name="FOO_ENABLE"/>
 <reservedword name="FOR"/>
 <reservedword name="FORCE"/>
+<reservedword name="FORMAT"/>
 <reservedword name="FOUND"/>
 <reservedword name="FRAMEWORK"/>
 <reservedword name="FULL_DOCS"/>
@@ -1177,11 +1195,13 @@
 <reservedword name="GROUP_WRITE"/>
 <reservedword name="GUARD"/>
 <reservedword name="GUID"/>
+<reservedword name="GZ"/>
 <reservedword name="HASH"/>
 <reservedword name="HEX"/>
 <reservedword name="HEXADECIMAL"/>
 <reservedword name="HINTS"/>
 <reservedword name="HOMEPAGE_URL"/>
+<reservedword name="HOST_LINK"/>
 <reservedword name="HTTPHEADER"/>
 <reservedword name="IGNORE"/>
 <reservedword name="IGNORED"/>
@@ -1229,6 +1249,7 @@
 <reservedword name="LINK_PUBLIC"/>
 <reservedword name="LISTS"/>
 <reservedword name="LIST_DIRECTORIES"/>
+<reservedword name="LIST_ONLY"/>
 <reservedword name="LOCK"/>
 <reservedword name="LOG"/>
 <reservedword name="MACOSX_BUNDLE"/>
@@ -1238,6 +1259,7 @@
 <reservedword name="MESSAGE_NEVER"/>
 <reservedword name="MODULE"/>
 <reservedword name="MODULES"/>
+<reservedword name="MTIME"/>
 <reservedword name="NAME"/>
 <reservedword name="NAMELINK_COMPONENT"/>
 <reservedword name="NAMELINK_ONLY"/>
@@ -1305,6 +1327,7 @@
 <reservedword name="PATHS"/>
 <reservedword name="PATH_SUFFIXES"/>
 <reservedword name="PATTERN"/>
+<reservedword name="PATTERNS"/>
 <reservedword name="PERMISSIONS"/>
 <reservedword name="PLATFORM"/>
 <reservedword name="POP"/>
@@ -1382,6 +1405,7 @@
 <reservedword name="STATUS"/>
 <reservedword name="STDERR"/>
 <reservedword name="STDOUT"/>
+<reservedword name="STOP_ON_FAILURE"/>
 <reservedword name="STOP_TIME"/>
 <reservedword name="STREQUAL"/>
 <reservedword name="STRGREATER"/>
@@ -1397,6 +1421,7 @@
 <reservedword name="TAG"/>
 <reservedword name="TARGET"/>
 <reservedword name="TARGETS"/>
+<reservedword name="TARGET_DIRECTORY"/>
 <reservedword name="TARGET_FILE"/>
 <reservedword name="TARGET_OBJECTS"/>
 <reservedword name="TEST"/>
@@ -1453,6 +1478,7 @@
 <reservedword name="WORLD_READ"/>
 <reservedword name="WORLD_WRITE"/>
 <reservedword name="WRITE"/>
+<reservedword name="XZ"/>
 <reservedword name="YES"/>
 </extension>
 <extension point="com.cthing.cmakeed.core.variables" >
@@ -1538,7 +1564,7 @@
 <variable name="CMAKE_ASM-ATT_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_ASM-ATT_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_ASM-ATT_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_ASM-ATT_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-ATT_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_ASM-ATT_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_ASM-ATT_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_ASM-ATT_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -1600,7 +1626,7 @@
 <variable name="CMAKE_ASM-MASM_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_ASM-MASM_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_ASM-MASM_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_ASM-MASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-MASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_ASM-MASM_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_ASM-MASM_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_ASM-MASM_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -1662,7 +1688,7 @@
 <variable name="CMAKE_ASM-NASM_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_ASM-NASM_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_ASM-NASM_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_ASM-NASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM-NASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_ASM-NASM_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_ASM-NASM_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_ASM-NASM_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -1724,7 +1750,7 @@
 <variable name="CMAKE_ASM_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_ASM_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_ASM_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_ASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_ASM_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_ASM_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_ASM_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_ASM_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -1799,7 +1825,7 @@
 <variable name="CMAKE_CPACK_COMMAND" desc="Full path to cpack(1) command installed with CMake."/>
 <variable name="CMAKE_CROSSCOMPILING" desc="Intended to indicate whether CMake is cross compiling, but note limitations discussed below."/>
 <variable name="CMAKE_CROSSCOMPILING_EMULATOR" desc="This variable is only used when CMAKE_CROSSCOMPILING is on. It should point to a command on the host system that can run executable built for the target system."/>
-<variable name="CMAKE_CROSS_CONFIGS" desc="Specifies a semicolon-separated list of configurations available from all build-&lt;Config&gt;.ninja files in the Ninja Multi-Config generator. See the generator’s documentation for more details."/>
+<variable name="CMAKE_CROSS_CONFIGS" desc="Specifies a semicolon-separated list of configurations available from all build-&lt;Config&gt;.ninja files in the Ninja Multi-Config generator. This variable activates cross-config mode. Targets from each config specified in this variable can be built from any build-&lt;Config&gt;.ninja file. Custom commands will use the configuration native to build-&lt;Config&gt;.ninja. If it is set to all, all configurations from CMAKE_CONFIGURATION_TYPES are cross-configs. If it is not specified, or empty, each build-&lt;Config&gt;.ninja file will only contain build rules for its own configuration."/>
 <variable name="CMAKE_CSharp_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
 <variable name="CMAKE_CSharp_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
 <variable name="CMAKE_CSharp_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
@@ -1831,7 +1857,7 @@
 <variable name="CMAKE_CSharp_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_CSharp_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_CSharp_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_CSharp_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CSharp_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_CSharp_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_CSharp_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_CSharp_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -1867,6 +1893,7 @@
 <variable name="CMAKE_CUDA_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
 <variable name="CMAKE_CUDA_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
 <variable name="CMAKE_CUDA_ANDROID_TOOLCHAIN_SUFFIX" desc="When Cross Compiling for Android this variable contains the host platform suffix of the toolchain GNU compiler and its binutils."/>
+<variable name="CMAKE_CUDA_ARCHITECTURES" desc="Default value for CUDA_ARCHITECTURES property of targets."/>
 <variable name="CMAKE_CUDA_ARCHIVE_APPEND" desc="Rule variable to append to a static archive."/>
 <variable name="CMAKE_CUDA_ARCHIVE_CREATE" desc="Rule variable to create a new static archive."/>
 <variable name="CMAKE_CUDA_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
@@ -1897,7 +1924,7 @@
 <variable name="CMAKE_CUDA_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_CUDA_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_CUDA_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_CUDA_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CUDA_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_CUDA_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_CUDA_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_CUDA_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -1923,7 +1950,7 @@
 <variable name="CMAKE_CUDA_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_CUDA_PLATFORM_ID" desc="An internal variable subject to change."/>
 <variable name="CMAKE_CUDA_RESOLVE_DEVICE_SYMBOLS" desc="Default value for CUDA_RESOLVE_DEVICE_SYMBOLS target property. This variable is used to initialize the property on each target as it is created."/>
-<variable name="CMAKE_CUDA_RUNTIME_LIBRARY" desc="Select the CUDA runtime library for use by compilers targeting the MSVC ABI. This variable is used to initialize the CUDA_RUNTIME_LIBRARY property on all targets as they are created."/>
+<variable name="CMAKE_CUDA_RUNTIME_LIBRARY" desc="Select the CUDA runtime library for use when compiling and linking CUDA. This variable is used to initialize the CUDA_RUNTIME_LIBRARY property on all targets as they are created."/>
 <variable name="CMAKE_CUDA_SEPARABLE_COMPILATION" desc="Default value for CUDA_SEPARABLE_COMPILATION target property. This variable is used to initialize the property on each target as it is created."/>
 <variable name="CMAKE_CUDA_SIMULATE_ID" desc="Identification string of “simulated” compiler."/>
 <variable name="CMAKE_CUDA_SIMULATE_VERSION" desc="Version string of “simulated” compiler."/>
@@ -1936,10 +1963,10 @@
 <variable name="CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES" desc="When the CUDA language has been enabled, this provides a semicolon-separated list of include directories provided by the CUDA Toolkit. The value may be useful for C++ source files to include CUDA headers."/>
 <variable name="CMAKE_CUDA_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_CURRENT_BINARY_DIR" desc="The path to the binary directory currently being processed."/>
-<variable name="CMAKE_CURRENT_FUNCTION" desc="When executing code inside a function(), this variable contains the name of the current function. It can be used for diagnostic or debug messages."/>
-<variable name="CMAKE_CURRENT_FUNCTION_LIST_DIR" desc="When executing code inside a function(), this variable contains the full directory of the listfile defining the current function."/>
-<variable name="CMAKE_CURRENT_FUNCTION_LIST_FILE" desc="When executing code inside a function(), this variable contains the full path to the listfile declaring a current function."/>
-<variable name="CMAKE_CURRENT_FUNCTION_LIST_LINE" desc="When executing code inside a function(), this variable contains the line number in the listfile where a current function has defined."/>
+<variable name="CMAKE_CURRENT_FUNCTION" desc="When executing code inside a function(), this variable contains the name of the current function. It can be useful for diagnostic or debug messages."/>
+<variable name="CMAKE_CURRENT_FUNCTION_LIST_DIR" desc="When executing code inside a function(), this variable contains the full directory of the listfile that defined the current function."/>
+<variable name="CMAKE_CURRENT_FUNCTION_LIST_FILE" desc="When executing code inside a function(), this variable contains the full path to the listfile that defined the current function."/>
+<variable name="CMAKE_CURRENT_FUNCTION_LIST_LINE" desc="When executing code inside a function(), this variable contains the line number in the listfile where the current function was defined."/>
 <variable name="CMAKE_CURRENT_LIST_DIR" desc="Full directory of the listfile currently being processed."/>
 <variable name="CMAKE_CURRENT_LIST_FILE" desc="Full path to the listfile currently being processed."/>
 <variable name="CMAKE_CURRENT_LIST_LINE" desc="The line number of the current file being processed."/>
@@ -1977,7 +2004,7 @@
 <variable name="CMAKE_CXX_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_CXX_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_CXX_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_CXX_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_CXX_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_CXX_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_CXX_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_CXX_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -2043,7 +2070,7 @@
 <variable name="CMAKE_C_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_C_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_C_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_C_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_C_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_C_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_C_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_C_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -2078,8 +2105,8 @@
 <variable name="CMAKE_C_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_DEBUG_POSTFIX" desc="See variable CMAKE_&lt;CONFIG&gt;_POSTFIX."/>
 <variable name="CMAKE_DEBUG_TARGET_PROPERTIES" desc="Enables tracing output for target properties."/>
-<variable name="CMAKE_DEFAULT_BUILD_TYPE" desc="Specifies the configuration to use by default in a build.ninja file in the Ninja Multi-Config generator. See the generator’s documentation for more details."/>
-<variable name="CMAKE_DEFAULT_CONFIGS" desc="Specifies a semicolon-separated list of configurations to build for a target in build.ninja if no :&lt;Config&gt; suffix is specified in the Ninja Multi-Config generator. See the generator’s documentation for more details."/>
+<variable name="CMAKE_DEFAULT_BUILD_TYPE" desc="Specifies the configuration to use by default in a build.ninja file in the Ninja Multi-Config generator. If this variable is specified, build.ninja uses build rules from build-&lt;Config&gt;.ninja by default. All custom commands are executed with this configuration. If the variable is not specified, the first item from CMAKE_CONFIGURATION_TYPES is used instead."/>
+<variable name="CMAKE_DEFAULT_CONFIGS" desc="Specifies a semicolon-separated list of configurations to build for a target in build.ninja if no :&lt;Config&gt; suffix is specified in the Ninja Multi-Config generator. If it is set to all, all configurations from CMAKE_CROSS_CONFIGS are used. If it is not specified, it defaults to CMAKE_DEFAULT_BUILD_TYPE."/>
 <variable name="CMAKE_DEPENDS_IN_PROJECT_ONLY" desc="When set to TRUE in a directory, the build system produced by the Makefile Generators is set up to only consider dependencies on source files that appear either in the source or in the binary directories. Changes to source files outside of these directories will not cause rebuilds."/>
 <variable name="CMAKE_DIRECTORY_LABELS" desc="Specify labels for the current directory."/>
 <variable name="CMAKE_DISABLE_FIND_PACKAGE_&lt;PackageName&gt;" desc="Variable for disabling find_package() calls."/>
@@ -2108,7 +2135,7 @@
 <variable name="CMAKE_EXTRA_GENERATOR" desc="The extra generator used to build the project. See cmake-generators(7)."/>
 <variable name="CMAKE_EXTRA_SHARED_LIBRARY_SUFFIXES" desc="Additional suffixes for shared libraries."/>
 <variable name="CMAKE_FIND_APPBUNDLE" desc="This variable affects how find_* commands choose between macOS Application Bundles and unix-style package components."/>
-<variable name="CMAKE_FIND_DEBUG_MODE" desc="Print extra find call information for the following commands to standard error: * find_program() * find_library() * find_file() * find_path() * find_package()"/>
+<variable name="CMAKE_FIND_DEBUG_MODE" desc="Print extra find call information for the following commands to standard error:"/>
 <variable name="CMAKE_FIND_FRAMEWORK" desc="This variable affects how find_* commands choose between macOS Frameworks and unix-style package components."/>
 <variable name="CMAKE_FIND_LIBRARY_CUSTOM_LIB_SUFFIX" desc="Specify a &lt;suffix&gt; to tell the find_library() command to search in a lib&lt;suffix&gt; directory before each lib directory that would normally be searched."/>
 <variable name="CMAKE_FIND_LIBRARY_PREFIXES" desc="Prefixes to prepend when looking for libraries."/>
@@ -2136,6 +2163,7 @@
 <variable name="CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY" desc="Controls searching the System Package Registry by the find_package() command."/>
 <variable name="CMAKE_FOLDER" desc="Set the folder name. Use to organize targets in an IDE."/>
 <variable name="CMAKE_FRAMEWORK" desc="Default value for FRAMEWORK of targets."/>
+<variable name="CMAKE_FRAMEWORK_MULTI_CONFIG_POSTFIX_&lt;CONFIG&gt;" desc="Default framework filename postfix under configuration &lt;CONFIG&gt; when using a multi-config generator."/>
 <variable name="CMAKE_FRAMEWORK_PATH" desc="Semicolon-separated list of directories specifying a search path for macOS frameworks used by the find_library(), find_package(), find_path(), and find_file() commands."/>
 <variable name="CMAKE_Fortran_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
 <variable name="CMAKE_Fortran_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
@@ -2168,7 +2196,7 @@
 <variable name="CMAKE_Fortran_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_Fortran_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_Fortran_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_Fortran_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Fortran_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_Fortran_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_Fortran_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_Fortran_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -2197,6 +2225,7 @@
 <variable name="CMAKE_Fortran_MODULE_DIRECTORY" desc="Fortran module output directory."/>
 <variable name="CMAKE_Fortran_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_Fortran_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_Fortran_PREPROCESS" desc="Default value for Fortran_PREPROCESS of targets."/>
 <variable name="CMAKE_Fortran_SIMULATE_ID" desc="Identification string of “simulated” compiler."/>
 <variable name="CMAKE_Fortran_SIMULATE_VERSION" desc="Version string of “simulated” compiler."/>
 <variable name="CMAKE_Fortran_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
@@ -2279,7 +2308,7 @@
 <variable name="CMAKE_Java_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_Java_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_Java_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_Java_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Java_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_Java_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_Java_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_Java_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -2366,6 +2395,7 @@
 <variable name="CMAKE_OSX_SYSROOT" desc="Specify the location or name of the macOS platform SDK to be used. CMake uses this value to compute the value of the -isysroot flag or equivalent and to help the find_* commands locate files in the SDK."/>
 <variable name="CMAKE_PARENT_LIST_FILE" desc="Full path to the CMake file that included the current one."/>
 <variable name="CMAKE_PATCH_VERSION" desc="Third version number component of the CMAKE_VERSION variable."/>
+<variable name="CMAKE_PCH_WARN_INVALID" desc="This variable is used to initialize the PCH_WARN_INVALID property of targets when they are created."/>
 <variable name="CMAKE_PDB_OUTPUT_DIRECTORY" desc="Output directory for MS debug symbol .pdb files generated by the linker for executable and shared library targets."/>
 <variable name="CMAKE_PDB_OUTPUT_DIRECTORY_&lt;CONFIG&gt;" desc="Per-configuration output directory for MS debug symbol .pdb files generated by the linker for executable and shared library targets."/>
 <variable name="CMAKE_POLICY_DEFAULT_CMP&lt;NNNN&gt;" desc="Default for CMake Policy CMP&lt;NNNN&gt; when it is otherwise left unset."/>
@@ -2417,7 +2447,7 @@
 <variable name="CMAKE_RC_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_RC_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_RC_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_RC_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_RC_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_RC_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_RC_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_RC_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -2523,7 +2553,7 @@
 <variable name="CMAKE_Swift_FLAGS" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_Swift_FLAGS_DEBUG" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_Swift_FLAGS_DEBUG_INIT" desc="This variable is the Debug variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
-<variable name="CMAKE_Swift_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_Swift_FLAGS_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform. For example, the contents of a xxxFLAGS environment variable will be prepended, where xxx will be language-specific but not necessarily the same as &lt;LANG&gt; (e.g. CXXFLAGS for CXX, FFLAGS for Fortran, and so on)."/>
 <variable name="CMAKE_Swift_FLAGS_MINSIZEREL" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
 <variable name="CMAKE_Swift_FLAGS_MINSIZEREL_INIT" desc="This variable is the MinSizeRel variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT variable."/>
 <variable name="CMAKE_Swift_FLAGS_RELEASE" desc="This variable is the Release variant of the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; variable."/>
@@ -2618,7 +2648,7 @@
 <variable name="CMAKE_XCODE_SCHEME_THREAD_SANITIZER_STOP" desc="Whether to enable Thread Sanitizer - Pause on issues in the Diagnostics section of the generated Xcode scheme."/>
 <variable name="CMAKE_XCODE_SCHEME_UNDEFINED_BEHAVIOUR_SANITIZER" desc="Whether to enable Undefined Behavior Sanitizer in the Diagnostics section of the generated Xcode scheme."/>
 <variable name="CMAKE_XCODE_SCHEME_UNDEFINED_BEHAVIOUR_SANITIZER_STOP" desc="Whether to enable Undefined Behavior Sanitizer option Pause on issues in the Diagnostics section of the generated Xcode scheme."/>
-<variable name="CMAKE_XCODE_SCHEME_WORKING_DIRECTORY" desc="Specify the Working Directory a of the Run and Profile action in the generated Xcode scheme."/>
+<variable name="CMAKE_XCODE_SCHEME_WORKING_DIRECTORY" desc="Specify the Working Directory of the Run and Profile actions in the generated Xcode scheme."/>
 <variable name="CMAKE_XCODE_SCHEME_ZOMBIE_OBJECTS" desc="Whether to enable Zombie Objects in the Diagnostics section of the generated Xcode scheme."/>
 <variable name="CPACK_ABSOLUTE_DESTINATION_FILES" desc="List of files which have been installed using an ABSOLUTE DESTINATION path."/>
 <variable name="CPACK_COMPONENT_INCLUDE_TOPLEVEL_DIRECTORY" desc="Boolean toggle to include/exclude top level directory (component case)."/>
@@ -2684,6 +2714,7 @@
 <variable name="CTEST_P4_COMMAND" desc="Specify the CTest P4Command setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_P4_OPTIONS" desc="Specify the CTest P4Options setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_P4_UPDATE_OPTIONS" desc="Specify the CTest P4UpdateOptions setting in a ctest(1) dashboard client script."/>
+<variable name="CTEST_RESOURCE_SPEC_FILE" desc="Specify the CTest ResourceSpecFile setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_RUN_CURRENT_SCRIPT" desc="Setting this to 0 prevents ctest(1) from being run again when it reaches the end of a script run by calling ctest -S."/>
 <variable name="CTEST_SCP_COMMAND" desc="Legacy option. Not used."/>
 <variable name="CTEST_SITE" desc="Specify the CTest Site setting in a ctest(1) dashboard client script."/>
@@ -2725,7 +2756,7 @@
 <variable name="PROJECT_DESCRIPTION" desc="Short project description given to the project command."/>
 <variable name="PROJECT_HOMEPAGE_URL" desc="The homepage URL of the project."/>
 <variable name="PROJECT_NAME" desc="Name of the project given to the project command."/>
-<variable name="PROJECT_SOURCE_DIR" desc="Top level source directory for the current project."/>
+<variable name="PROJECT_SOURCE_DIR" desc="This is the source directory of the last call to the project() command made in the current directory scope or one of its parents. Note, it is not affected by calls to project() made within a child directory scope (i.e. from within a call to add_subdirectory() from the current scope)."/>
 <variable name="PROJECT_VERSION" desc="Value given to the VERSION option of the most recent call to the project() command, if any."/>
 <variable name="PROJECT_VERSION_MAJOR" desc="First version number component of the PROJECT_VERSION variable as set by the project() command."/>
 <variable name="PROJECT_VERSION_MINOR" desc="Second version number component of the PROJECT_VERSION variable as set by the project() command."/>
