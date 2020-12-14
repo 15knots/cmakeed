@@ -34,6 +34,10 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ---
 # Release History
 
+## 1.15.1 (2020-12-14)
+### Changes
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.19.
+
 ## 1.15.0 (2020-07-21)
 ### Changes
 - Enhancement: Updated syntax highlighting data and tool tips to cmake 3.18.
@@ -94,7 +98,7 @@ Added 'Toggle Comment', 'Shift Left', 'Shift Right' actions to editor context me
 ### Changes
 - Fixed issue #6: CMakeEd inserts always to the text 4 spaces by the tab pressing.
 - Fixed feature #8: Allow to configure displayed tab width
-- Code clean-up: Imports removed, classes parametrized, redundant null-checks removed
+- Code clean-up: Imports removed, classes parameterized, redundant null-checks removed
 
 ## 1.2.0 (2016-10-14)
 ### Changes
@@ -130,7 +134,7 @@ Added 'Toggle Comment', 'Shift Left', 'Shift Right' actions to editor context me
 - Preference Panel to define custom keystroke code templates
 - Keystroke short cuts to comment/uncomment blocks of code
 - Basic hover support to show brief description of command or variable being hovered over.
-- CMake command reference intregrated in the Eclipse Help system
+- CMake command reference integrated in the Eclipse Help system
 - Editing of CMakeLists.txt and any *.cmake file or *.cmake.in file
 
 ## 1.1.0 (2008-12-29)
