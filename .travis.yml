@@ -22,8 +22,8 @@ after_success:
 
 # Deployment steps
 - set -e
+- curl -sSf -H "X-JFrog-Art-Api:${API_KEY}" -X PUT -T com.cthing.cmakeed.site/target/CMakeEd*.zip --url https://fifteenknots.jfrog.io/artifactory/p2-zip/cmakeed/
 # extract persion from repo pom
-- VERSION=$(basename com.cthing.cmakeed.site/target/CMakeEd-*.zip| sed -r -n 's/.+-([0-9]+(\.[0-9]+)*).zip$/\1/p')
-- curl -f -H ${API_KEY} -X PUT -T com.cthing.cmakeed.site/target/CMakeEd*.zip --url https://fifteenknots.jfrog.io/artifactory/p2-zip
+#- VERSION=$(basename com.cthing.cmakeed.site/target/CMakeEd-*.zip| sed -r -n 's/.+-([0-9]+(\.[0-9]+)*).zip$/\1/p')
 # upload p2 repo zip to bintray as a new version
-- curl -f -T com.cthing.cmakeed.site/target/CMakeEd*${VERSION}.zip -u${BINTRAY_USER}:${BINTRAY_API_KEY} https://api.bintray.com/content/${BINTRAY_USER}/p2-zip/cmakeed/${VERSION}/
+#- curl -f -T com.cthing.cmakeed.site/target/CMakeEd*${VERSION}.zip -u${BINTRAY_USER}:${BINTRAY_API_KEY} https://api.bintray.com/content/${BINTRAY_USER}/p2-zip/cmakeed/${VERSION}/
