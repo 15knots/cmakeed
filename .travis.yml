@@ -2,6 +2,8 @@ env:
   global:
   - secure: "yr+6iVZQ/N0fz3ZYgq29VP2ifLGQSSK1GiTlThVEMf5lI5vqHSnXf78cMaiCj94H2XbZF5JQjPkrkiXD0b+67dAcP4bI1LjtDUhXETfhgS+xvYnhzhuN9jOwU4OmyWDwtaU8vo3bmvbLYBQdxQ2REp84k+fcCIPyrV/Hlj2Ptt3aoiMBzyfPRa7vtXRryeOd5a5HxMnQJRgGxOX9VvRVb9suR/qALAfyBxQxikpKUw2nmS0+IeXMGMueqLfzjImwgdXJ3DFQGB9Y67AQTLmPoGR8dPDHPX8KM+bq6dqJmBRIxMeJjdS8OBVJGK6/OU4cCCcRTjrtlxfcFW9EFAnc8ZPm4FLZN+1Wk+ExllrBqDz7MBmFgwQG5ssv8YxYtXJgVOHh3YbToRcGqHn9CVCj72mun68B/qBwts0bzaS4TPDOtJTbCODRywVx02KLp0HciZtZZF+Mj6yjhlcI0Qfm5lYn2LxQ5wfFG6EdwpUhaNJprlzyZNeGn2yAp3EFHSe6K/7HygJZeWWe3kvvCTwgds7k1QxrqTzYEpLa/vRxxMimE4uBoCAHmwdAWJjflbCv0+OFWrx5QjqT5Vx8nJEFxrE9BfGNgZ92uCdB1X6bqEhpSFgHRujJ49HWZLXITfaqRK9fDEoSnbbjiECxyoSDjRHT9iqfC8ldsDQzq02/5c0="
   - secure: "eR6Oy0kZPnE+TbciFx78kTQeXHMzu48PCgU7SnPnUtqBhUjWcLVD4GnCA5zrQvPGXBEYMUg7MELRvBmCHfdG5hT7dnNMbP4x3qgwGI2JTi3Ty/4PkwnBwa389Oeid3ecW2sgefzqgSagkPlht6zo3Em9g8STGDyvYmr165stvry91BfVPC/fv1YsSmmlnN51gWDiq61m+oHplVYmG5eFfxmLDD56F/eNWe9mOiCRkVP6cS6BlAVCqA7J1Y65PnFIJUdnG8oNumqXAfTAtmIQDF37MxN0ZA/LmlGytbNQlr208O8UWW7jUJRxR7oPQmxHVZ3fdldP08siFLdvZ9zIIXMpK9LZRm/qMv7+L8FjbOH1rjkmaGl+OBpzugQOVfsl+khjJCJ2XDOG376H2vti4uvabdROIZsGI8gRXoJHZGCic6XqCaqSTLHgPM/AfsVir1YOXmMENcZF1Pg3GrYOxD750bV76cK+wSPTgaDq/MN088EjQxw7MNlE+cZkqo1CgbaJcfLjnq5RiQYj98FBa2d51U/FAXHH/NChs30QTyXhRVZ3lclXqzX8w8ChIvk/jxRj38txIMBymAT2WXGLhfccp06oegBui+UdjqOUaztHQjs1py4kL/wazlze0CP9oh1eV9coZqbC6HTOGBMQTibNoNJ+DX9KZIPu7sx8Tmo="
+# jfrog(travis)
+  - secure: "Ugm95HgFIoo7pJztfu31dNnWOtTmXhahH8tPhQFSnSYKqjp6TG2MH+IVWsgoeqEiuWz6+TpGnUnyuMlhaTCqq0o7zqKMCJK2FjqZRF4ZfI3lJPUo0ZAUsHn6m6hSQeIoKx6stxGMklOsq83hEs066zyc3jA/pe2lPOVX6JAjiLskq+/xmYDqK+GsYQBTWd9Jw4/hxT8PZGtLR0UlmVdoniJyUYoqXeOhLA3ymO7V7/bsjPvHTmFQq0dy+m/qGzuKrzznM9BiYu+bg6rFwtP2RFDDABTE5qe3+TQ7Mv746aYuY6NmhfJ9aAzS+rfuUjaJ4e4bu7S6WQZMUZnhMEKFRpXDb7LRXdCh4nEPZizu8qOBZ+VOqvGZIfJS/NFQErj5VmgZEBOV0dzmPgNZxKCpcpobnFqbvOk+N7WtdajHCM1fVbtyRZpWUESWwdxbPYpe9I6M5wP7VeInGsmQUQt95eqMDrx1DJ42obWB70rvHDSjlL23T0Bi4TX77WNGy3O3A/OGb9l3JwXG1xcLZUKXukZckgDZ0BB3LDD2yLResp3V++Xwg/+EEQkjMMDqyoZD95xh4eSFo5ZwArUeKVM66QZVz0XPW3p2d72vzlo4zHg9kDvbqmu+FYDbFxi+WU9rFtZK/SiNUPGyPRBNQhk/4ztoepBVgKx10mhRtyCwhcM="
 
 language: java
 jdk:
@@ -20,7 +22,8 @@ after_success:
 
 # Deployment steps
 - set -e
+- curl -sSf -H "X-JFrog-Art-Api:${API_KEY}" -X PUT -T com.cthing.cmakeed.site/target/CMakeEd*.zip --url https://fifteenknots.jfrog.io/artifactory/p2-zip/
 # extract persion from repo pom
-- VERSION=$(basename com.cthing.cmakeed.site/target/CMakeEd-*.zip| sed -r -n 's/.+-([0-9]+(\.[0-9]+)*).zip$/\1/p')
+#- VERSION=$(basename com.cthing.cmakeed.site/target/CMakeEd-*.zip| sed -r -n 's/.+-([0-9]+(\.[0-9]+)*).zip$/\1/p')
 # upload p2 repo zip to bintray as a new version
-- curl -f -T com.cthing.cmakeed.site/target/CMakeEd*${VERSION}.zip -u${BINTRAY_USER}:${BINTRAY_API_KEY} https://api.bintray.com/content/${BINTRAY_USER}/p2-zip/cmakeed/${VERSION}/
+#- curl -f -T com.cthing.cmakeed.site/target/CMakeEd*${VERSION}.zip -u${BINTRAY_USER}:${BINTRAY_API_KEY} https://api.bintray.com/content/${BINTRAY_USER}/p2-zip/cmakeed/${VERSION}/
