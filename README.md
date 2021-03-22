@@ -20,10 +20,10 @@ The plugin may be installed
 This composite update site contains the latest release as well as selected older releases: 
 https://raw.githubusercontent.com/15knots/cmakeed/master/cmakeed-update/ .
 
-Tool integrators will find each release at [bintray](https://bintray.com/15knots/p2-zip/cmakeed#files).
-Each release is provided as a standalone zipped p2 repository and can be consumed in a PDE target platform. To add one
+Tool integrators will find each release at [JFrog Platform](https://fifteenknots.jfrog.io/artifactory/p2-zip/).
+Each release is provided as a stand-alone zipped p2 repository and can be consumed in a PDE target platform. To add one
 of these repositories to your target platform, add a **Software Site** and enter a URL for the location as
-`jar:https://dl.bintray.com/15knots/p2-zip/CMakeEd-1.8.0.zip!/` (note the leading `jar:` and the trailing `!/`).
+`jar:https://fifteenknots.jfrog.io/artifactory/p2-zip/CMakeEd-1.16.0.zip!/` (note the leading `jar:` and the trailing `!/`).
 
 ### Debug and Build
 This project uses Apache maven as its build system.
