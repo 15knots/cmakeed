@@ -35,7 +35,7 @@
         <xsl:with-param name="command" select="$name" tunnel="yes" />
       </xsl:apply-templates>
       <xsl:apply-templates
-        select="section[@ids!='synopsis' and @ids!='example' and @ids!='arguments' and @ids!='invocation' and @ids!='argument-caveats id2']/literal_block">
+        select="section[@ids!='synopsis' and not(contains(@ids,'example')) and @ids!='arguments' and @ids!='invocation' and @ids!='argument-caveats id2']/literal_block">
         <xsl:with-param name="command" select="$name" tunnel="yes" />
       </xsl:apply-templates>
 	  <!-- for project command -->
