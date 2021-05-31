@@ -1,5 +1,5 @@
 [Install...](#installation-instructions)
-[![Build Status](https://travis-ci.org/15knots/cmakeed.svg?branch=master)](https://travis-ci.org/15knots/cmakeed)
+[![Build Status](https://github.com/15knots/cmakeed/actions/workflows/maven.yml/badge.svg)](https://github.com/15knots/cmakeed/actions/workflows/maven.yml)
 [![GitHub issues](https://img.shields.io/github/issues/15knots/cmakeed.svg)](https://github.com/15knots/cmakeed/issues)
 
 An Eclipse plug-in for editing CMake files such as CMakeLists.txt. Provides syntax coloring, CMake command content assist, 
