@@ -266,6 +266,7 @@ message(STATUS "${variable}: $${${variable}}")
  <extension
        point="org.eclipse.ui.preferenceTransfer">
     <transfer
+          icon="icons/CMakeLogo.gif"
           id="com.cthing.cmakeed.ui.transfer"
           name="CMake Editor Preferences">
        <mapping
