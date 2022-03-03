@@ -48,12 +48,12 @@
   </xsl:template>
 
   <!-- literal_block in any section contains a usage description -->
-  <xsl:template match="literal_block[@language='cmake' or not(@language)]">
+  <xsl:template match="literal_block[@language='cmake' or @language='none' or not(@language)]">
     <xsl:param name="command" tunnel="yes" />
 <!--     <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message> -->
     <xsl:variable name="text" select="normalize-space(text())" />
     <!-- remove command name from usage description -->
-    <xsl:variable name="text2" select="normalize-space(substring-after($text,$command))" />
+    <xsl:variable name="text2" select="normalize-space(substring-after($text, $command))" />
     <!--
       <xsl:message terminate="no"
       select="concat('DESC #',$text,'# : ',string(string-length($command)))" />
@@ -74,6 +74,21 @@
     <xsl:when test="contains($text2,'mylib')"/>
     <xsl:when test="contains($text2,'mypro')"/>
     <xsl:when test="contains($text2,'myTarget')"/>
+    <xsl:when test="$command='cmake_path'">
+      <!-- CMAKE_PATH may have multiple usages in a single text block -->
+      <xsl:for-each select="tokenize(text(), '&#10;')">
+        <xsl:variable name="text" select="normalize-space(.)" />
+          <xsl:if test="starts-with($text, $command)">
+            <xsl:variable name="text2" select="normalize-space(substring-after($text, $command))" />
+            <xsl:message terminate="no" >#<xsl:value-of select="$text" />#</xsl:message>
+            <xsl:value-of select="'&#10;'" />
+            <xsl:element name="usage">
+              <xsl:attribute name="value" select="$text2" />
+            </xsl:element>
+            <xsl:value-of select="'&#10;'" />
+          </xsl:if>
+      </xsl:for-each>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:message terminate="no" >#<xsl:value-of select="$text" />#</xsl:message>
       <xsl:value-of select="'&#10;'" />

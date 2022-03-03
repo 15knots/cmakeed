@@ -14,7 +14,7 @@ For the rest of this document `$CMAKESRC` refers to the location of the cmake so
 
 - Generate build scripts for cmake with cmake in the build directory, telling it to build documentation.
  1. Create a build directory: `mkdir -p $CMAKESRC/build`.
- - Run `(cd $CMAKESRC/build && cmake -DSPHINX_HTML=ON ..)`.
+ - Run `(cd $CMAKESRC/build && cmake -DSPHINX_HTML=ON -DCMAKE_USE_OPENSSL=OFF ..)`.
 - Generate XML files from the sources in `$CMAKESRC/Utilities/Sphinx/doctree`
 into directory `$CMAKESRC/build/xml/`.
  - Generate cmake documentation in XML format:

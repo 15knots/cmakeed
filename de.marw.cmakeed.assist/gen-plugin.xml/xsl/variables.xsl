@@ -18,6 +18,8 @@
     <lang>CXX</lang>
     <lang>Fortran</lang>
     <lang>Java</lang>
+    <lang>OBJC</lang>
+    <lang>OBJCXX</lang>
     <lang>RC</lang>
     <lang>Swift</lang>
   </xsl:variable>
