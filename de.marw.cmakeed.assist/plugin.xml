@@ -865,7 +865,7 @@
 <property name="INTERFACE_COMPILE_DEFINITIONS" desc="List of public compile definitions requirements for a library."/>
 <property name="INTERFACE_COMPILE_FEATURES" desc="List of public compile features requirements for a library."/>
 <property name="INTERFACE_COMPILE_OPTIONS" desc="List of public compile options requirements for a library."/>
-<property name="INTERFACE_HEADER_SETS" desc="List of INTERFACE and PUBLIC header sets added by target_sources(FILE_SET). Headers listed in these header sets can be installed with install(TARGETS) and exported with install(EXPORT) and export()."/>
+<property name="INTERFACE_HEADER_SETS" desc="List of the target's INTERFACE and PUBLIC header sets (i.e. all file sets with the type HEADERS). Files listed in these header sets can be installed with install(TARGETS) and exported with install(EXPORT) and export()."/>
 <property name="INTERFACE_INCLUDE_DIRECTORIES" desc="List of public include directories requirements for a library."/>
 <property name="INTERFACE_LINK_DEPENDS" desc="Additional public interface files on which a target binary depends for linking."/>
 <property name="INTERFACE_LINK_DIRECTORIES" desc="List of public link directories requirements for a library."/>
@@ -2564,7 +2564,7 @@
 <variable name="CMAKE_HOST_SYSTEM_VERSION" desc="The OS version CMake is running on."/>
 <variable name="CMAKE_HOST_UNIX" desc="True for UNIX and UNIX like operating systems."/>
 <variable name="CMAKE_HOST_WIN32" desc="True if the host system is running Windows, including Windows 64-bit and MSYS."/>
-<variable name="CMAKE_IGNORE_PATH" desc="Semicolon-separated list of directories to be ignored by the find_program(), find_library(), find_file(), and find_path() commands. This is useful in cross-compiling environments where some system directories contain incompatible but possibly linkable libraries. For example, on cross-compiled cluster environments, this allows a user to ignore directories containing libraries meant for the front-end machine."/>
+<variable name="CMAKE_IGNORE_PATH" desc="Semicolon-separated list of directories to be ignored by the various find...() commands."/>
 <variable name="CMAKE_IGNORE_PREFIX_PATH" desc="Semicolon-separated list of prefixes to be ignored by the find_program(), find_library(), find_file(), find_path(), and find_package() commands. This is useful in cross-compiling environments where some system directories contain incompatible but possibly linkable libraries. For example, on cross-compiled cluster environments, this allows a user to ignore directories containing libraries meant for the front-end machine."/>
 <variable name="CMAKE_IMPORT_LIBRARY_PREFIX" desc="The prefix for import libraries that you link to."/>
 <variable name="CMAKE_IMPORT_LIBRARY_SUFFIX" desc="The suffix for import libraries that you link to."/>
@@ -2996,7 +2996,7 @@
 <variable name="CMAKE_SYSTEM" desc="Composite name of operating system CMake is compiling for."/>
 <variable name="CMAKE_SYSTEM_APPBUNDLE_PATH" desc="Search path for macOS application bundles used by the find_program(), and find_package() commands. By default it contains the standard directories for the current system. It is not intended to be modified by the project, use CMAKE_APPBUNDLE_PATH for this."/>
 <variable name="CMAKE_SYSTEM_FRAMEWORK_PATH" desc="Search path for macOS frameworks used by the find_library(), find_package(), find_path(), and find_file() commands. By default it contains the standard directories for the current system. It is not intended to be modified by the project, use CMAKE_FRAMEWORK_PATH for this."/>
-<variable name="CMAKE_SYSTEM_IGNORE_PATH" desc="Semicolon-separated list of directories to be ignored by the find_program(), find_library(), find_file(), and find_path() commands. This is useful in cross-compiling environments where some system directories contain incompatible but possibly linkable libraries. For example, on cross-compiled cluster environments, this allows a user to ignore directories containing libraries meant for the front-end machine."/>
+<variable name="CMAKE_SYSTEM_IGNORE_PATH" desc="Semicolon-separated list of directories to be ignored by the various find...() commands."/>
 <variable name="CMAKE_SYSTEM_IGNORE_PREFIX_PATH" desc="Semicolon-separated list of prefixes to be ignored by the find_program(), find_library(), find_file(), find_path(), and find_package() commands. This is useful in cross-compiling environments where some system directories contain incompatible but possibly linkable libraries. For example, on cross-compiled cluster environments, this allows a user to ignore directories containing libraries meant for the front-end machine."/>
 <variable name="CMAKE_SYSTEM_INCLUDE_PATH" desc="Semicolon-separated list of directories specifying a search path for the find_file() and find_path() commands. By default this contains the standard directories for the current system. It is not intended to be modified by the project; use CMAKE_INCLUDE_PATH for this. See also CMAKE_SYSTEM_PREFIX_PATH."/>
 <variable name="CMAKE_SYSTEM_LIBRARY_PATH" desc="Semicolon-separated list of directories specifying a search path for the find_library() command. By default this contains the standard directories for the current system. It is not intended to be modified by the project; use CMAKE_LIBRARY_PATH for this. See also CMAKE_SYSTEM_PREFIX_PATH."/>
