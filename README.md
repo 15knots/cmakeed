@@ -20,10 +20,11 @@ The plugin may be installed
 This composite update site contains the latest release as well as selected older releases: 
 https://raw.githubusercontent.com/15knots/cmakeed/master/cmakeed-update/ .
 
-Tool integrators will find each release at [JFrog Platform](https://fifteenknots.jfrog.io/artifactory/p2-zip/).
+### p2 Repositories
+Tool integrators will find each release at [cloudsmith](https://cloudsmith.io/~15knots/repos/p2-zip/packages/).
 Each release is provided as a stand-alone zipped p2 repository and can be consumed in a PDE target platform. To add one
 of these repositories to your target platform, add a **Software Site** and enter a URL for the location as
-`jar:https://fifteenknots.jfrog.io/artifactory/p2-zip/CMakeEd-1.16.0.zip!/` (note the leading `jar:` and the trailing `!/`).
+`jar:https://cloudsmith.io/~15knots/repos/p2-zip/packages/CMakeEd-1.18.0.zip!/` (note the leading `jar:` and the trailing `!/`).
 
 ### Debug and Build
 This project uses Apache maven as its build system.
@@ -124,7 +125,7 @@ Added 'Toggle Comment', 'Shift Left', 'Shift Right' actions to editor context me
 ## 1.1.5 (2010-02-01)
 ### Changes
 - Updated documentation for CMake 2.8.0
-- Added preference to use either UPPERCASE or lowercase for CMake commands to better integrate with your current CMake files
+- Added preference to use either UPPERCASE or lowercase for CMake commands to better integrate with your current CMake files.
 - Cleaned up some parsing errors.
 
 ## 1.1.4 (2009-00-01)
