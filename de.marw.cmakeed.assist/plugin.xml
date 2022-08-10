@@ -57,8 +57,10 @@
 <command name="build_name" desc="Disallowed since version 3.0. See CMake Policy CMP0036." deprecated="true">
 <usage value="(variable)"/>
 </command>
-<command name="cmake_host_system_information" desc="Query host system specific information.">
+<command name="cmake_host_system_information" desc="Query various host system information.">
 <usage value="(RESULT &lt;variable&gt; QUERY &lt;key&gt; ...)"/>
+<usage value="(RESULT &lt;variable&gt; QUERY WINDOWS_REGISTRY &lt;key&gt; [VALUE_NAMES|SUBKEYS|VALUE &lt;name&gt;] [VIEW (64|32|64_32|32_64|HOST|TARGET|BOTH)] [SEPARATOR &lt;separator&gt;] [ERROR_VARIABLE &lt;result&gt;])"/>
+<usage value="(RESULT result QUERY WINDOWS_REGISTRY &#34;HKLM&#34;) cmake_host_system_information(RESULT result QUERY WINDOWS_REGISTRY &#34;HKLM/SOFTWARE/Kitware&#34;) cmake_host_system_information(RESULT result QUERY WINDOWS_REGISTRY &#34;HKCU\\SOFTWARE\\Kitware&#34;)"/>
 </command>
 <command name="cmake_language" desc="Call meta-operations on CMake commands.">
 <usage value="(DEFER CALL message &#34;${deferred_message}&#34;) cmake_language(DEFER ID_VAR id CALL message &#34;Canceled Message&#34;) cmake_language(DEFER CANCEL_CALL ${id}) message(&#34;Immediate Message&#34;) set(deferred_message &#34;Deferred Message&#34;)"/>
@@ -68,6 +70,7 @@
 <usage value="(DEFER [DIRECTORY &lt;dir&gt;] GET_CALL_IDS &lt;var&gt;)"/>
 <usage value="(DEFER [DIRECTORY &lt;dir&gt;] GET_CALL &lt;id&gt; &lt;var&gt;)"/>
 <usage value="(DEFER [DIRECTORY &lt;dir&gt;] CANCEL_CALL &lt;id&gt;...)"/>
+<usage value="(SET_DEPENDENCY_PROVIDER &lt;command&gt; SUPPORTED_METHODS &lt;methods&gt;...)"/>
 </command>
 <command name="cmake_minimum_required" desc="Require a minimum version of cmake.">
 <usage value="(VERSION &lt;min&gt;[...&lt;policy_max&gt;] [FATAL_ERROR])"/>
@@ -247,31 +250,31 @@
 <usage value="(DOWNLOAD &lt;url&gt; [&lt;file&gt;] [&lt;options&gt;...]) file(UPLOAD &lt;file&gt; &lt;url&gt; [&lt;options&gt;...])"/>
 <usage value="(LOCK &lt;path&gt; [DIRECTORY] [RELEASE] [GUARD &lt;FUNCTION|FILE|PROCESS&gt;] [RESULT_VARIABLE &lt;variable&gt;] [TIMEOUT &lt;seconds&gt;])"/>
 <usage value="(ARCHIVE_CREATE OUTPUT &lt;archive&gt; PATHS &lt;paths&gt;... [FORMAT &lt;format&gt;] [COMPRESSION &lt;compression&gt; [COMPRESSION_LEVEL &lt;compression-level&gt;]] [MTIME &lt;mtime&gt;] [VERBOSE])"/>
-<usage value="(ARCHIVE_EXTRACT INPUT &lt;archive&gt; [DESTINATION &lt;dir&gt;] [PATTERNS &lt;patterns&gt;...] [LIST_ONLY] [VERBOSE])"/>
+<usage value="(ARCHIVE_EXTRACT INPUT &lt;archive&gt; [DESTINATION &lt;dir&gt;] [PATTERNS &lt;patterns&gt;...] [LIST_ONLY] [VERBOSE] [TOUCH])"/>
 </command>
 <command name="find_file" desc="A short-hand signature is:">
 <usage value="(&lt;VAR&gt; name1 [path1 path2 ...])"/>
-<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS [path | ENV var]... ] [PATHS [path | ENV var]... ] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_CACHE] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS [path | ENV var]... ] [PATHS [path | ENV var]... ] [REGISTRY_VIEW (64|32|64_32|32_64|HOST|TARGET|BOTH)] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_CACHE] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_INSTALL_PREFIX] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
 <usage value="(&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_file (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="find_library" desc="A short-hand signature is:">
 <usage value="(&lt;VAR&gt; name1 [path1 path2 ...])"/>
-<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS [path | ENV var]... ] [PATHS [path | ENV var]... ] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_CACHE] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS [path | ENV var]... ] [PATHS [path | ENV var]... ] [REGISTRY_VIEW (64|32|64_32|32_64|HOST|TARGET|BOTH)] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_CACHE] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_INSTALL_PREFIX] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
 <usage value="(&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_library (&lt;VAR&gt; NAMES name)"/>
 </command>
-<command name="find_package" desc="Find a package (usually provided by something external to the project), and load its package-specific details.">
-<usage value="(&lt;PackageName&gt; [version] [EXACT] [QUIET] [MODULE] [REQUIRED] [[COMPONENTS] [components...]] [OPTIONAL_COMPONENTS components...] [NO_POLICY_SCOPE])"/>
-<usage value="(&lt;PackageName&gt; [version] [EXACT] [QUIET] [REQUIRED] [[COMPONENTS] [components...]] [OPTIONAL_COMPONENTS components...] [CONFIG|NO_MODULE] [NO_POLICY_SCOPE] [NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]] [PATHS path1 [path2 ... ]] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] # Deprecated; does nothing. [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])"/>
+<command name="find_package" desc="Find a package (usually provided by something external to the project), and load its package-specific details. Calls to this command can also be intercepted by dependency providers.">
+<usage value="(&lt;PackageName&gt; [version] [EXACT] [QUIET] [MODULE] [REQUIRED] [[COMPONENTS] [components...]] [OPTIONAL_COMPONENTS components...] [REGISTRY_VIEW (64|32|64_32|32_64|HOST|TARGET|BOTH)] [GLOBAL] [NO_POLICY_SCOPE] [BYPASS_PROVIDER])"/>
+<usage value="(&lt;PackageName&gt; [version] [EXACT] [QUIET] [REQUIRED] [[COMPONENTS] [components...]] [OPTIONAL_COMPONENTS components...] [CONFIG|NO_MODULE] [GLOBAL] [NO_POLICY_SCOPE] [BYPASS_PROVIDER] [NAMES name1 [name2 ...]] [CONFIGS config1 [config2 ...]] [HINTS path1 [path2 ... ]] [PATHS path1 [path2 ... ]] [REGISTRY_VIEW (64|32|64_32|32_64|HOST|TARGET|BOTH)] [PATH_SUFFIXES suffix1 [suffix2 ...]] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_PACKAGE_REGISTRY] [NO_CMAKE_BUILDS_PATH] # Deprecated; does nothing. [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_INSTALL_PREFIX] [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH])"/>
 <usage value="(&lt;PackageName&gt; PATHS paths... NO_DEFAULT_PATH) find_package (&lt;PackageName&gt;)"/>
 </command>
 <command name="find_path" desc="A short-hand signature is:">
 <usage value="(&lt;VAR&gt; name1 [path1 path2 ...])"/>
-<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS [path | ENV var]... ] [PATHS [path | ENV var]... ] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_CACHE] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [HINTS [path | ENV var]... ] [PATHS [path | ENV var]... ] [REGISTRY_VIEW (64|32|64_32|32_64|HOST|TARGET|BOTH)] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_CACHE] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_INSTALL_PREFIX] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
 <usage value="(&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_path (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="find_program" desc="A short-hand signature is:">
 <usage value="(&lt;VAR&gt; name1 [path1 path2 ...])"/>
-<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS [path | ENV var]... ] [PATHS [path | ENV var]... ] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_CACHE] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
+<usage value="( &lt;VAR&gt; name | NAMES name1 [name2 ...] [NAMES_PER_DIR] [HINTS [path | ENV var]... ] [PATHS [path | ENV var]... ] [REGISTRY_VIEW (64|32|64_32|32_64|HOST|TARGET|BOTH)] [PATH_SUFFIXES suffix1 [suffix2 ...]] [DOC &#34;cache documentation string&#34;] [NO_CACHE] [REQUIRED] [NO_DEFAULT_PATH] [NO_PACKAGE_ROOT_PATH] [NO_CMAKE_PATH] [NO_CMAKE_ENVIRONMENT_PATH] [NO_SYSTEM_ENVIRONMENT_PATH] [NO_CMAKE_SYSTEM_PATH] [NO_CMAKE_INSTALL_PREFIX] [CMAKE_FIND_ROOT_PATH_BOTH | ONLY_CMAKE_FIND_ROOT_PATH | NO_CMAKE_FIND_ROOT_PATH] )"/>
 <usage value="(&lt;VAR&gt; NAMES name PATHS paths... NO_DEFAULT_PATH) find_program (&lt;VAR&gt; NAMES name)"/>
 </command>
 <command name="fltk_wrap_ui" desc="Create FLTK user interfaces Wrappers.">
@@ -402,7 +405,7 @@
 <usage value="(&lt;checkState&gt; &#34;message&#34; ...)"/>
 <usage value="(CHECK_START &#34;Finding my things&#34;) list(APPEND CMAKE_MESSAGE_INDENT &#34; &#34;) unset(missingComponents) message(CHECK_START &#34;Finding partA&#34;) # ... do check, assume we find A message(CHECK_PASS &#34;found&#34;) message(CHECK_START &#34;Finding partB&#34;) # ... do check, assume we don't find B list(APPEND missingComponents B) message(CHECK_FAIL &#34;not found&#34;) list(POP_BACK CMAKE_MESSAGE_INDENT) if(missingComponents) message(CHECK_FAIL &#34;missing components: ${missingComponents}&#34;) else() message(CHECK_PASS &#34;all components found&#34;) endif()"/>
 </command>
-<command name="option" desc="Provide an option that the user can optionally select.">
+<command name="option" desc="Provide a boolean option that the user can optionally select.">
 <usage value="(&lt;variable&gt; &#34;&lt;help_text&gt;&#34; [value])"/>
 </command>
 <command name="output_required_files" desc="Disallowed since version 3.0. See CMake Policy CMP0032." deprecated="true">
@@ -488,7 +491,7 @@
 <usage value="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-variable&gt;] GET &lt;json-string&gt; &lt;member|index&gt; [&lt;member|index&gt; ...])"/>
 <usage value="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-variable&gt;] TYPE &lt;json-string&gt; &lt;member|index&gt; [&lt;member|index&gt; ...])"/>
 <usage value="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-var&gt;] MEMBER &lt;json-string&gt; [&lt;member|index&gt; ...] &lt;index&gt;)"/>
-<usage value="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-variable&gt;] LENGTH &lt;json-string&gt; &lt;member|index&gt; [&lt;member|index&gt; ...])"/>
+<usage value="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-variable&gt;] LENGTH &lt;json-string&gt; [&lt;member|index&gt; ...])"/>
 <usage value="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-variable&gt;] REMOVE &lt;json-string&gt; &lt;member|index&gt; [&lt;member|index&gt; ...])"/>
 <usage value="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-variable&gt;] SET &lt;json-string&gt; &lt;member|index&gt; [&lt;member|index&gt; ...] &lt;value&gt;)"/>
 <usage value="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-var&gt;] EQUAL &lt;json-string1&gt; &lt;json-string2&gt;)"/>
@@ -530,7 +533,7 @@
 </command>
 <command name="target_sources" desc="Add sources to a target.">
 <usage value="(&lt;target&gt; &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...] [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])"/>
-<usage value="(&lt;target&gt; &lt;INTERFACE|PUBLIC|PRIVATE&gt; FILE_SET set1 [TYPE type1] [BASE_DIRS dirs1...] [FILES files1...] [&lt;INTERFACE|PUBLIC|PRIVATE&gt; FILE_SET set2 [TYPE type2] [BASE_DIRS dirs2...] [FILES files2...])"/>
+<usage value="(&lt;target&gt; [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [FILE_SET &lt;set&gt; [TYPE &lt;type&gt;] [BASE_DIRS &lt;dirs&gt;...] [FILES &lt;files&gt;...]]... ]...)"/>
 </command>
 <command name="try_compile" desc="Try building some code.">
 <usage value="(&lt;resultVar&gt; &lt;bindir&gt; &lt;srcdir&gt; &lt;projectName&gt; [&lt;targetName&gt;] [CMAKE_FLAGS &lt;flags&gt;...] [OUTPUT_VARIABLE &lt;var&gt;])"/>
@@ -689,6 +692,7 @@
 <property name="COMPILE_PDB_NAME_&lt;CONFIG&gt;" desc="Per-configuration output name for the MS debug symbol .pdb file generated by the compiler while building source files."/>
 <property name="COMPILE_PDB_OUTPUT_DIRECTORY" desc="Output directory for the MS debug symbol .pdb file generated by the compiler while building source files."/>
 <property name="COMPILE_PDB_OUTPUT_DIRECTORY_&lt;CONFIG&gt;" desc="Per-configuration output directory for the MS debug symbol .pdb file generated by the compiler while building source files."/>
+<property name="COMPILE_WARNING_AS_ERROR" desc="Specify whether to treat warnings on compile as errors. If enabled, adds a flag to treat warnings on compile as errors."/>
 <property name="COST" desc="This property describes the cost of a test. When parallel testing is enabled, tests in the test set will be run in descending order of cost. Projects can explicitly define the cost of a test by setting this property to a floating point value."/>
 <property name="CPACK_DESKTOP_SHORTCUTS" desc="Species a list of shortcut names that should be created on the Desktop for this file."/>
 <property name="CPACK_NEVER_OVERWRITE" desc="Request that this file not be overwritten on install or reinstall."/>
@@ -815,12 +819,12 @@
 <property name="GLOBAL_DEPENDS_NO_CYCLES" desc="Disallow global target dependency graph cycles."/>
 <property name="GNUtoMS" desc="Convert GNU import library (.dll.a) to MS format (.lib)."/>
 <property name="HAS_CXX" desc="Link the target using the C++ linker tool (obsolete)."/>
-<property name="HEADER_DIRS" desc="Semicolon-separated list of base directories of the default header set created by target_sources(FILE_SET). This property supports generator expressions."/>
-<property name="HEADER_DIRS_&lt;NAME&gt;" desc="Semicolon-separated list of base directories of the header set with name &lt;NAME&gt; created by target_sources(FILE_SET). This property supports generator expressions."/>
+<property name="HEADER_DIRS" desc="Semicolon-separated list of base directories of the target's default header set (i.e. the file set with name and type HEADERS). The property supports generator expressions."/>
+<property name="HEADER_DIRS_&lt;NAME&gt;" desc="Semicolon-separated list of base directories of the target's &lt;NAME&gt; header set, which has the set type HEADERS. The property supports generator expressions."/>
 <property name="HEADER_FILE_ONLY" desc="Is this source file only a header file."/>
-<property name="HEADER_SET" desc="Semicolon-separated list of headers in the default header set created by target_sources(FILE_SET). This property supports generator expressions. If any of the headers are relative paths, they are computed relative to the target's source directory."/>
-<property name="HEADER_SETS" desc="List of PRIVATE and PUBLIC header sets added by target_sources(FILE_SET). Headers listed in these header sets are treated as source files for the purposes of IDE integration."/>
-<property name="HEADER_SET_&lt;NAME&gt;" desc="Semicolon-separated list of headers in the named header set &lt;NAME&gt; created by target_sources(FILE_SET). This property supports generator expressions. If any of the headers are relative paths, they are computed relative to the target's source directory."/>
+<property name="HEADER_SET" desc="Semicolon-separated list of files in the target's default header set, (i.e. the file set with name and type HEADERS). If any of the paths are relative, they are computed relative to the target's source directory. The property supports generator expressions."/>
+<property name="HEADER_SETS" desc="Read-only list of the target's PRIVATE and PUBLIC header sets (i.e. all file sets with the type HEADERS). Files listed in these file sets are treated as source files for the purpose of IDE integration. The files also have their HEADER_FILE_ONLY property set to TRUE."/>
+<property name="HEADER_SET_&lt;NAME&gt;" desc="Semicolon-separated list of files in the target's &lt;NAME&gt; header set, which has the set type HEADERS. If any of the paths are relative, they are computed relative to the target's source directory. The property supports generator expressions."/>
 <property name="HELPSTRING" desc="Help associated with entry in GUIs."/>
 <property name="HIP_ARCHITECTURES" desc="List of AMD GPU architectures to generate device code for."/>
 <property name="HIP_EXTENSIONS" desc="Boolean specifying whether compiler specific extensions are requested."/>
@@ -865,7 +869,8 @@
 <property name="INTERFACE_COMPILE_DEFINITIONS" desc="List of public compile definitions requirements for a library."/>
 <property name="INTERFACE_COMPILE_FEATURES" desc="List of public compile features requirements for a library."/>
 <property name="INTERFACE_COMPILE_OPTIONS" desc="List of public compile options requirements for a library."/>
-<property name="INTERFACE_HEADER_SETS" desc="List of the target's INTERFACE and PUBLIC header sets (i.e. all file sets with the type HEADERS). Files listed in these header sets can be installed with install(TARGETS) and exported with install(EXPORT) and export()."/>
+<property name="INTERFACE_HEADER_SETS" desc="Read-only list of the target's INTERFACE and PUBLIC header sets (i.e. all file sets with the type HEADERS). Files listed in these header sets can be installed with install(TARGETS) and exported with install(EXPORT) and export()."/>
+<property name="INTERFACE_HEADER_SETS_TO_VERIFY" desc="Used to specify which PUBLIC and INTERFACE header sets of a target should be verified."/>
 <property name="INTERFACE_INCLUDE_DIRECTORIES" desc="List of public include directories requirements for a library."/>
 <property name="INTERFACE_LINK_DEPENDS" desc="Additional public interface files on which a target binary depends for linking."/>
 <property name="INTERFACE_LINK_DIRECTORIES" desc="List of public link directories requirements for a library."/>
@@ -917,6 +922,8 @@
 <property name="LINK_INTERFACE_MULTIPLICITY_&lt;CONFIG&gt;" desc="Per-configuration repetition count for cycles of STATIC libraries."/>
 <property name="LINK_LIBRARIES" desc="List of direct link dependencies."/>
 <property name="LINK_LIBRARIES_ONLY_TARGETS" desc="Enforce that link items that can be target names are actually existing targets."/>
+<property name="LINK_LIBRARY_OVERRIDE" desc="Override the library features associated with libraries from LINK_LIBRARY generator expressions. This can be used to resolve incompatible library features that result from specifying different features for the same library in different LINK_LIBRARY generator expressions."/>
+<property name="LINK_LIBRARY_OVERRIDE_&lt;LIBRARY&gt;" desc="Override the library feature associated with &lt;LIBRARY&gt; from LINK_LIBRARY generator expressions. This can be used to resolve incompatible library features that result from specifying different features for &lt;LIBRARY&gt; in different LINK_LIBRARY generator expressions."/>
 <property name="LINK_OPTIONS" desc="List of options to use for the link step of shared library, module and executable targets as well as the device link step. Targets that are static libraries need to use the STATIC_LIBRARY_OPTIONS target property."/>
 <property name="LINK_SEARCH_END_STATIC" desc="End a link line such that static system libraries are used."/>
 <property name="LINK_SEARCH_START_STATIC" desc="Assume the linker looks for static libraries by default."/>
@@ -1052,6 +1059,7 @@
 <property name="USE_FOLDERS" desc="Use the FOLDER target property to organize targets into folders."/>
 <property name="VALUE" desc="Value of a cache entry."/>
 <property name="VARIABLES" desc="List of variables defined in the current directory."/>
+<property name="VERIFY_INTERFACE_HEADER_SETS" desc="Used to verify that all headers in a target's PUBLIC and INTERFACE header sets can be included on their own."/>
 <property name="VERSION" desc="What version number is this target."/>
 <property name="VISIBILITY_INLINES_HIDDEN" desc="Whether to add a compile flag to hide symbols of inline functions"/>
 <property name="VS_CONFIGURATION_TYPE" desc="Visual Studio project configuration type."/>
@@ -1069,6 +1077,7 @@
 <property name="VS_DOTNET_REFERENCES" desc="Visual Studio managed project .NET references"/>
 <property name="VS_DOTNET_REFERENCES_COPY_LOCAL" desc="Sets the Copy Local property for all .NET hint references in the target"/>
 <property name="VS_DOTNET_REFERENCE_&lt;refname&gt;" desc="Visual Studio managed project .NET reference with name &lt;refname&gt; and hint path."/>
+<property name="VS_DOTNET_STARTUP_OBJECT" desc="Sets the startup object property in Visual Studio .NET targets. The property value defines a full qualified class name (including package name), for example: MyCompany.Package.MyStarterClass."/>
 <property name="VS_DOTNET_TARGET_FRAMEWORK_VERSION" desc="Specify the .NET target framework version."/>
 <property name="VS_DPI_AWARE" desc="Set the Manifest Tool -&gt; Input and Output -&gt; DPI Awareness in the Visual Studio target project properties."/>
 <property name="VS_GLOBAL_&lt;variable&gt;" desc="Visual Studio project-specific global variable."/>
@@ -1083,6 +1092,7 @@
 <property name="VS_JUST_MY_CODE_DEBUGGING" desc="Enable Just My Code with Visual Studio debugger."/>
 <property name="VS_KEYWORD" desc="Visual Studio project keyword for VS 9 (2008) and older."/>
 <property name="VS_MOBILE_EXTENSIONS_VERSION" desc="Visual Studio Windows 10 Mobile Extensions Version"/>
+<property name="VS_NO_COMPILE_BATCHING" desc="Turn off compile batching for the target. Usually MSBuild calls the compiler with multiple c/cpp files and compiler starts subprocesses for each file to make the build parallel. If you want compiler to be invoked with one file at a time set VS_NO_COMPILE_BATCHING to ON. If this flag is set MSBuild will call compiler with one c/cpp file at a time. Useful when you want to use tool that replaces the compiler, for example some build caching tool."/>
 <property name="VS_NO_SOLUTION_DEPLOY" desc="Specify that the target should not be marked for deployment to a Windows CE or Windows Phone device in the generated Visual Studio solution."/>
 <property name="VS_PACKAGE_REFERENCES" desc="Visual Studio package references for nuget."/>
 <property name="VS_PLATFORM_TOOLSET" desc="Overrides the platform toolset used to build a target."/>
@@ -1113,6 +1123,7 @@
 <property name="VS_WINRT_EXTENSIONS" desc="Deprecated. Use VS_WINRT_COMPONENT instead. This property was an experimental partial implementation of that one."/>
 <property name="VS_WINRT_REFERENCES" desc="Visual Studio project Windows Runtime Metadata references"/>
 <property name="VS_XAML_TYPE" desc="Mark a Extensible Application Markup Language (XAML) source file as a different type than the default Page. The most common usage would be to set the default App.xaml file as ApplicationDefinition."/>
+<property name="WATCOM_RUNTIME_LIBRARY" desc="Select the Watcom runtime library for use by compilers targeting the Watcom ABI."/>
 <property name="WILL_FAIL" desc="If set to true, this will invert the pass/fail flag of the test."/>
 <property name="WIN32_EXECUTABLE" desc="Build an executable with a WinMain entry point on windows."/>
 <property name="WINDOWS_EXPORT_ALL_SYMBOLS" desc="This property is implemented only for MS-compatible tools on Windows."/>
@@ -1154,6 +1165,7 @@
 <property name="XCODE_SCHEME_UNDEFINED_BEHAVIOUR_SANITIZER_STOP" desc="Whether to enable Undefined Behavior Sanitizer option Pause on issues in the Diagnostics section of the generated Xcode scheme."/>
 <property name="XCODE_SCHEME_WORKING_DIRECTORY" desc="Specify the Working Directory of the Run and Profile actions in the generated Xcode scheme. In case the value contains generator expressions those are evaluated."/>
 <property name="XCODE_SCHEME_ZOMBIE_OBJECTS" desc="Whether to enable Zombie Objects in the Diagnostics section of the generated Xcode scheme."/>
+<property name="XCODE_XCCONFIG" desc="If set, the Xcode generator will register the specified file as a target-level XCConfig file. For global XCConfig files see the CMAKE_XCODE_XCCONFIG variable."/>
 <property name="XCTEST" desc="This target is a XCTest CFBundle on the Mac."/>
 </extension>
 <extension point="com.cthing.cmakeed.core.reservedwords" >
@@ -1189,6 +1201,7 @@
 <reservedword name="BIT"/>
 <reservedword name="BOOL"/>
 <reservedword name="BOOLEAN"/>
+<reservedword name="BOTH"/>
 <reservedword name="BRIEF_DOCS"/>
 <reservedword name="BUILD"/>
 <reservedword name="BUILD_ID"/>
@@ -1206,7 +1219,6 @@
 <reservedword name="CHECK_PASS"/>
 <reservedword name="CHECK_START"/>
 <reservedword name="CLEAR"/>
-<reservedword name="CMAKE"/>
 <reservedword name="CMAKE_FIND_PACKAGE_NAME"/>
 <reservedword name="CMAKE_FIND_ROOT_PATH_BOTH"/>
 <reservedword name="CMAKE_FLAGS"/>
@@ -1299,6 +1311,7 @@
 <reservedword name="FAILED_TO_RUN"/>
 <reservedword name="FALSE"/>
 <reservedword name="FATAL_ERROR"/>
+<reservedword name="FETCHCONTENT_MAKEAVAILABLE_SERIAL"/>
 <reservedword name="FI"/>
 <reservedword name="FILE"/>
 <reservedword name="FILENAMES"/>
@@ -1309,7 +1322,9 @@
 <reservedword name="FILE_SET"/>
 <reservedword name="FILTER"/>
 <reservedword name="FIND_COMPONENTS"/>
+<reservedword name="FIND_PACKAGE"/>
 <reservedword name="FIND_QUIETLY"/>
+<reservedword name="FIND_REGISTRY_VIEW"/>
 <reservedword name="FIND_REQUIRED"/>
 <reservedword name="FIND_VERSION"/>
 <reservedword name="FIND_VERSION_COMPLETE"/>
@@ -1378,6 +1393,7 @@
 <reservedword name="HIP"/>
 <reservedword name="HOME"/>
 <reservedword name="HOMEPAGE_URL"/>
+<reservedword name="HOST"/>
 <reservedword name="HOSTNAME"/>
 <reservedword name="HTTPHEADER"/>
 <reservedword name="ID"/>
@@ -1394,7 +1410,6 @@
 <reservedword name="INCLUDE_INTERNALS"/>
 <reservedword name="INCLUDE_LABEL"/>
 <reservedword name="INHERITED"/>
-<reservedword name="INITIALIZE_FROM_VARIABLE"/>
 <reservedword name="INPUT"/>
 <reservedword name="INPUT_FILE"/>
 <reservedword name="INSERT"/>
@@ -1569,9 +1584,18 @@
 <reservedword name="PUSH"/>
 <reservedword name="QUIET"/>
 <reservedword name="RANDOM_SEED"/>
+<reservedword name="RANGE_END"/>
+<reservedword name="RANGE_START"/>
 <reservedword name="READ_ACCESS"/>
 <reservedword name="REGEX"/>
+<reservedword name="REGISTRY"/>
+<reservedword name="REGISTRY_VIEW"/>
 <reservedword name="REGULAR_EXPRESSION"/>
+<reservedword name="REG_DWORD"/>
+<reservedword name="REG_EXPAND_SZ"/>
+<reservedword name="REG_MULTI_SZ"/>
+<reservedword name="REG_QWORD"/>
+<reservedword name="REG_SZ"/>
 <reservedword name="RELATIVE"/>
 <reservedword name="RELEASE"/>
 <reservedword name="REMOVED_ACCESS"/>
@@ -1605,9 +1629,11 @@
 <reservedword name="SELECTOR"/>
 <reservedword name="SEND_ERROR"/>
 <reservedword name="SEPARATE_ARGS"/>
+<reservedword name="SEPARATOR"/>
 <reservedword name="SET"/>
 <reservedword name="SETGID"/>
 <reservedword name="SETUID"/>
+<reservedword name="SET_DEPENDENCY_PROVIDER"/>
 <reservedword name="SHA"/>
 <reservedword name="SHARED"/>
 <reservedword name="SHELL"/>
@@ -1630,6 +1656,7 @@
 <reservedword name="STRIDE"/>
 <reservedword name="STRING"/>
 <reservedword name="STRIP"/>
+<reservedword name="SUBKEYS"/>
 <reservedword name="SUBMIT_URL"/>
 <reservedword name="SYMBOLIC"/>
 <reservedword name="SYSTEM"/>
@@ -1679,6 +1706,7 @@
 <reservedword name="UTC"/>
 <reservedword name="UTF"/>
 <reservedword name="VALUE"/>
+<reservedword name="VALUE_NAMES"/>
 <reservedword name="VAR"/>
 <reservedword name="VARIABLE"/>
 <reservedword name="VERBATIM"/>
@@ -1689,6 +1717,7 @@
 <reservedword name="VERSION_MINOR"/>
 <reservedword name="VERSION_PATCH"/>
 <reservedword name="VERSION_TWEAK"/>
+<reservedword name="VIEW"/>
 <reservedword name="WARNING"/>
 <reservedword name="WIN"/>
 <reservedword name="WINDOWS_COMMAND"/>
@@ -1719,7 +1748,12 @@
 <variable name="CMAKE_&lt;CONFIG&gt;_POSTFIX" desc="Default filename postfix for libraries under configuration &lt;CONFIG&gt;."/>
 <variable name="CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;" desc="Flags for language &lt;LANG&gt; when building for the &lt;CONFIG&gt; configuration."/>
 <variable name="CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;_INIT" desc="Value used to initialize the CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured for language &lt;LANG&gt;. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
+<variable name="CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
+<variable name="CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
 <variable name="CMAKE_ABSOLUTE_DESTINATION_FILES" desc="List of files which have been installed using an ABSOLUTE DESTINATION path."/>
+<variable name="CMAKE_ADSP_ROOT" desc="When Cross Compiling for ADSP SHARC/Blackfin, this variable holds the absolute path to the latest CCES or VDSP++ install. The directory is expected to contain the cc21k.exe and ccblkfn.exe compilers. This will be set automatically if a default install of CCES or VDSP++ can be found."/>
 <variable name="CMAKE_AIX_EXPORT_ALL_SYMBOLS" desc="Default value for AIX_EXPORT_ALL_SYMBOLS target property. This variable is used to initialize the property on each target as it is created."/>
 <variable name="CMAKE_ANDROID_ANT_ADDITIONAL_OPTIONS" desc="Default value for the ANDROID_ANT_ADDITIONAL_OPTIONS target property. See that target property for additional information."/>
 <variable name="CMAKE_ANDROID_API" desc="When Cross Compiling for Android with NVIDIA Nsight Tegra Visual Studio Edition, this variable may be set to specify the default value for the ANDROID_API target property. See that target property for additional information."/>
@@ -1811,9 +1845,13 @@
 <variable name="CMAKE_ASM-ATT_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_ASM-ATT_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_ASM-ATT_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_ASM-ATT_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_ASM-ATT_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_ASM-ATT_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_ASM-ATT_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_ASM-ATT_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_ASM-ATT_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-ATT_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_ASM-ATT_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_ASM-ATT_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_ASM-ATT_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -1882,9 +1920,13 @@
 <variable name="CMAKE_ASM-MASM_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_ASM-MASM_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_ASM-MASM_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_ASM-MASM_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_ASM-MASM_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_ASM-MASM_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_ASM-MASM_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_ASM-MASM_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_ASM-MASM_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-MASM_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_ASM-MASM_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_ASM-MASM_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_ASM-MASM_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -1953,9 +1995,13 @@
 <variable name="CMAKE_ASM-NASM_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_ASM-NASM_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_ASM-NASM_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_ASM-NASM_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_ASM-NASM_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_ASM-NASM_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_ASM-NASM_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_ASM-NASM_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_ASM-NASM_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM-NASM_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_ASM-NASM_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_ASM-NASM_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_ASM-NASM_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2024,9 +2070,13 @@
 <variable name="CMAKE_ASM_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_ASM_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_ASM_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_ASM_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_ASM_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_ASM_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_ASM_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_ASM_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_ASM_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_ASM_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_ASM_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_ASM_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_ASM_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2063,7 +2113,7 @@
 <variable name="CMAKE_BUILD_TYPE" desc="Specifies the build type on single-configuration generators (e.g. Makefile Generators or Ninja). Typical values include Debug, Release, RelWithDebInfo and MinSizeRel, but custom build types can also be defined."/>
 <variable name="CMAKE_BUILD_WITH_INSTALL_NAME_DIR" desc="Whether to use INSTALL_NAME_DIR on targets in the build tree."/>
 <variable name="CMAKE_BUILD_WITH_INSTALL_RPATH" desc="Use the install path for the RPATH."/>
-<variable name="CMAKE_CACHEFILE_DIR" desc="The directory with the CMakeCache.txt file."/>
+<variable name="CMAKE_CACHEFILE_DIR" desc="This variable is used internally by CMake, and may not be set during the first configuration of a build tree. When it is set, it has the same value as CMAKE_BINARY_DIR. Use that variable instead."/>
 <variable name="CMAKE_CACHE_MAJOR_VERSION" desc="Major version of CMake used to create the CMakeCache.txt file"/>
 <variable name="CMAKE_CACHE_MINOR_VERSION" desc="Minor version of CMake used to create the CMakeCache.txt file"/>
 <variable name="CMAKE_CACHE_PATCH_VERSION" desc="Patch version of CMake used to create the CMakeCache.txt file"/>
@@ -2073,14 +2123,16 @@
 <variable name="CMAKE_CODEBLOCKS_COMPILER_ID" desc="Change the compiler id in the generated CodeBlocks project files."/>
 <variable name="CMAKE_CODEBLOCKS_EXCLUDE_EXTERNAL_FILES" desc="Change the way the CodeBlocks generator creates project files."/>
 <variable name="CMAKE_CODELITE_USE_TARGETS" desc="Change the way the CodeLite generator creates projectfiles."/>
+<variable name="CMAKE_COLOR_DIAGNOSTICS" desc="Enable color diagnostics throughout."/>
 <variable name="CMAKE_COLOR_MAKEFILE" desc="Enables color output when using the Makefile Generators."/>
 <variable name="CMAKE_COMMAND" desc="The full path to the cmake(1) executable."/>
 <variable name="CMAKE_COMPILER_2005" desc="Using the Visual Studio 2005 compiler from Microsoft"/>
-<variable name="CMAKE_COMPILER_IS_GNUCC" desc="True if the C compiler is GNU. Use CMAKE_C_COMPILER_ID instead."/>
-<variable name="CMAKE_COMPILER_IS_GNUCXX" desc="True if the C++ (CXX) compiler is GNU. Use CMAKE_CXX_COMPILER_ID instead."/>
-<variable name="CMAKE_COMPILER_IS_GNUG77" desc="True if the Fortran compiler is GNU. Use CMAKE_Fortran_COMPILER_ID instead."/>
+<variable name="CMAKE_COMPILER_IS_GNUCC" desc="True if the C compiler is GNU."/>
+<variable name="CMAKE_COMPILER_IS_GNUCXX" desc="True if the C++ (CXX) compiler is GNU."/>
+<variable name="CMAKE_COMPILER_IS_GNUG77" desc="True if the Fortran compiler is GNU."/>
 <variable name="CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY" desc="Output directory for MS debug symbol .pdb files generated by the compiler while building source files."/>
 <variable name="CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY_&lt;CONFIG&gt;" desc="Per-configuration output directory for MS debug symbol .pdb files generated by the compiler while building source files."/>
+<variable name="CMAKE_COMPILE_WARNING_AS_ERROR" desc="Specify whether to treat warnings on compile as errors."/>
 <variable name="CMAKE_CONFIGURATION_TYPES" desc="Specifies the available build types (configurations) on multi-config generators (e.g. Visual Studio, Xcode, or Ninja Multi-Config). Typical values include Debug, Release, RelWithDebInfo and MinSizeRel, but custom build types can also be defined."/>
 <variable name="CMAKE_CPACK_COMMAND" desc="Full path to cpack(1) command installed with CMake."/>
 <variable name="CMAKE_CROSSCOMPILING" desc="Intended to indicate whether CMake is cross compiling, but note limitations discussed below."/>
@@ -2141,9 +2193,13 @@
 <variable name="CMAKE_CSharp_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_CSharp_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_CSharp_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_CSharp_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_CSharp_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_CSharp_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_CSharp_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_CSharp_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_CSharp_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_CSharp_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_CSharp_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_CSharp_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_CSharp_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2218,9 +2274,13 @@
 <variable name="CMAKE_CUDA_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_CUDA_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_CUDA_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_CUDA_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_CUDA_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_CUDA_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_CUDA_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_CUDA_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_CUDA_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_CUDA_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_CUDA_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_CUDA_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_CUDA_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2306,9 +2366,13 @@
 <variable name="CMAKE_CXX_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_CXX_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_CXX_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_CXX_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_CXX_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_CXX_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_CXX_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_CXX_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_CXX_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_CXX_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_CXX_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_CXX_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_CXX_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2381,9 +2445,13 @@
 <variable name="CMAKE_C_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_C_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_C_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_C_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_C_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_C_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_C_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_C_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_C_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_C_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_C_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_C_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_C_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2444,9 +2512,11 @@
 <variable name="CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY" desc="By default this variable is not set. If neither CMAKE_FIND_USE_PACKAGE_REGISTRY nor CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY is set, then find_package() will use the User Package Registry unless the NO_CMAKE_PACKAGE_REGISTRY option is provided."/>
 <variable name="CMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY" desc="By default this variable is not set. If neither CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY nor CMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY is set, then find_package() will use the System Package Registry unless the NO_CMAKE_SYSTEM_PACKAGE_REGISTRY option is provided."/>
 <variable name="CMAKE_FIND_PACKAGE_PREFER_CONFIG" desc="Tell find_package() to try &#34;Config&#34; mode before &#34;Module&#34; mode if no mode was specified."/>
+<variable name="CMAKE_FIND_PACKAGE_REDIRECTS_DIR" desc="This read-only variable specifies a directory that the find_package() command will check first before searching anywhere else for a module or config package file. A config package file in this directory will always be found in preference to any other Find module file or config package file."/>
 <variable name="CMAKE_FIND_PACKAGE_RESOLVE_SYMLINKS" desc="Set to TRUE to tell find_package() calls to resolve symbolic links in the value of &lt;PackageName&gt;_DIR."/>
 <variable name="CMAKE_FIND_PACKAGE_SORT_DIRECTION" desc="The sorting direction used by CMAKE_FIND_PACKAGE_SORT_ORDER. It can assume one of the following values:"/>
 <variable name="CMAKE_FIND_PACKAGE_SORT_ORDER" desc="The default order for sorting packages found using find_package(). It can assume one of the following values:"/>
+<variable name="CMAKE_FIND_PACKAGE_TARGETS_GLOBAL" desc="Setting to TRUE promotes all IMPORTED targets discoverd by find_package() to a GLOBAL scope."/>
 <variable name="CMAKE_FIND_PACKAGE_WARN_NO_MODULE" desc="Tell find_package() to warn if called without an explicit mode."/>
 <variable name="CMAKE_FIND_ROOT_PATH" desc="Semicolon-separated list of root paths to search on the filesystem."/>
 <variable name="CMAKE_FIND_ROOT_PATH_MODE_INCLUDE" desc="This variable controls whether the CMAKE_FIND_ROOT_PATH and CMAKE_SYSROOT are used by find_file() and find_path()."/>
@@ -2456,6 +2526,7 @@
 <variable name="CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH" desc="Controls the default behavior of the following commands for whether or not to search paths provided by cmake-specific environment variables:"/>
 <variable name="CMAKE_FIND_USE_CMAKE_PATH" desc="Controls the default behavior of the following commands for whether or not to search paths provided by cmake-specific cache variables:"/>
 <variable name="CMAKE_FIND_USE_CMAKE_SYSTEM_PATH" desc="Controls the default behavior of the following commands for whether or not to search paths provided by platform-specific cmake variables:"/>
+<variable name="CMAKE_FIND_USE_INSTALL_PREFIX" desc="Controls the default behavior of the following commands for whether or not to search the install location:"/>
 <variable name="CMAKE_FIND_USE_PACKAGE_REGISTRY" desc="Controls the default behavior of the find_package() command for whether or not to search paths provided by the User Package Registry."/>
 <variable name="CMAKE_FIND_USE_PACKAGE_ROOT_PATH" desc="Controls the default behavior of the following commands for whether or not to search paths provided by &lt;PackageName&gt;_ROOT variables:"/>
 <variable name="CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH" desc="Controls the default behavior of the following commands for whether or not to search paths provided by standard system environment variables:"/>
@@ -2520,9 +2591,13 @@
 <variable name="CMAKE_Fortran_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_Fortran_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_Fortran_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_Fortran_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_Fortran_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_Fortran_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_Fortran_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_Fortran_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_Fortran_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_Fortran_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_Fortran_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_Fortran_MODDIR_DEFAULT" desc="Fortran default module output directory."/>
 <variable name="CMAKE_Fortran_MODDIR_FLAG" desc="Fortran flag for module output directory."/>
@@ -2565,7 +2640,7 @@
 <variable name="CMAKE_HOST_UNIX" desc="True for UNIX and UNIX like operating systems."/>
 <variable name="CMAKE_HOST_WIN32" desc="True if the host system is running Windows, including Windows 64-bit and MSYS."/>
 <variable name="CMAKE_IGNORE_PATH" desc="Semicolon-separated list of directories to be ignored by the various find...() commands."/>
-<variable name="CMAKE_IGNORE_PREFIX_PATH" desc="Semicolon-separated list of prefixes to be ignored by the find_program(), find_library(), find_file(), find_path(), and find_package() commands. This is useful in cross-compiling environments where some system directories contain incompatible but possibly linkable libraries. For example, on cross-compiled cluster environments, this allows a user to ignore directories containing libraries meant for the front-end machine."/>
+<variable name="CMAKE_IGNORE_PREFIX_PATH" desc="Semicolon-separated list of search prefixes to be ignored by the find_program(), find_library(), find_file(), and find_path() commands. The prefixes are also ignored by the Config mode of the find_package() command (Module mode is unaffected). To ignore specific directories instead, see CMAKE_IGNORE_PATH."/>
 <variable name="CMAKE_IMPORT_LIBRARY_PREFIX" desc="The prefix for import libraries that you link to."/>
 <variable name="CMAKE_IMPORT_LIBRARY_SUFFIX" desc="The suffix for import libraries that you link to."/>
 <variable name="CMAKE_INCLUDE_CURRENT_DIR" desc="Automatically add the current source and build directories to the include path."/>
@@ -2648,9 +2723,13 @@
 <variable name="CMAKE_Java_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_Java_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_Java_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_Java_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_Java_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_Java_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_Java_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_Java_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_Java_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_Java_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_Java_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_Java_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_Java_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2673,11 +2752,15 @@
 <variable name="CMAKE_LINK_DEF_FILE_FLAG" desc="Linker flag to be used to specify a .def file for dll creation."/>
 <variable name="CMAKE_LINK_DEPENDS_NO_SHARED" desc="Whether to skip link dependencies on shared library files."/>
 <variable name="CMAKE_LINK_DIRECTORIES_BEFORE" desc="Whether to append or prepend directories by default in link_directories()."/>
+<variable name="CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used. Both of the following conditions must be met for this variable to have any effect:"/>
+<variable name="CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED" desc="This variable specifies whether the &lt;FEATURE&gt; is supported regardless of the link language. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;."/>
 <variable name="CMAKE_LINK_INTERFACE_LIBRARIES" desc="Default value for LINK_INTERFACE_LIBRARIES of targets."/>
 <variable name="CMAKE_LINK_LIBRARIES_ONLY_TARGETS" desc="Set this variable to initialize the LINK_LIBRARIES_ONLY_TARGETS property of non-imported targets when they are created. Setting it to true enables an additional check that all items named by target_link_libraries() that can be target names are actually names of existing targets. See the target property documentation for details."/>
 <variable name="CMAKE_LINK_LIBRARY_FILE_FLAG" desc="Flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into an executable."/>
 <variable name="CMAKE_LINK_LIBRARY_SUFFIX" desc="The suffix for libraries that you link to."/>
+<variable name="CMAKE_LINK_LIBRARY_USING_&lt;FEATURE&gt;" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used. Both of the following conditions must be met for this variable to have any effect:"/>
+<variable name="CMAKE_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported regardless the linker language."/>
 <variable name="CMAKE_LINK_SEARCH_END_STATIC" desc="End a link line such that static system libraries are used."/>
 <variable name="CMAKE_LINK_SEARCH_START_STATIC" desc="Assume the linker looks for static libraries by default."/>
 <variable name="CMAKE_LINK_WHAT_YOU_USE" desc="Default value for LINK_WHAT_YOU_USE target property. This variable is used to initialize the property on each target as it is created."/>
@@ -2766,9 +2849,13 @@
 <variable name="CMAKE_OBJCXX_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_OBJCXX_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_OBJCXX_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_OBJCXX_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_OBJCXX_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_OBJCXX_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_OBJCXX_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_OBJCXX_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_OBJCXX_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_OBJCXX_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_OBJCXX_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_OBJCXX_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_OBJCXX_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2840,9 +2927,13 @@
 <variable name="CMAKE_OBJC_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_OBJC_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_OBJC_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_OBJC_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_OBJC_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_OBJC_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_OBJC_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_OBJC_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_OBJC_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_OBJC_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_OBJC_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_OBJC_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_OBJC_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2875,13 +2966,14 @@
 <variable name="CMAKE_POSITION_INDEPENDENT_CODE" desc="Default value for POSITION_INDEPENDENT_CODE of targets."/>
 <variable name="CMAKE_PREFIX_PATH" desc="Semicolon-separated list of directories specifying installation prefixes to be searched by the find_package(), find_program(), find_library(), find_file(), and find_path() commands. Each command will add appropriate subdirectories (like bin, lib, or include) as specified in its own documentation."/>
 <variable name="CMAKE_PROGRAM_PATH" desc="Semicolon-separated list of directories specifying a search path for the find_program() command. By default it is empty, it is intended to be set by the project. See also CMAKE_SYSTEM_PROGRAM_PATH and CMAKE_PREFIX_PATH."/>
-<variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE" desc="A CMake language file or module to be included as the last step of any project() command calls that specify &lt;PROJECT-NAME&gt; as the project name. This is intended for injecting custom code into project builds without modifying their source."/>
-<variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE_BEFORE" desc="A CMake language file or module to be included as the first step of any project() command calls that specify &lt;PROJECT-NAME&gt; as the project name. This is intended for injecting custom code into project builds without modifying their source."/>
+<variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE" desc="A CMake language file or module to be included as the last step of any project() command calls that specify &lt;PROJECT-NAME&gt; as the project name. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
+<variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE_BEFORE" desc="A CMake language file or module to be included as the first step of any project() command calls that specify &lt;PROJECT-NAME&gt; as the project name. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
 <variable name="CMAKE_PROJECT_DESCRIPTION" desc="The description of the top level project."/>
 <variable name="CMAKE_PROJECT_HOMEPAGE_URL" desc="The homepage URL of the top level project."/>
-<variable name="CMAKE_PROJECT_INCLUDE" desc="A CMake language file or module to be included as the last step of all project() command calls. This is intended for injecting custom code into project builds without modifying their source."/>
-<variable name="CMAKE_PROJECT_INCLUDE_BEFORE" desc="A CMake language file or module to be included as the first step of all project() command calls. This is intended for injecting custom code into project builds without modifying their source."/>
+<variable name="CMAKE_PROJECT_INCLUDE" desc="A CMake language file or module to be included as the last step of all project() command calls. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
+<variable name="CMAKE_PROJECT_INCLUDE_BEFORE" desc="A CMake language file or module to be included as the first step of all project() command calls. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
 <variable name="CMAKE_PROJECT_NAME" desc="The name of the top level project."/>
+<variable name="CMAKE_PROJECT_TOP_LEVEL_INCLUDES" desc="Semicolon-separated list of CMake language files to include as part of the very first project() call. The files will be included immediately after the toolchain file has been read (if one is specified) and platform variables have been set, but before any languages have been enabled. Therefore, language-specific variables, including things like CMAKE_&lt;LANG&gt;_COMPILER, might not be set. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
 <variable name="CMAKE_PROJECT_VERSION" desc="The version of the top level project."/>
 <variable name="CMAKE_PROJECT_VERSION_MAJOR" desc="The major version of the top level project."/>
 <variable name="CMAKE_PROJECT_VERSION_MINOR" desc="The minor version of the top level project."/>
@@ -2943,9 +3035,13 @@
 <variable name="CMAKE_RC_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_RC_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_RC_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_RC_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_RC_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_RC_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_RC_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_RC_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_RC_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_RC_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_RC_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_RC_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_RC_PLATFORM_ID" desc="An internal variable subject to change."/>
@@ -2997,7 +3093,7 @@
 <variable name="CMAKE_SYSTEM_APPBUNDLE_PATH" desc="Search path for macOS application bundles used by the find_program(), and find_package() commands. By default it contains the standard directories for the current system. It is not intended to be modified by the project, use CMAKE_APPBUNDLE_PATH for this."/>
 <variable name="CMAKE_SYSTEM_FRAMEWORK_PATH" desc="Search path for macOS frameworks used by the find_library(), find_package(), find_path(), and find_file() commands. By default it contains the standard directories for the current system. It is not intended to be modified by the project, use CMAKE_FRAMEWORK_PATH for this."/>
 <variable name="CMAKE_SYSTEM_IGNORE_PATH" desc="Semicolon-separated list of directories to be ignored by the various find...() commands."/>
-<variable name="CMAKE_SYSTEM_IGNORE_PREFIX_PATH" desc="Semicolon-separated list of prefixes to be ignored by the find_program(), find_library(), find_file(), find_path(), and find_package() commands. This is useful in cross-compiling environments where some system directories contain incompatible but possibly linkable libraries. For example, on cross-compiled cluster environments, this allows a user to ignore directories containing libraries meant for the front-end machine."/>
+<variable name="CMAKE_SYSTEM_IGNORE_PREFIX_PATH" desc="Semicolon-separated list of search prefixes to be ignored by the find_program(), find_library(), find_file(), and find_path() commands. The prefixes are also ignored by the Config mode of the find_package() command (Module mode is unaffected). To ignore specific directories instead, see CMAKE_SYSTEM_IGNORE_PATH."/>
 <variable name="CMAKE_SYSTEM_INCLUDE_PATH" desc="Semicolon-separated list of directories specifying a search path for the find_file() and find_path() commands. By default this contains the standard directories for the current system. It is not intended to be modified by the project; use CMAKE_INCLUDE_PATH for this. See also CMAKE_SYSTEM_PREFIX_PATH."/>
 <variable name="CMAKE_SYSTEM_LIBRARY_PATH" desc="Semicolon-separated list of directories specifying a search path for the find_library() command. By default this contains the standard directories for the current system. It is not intended to be modified by the project; use CMAKE_LIBRARY_PATH for this. See also CMAKE_SYSTEM_PREFIX_PATH."/>
 <variable name="CMAKE_SYSTEM_NAME" desc="The name of the operating system for which CMake is to build. See the CMAKE_SYSTEM_VERSION variable for the OS version."/>
@@ -3061,9 +3157,13 @@
 <variable name="CMAKE_Swift_LINKER_WRAPPER_FLAG" desc="Defines the syntax of compiler driver option to pass options to the linker tool. It will be used to translate the LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_Swift_LINKER_WRAPPER_FLAG_SEP" desc="This variable is used with CMAKE_&lt;LANG&gt;_LINKER_WRAPPER_FLAG variable to format LINKER: prefix in the link options (see add_link_options() and target_link_options())."/>
 <variable name="CMAKE_Swift_LINK_EXECUTABLE" desc="Rule variable to link an executable."/>
+<variable name="CMAKE_Swift_LINK_GROUP_USING" desc="This variable defines how to link a group of libraries for the specified &lt;FEATURE&gt; when a LINK_GROUP generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
+<variable name="CMAKE_Swift_LINK_GROUP_USING" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_Swift_LINK_LIBRARY_FILE_FLAG" desc="Language-specific flag to be used to link a library specified by a path to its file."/>
 <variable name="CMAKE_Swift_LINK_LIBRARY_FLAG" desc="Flag to be used to link a library into a shared library or executable."/>
 <variable name="CMAKE_Swift_LINK_LIBRARY_SUFFIX" desc="Language-specific suffix for libraries that you link to."/>
+<variable name="CMAKE_Swift_LINK_LIBRARY_USING" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_Swift_LINK_LIBRARY_USING" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_Swift_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_Swift_MODULE_DIRECTORY" desc="Swift module output directory."/>
 <variable name="CMAKE_Swift_NUM_THREADS" desc="Number of threads for parallel compilation for Swift targets."/>
@@ -3083,6 +3183,7 @@
 <variable name="CMAKE_TLS_VERIFY" desc="Specify the default value for the file(DOWNLOAD) and file(UPLOAD) commands' TLS_VERIFY options. If not set, the default is off."/>
 <variable name="CMAKE_TOOLCHAIN_FILE" desc="Path to toolchain file supplied to cmake(1)."/>
 <variable name="CMAKE_TRY_COMPILE_CONFIGURATION" desc="Build configuration used for try_compile() and try_run() projects."/>
+<variable name="CMAKE_TRY_COMPILE_NO_PLATFORM_VARIABLES" desc="Set to a true value to tell the try_compile() command not to propagate any platform variables into the test project."/>
 <variable name="CMAKE_TRY_COMPILE_PLATFORM_VARIABLES" desc="List of variables that the try_compile() command source file signature must propagate into the test project in order to target the same platform as the host project."/>
 <variable name="CMAKE_TRY_COMPILE_TARGET_TYPE" desc="Type of target generated for try_compile() calls using the source file signature. Valid values are:"/>
 <variable name="CMAKE_TWEAK_VERSION" desc="Defined to 0 for compatibility with code written for older CMake versions that may have defined higher values."/>
@@ -3093,6 +3194,7 @@
 <variable name="CMAKE_USER_MAKE_RULES_OVERRIDE_&lt;LANG&gt;" desc="Specify a CMake file that overrides platform information for &lt;LANG&gt;."/>
 <variable name="CMAKE_USE_RELATIVE_PATHS" desc="This variable has no effect. The partially implemented effect it had in previous releases was removed in CMake 3.4."/>
 <variable name="CMAKE_VERBOSE_MAKEFILE" desc="Enable verbose output from Makefile builds."/>
+<variable name="CMAKE_VERIFY_INTERFACE_HEADER_SETS" desc="This variable is used to initialize the VERIFY_INTERFACE_HEADER_SETS property of targets when they are created. Setting it to true enables header set verification."/>
 <variable name="CMAKE_VERSION" desc="The CMake version string as three non-negative integer components separated by . and possibly followed by - and other information. The first two components represent the feature level and the third component represents either a bug-fix level or development date."/>
 <variable name="CMAKE_VISIBILITY_INLINES_HIDDEN" desc="Default value for the VISIBILITY_INLINES_HIDDEN target property when a target is created."/>
 <variable name="CMAKE_VS_DEVENV_COMMAND" desc="The generators for Visual Studio 9 2008 and above set this variable to the devenv.com command installed with the corresponding Visual Studio version. Note that this variable may be empty on Visual Studio Express editions because they do not provide this tool."/>
@@ -3102,6 +3204,7 @@
 <variable name="CMAKE_VS_INTEL_Fortran_PROJECT_VERSION" desc="When generating for Visual Studio 9 2008 or greater with the Intel Fortran plugin installed, this specifies the .vfproj project file format version. This is intended for internal use by CMake and should not be used by project code."/>
 <variable name="CMAKE_VS_JUST_MY_CODE_DEBUGGING" desc="Enable Just My Code with Visual Studio debugger."/>
 <variable name="CMAKE_VS_MSBUILD_COMMAND" desc="The generators for Visual Studio 10 2010 and above set this variable to the MSBuild.exe command installed with the corresponding Visual Studio version."/>
+<variable name="CMAKE_VS_NO_COMPILE_BATCHING" desc="Turn off compile batching when using Visual Studio Generators."/>
 <variable name="CMAKE_VS_NUGET_PACKAGE_RESTORE" desc="When using a Visual Studio generator, this cache variable controls if msbuild should automatically attempt to restore NuGet packages prior to a build. NuGet packages can be defined using the VS_PACKAGE_REFERENCES property on a target. If no package references are defined, this setting will do nothing."/>
 <variable name="CMAKE_VS_NsightTegra_VERSION" desc="When using a Visual Studio generator with the CMAKE_SYSTEM_NAME variable set to Android, this variable contains the version number of the installed NVIDIA Nsight Tegra Visual Studio Edition."/>
 <variable name="CMAKE_VS_PLATFORM_NAME" desc="Visual Studio target platform name used by the current generator."/>
@@ -3126,6 +3229,7 @@
 <variable name="CMAKE_VS_WINRT_BY_DEFAULT" desc="Inform Visual Studio Generators for VS 2010 and above that the target platform enables WinRT compilation by default and it needs to be explicitly disabled if /ZW or VS_WINRT_COMPONENT is omitted (as opposed to enabling it when either of those options is present)"/>
 <variable name="CMAKE_WARN_DEPRECATED" desc="Whether to issue warnings for deprecated functionality."/>
 <variable name="CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION" desc="Ask cmake_install.cmake script to warn each time a file with absolute INSTALL DESTINATION is encountered."/>
+<variable name="CMAKE_WATCOM_RUNTIME_LIBRARY" desc="Select the Watcom runtime library for use by compilers targeting the Watcom ABI. This variable is used to initialize the WATCOM_RUNTIME_LIBRARY property on all targets as they are created. It is also propagated by calls to the try_compile() command into the test project."/>
 <variable name="CMAKE_WIN32_EXECUTABLE" desc="Default value for WIN32_EXECUTABLE of targets."/>
 <variable name="CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS" desc="Default value for WINDOWS_EXPORT_ALL_SYMBOLS target property. This variable is used to initialize the property on each target as it is created."/>
 <variable name="CMAKE_XCODE_ATTRIBUTE_&lt;an-attribute&gt;" desc="Set Xcode target attributes directly."/>
@@ -3153,6 +3257,7 @@
 <variable name="CMAKE_XCODE_SCHEME_UNDEFINED_BEHAVIOUR_SANITIZER_STOP" desc="Whether to enable Undefined Behavior Sanitizer option Pause on issues in the Diagnostics section of the generated Xcode scheme."/>
 <variable name="CMAKE_XCODE_SCHEME_WORKING_DIRECTORY" desc="Specify the Working Directory of the Run and Profile actions in the generated Xcode scheme."/>
 <variable name="CMAKE_XCODE_SCHEME_ZOMBIE_OBJECTS" desc="Whether to enable Zombie Objects in the Diagnostics section of the generated Xcode scheme."/>
+<variable name="CMAKE_XCODE_XCCONFIG" desc="If set, the Xcode generator will register the specified file as a global XCConfig file. For target-level XCConfig files see the XCODE_XCCONFIG target property."/>
 <variable name="CPACK_ABSOLUTE_DESTINATION_FILES" desc="List of files which have been installed using an ABSOLUTE DESTINATION path."/>
 <variable name="CPACK_COMPONENT_INCLUDE_TOPLEVEL_DIRECTORY" desc="Boolean toggle to include/exclude top level directory (component case)."/>
 <variable name="CPACK_CUSTOM_INSTALL_VARIABLES" desc="CPack variables (set via e.g. cpack -D, CPackConfig.cmake or CPACK_PROJECT_CONFIG_FILE scripts) are not directly visible in installation scripts. Instead, one can pass a list of varName=value pairs in the CPACK_CUSTOM_INSTALL_VARIABLES variable. At install time, each list item will result in a variable of the specified name (varName) being set to the given value. The = can be omitted for an empty value."/>
@@ -3179,16 +3284,17 @@
 <variable name="CTEST_CUSTOM_ERROR_MATCH" desc="A list of regular expressions which will be used to detect error messages in build outputs by the ctest_test() command."/>
 <variable name="CTEST_CUSTOM_ERROR_POST_CONTEXT" desc="The number of lines to include as context which follow an error message by the ctest_test() command. The default is 10."/>
 <variable name="CTEST_CUSTOM_ERROR_PRE_CONTEXT" desc="The number of lines to include as context which precede an error message by the ctest_test() command. The default is 10."/>
-<variable name="CTEST_CUSTOM_MAXIMUM_FAILED_TEST_OUTPUT_SIZE" desc="When saving a failing test's output, this is the maximum size, in bytes, that will be collected by the ctest_test() command. Defaults to 307200 (300 KiB)."/>
+<variable name="CTEST_CUSTOM_MAXIMUM_FAILED_TEST_OUTPUT_SIZE" desc="When saving a failing test's output, this is the maximum size, in bytes, that will be collected by the ctest_test() command. Defaults to 307200 (300 KiB). See CTEST_CUSTOM_TEST_OUTPUT_TRUNCATION for possible truncation modes."/>
 <variable name="CTEST_CUSTOM_MAXIMUM_NUMBER_OF_ERRORS" desc="The maximum number of errors in a single build step which will be detected. After this, the ctest_test() command will truncate the output. Defaults to 50."/>
 <variable name="CTEST_CUSTOM_MAXIMUM_NUMBER_OF_WARNINGS" desc="The maximum number of warnings in a single build step which will be detected. After this, the ctest_test() command will truncate the output. Defaults to 50."/>
-<variable name="CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE" desc="When saving a passing test's output, this is the maximum size, in bytes, that will be collected by the ctest_test() command. Defaults to 1024 (1 KiB)."/>
+<variable name="CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE" desc="When saving a passing test's output, this is the maximum size, in bytes, that will be collected by the ctest_test() command. Defaults to 1024 (1 KiB). See CTEST_CUSTOM_TEST_OUTPUT_TRUNCATION for possible truncation modes."/>
 <variable name="CTEST_CUSTOM_MEMCHECK_IGNORE" desc="A list of regular expressions to use to exclude tests during the ctest_memcheck() command."/>
 <variable name="CTEST_CUSTOM_POST_MEMCHECK" desc="A list of commands to run at the end of the ctest_memcheck() command."/>
 <variable name="CTEST_CUSTOM_POST_TEST" desc="A list of commands to run at the end of the ctest_test() command."/>
 <variable name="CTEST_CUSTOM_PRE_MEMCHECK" desc="A list of commands to run at the start of the ctest_memcheck() command."/>
 <variable name="CTEST_CUSTOM_PRE_TEST" desc="A list of commands to run at the start of the ctest_test() command."/>
 <variable name="CTEST_CUSTOM_TESTS_IGNORE" desc="A list of test names to be excluded from the set of tests run by the ctest_test() command."/>
+<variable name="CTEST_CUSTOM_TEST_OUTPUT_TRUNCATION" desc="Set the test output truncation mode in case a maximum size is configured via the CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE or CTEST_CUSTOM_MAXIMUM_FAILED_TEST_OUTPUT_SIZE variables. By default the tail of the output will be truncated. Other possible values are middle and head."/>
 <variable name="CTEST_CUSTOM_WARNING_EXCEPTION" desc="A list of regular expressions which will be used to exclude when detecting warning messages in build outputs by the ctest_build() command."/>
 <variable name="CTEST_CUSTOM_WARNING_MATCH" desc="A list of regular expressions which will be used to detect warning messages in build outputs by the ctest_build() command."/>
 <variable name="CTEST_CVS_CHECKOUT" desc="Deprecated. Use CTEST_CHECKOUT_COMMAND instead." deprecated="true"/>
