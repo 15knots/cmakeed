@@ -2,7 +2,7 @@
 <feature
       id="com.cthing.cmakeed.feature"
       label="CMake Editor"
-      version="1.19.0"
+      version="1.20.0"
       provider-name="Martin Weber/C Thing Software/BlueQuartz Software">
 
    <description url="http://cmakeed.sourceforge.net">
