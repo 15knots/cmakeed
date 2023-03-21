@@ -10,6 +10,7 @@
 <usage value="(&lt;option&gt; ...)"/>
 </command>
 <command name="add_custom_command" desc="Add a custom build rule to the generated build system.">
+<usage value="( OUTPUT table.csv COMMAND makeTable -i ${CMAKE_CURRENT_SOURCE_DIR}/input.dat -o table.csv DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/input.dat VERBATIM) add_custom_target(generate_table_csv DEPENDS table.csv) add_custom_command( OUTPUT foo.cxx COMMAND genFromTable -i table.csv -case foo -o foo.cxx DEPENDS table.csv # file-level dependency generate_table_csv # target-level dependency VERBATIM) add_library(foo foo.cxx) add_custom_command( OUTPUT bar.cxx COMMAND genFromTable -i table.csv -case bar -o bar.cxx DEPENDS table.csv # file-level dependency generate_table_csv # target-level dependency VERBATIM) add_library(bar bar.cxx)"/>
 <usage value="(OUTPUT output1 [output2 ...] COMMAND command1 [ARGS] [args1...] [COMMAND command2 [ARGS] [args2...] ...] [MAIN_DEPENDENCY depend] [DEPENDS [depends...]] [BYPRODUCTS [files...]] [IMPLICIT_DEPENDS &lt;lang1&gt; depend1 [&lt;lang2&gt; depend2] ...] [WORKING_DIRECTORY dir] [COMMENT comment] [DEPFILE depfile] [JOB_POOL job_pool] [VERBATIM] [APPEND] [USES_TERMINAL] [COMMAND_EXPAND_LISTS])"/>
 <usage value="(TARGET &lt;target&gt; PRE_BUILD | PRE_LINK | POST_BUILD COMMAND command1 [ARGS] [args1...] [COMMAND command2 [ARGS] [args2...] ...] [BYPRODUCTS [files...]] [WORKING_DIRECTORY dir] [COMMENT comment] [VERBATIM] [USES_TERMINAL] [COMMAND_EXPAND_LISTS])"/>
 </command>
@@ -150,13 +151,13 @@
 <usage value="([BUILD &lt;build-dir&gt;] [APPEND] [LABELS &lt;label&gt;...] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [QUIET] )"/>
 </command>
 <command name="ctest_empty_binary_directory" desc="empties the binary directory">
-<usage value="( directory )"/>
+<usage value="(&lt;directory&gt;)"/>
 </command>
 <command name="ctest_memcheck" desc="Perform the CTest MemCheck Step as a Dashboard Client.">
 <usage value="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL &lt;level&gt;] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_ON_FAILURE] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [OUTPUT_JUNIT &lt;file&gt;] [DEFECT_COUNT &lt;defect-count-var&gt;] [QUIET] )"/>
 </command>
 <command name="ctest_read_custom_files" desc="read CTestCustom files.">
-<usage value="( directory ... )"/>
+<usage value="(&lt;directory&gt;...)"/>
 </command>
 <command name="ctest_run_script" desc="runs a ctest -S script">
 <usage value="([NEW_PROCESS] script_file_name script_file_name1 script_file_name2 ... [RETURN_VALUE var])"/>
@@ -244,7 +245,7 @@
 <usage value="(MAKE_DIRECTORY [&lt;directories&gt;...])"/>
 <usage value="(REMOVE [&lt;files&gt;...]) file(REMOVE_RECURSE [&lt;files&gt;...])"/>
 <usage value="(RENAME &lt;oldname&gt; &lt;newname&gt; [RESULT &lt;result&gt;] [NO_REPLACE])"/>
-<usage value="(COPY_FILE &lt;oldname&gt; &lt;newname&gt; [RESULT &lt;result&gt;] [ONLY_IF_DIFFERENT])"/>
+<usage value="(COPY_FILE &lt;oldname&gt; &lt;newname&gt; [RESULT &lt;result&gt;] [ONLY_IF_DIFFERENT] [INPUT_MAY_BE_RECENT])"/>
 <usage value="(&lt;COPY|INSTALL&gt; &lt;files&gt;... DESTINATION &lt;dir&gt; [NO_SOURCE_PERMISSIONS | USE_SOURCE_PERMISSIONS] [FILE_PERMISSIONS &lt;permissions&gt;...] [DIRECTORY_PERMISSIONS &lt;permissions&gt;...] [FOLLOW_SYMLINK_CHAIN] [FILES_MATCHING] [[PATTERN &lt;pattern&gt; | REGEX &lt;regex&gt;] [EXCLUDE] [PERMISSIONS &lt;permissions&gt;...]] [...])"/>
 <usage value="(SIZE &lt;filename&gt; &lt;variable&gt;)"/>
 <usage value="(READ_SYMLINK &lt;linkname&gt; &lt;variable&gt;)"/>
@@ -411,6 +412,7 @@
 <usage value="(STATUS &#34;Looking for someheader.h&#34;) #... do the checks, set checkSuccess with the result if(checkSuccess) message(STATUS &#34;Looking for someheader.h - found&#34;) else() message(STATUS &#34;Looking for someheader.h - not found&#34;) endif()"/>
 <usage value="(&lt;checkState&gt; &#34;message&#34; ...)"/>
 <usage value="(CHECK_START &#34;Finding my things&#34;) list(APPEND CMAKE_MESSAGE_INDENT &#34; &#34;) unset(missingComponents) message(CHECK_START &#34;Finding partA&#34;) # ... do check, assume we find A message(CHECK_PASS &#34;found&#34;) message(CHECK_START &#34;Finding partB&#34;) # ... do check, assume we don't find B list(APPEND missingComponents B) message(CHECK_FAIL &#34;not found&#34;) list(POP_BACK CMAKE_MESSAGE_INDENT) if(missingComponents) message(CHECK_FAIL &#34;missing components: ${missingComponents}&#34;) else() message(CHECK_PASS &#34;all components found&#34;) endif()"/>
+<usage value="(CONFIGURE_LOG &lt;text&gt;...)"/>
 </command>
 <command name="option" desc="Provide a boolean option that the user can optionally select.">
 <usage value="(&lt;variable&gt; &#34;&lt;help_text&gt;&#34; [value])"/>
@@ -543,14 +545,14 @@
 <usage value="(&lt;target&gt; [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [FILE_SET &lt;set&gt; [TYPE &lt;type&gt;] [BASE_DIRS &lt;dirs&gt;...] [FILES &lt;files&gt;...]]... ]...)"/>
 </command>
 <command name="try_compile" desc="Try building some code.">
-<usage value="(&lt;resultVar&gt; PROJECT &lt;projectName&gt; SOURCE_DIR &lt;srcdir&gt; [BINARY_DIR &lt;bindir&gt;] [TARGET &lt;targetName&gt;] [NO_CACHE] [CMAKE_FLAGS &lt;flags&gt;...] [OUTPUT_VARIABLE &lt;var&gt;])"/>
-<usage value="(&lt;resultVar&gt; &lt;bindir&gt; &lt;srcdir&gt; &lt;projectName&gt; [&lt;targetName&gt;] [NO_CACHE] [CMAKE_FLAGS &lt;flags&gt;...] [OUTPUT_VARIABLE &lt;var&gt;])"/>
-<usage value="(&lt;resultVar&gt; &lt;SOURCES &lt;srcfile...&gt; | SOURCE_FROM_CONTENT &lt;name&gt; &lt;content&gt; | SOURCE_FROM_VAR &lt;name&gt; &lt;var&gt; | SOURCE_FROM_FILE &lt;name&gt; &lt;path&gt; &gt;... [NO_CACHE] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] )"/>
-<usage value="(&lt;resultVar&gt; &lt;bindir&gt; &lt;srcfile|SOURCES srcfile...&gt; [NO_CACHE] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] )"/>
+<usage value="(&lt;compileResultVar&gt; PROJECT &lt;projectName&gt; SOURCE_DIR &lt;srcdir&gt; [BINARY_DIR &lt;bindir&gt;] [TARGET &lt;targetName&gt;] [LOG_DESCRIPTION &lt;text&gt;] [NO_CACHE] [NO_LOG] [CMAKE_FLAGS &lt;flags&gt;...] [OUTPUT_VARIABLE &lt;var&gt;])"/>
+<usage value="(&lt;compileResultVar&gt; &lt;bindir&gt; &lt;srcdir&gt; &lt;projectName&gt; [&lt;targetName&gt;] [CMAKE_FLAGS &lt;flags&gt;...] [OUTPUT_VARIABLE &lt;var&gt;])"/>
+<usage value="(&lt;compileResultVar&gt; &lt;SOURCES &lt;srcfile...&gt; | SOURCE_FROM_CONTENT &lt;name&gt; &lt;content&gt; | SOURCE_FROM_VAR &lt;name&gt; &lt;var&gt; | SOURCE_FROM_FILE &lt;name&gt; &lt;path&gt; &gt;... [LOG_DESCRIPTION &lt;text&gt;] [NO_CACHE] [NO_LOG] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] )"/>
+<usage value="(&lt;compileResultVar&gt; &lt;bindir&gt; &lt;srcfile|SOURCES srcfile...&gt; [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] )"/>
 </command>
 <command name="try_run" desc="Try compiling and then running some code.">
-<usage value="(&lt;runResultVar&gt; &lt;compileResultVar&gt; &lt;SOURCES &lt;srcfile...&gt; | SOURCE_FROM_CONTENT &lt;name&gt; &lt;content&gt; | SOURCE_FROM_VAR &lt;name&gt; &lt;var&gt; | SOURCE_FROM_FILE &lt;name&gt; &lt;path&gt; &gt;... [NO_CACHE] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [COMPILE_OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] [RUN_OUTPUT_VARIABLE &lt;var&gt;] [RUN_OUTPUT_STDOUT_VARIABLE &lt;var&gt;] [RUN_OUTPUT_STDERR_VARIABLE &lt;var&gt;] [OUTPUT_VARIABLE &lt;var&gt;] [WORKING_DIRECTORY &lt;var&gt;] [ARGS &lt;args&gt;...] )"/>
-<usage value="(&lt;runResultVar&gt; &lt;compileResultVar&gt; &lt;bindir&gt; &lt;srcfile|SOURCES srcfile...&gt; [NO_CACHE] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [COMPILE_OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] [RUN_OUTPUT_VARIABLE &lt;var&gt;] [RUN_OUTPUT_STDOUT_VARIABLE &lt;var&gt;] [RUN_OUTPUT_STDERR_VARIABLE &lt;var&gt;] [OUTPUT_VARIABLE &lt;var&gt;] [WORKING_DIRECTORY &lt;var&gt;] [ARGS &lt;args&gt;...] )"/>
+<usage value="(&lt;runResultVar&gt; &lt;compileResultVar&gt; &lt;SOURCES &lt;srcfile...&gt; | SOURCE_FROM_CONTENT &lt;name&gt; &lt;content&gt; | SOURCE_FROM_VAR &lt;name&gt; &lt;var&gt; | SOURCE_FROM_FILE &lt;name&gt; &lt;path&gt; &gt;... [LOG_DESCRIPTION &lt;text&gt;] [NO_CACHE] [NO_LOG] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [COMPILE_OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] [RUN_OUTPUT_VARIABLE &lt;var&gt;] [RUN_OUTPUT_STDOUT_VARIABLE &lt;var&gt;] [RUN_OUTPUT_STDERR_VARIABLE &lt;var&gt;] [WORKING_DIRECTORY &lt;var&gt;] [ARGS &lt;args&gt;...] )"/>
+<usage value="(&lt;runResultVar&gt; &lt;compileResultVar&gt; &lt;bindir&gt; &lt;srcfile|SOURCES srcfile...&gt; [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [COMPILE_OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] [RUN_OUTPUT_VARIABLE &lt;var&gt;] [OUTPUT_VARIABLE &lt;var&gt;] [WORKING_DIRECTORY &lt;var&gt;] [ARGS &lt;args&gt;...] )"/>
 </command>
 <command name="unset" desc="Unset a variable, cache variable, or environment variable.">
 <usage value="(&lt;variable&gt; [CACHE | PARENT_SCOPE])"/>
@@ -608,6 +610,7 @@
 <property name="ARCHIVE_OUTPUT_NAME" desc="Output name for ARCHIVE target files."/>
 <property name="ARCHIVE_OUTPUT_NAME_&lt;CONFIG&gt;" desc="Per-configuration output name for ARCHIVE target files."/>
 <property name="ASM-ATT_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="ASM-ATT_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="ASM-ATT_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="ASM-ATT_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="ASM-ATT_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -618,6 +621,7 @@
 <property name="ASM-ATT_STANDARD_REQUIRED" desc="The variations are:"/>
 <property name="ASM-ATT_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="ASM-MASM_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="ASM-MASM_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="ASM-MASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="ASM-MASM_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="ASM-MASM_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -628,6 +632,7 @@
 <property name="ASM-MASM_STANDARD_REQUIRED" desc="The variations are:"/>
 <property name="ASM-MASM_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="ASM-NASM_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="ASM-NASM_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="ASM-NASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="ASM-NASM_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="ASM-NASM_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -638,6 +643,7 @@
 <property name="ASM-NASM_STANDARD_REQUIRED" desc="The variations are:"/>
 <property name="ASM-NASM_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="ASM_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="ASM_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="ASM_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="ASM_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="ASM_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -675,7 +681,7 @@
 <property name="AUTOUIC_SOURCE_GROUP" desc="Name of the source_group() for AUTOUIC generated files."/>
 <property name="BINARY_DIR" desc="This read-only property reports the value of the CMAKE_CURRENT_BINARY_DIR variable in the directory in which the target was defined."/>
 <property name="BUILDSYSTEM_TARGETS" desc="This read-only directory property contains a semicolon-separated list of buildsystem targets added in the directory by calls to the add_library(), add_executable(), and add_custom_target() commands. The list does not include any Imported Targets or Alias Targets, but does include Interface Libraries. Each entry in the list is the logical name of a target, suitable to pass to the get_property() command TARGET option."/>
-<property name="BUILD_RPATH" desc="A semicolon-separated list specifying runtime path (RPATH) entries to add to binaries linked in the build tree (for platforms that support it). The entries will not be used for binaries in the install tree. See also the INSTALL_RPATH target property."/>
+<property name="BUILD_RPATH" desc="A semicolon-separated list specifying runtime path (RPATH) entries to add to binaries linked in the build tree (for platforms that support it). By default, CMake sets the runtime path of binaries in the build tree to contain search paths it knows are needed to find the shared libraries they link. Projects may set BUILD_RPATH to specify additional search paths."/>
 <property name="BUILD_RPATH_USE_ORIGIN" desc="Whether to use relative paths for the build RPATH."/>
 <property name="BUILD_WITH_INSTALL_NAME_DIR" desc="BUILD_WITH_INSTALL_NAME_DIR is a boolean specifying whether the macOS install_name of a target in the build tree uses the directory given by INSTALL_NAME_DIR. This setting only applies to targets on macOS."/>
 <property name="BUILD_WITH_INSTALL_RPATH" desc="BUILD_WITH_INSTALL_RPATH is a boolean specifying whether to link the target in the build tree with the INSTALL_RPATH. This takes precedence over SKIP_BUILD_RPATH and avoids the need for relinking before installation."/>
@@ -712,6 +718,7 @@
 <property name="CPACK_WIX_ACL" desc="Specifies access permissions for files or directories installed by a WiX installer."/>
 <property name="CROSSCOMPILING_EMULATOR" desc="Use the given emulator to run executables created when crosscompiling. This command will be added as a prefix to add_test(), add_custom_command(), and add_custom_target() commands for built target system executables."/>
 <property name="CSharp_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="CSharp_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="CSharp_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="CSharp_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="CSharp_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -723,6 +730,7 @@
 <property name="CSharp_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="CUDA_ARCHITECTURES" desc="List of architectures to generate device code for."/>
 <property name="CUDA_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="CUDA_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="CUDA_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="CUDA_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="CUDA_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -740,6 +748,7 @@
 <property name="CUDA_STANDARD_REQUIRED" desc="The variations are:"/>
 <property name="CUDA_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="CXX_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="CXX_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="CXX_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="CXX_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="CXX_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -757,12 +766,14 @@
 <property name="CXX_MODULE_SET" desc="Semicolon-separated list of files in the target's default C++ module set, (i.e. the file set with name and type CXX_MODULES). If any of the paths are relative, they are computed relative to the target's source directory. The property supports generator expressions."/>
 <property name="CXX_MODULE_SETS" desc="Read-only list of the target's PRIVATE and PUBLIC C++ module sets (i.e. all file sets with the type CXX_MODULES). Files listed in these file sets are treated as source files for the purpose of IDE integration."/>
 <property name="CXX_MODULE_SET_&lt;NAME&gt;" desc="Semicolon-separated list of files in the target's &lt;NAME&gt; C++ module set, which has the set type CXX_MODULES. If any of the paths are relative, they are computed relative to the target's source directory. The property supports generator expressions."/>
+<property name="CXX_SCAN_FOR_MODULES" desc="CXX_SCAN_FOR_MODULES is a boolean specifying whether CMake will scan C++ sources in the target for module dependencies. See also the CXX_SCAN_FOR_MODULES for per-source settings which, if set, overrides the target-wide settings."/>
 <property name="CXX_STANDARD" desc="The C++ standard whose features are requested to build this target."/>
 <property name="CXX_STANDARD" desc="The variations are:"/>
 <property name="CXX_STANDARD_REQUIRED" desc="Boolean describing whether the value of CXX_STANDARD is a requirement."/>
 <property name="CXX_STANDARD_REQUIRED" desc="The variations are:"/>
 <property name="CXX_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="C_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="C_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="C_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="C_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="C_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -801,7 +812,7 @@
 <property name="EXCLUDE_FROM_DEFAULT_BUILD_&lt;CONFIG&gt;" desc="Per-configuration version of target exclusion from Build Solution."/>
 <property name="EXPORT_COMPILE_COMMANDS" desc="Enable/Disable output of compile commands during generation for a target."/>
 <property name="EXPORT_NAME" desc="Exported name for target files."/>
-<property name="EXPORT_NO_SYSTEM" desc="Specifies that install(EXPORT) and export() commands will generate an imported target with SYSTEM property OFF."/>
+<property name="EXPORT_NO_SYSTEM" desc="This property affects the behavior of the install(EXPORT) and export() commands when they install or export the target respectively. When EXPORT_NO_SYSTEM is set to true, those commands generate an imported target with SYSTEM property set to false."/>
 <property name="EXPORT_PROPERTIES" desc="List additional properties to export for a target."/>
 <property name="EXTERNAL_OBJECT" desc="If set to true then this is an object file."/>
 <property name="EchoString" desc="A message to be displayed when the target is built."/>
@@ -813,12 +824,13 @@
 <property name="FIXTURES_CLEANUP" desc="Specifies a list of fixtures for which the test is to be treated as a cleanup test. These fixture names are distinct from test case names and are not required to have any similarity to the names of tests associated with them."/>
 <property name="FIXTURES_REQUIRED" desc="Specifies a list of fixtures the test requires. Fixture names are case sensitive and they are not required to have any similarity to test names."/>
 <property name="FIXTURES_SETUP" desc="Specifies a list of fixtures for which the test is to be treated as a setup test. These fixture names are distinct from test case names and are not required to have any similarity to the names of tests associated with them."/>
-<property name="FOLDER" desc="Set the folder name. Use to organize targets in an IDE."/>
+<property name="FOLDER" desc="For IDEs that present targets using a folder hierarchy, this property specifies the name of the folder to place the target under. To nest folders, use FOLDER values such as GUI/Dialogs with / characters separating folder levels. Targets with no FOLDER property will appear as top level entities. Targets with the same FOLDER property value will appear in the same folder as siblings."/>
 <property name="FRAMEWORK" desc="Build SHARED or STATIC library as Framework Bundle on the macOS and iOS."/>
 <property name="FRAMEWORK_MULTI_CONFIG_POSTFIX_&lt;CONFIG&gt;" desc="Postfix to append to the framework file name for configuration &lt;CONFIG&gt;, when using a multi-config generator (like Xcode and Ninja Multi-Config)."/>
 <property name="FRAMEWORK_VERSION" desc="Version of a framework created using the FRAMEWORK target property (e.g. A)."/>
 <property name="Fortran_BUILDING_INSTRINSIC_MODULES" desc="Instructs the CMake Fortran preprocessor that the target is building Fortran intrinsics for building a Fortran compiler."/>
 <property name="Fortran_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="Fortran_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="Fortran_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="Fortran_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="Fortran_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -872,7 +884,7 @@
 <property name="IMPORTED_LOCATION_&lt;CONFIG&gt;" desc="&lt;CONFIG&gt;-specific version of IMPORTED_LOCATION property."/>
 <property name="IMPORTED_NO_SONAME" desc="Specifies that an IMPORTED shared library target has no soname."/>
 <property name="IMPORTED_NO_SONAME_&lt;CONFIG&gt;" desc="&lt;CONFIG&gt;-specific version of IMPORTED_NO_SONAME property."/>
-<property name="IMPORTED_NO_SYSTEM" desc="Specifies that an Imported Target is not a SYSTEM library. This has the following effects:"/>
+<property name="IMPORTED_NO_SYSTEM" desc="Setting IMPORTED_NO_SYSTEM to true on an imported target specifies that it is not a system target. This has the following effects:"/>
 <property name="IMPORTED_OBJECTS" desc="A semicolon-separated list of absolute paths to the object files on disk for an imported object library."/>
 <property name="IMPORTED_OBJECTS_&lt;CONFIG&gt;" desc="&lt;CONFIG&gt;-specific version of IMPORTED_OBJECTS property."/>
 <property name="IMPORTED_SONAME" desc="The soname of an IMPORTED target of shared library type."/>
@@ -917,6 +929,7 @@
 <property name="JOB_POOL_LINK" desc="Ninja only: Pool used for linking."/>
 <property name="JOB_POOL_PRECOMPILE_HEADER" desc="Ninja only: Pool used for generating pre-compiled headers."/>
 <property name="Java_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="Java_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="Java_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="Java_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="Java_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -970,7 +983,7 @@
 <property name="MSVC_RUNTIME_LIBRARY" desc="Select the MSVC runtime library for use by compilers targeting the MSVC ABI."/>
 <property name="NAME" desc="Logical name for the target."/>
 <property name="NO_SONAME" desc="Whether to set soname when linking a shared library."/>
-<property name="NO_SYSTEM_FROM_IMPORTED" desc="Do not treat include directories from the interfaces of consumed Imported Targets as SYSTEM."/>
+<property name="NO_SYSTEM_FROM_IMPORTED" desc="Do not treat include directories from the interfaces of consumed Imported Targets as system directories."/>
 <property name="OBJCXX_EXTENSIONS" desc="Boolean specifying whether compiler specific extensions are requested."/>
 <property name="OBJCXX_STANDARD" desc="The ObjC++ standard whose features are requested to build this target."/>
 <property name="OBJCXX_STANDARD_REQUIRED" desc="Boolean describing whether the value of OBJCXX_STANDARD is a requirement."/>
@@ -1007,6 +1020,7 @@
 <property name="PROJECT_LABEL" desc="Change the name of a target in an IDE."/>
 <property name="PUBLIC_HEADER" desc="Specify public header files in a FRAMEWORK shared library target."/>
 <property name="RC_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="RC_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="RC_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="RC_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="RC_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -1049,8 +1063,9 @@
 <property name="SUBDIRECTORIES" desc="This read-only directory property contains a semicolon-separated list of subdirectories processed so far by the add_subdirectory() or subdirs() commands. Each entry is the absolute path to the source directory (containing the CMakeLists.txt file). This is suitable to pass to the get_property() command DIRECTORY option."/>
 <property name="SUFFIX" desc="What comes after the target name."/>
 <property name="SYMBOLIC" desc="Is this just a name for a rule."/>
-<property name="SYSTEM" desc="Specifies that a target is a SYSTEM library. This has the following effects:"/>
+<property name="SYSTEM" desc="Specifies that a target is a system target. This has the following effects:"/>
 <property name="Swift_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<property name="Swift_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
 <property name="Swift_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="Swift_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="Swift_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -1081,7 +1096,7 @@
 <property name="UNITY_BUILD_MODE" desc="CMake provides different algorithms for selecting which sources are grouped together into a bucket. Selection is decided by this property, which has the following acceptable values:"/>
 <property name="UNITY_BUILD_UNIQUE_ID" desc="The name of a valid C-identifier which is set to a unique per-file value during unity builds."/>
 <property name="UNITY_GROUP" desc="This property controls which bucket the source will be part of when the UNITY_BUILD_MODE is set to GROUP."/>
-<property name="USE_FOLDERS" desc="Use the FOLDER target property to organize targets into folders."/>
+<property name="USE_FOLDERS" desc="Controls whether to use the FOLDER target property to organize targets into folders. The value of USE_FOLDERS at the end of the top level CMakeLists.txt file is what determines the behavior."/>
 <property name="VALUE" desc="Value of a cache entry."/>
 <property name="VARIABLES" desc="List of variables defined in the current directory."/>
 <property name="VERIFY_INTERFACE_HEADER_SETS" desc="Used to verify that all headers in a target's PUBLIC and INTERFACE header sets can be included on their own."/>
@@ -1206,7 +1221,6 @@
 <reservedword name="ALIAS"/>
 <reservedword name="ALL"/>
 <reservedword name="ALL_BUILD"/>
-<reservedword name="ANGLE"/>
 <reservedword name="ANSI"/>
 <reservedword name="ANY"/>
 <reservedword name="APPEND"/>
@@ -1218,7 +1232,11 @@
 <reservedword name="ARGV"/>
 <reservedword name="ARRAY"/>
 <reservedword name="ASM"/>
+<reservedword name="ASM_MARMASM"/>
+<reservedword name="ASM_MASM"/>
+<reservedword name="ASM_NASM"/>
 <reservedword name="AT"/>
+<reservedword name="ATT"/>
 <reservedword name="AUTHOR_WARNING"/>
 <reservedword name="AUTO"/>
 <reservedword name="AVAILABLE_PHYSICAL_MEMORY"/>
@@ -1262,7 +1280,6 @@
 <reservedword name="COMMENT"/>
 <reservedword name="COMPARE"/>
 <reservedword name="COMPILE_DEFINITIONS"/>
-<reservedword name="COMPILE_FEATURES"/>
 <reservedword name="COMPILE_OUTPUT_VARIABLE"/>
 <reservedword name="COMPONENT"/>
 <reservedword name="COMPONENTS"/>
@@ -1282,6 +1299,7 @@
 <reservedword name="COPY_FILE_ERROR"/>
 <reservedword name="COPY_ON_ERROR"/>
 <reservedword name="CRLF"/>
+<reservedword name="CS"/>
 <reservedword name="CTEST_BUILD_CONFIGURATION"/>
 <reservedword name="CTEST_BUILD_FLAGS"/>
 <reservedword name="CTEST_BUILD_TARGET"/>
@@ -1316,6 +1334,7 @@
 <reservedword name="DOC"/>
 <reservedword name="DOS"/>
 <reservedword name="DOWNLOAD"/>
+<reservedword name="ECHO"/>
 <reservedword name="ECHO_ERROR_VARIABLE"/>
 <reservedword name="ECHO_OUTPUT_VARIABLE"/>
 <reservedword name="ENCODING"/>
@@ -1445,9 +1464,9 @@
 <reservedword name="INHERITED"/>
 <reservedword name="INPUT"/>
 <reservedword name="INPUT_FILE"/>
+<reservedword name="INPUT_MAY_BE_RECENT"/>
 <reservedword name="INSERT"/>
 <reservedword name="INSTALL"/>
-<reservedword name="INSTALL_PREFIX"/>
 <reservedword name="INTERFACE"/>
 <reservedword name="INTERNAL"/>
 <reservedword name="IS"/>
@@ -1482,6 +1501,7 @@
 <reservedword name="LIST_ONLY"/>
 <reservedword name="LOCK"/>
 <reservedword name="LOG"/>
+<reservedword name="LOG_DESCRIPTION"/>
 <reservedword name="MACOSX_BUNDLE"/>
 <reservedword name="MAIN_DEPENDENCY"/>
 <reservedword name="MD"/>
@@ -1511,6 +1531,7 @@
 <reservedword name="NO_CMAKE_FIND_ROOT_PATH"/>
 <reservedword name="NO_DEFAULT_PATH"/>
 <reservedword name="NO_HEX_CONVERSION"/>
+<reservedword name="NO_LOG"/>
 <reservedword name="NO_MODULE"/>
 <reservedword name="NO_POLICY_SCOPE"/>
 <reservedword name="NO_REPLACE"/>
@@ -1707,9 +1728,7 @@
 <reservedword name="TARGET_DIRECTORY"/>
 <reservedword name="TARGET_FILE"/>
 <reservedword name="TARGET_LINKER_FILE"/>
-<reservedword name="TARGET_OBJECTS"/>
 <reservedword name="TARGET_PDB_FILE"/>
-<reservedword name="TARGET_PROPERTY"/>
 <reservedword name="TARGET_SONAME_FILE"/>
 <reservedword name="TEST"/>
 <reservedword name="TEST_LOAD"/>
@@ -1782,7 +1801,7 @@
 <variable name="&lt;PROJECT-NAME&gt;_VERSION_MINOR" desc="Second version number component of the &lt;PROJECT-NAME&gt;_VERSION variable as set by the project() command."/>
 <variable name="&lt;PROJECT-NAME&gt;_VERSION_PATCH" desc="Third version number component of the &lt;PROJECT-NAME&gt;_VERSION variable as set by the project() command."/>
 <variable name="&lt;PROJECT-NAME&gt;_VERSION_TWEAK" desc="Fourth version number component of the &lt;PROJECT-NAME&gt;_VERSION variable as set by the project() command."/>
-<variable name="&lt;PackageName&gt;_ROOT" desc="Calls to find_package(&lt;PackageName&gt;) will search in prefixes specified by the &lt;PackageName&gt;_ROOT CMake variable, where &lt;PackageName&gt; is the name given to the find_package() call and _ROOT is literal. For example, find_package(Foo) will search prefixes specified in the Foo_ROOT CMake variable (if set). See policy CMP0074."/>
+<variable name="&lt;PackageName&gt;_ROOT" desc="Calls to find_package(&lt;PackageName&gt;) will search in prefixes specified by the &lt;PackageName&gt;_ROOT CMake variable, where &lt;PackageName&gt; is the (case-preserved) name given to the find_package() call and _ROOT is literal. For example, find_package(Foo) will search prefixes specified in the Foo_ROOT CMake variable (if set). See policy CMP0074."/>
 <variable name="ANDROID" desc="Set to 1 when the target system (CMAKE_SYSTEM_NAME) is Android."/>
 <variable name="APPLE" desc="Set to True when the target system is an Apple platform (macOS, iOS, tvOS or watchOS)."/>
 <variable name="BORLAND" desc="True if the Borland compiler is being used."/>
@@ -1842,6 +1861,7 @@
 <variable name="CMAKE_ASM-ATT_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_ASM-ATT_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_ASM-ATT_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_ASM-ATT_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_ASM-ATT_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -1917,6 +1937,7 @@
 <variable name="CMAKE_ASM-MASM_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_ASM-MASM_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_ASM-MASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_ASM-MASM_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_ASM-MASM_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -1992,6 +2013,7 @@
 <variable name="CMAKE_ASM-NASM_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_ASM-NASM_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_ASM-NASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_ASM-NASM_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_ASM-NASM_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_ASM-NASM_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_ASM-NASM_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2067,6 +2089,7 @@
 <variable name="CMAKE_ASM_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_ASM_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_ASM_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_ASM_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_ASM_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_ASM_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_ASM_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2177,7 +2200,7 @@
 <variable name="CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY" desc="Output directory for MS debug symbol .pdb files generated by the compiler while building source files."/>
 <variable name="CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY_&lt;CONFIG&gt;" desc="Per-configuration output directory for MS debug symbol .pdb files generated by the compiler while building source files."/>
 <variable name="CMAKE_COMPILE_WARNING_AS_ERROR" desc="Specify whether to treat warnings on compile as errors."/>
-<variable name="CMAKE_CONFIGURATION_TYPES" desc="Specifies the available build types (configurations) on multi-config generators (e.g. Visual Studio, Xcode, or Ninja Multi-Config). Typical values include Debug, Release, RelWithDebInfo and MinSizeRel, but custom build types can also be defined."/>
+<variable name="CMAKE_CONFIGURATION_TYPES" desc="Specifies the available build types (configurations) on multi-config generators (e.g. Visual Studio, Xcode, or Ninja Multi-Config) as a semicolon-separated list. Typical entries include Debug, Release, RelWithDebInfo and MinSizeRel, but custom build types can also be defined."/>
 <variable name="CMAKE_CPACK_COMMAND" desc="Full path to cpack(1) command installed with CMake."/>
 <variable name="CMAKE_CROSSCOMPILING" desc="Intended to indicate whether CMake is cross compiling, but note limitations discussed below."/>
 <variable name="CMAKE_CROSSCOMPILING_EMULATOR" desc="This variable is only used when CMAKE_CROSSCOMPILING is on. It should point to a command on the host system that can run executable built for the target system."/>
@@ -2190,6 +2213,7 @@
 <variable name="CMAKE_CSharp_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_CSharp_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_CSharp_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_CSharp_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_CSharp_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_CSharp_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_CSharp_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2268,6 +2292,7 @@
 <variable name="CMAKE_CUDA_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_CUDA_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_CUDA_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_CUDA_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_CUDA_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_CUDA_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_CUDA_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2328,7 +2353,7 @@
 <variable name="CMAKE_CUDA_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_CUDA_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_CUDA_PLATFORM_ID" desc="An internal variable subject to change."/>
-<variable name="CMAKE_CUDA_RESOLVE_DEVICE_SYMBOLS" desc="Default value for CUDA_RESOLVE_DEVICE_SYMBOLS target property. This variable is used to initialize the property on each target as it is created."/>
+<variable name="CMAKE_CUDA_RESOLVE_DEVICE_SYMBOLS" desc="Default value for CUDA_RESOLVE_DEVICE_SYMBOLS target property when defined. By default this variable is not defined."/>
 <variable name="CMAKE_CUDA_RUNTIME_LIBRARY" desc="Select the CUDA runtime library for use when compiling and linking CUDA. This variable is used to initialize the CUDA_RUNTIME_LIBRARY property on all targets as they are created."/>
 <variable name="CMAKE_CUDA_SEPARABLE_COMPILATION" desc="Default value for CUDA_SEPARABLE_COMPILATION target property. This variable is used to initialize the property on each target as it is created."/>
 <variable name="CMAKE_CUDA_SIMULATE_ID" desc="Identification string of the &#34;simulated&#34; compiler."/>
@@ -2361,6 +2386,7 @@
 <variable name="CMAKE_CXX_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_CXX_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_CXX_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_CXX_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_CXX_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_CXX_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_CXX_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2420,6 +2446,7 @@
 <variable name="CMAKE_CXX_LINK_WHAT_YOU_USE_FLAG" desc="Linker flag to be used to configure linker so that all specified libraries on the command line will be linked into the target."/>
 <variable name="CMAKE_CXX_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <variable name="CMAKE_CXX_PLATFORM_ID" desc="An internal variable subject to change."/>
+<variable name="CMAKE_CXX_SCAN_FOR_MODULES" desc="Whether to scan C++ source files for module dependencies."/>
 <variable name="CMAKE_CXX_SIMULATE_ID" desc="Identification string of the &#34;simulated&#34; compiler."/>
 <variable name="CMAKE_CXX_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
 <variable name="CMAKE_CXX_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
@@ -2440,6 +2467,7 @@
 <variable name="CMAKE_C_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_C_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_C_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_C_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_C_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_C_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_C_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2587,6 +2615,7 @@
 <variable name="CMAKE_Fortran_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_Fortran_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_Fortran_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_Fortran_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_Fortran_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_Fortran_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_Fortran_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2722,6 +2751,7 @@
 <variable name="CMAKE_Java_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_Java_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_Java_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_Java_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_Java_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_Java_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_Java_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2830,7 +2860,7 @@
 <variable name="CMAKE_MODULE_LINKER_FLAGS_&lt;CONFIG&gt;" desc="Flags to be used when linking a module."/>
 <variable name="CMAKE_MODULE_LINKER_FLAGS_&lt;CONFIG&gt;_INIT" desc="Value used to initialize the CMAKE_MODULE_LINKER_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_MODULE_LINKER_FLAGS_INIT" desc="Value used to initialize the CMAKE_MODULE_LINKER_FLAGS cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
-<variable name="CMAKE_MODULE_PATH" desc="Semicolon-separated list of directories specifying a search path for CMake modules to be loaded by the include() or find_package() commands before checking the default modules that come with CMake. By default it is empty, it is intended to be set by the project."/>
+<variable name="CMAKE_MODULE_PATH" desc="Semicolon-separated list of directories, represented using forward slashes, specifying a search path for CMake modules to be loaded by the include() or find_package() commands before checking the default modules that come with CMake. By default it is empty. It is intended to be set by the project."/>
 <variable name="CMAKE_MSVCIDE_RUN_PATH" desc="Extra PATH locations that should be used when executing add_custom_command() or add_custom_target() when using the Visual Studio 9 2008 (or above) generator. This allows for running commands and using dll's that the IDE environment is not aware of."/>
 <variable name="CMAKE_MSVC_DEBUG_INFORMATION_FORMAT" desc="Select the MSVC debug information format targeting the MSVC ABI. This variable is used to initialize the MSVC_DEBUG_INFORMATION_FORMAT property on all targets as they are created. It is also propagated by calls to the try_compile() command into the test project."/>
 <variable name="CMAKE_MSVC_RUNTIME_LIBRARY" desc="Select the MSVC runtime library for use by compilers targeting the MSVC ABI. This variable is used to initialize the MSVC_RUNTIME_LIBRARY property on all targets as they are created. It is also propagated by calls to the try_compile() command into the test project."/>
@@ -2848,6 +2878,7 @@
 <variable name="CMAKE_OBJCXX_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_OBJCXX_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_OBJCXX_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_OBJCXX_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_OBJCXX_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_OBJCXX_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_OBJCXX_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -2926,6 +2957,7 @@
 <variable name="CMAKE_OBJC_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_OBJC_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_OBJC_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_OBJC_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_OBJC_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_OBJC_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_OBJC_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -3035,6 +3067,7 @@
 <variable name="CMAKE_RC_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_RC_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_RC_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_RC_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_RC_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_RC_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_RC_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -3156,6 +3189,7 @@
 <variable name="CMAKE_Swift_ARCHIVE_FINISH" desc="Rule variable to finish an existing static archive."/>
 <variable name="CMAKE_Swift_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_Swift_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_Swift_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_Swift_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_Swift_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_Swift_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -3272,6 +3306,7 @@
 <variable name="CMAKE_VS_TARGET_FRAMEWORK_IDENTIFIER" desc="Visual Studio target framework identifier."/>
 <variable name="CMAKE_VS_TARGET_FRAMEWORK_TARGETS_VERSION" desc="Visual Studio target framework targets version."/>
 <variable name="CMAKE_VS_TARGET_FRAMEWORK_VERSION" desc="Visual Studio target framework version."/>
+<variable name="CMAKE_VS_VERSION_BUILD_NUMBER" desc="Visual Studio version."/>
 <variable name="CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION" desc="Visual Studio Windows Target Platform Version."/>
 <variable name="CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM" desc="Override the Windows 10 SDK Maximum Version for VS 2015 and beyond."/>
 <variable name="CMAKE_VS_WINRT_BY_DEFAULT" desc="Inform Visual Studio Generators for VS 2010 and above that the target platform enables WinRT compilation by default and it needs to be explicitly disabled if /ZW or VS_WINRT_COMPONENT is omitted (as opposed to enabling it when either of those options is present)"/>
@@ -3332,10 +3367,10 @@
 <variable name="CTEST_COVERAGE_EXTRA_FLAGS" desc="Specify the CTest CoverageExtraFlags setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_CURL_OPTIONS" desc="Specify the CTest CurlOptions setting in a ctest(1) dashboard client script."/>
 <variable name="CTEST_CUSTOM_COVERAGE_EXCLUDE" desc="A list of regular expressions which will be used to exclude files by their path from coverage output by the ctest_coverage() command."/>
-<variable name="CTEST_CUSTOM_ERROR_EXCEPTION" desc="A list of regular expressions which will be used to exclude when detecting error messages in build outputs by the ctest_test() command."/>
-<variable name="CTEST_CUSTOM_ERROR_MATCH" desc="A list of regular expressions which will be used to detect error messages in build outputs by the ctest_test() command."/>
-<variable name="CTEST_CUSTOM_ERROR_POST_CONTEXT" desc="The number of lines to include as context which follow an error message by the ctest_test() command. The default is 10."/>
-<variable name="CTEST_CUSTOM_ERROR_PRE_CONTEXT" desc="The number of lines to include as context which precede an error message by the ctest_test() command. The default is 10."/>
+<variable name="CTEST_CUSTOM_ERROR_EXCEPTION" desc="A list of regular expressions which will be used to exclude when detecting error messages in build outputs by the ctest_build() command."/>
+<variable name="CTEST_CUSTOM_ERROR_MATCH" desc="A list of regular expressions which will be used to detect error messages in build outputs by the ctest_build() command."/>
+<variable name="CTEST_CUSTOM_ERROR_POST_CONTEXT" desc="The number of lines to include as context which follow an error message by the ctest_build() command. The default is 10."/>
+<variable name="CTEST_CUSTOM_ERROR_PRE_CONTEXT" desc="The number of lines to include as context which precede an error message by the ctest_build() command. The default is 10."/>
 <variable name="CTEST_CUSTOM_MAXIMUM_FAILED_TEST_OUTPUT_SIZE" desc="When saving a failing test's output, this is the maximum size, in bytes, that will be collected by the ctest_test() command. Defaults to 307200 (300 KiB). See CTEST_CUSTOM_TEST_OUTPUT_TRUNCATION for possible truncation modes."/>
 <variable name="CTEST_CUSTOM_MAXIMUM_NUMBER_OF_ERRORS" desc="The maximum number of errors in a single build step which will be detected. After this, the ctest_test() command will truncate the output. Defaults to 50."/>
 <variable name="CTEST_CUSTOM_MAXIMUM_NUMBER_OF_WARNINGS" desc="The maximum number of warnings in a single build step which will be detected. After this, the ctest_test() command will truncate the output. Defaults to 50."/>
