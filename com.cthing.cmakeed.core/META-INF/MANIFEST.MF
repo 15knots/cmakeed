@@ -1,5 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Automatic-Module-Name: com.cthing.cmakeed.core
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.cthing.cmakeed.core;singleton:=true
 Bundle-Version: 1.1.6
@@ -14,4 +15,4 @@ Export-Package: com.cthing.cmakeed.core.commands,
  com.cthing.cmakeed.core.uservariables,
  com.cthing.cmakeed.core.utils,
  com.cthing.cmakeed.core.variables
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11

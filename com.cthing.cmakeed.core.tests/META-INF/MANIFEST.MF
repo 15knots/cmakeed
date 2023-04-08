@@ -6,6 +6,7 @@ Bundle-Version: 1.1.6
 Bundle-Vendor: %Bundle-Vendor
 Fragment-Host: com.cthing.cmakeed.core
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: junit.framework,
  org.junit
+Automatic-Module-Name: com.cthing.cmakeed.core.tests

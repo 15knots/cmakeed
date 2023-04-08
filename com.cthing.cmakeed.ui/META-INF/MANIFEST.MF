@@ -1,5 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Automatic-Module-Name: com.cthing.cmakeed.ui
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.cthing.cmakeed.ui; singleton:=true
 Bundle-Version: 1.9.0
@@ -12,9 +13,10 @@ Require-Bundle: com.cthing.cmakeed.core,
  org.eclipse.jface.text,
  org.eclipse.ui.editors,
  org.eclipse.ui.workbench.texteditor,
- org.eclipse.help
+ org.eclipse.help,
+ org.eclipse.e4.ui.css.swt.theme
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: com.cthing.cmakeed.ui.editor,
  org.eclipse.core.resources,
  org.eclipse.ui.dialogs,

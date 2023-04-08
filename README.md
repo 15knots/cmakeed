@@ -35,6 +35,12 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ---
 # Release History
 
+## Next release
+### Changes
+- Fix #15: Missing requirement: 'java.package; javax.crypto 0.0.0'
+- Requires Eclipse 4.17 (2020-09)
+- Requires Java 11
+
 ## 1.21.0 (2023-03-21)
 ### Changes
 - Enhancement: Updated syntax highlighting data and tool tips to cmake 3.26.

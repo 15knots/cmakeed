@@ -72,8 +72,8 @@
   </issueManagement>
 
   <properties>
-    <java.source>1.8</java.source>
-    <tycho-version>1.6.0</tycho-version>
+    <java.source>11</java.source>
+    <tycho-version>2.7.5</tycho-version>
     <platform.version>1.0.0</platform.version>
     <!-- don't pollute maven repositories with useless stuff, submodules can override this property -->
     <maven.deploy.skip>true</maven.deploy.skip>
@@ -108,8 +108,8 @@
           <artifactId>tycho-compiler-plugin</artifactId>
           <version>${tycho-version}</version>
           <configuration>
-            <source>1.7</source>
-            <target>1.7</target>
+            <source>11</source>
+            <target>11</target>
             <encoding>UTF-8</encoding>
           </configuration>
         </plugin>
@@ -223,11 +223,6 @@
               <environment>
                 <os>linux</os>
                 <ws>gtk</ws>
-                <arch>x86</arch>
-              </environment>
-              <environment>
-                <os>linux</os>
-                <ws>gtk</ws>
                 <arch>x86_64</arch>
               </environment>
               <environment>
@@ -238,17 +233,7 @@
               <environment>
                 <os>win32</os>
                 <ws>win32</ws>
-                <arch>x86</arch>
-              </environment>
-              <environment>
-                <os>win32</os>
-                <ws>win32</ws>
                 <arch>x86_64</arch>
-              </environment>
-              <environment>
-                <os>macosx</os>
-                <ws>cocoa</ws>
-                <arch>x86</arch>
               </environment>
               <environment>
                 <os>macosx</os>
