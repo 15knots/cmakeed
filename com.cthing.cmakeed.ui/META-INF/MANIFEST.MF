@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Automatic-Module-Name: com.cthing.cmakeed.ui
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.cthing.cmakeed.ui; singleton:=true
-Bundle-Version: 1.9.0
+Bundle-Version: 1.9.1
 Bundle-Activator: com.cthing.cmakeed.ui.CMakeEditorPlugin
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
@@ -23,10 +23,44 @@ Import-Package: com.cthing.cmakeed.ui.editor,
  org.eclipse.ui.ide,
  org.eclipse.ui.plugin,
  org.osgi.framework
-Export-Package: com.cthing.cmakeed.ui,
- com.cthing.cmakeed.ui.editor,
- com.cthing.cmakeed.ui.editor.handlers,
- com.cthing.cmakeed.ui.editor.rules,
- com.cthing.cmakeed.ui.editor.template,
- com.cthing.cmakeed.ui.editor.wizards,
- com.cthing.cmakeed.ui.prefs
+Export-Package: com.cthing.cmakeed.ui;
+  uses:="org.osgi.framework,
+   org.eclipse.jface.resource,
+   com.cthing.cmakeed.ui.editor,
+   org.eclipse.ui.plugin",
+ com.cthing.cmakeed.ui.editor;
+  uses:="org.eclipse.jface.text.templates.persistence,
+   org.eclipse.ui.editors.text,
+   org.eclipse.jface.text.source,
+   org.eclipse.swt.graphics,
+   org.eclipse.jface.text,
+   org.eclipse.swt.widgets,
+   org.eclipse.core.filebuffers,
+   com.cthing.cmakeed.core.commands,
+   org.eclipse.jface.text.contentassist,
+   org.eclipse.ui,
+   org.eclipse.core.runtime,
+   org.eclipse.ui.texteditor,
+   org.eclipse.jface.util,
+   com.cthing.cmakeed.core.properties,
+   org.eclipse.jface.resource,
+   com.cthing.cmakeed.core.reservedwords,
+   org.eclipse.jface.text.presentation,
+   org.eclipse.jface.preference,
+   com.cthing.cmakeed.core.variables,
+   org.eclipse.jface.text.templates,
+   org.eclipse.jface.text.rules",
+ com.cthing.cmakeed.ui.editor.handlers;uses:="org.eclipse.core.commands",
+ com.cthing.cmakeed.ui.editor.rules;uses:="org.eclipse.jface.text.rules",
+ com.cthing.cmakeed.ui.editor.template;uses:="org.eclipse.jface.text.templates",
+ com.cthing.cmakeed.ui.editor.wizards;
+  uses:="org.eclipse.ui,
+   org.eclipse.swt.widgets,
+   org.eclipse.jface.wizard,
+   org.eclipse.jface.viewers",
+ com.cthing.cmakeed.ui.prefs;
+  uses:="org.eclipse.ui,
+   org.eclipse.swt.widgets,
+   org.eclipse.jface.preference,
+   org.eclipse.core.runtime.preferences,
+   org.eclipse.ui.texteditor.templates"

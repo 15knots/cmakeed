@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
@@ -119,11 +120,13 @@ public class PrefPage extends PreferencePage
       this.bracketColorB = new ColorSelector(colorComp);
       this.bracketColorB.getButton().setLayoutData(new GridData());
       this.bracketB.addSelectionListener(new SelectionListener() {
+        @Override
         public void widgetSelected(SelectionEvent e) {
           boolean enabled = bracketB.getSelection();
           bracketColorB.setEnabled(enabled);
         }
 
+        @Override
         public void widgetDefaultSelected(SelectionEvent e) {
         }
       });
@@ -162,6 +165,7 @@ public class PrefPage extends PreferencePage
             }
         });
         this.textAttrViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
             public void selectionChanged(final SelectionChangedEvent event)
             {
                 writeTextUI();
@@ -182,6 +186,7 @@ public class PrefPage extends PreferencePage
         this.colorB = new ColorSelector(styleComp);
         this.colorB.getButton().setLayoutData(new GridData());
         this.colorB.addListener(new IPropertyChangeListener() {
+            @Override
             public void propertyChange(final PropertyChangeEvent event)
             {
                 readTextUI();
@@ -241,7 +246,7 @@ public class PrefPage extends PreferencePage
         strikeL.setLayoutData(new GridData());
         strikeL.setText(Messages.getString("PreferencePage.Strike"));   //$NON-NLS-1$
 
-        init(CMakeEditorPlugin.getDefault().getWorkbench());
+        init(PlatformUI.getWorkbench());
 
         return topComp;
     }
@@ -277,6 +282,7 @@ public class PrefPage extends PreferencePage
      * {@inheritDoc}
      * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
+    @Override
     public void init(final IWorkbench workbench)
     {
         if (this.textAttrViewer != null) {
@@ -391,10 +397,12 @@ public class PrefPage extends PreferencePage
             Preferences.MATCHING_BRACKETS_COLOR));
 
         for (String baseKey : Preferences.TEXT_KEYS) {
-            this.colorMap.put(baseKey, PreferenceConverter.getDefaultColor(store,
-                    Preferences.getColorKey(baseKey)));
-            this.styleMap.put(baseKey,
-                    store.getDefaultInt(Preferences.getStyleKey(baseKey)));
+          String colorKey = Preferences.getColorKey(baseKey);
+          // this should retrieve the CSS-overridden colors in dark theme, but it seems there is no way to do that..
+          store.setToDefault(colorKey);
+          this.colorMap.put(baseKey, PreferenceConverter.getColor(store, colorKey));
+
+          this.styleMap.put(baseKey, store.getDefaultInt(Preferences.getStyleKey(baseKey)));
         }
 
         writeTextUI();

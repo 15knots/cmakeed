@@ -10,6 +10,6 @@
   </parent>
 
   <artifactId>com.cthing.cmakeed.ui</artifactId>
-  <version>1.9.0</version>
+  <version>1.9.1</version>
   <packaging>eclipse-plugin</packaging>
 </project>
