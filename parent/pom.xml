@@ -73,7 +73,7 @@
 
   <properties>
     <java.source>11</java.source>
-    <tycho-version>2.7.5</tycho-version>
+    <tycho-version>4.0.4</tycho-version>
     <platform.version>1.0.0</platform.version>
     <!-- don't pollute maven repositories with useless stuff, submodules can override this property -->
     <maven.deploy.skip>true</maven.deploy.skip>
