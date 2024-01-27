@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-    
-<!-- 
+
+	<!-- 
   <extension
          point="org.eclipse.ui.newWizards">
       <category
@@ -17,267 +17,383 @@
             name="New CMake file based on a template">
       </wizard>
    </extension>
-  --> 
-  
-    <extension point="org.eclipse.ui.contexts">
-      <context
-            name="Editing CMake Source"
-            id="com.cthing.cmakeed.ui.cmakeEditorScope"
-            parentId="org.eclipse.ui.textEditorScope">
-      </context>
-   </extension>
-   
-   
-   <extension point="org.eclipse.ui.editors">
-      <editor
-            class="com.cthing.cmakeed.ui.editor.CMakeEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            default="true"
-            extensions="cmake,ctest"
-            icon="icons/CMakeLogo.gif"
-            id="com.cthing.cmakeed.ui.editor.CMakeEditor"
-            name="%editor.name">
-         <contentTypeBinding contentTypeId="com.cthing.cmakeed.CMakeFileType"/>
-      </editor>
-   </extension>
-   
-   
-   <extension
-         id="CMakeDocumentSetupParticipant"
-         name="%documentSetupParticipantName"
-         point="org.eclipse.core.filebuffers.documentSetup">
-      <participant
-            class="com.cthing.cmakeed.ui.editor.CMakeDocumentSetupParticipant"
-            extensions="cmake"
-            fileNames="CMakeLists.txt,CMakeLists.txt.in,*.cmake,*.cmake.in">
-      </participant>
-   </extension>
-   
-   
-   <extension point="org.eclipse.core.contenttype.contentTypes">
-      <content-type
-            base-type="org.eclipse.core.runtime.text"
-            file-extensions="cmake,ctest"
-            file-names="CMakeLists.txt,CMakeLists.txt.in"
-            id="com.cthing.cmakeed.CMakeFileType"
-            name="%content-type.name"
-            priority="normal">
-    </content-type>
- </extension>
-   
-   <extension point="org.eclipse.ui.preferencePages">
-      <page
-            name="%CMakePreferences.Name"
-            class="com.cthing.cmakeed.ui.prefs.PrefPage"
-            id="com.cthing.cmakeed.ui.prefs.PrefPage">
-            </page>
-     <page
-            name="%CMakeTemplatePreferences.Name"
-            category="com.cthing.cmakeed.ui.prefs.PrefPage"
-            class="com.cthing.cmakeed.ui.prefs.TemplatesPreferencePage"
-            id="com.cthing.cmakeed.ui.prefs.TemplatesPreferencePage">
-      </page>
-   </extension>
-   
-   <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer class="com.cthing.cmakeed.ui.prefs.Initializer"/>
-   </extension>
-   
-   
-<!-- =========================================================================== -->
-<!-- Templates                                                                   -->
-<!-- =========================================================================== -->  
-   
-   <extension
-         point="org.eclipse.ui.editors.templates">
-       <contextType
-            name="%cmake.contextType.name"
-            class="com.cthing.cmakeed.ui.editor.template.CMakeContextType"
-            id="com.cthing.cmakeed.ui.editor.cmake">
-      </contextType>
-    <template
-          autoinsert="true"
-          contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-          description="%cmake.commands.if.description"
-          icon="icons/CMakeTemplate.png"
-          id="com.cthing.cmakeed.ui.editor.cmake.if"
-          name="%cmake.commands.if.name"> 
-        <pattern>if(${statement})
-  ${cursor}
-endif(${statement})
-    </pattern>
-    </template>
-        <template
-          autoinsert="true"
-          contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-          description="%cmake.commands.while.description"
-          icon="icons/CMakeTemplate.png"
-          id="com.cthing.cmakeed.ui.editor.cmake.while"
-          name="%cmake.commands.while.name"> 
-        <pattern>while(${statement})
-  ${cursor}
-endwhile(${statement})
-    </pattern>
-    </template>
-    <template
-          autoinsert="true"
-          contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-          description="%cmake.commands.foreach.description"
-          icon="icons/CMakeTemplate.png"
-          id="com.cthing.cmakeed.ui.editor.cmake.foreach"
-          name="%cmake.commands.foreach.name"> 
-        <pattern>foreach(${var} ${list})
-  ${cursor}
-endforeach(${var} ${list})
-    </pattern>
-    </template>
-    <template
-          autoinsert="true"
-          contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-          name="%cmake.commands.macro.name"
-          description="%cmake.commands.macro.description"
-          icon="icons/CMakeTemplate.png"
-          id="com.cthing.cmakeed.ui.editor.cmake.macro"> 
-        <pattern>macro(${macroName} ${args})
-  ${cursor}
-endmacro(${macroName} ${args})
-    </pattern>
-    </template>    
-    
-<template
-      autoinsert="true"
-      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-      description="%cmake.commands.cblock.description"
-      icon="icons/CMakeTemplate.png"
-      id="com.cthing.cmakeed.ui.editor.cmake.cblock"
-      name="%cmake.commands.cblock.name">
-<pattern>
-# --------------------------------------------------------------------
-# ${cursor}
-# --------------------------------------------------------------------
-</pattern>
-</template>    
-    
-<template
-      autoinsert="true"
-      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-      description="%cmake.commands.mark.description"
-      icon="icons/CMakeTemplate.png"
-      id="com.cthing.cmakeed.ui.editor.cmake.mark"
-      name="%cmake.commands.mark.name">
-<pattern>
-# --------------------------------------------------------------------
-</pattern>
-</template> 
+  -->
 
-<template
-      autoinsert="true"
-      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-      description="%cmake.commands.status.description"
-      icon="icons/CMakeTemplate.png"
-      id="com.cthing.cmakeed.ui.editors.cmake.status"
-      name="%cmake.commands.status.name">
-<pattern>
-message(STATUS "${cursor}")
+	<extension point="org.eclipse.ui.contexts">
+		<context
+			name="Editing CMake Source"
+			id="com.cthing.cmakeed.ui.cmakeEditorScope"
+			parentId="org.eclipse.ui.textEditorScope">
+		</context>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.editors">
+		<editor
+			class="com.cthing.cmakeed.ui.editor.CMakeEditor"
+			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+			default="true"
+			extensions="cmake,ctest"
+			icon="icons/CMakeLogo.gif"
+			id="com.cthing.cmakeed.ui.editor.CMakeEditor"
+			name="%editor.name">
+			<contentTypeBinding contentTypeId="com.cthing.cmakeed.CMakeFileType" />
+		</editor>
+	</extension>
+
+
+	<extension
+		id="CMakeDocumentSetupParticipant"
+		name="%documentSetupParticipantName"
+		point="org.eclipse.core.filebuffers.documentSetup">
+		<participant
+			class="com.cthing.cmakeed.ui.editor.CMakeDocumentSetupParticipant"
+			extensions="cmake"
+			fileNames="CMakeLists.txt,CMakeLists.txt.in,*.cmake,*.cmake.in">
+		</participant>
+	</extension>
+
+
+	<extension point="org.eclipse.core.contenttype.contentTypes">
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="cmake,ctest"
+			file-names="CMakeLists.txt,CMakeLists.txt.in"
+			id="com.cthing.cmakeed.CMakeFileType"
+			name="%content-type.name"
+			priority="normal">
+		</content-type>
+	</extension>
+
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			name="%CMakePreferences.Name"
+			class="com.cthing.cmakeed.ui.prefs.PrefPage"
+			id="com.cthing.cmakeed.ui.prefs.PrefPage">
+		</page>
+		<page
+			name="%CMakeTemplatePreferences.Name"
+			category="com.cthing.cmakeed.ui.prefs.PrefPage"
+			class="com.cthing.cmakeed.ui.prefs.TemplatesPreferencePage"
+			id="com.cthing.cmakeed.ui.prefs.TemplatesPreferencePage">
+		</page>
+	</extension>
+
+	<extension
+		point="org.eclipse.core.runtime.preferences">
+		<initializer class="com.cthing.cmakeed.ui.prefs.Initializer" />
+	</extension>
+
+
+	<!--
+	=========================================================================== -->
+	<!-- Templates                                                                   -->
+	<!--
+	=========================================================================== -->
+
+	<extension
+		point="org.eclipse.ui.editors.templates">
+		<contextType
+			name="%cmake.contextType.name"
+			class="com.cthing.cmakeed.ui.editor.template.CMakeContextType"
+			id="com.cthing.cmakeed.ui.editor.cmake">
+		</contextType>
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			description="%cmake.commands.if.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editor.cmake.if"
+			name="%cmake.commands.if.name">
+			<pattern>if(${statement})
+				${cursor}
+				endif(${statement})
+			</pattern>
+		</template>
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			description="%cmake.commands.while.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editor.cmake.while"
+			name="%cmake.commands.while.name">
+			<pattern>while(${statement})
+				${cursor}
+				endwhile(${statement})
+			</pattern>
+		</template>
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			description="%cmake.commands.foreach.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editor.cmake.foreach"
+			name="%cmake.commands.foreach.name">
+			<pattern>foreach(${var} ${list})
+				${cursor}
+				endforeach(${var} ${list})
+			</pattern>
+		</template>
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			name="%cmake.commands.macro.name"
+			description="%cmake.commands.macro.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editor.cmake.macro">
+			<pattern>macro(${macroName} ${args})
+				${cursor}
+				endmacro(${macroName} ${args})
+			</pattern>
+		</template>
+
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			description="%cmake.commands.cblock.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editor.cmake.cblock"
+			name="%cmake.commands.cblock.name">
+			<pattern>
+				#
+				--------------------------------------------------------------------
+				# ${cursor}
+				#
+				--------------------------------------------------------------------
 </pattern>
-</template>
+		</template>
 
-<template
-      autoinsert="true"
-      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-      description="%cmake.commands.error.description"
-      icon="icons/CMakeTemplate.png"
-      id="com.cthing.cmakeed.ui.editor.cmake.error"
-      name="%cmake.commands.error.name">
-<pattern>
-message(FATAL_ERROR "${cursor}")
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			description="%cmake.commands.mark.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editor.cmake.mark"
+			name="%cmake.commands.mark.name">
+			<pattern>
+				#
+				--------------------------------------------------------------------
 </pattern>
-</template>
+		</template>
 
-<template
-      autoinsert="true"
-      contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
-      description="%cmake.commands.printvar.description"
-      icon="icons/CMakeTemplate.png"
-      id="com.cthing.cmakeed.ui.editor.cmake.printvar"
-      name="%cmake.commands.printvar.name">
-<pattern>
-message(STATUS "${variable}: $${${variable}}")
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			description="%cmake.commands.status.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editors.cmake.status"
+			name="%cmake.commands.status.name">
+			<pattern>
+				message(STATUS "${cursor}")
 </pattern>
-</template>
-</extension>
+		</template>
 
-<!-- =========================================================================== -->
-<!-- Commands                                                                    -->
-<!-- =========================================================================== -->  
- <extension
-       point="org.eclipse.ui.commands">
-       <category
-          name="CMakeEd"
-          id="cmakeed.category"/>
-       <command
-             categoryId="cmakeed.category"
-             defaultHandler="com.cthing.cmakeed.ui.editor.handlers.ToggleCommentHandler"
-             description="Comment/Uncomment selected lines"
-             id="com.cthing.cmakeed.ui.ToggleComment.Command"
-             name="Toggle Comment">
-       </command>
- </extension>
-<!-- =========================================================================== -->
-<!-- Key Bindings                                                                -->
-<!-- =========================================================================== -->  
- <extension point="org.eclipse.ui.bindings">
-    <key
-          commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
-          contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
-          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-          sequence="M1+/"/>
-    <key
-          commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
-          contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
-          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-          sequence="M1+7"/>
-    <key
-          commandId="org.eclipse.ui.edit.text.shiftLeft"
-          contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
-          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-          sequence="M1+SHIFT+TAB">
-    </key>
-    <key
-          commandId="org.eclipse.ui.edit.text.shiftRight"
-          contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
-          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-          sequence="SHIFT+TAB">
-    </key>
- </extension>
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			description="%cmake.commands.error.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editor.cmake.error"
+			name="%cmake.commands.error.name">
+			<pattern>
+				message(FATAL_ERROR "${cursor}")
+</pattern>
+		</template>
 
- <extension
-       point="org.eclipse.ui.menus">
-    <menuContribution
-          allPopups="false"
-          locationURI="popup:com.cthing.cmakeed.ui.editor.CMakeEditor.EditorContext?after=group.edit">
-          <command
-                commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
-                mnemonic="C">
-          </command>
-    </menuContribution>
- </extension>
- <extension
-       point="org.eclipse.ui.preferenceTransfer">
-    <transfer
-          icon="icons/CMakeLogo.gif"
-          id="com.cthing.cmakeed.ui.transfer"
-          name="CMake Editor Preferences">
-       <mapping
-             scope="instance">
-          <entry
-                node="com.cthing.cmakeed.ui">
-	</entry>
-       </mapping>
-       <description>
-          Syntax highligting, uppercasing preferences and code templates.
-       </description>
-    </transfer>
- </extension>
+		<template
+			autoinsert="true"
+			contextTypeId="com.cthing.cmakeed.ui.editor.cmake"
+			description="%cmake.commands.printvar.description"
+			icon="icons/CMakeTemplate.png"
+			id="com.cthing.cmakeed.ui.editor.cmake.printvar"
+			name="%cmake.commands.printvar.name">
+			<pattern>
+				message(STATUS "${variable}: $${${variable}}")
+</pattern>
+		</template>
+	</extension>
+
+	<!--
+	=========================================================================== -->
+	<!-- Commands                                                                    -->
+	<!--
+	=========================================================================== -->
+	<extension
+		point="org.eclipse.ui.commands">
+		<category
+			name="CMakeEd"
+			id="cmakeed.category" />
+		<command
+			categoryId="cmakeed.category"
+			defaultHandler="com.cthing.cmakeed.ui.editor.handlers.ToggleCommentHandler"
+			description="Comment/Uncomment selected lines"
+			id="com.cthing.cmakeed.ui.ToggleComment.Command"
+			name="Toggle Comment">
+		</command>
+	</extension>
+	<!--
+	=========================================================================== -->
+	<!-- Key Bindings                                                                -->
+	<!--
+	=========================================================================== -->
+	<extension point="org.eclipse.ui.bindings">
+		<key
+			commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
+			contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+/" />
+		<key
+			commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
+			contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+7" />
+		<key
+			commandId="org.eclipse.ui.edit.text.shiftLeft"
+			contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+SHIFT+TAB">
+		</key>
+		<key
+			commandId="org.eclipse.ui.edit.text.shiftRight"
+			contextId="com.cthing.cmakeed.ui.cmakeEditorScope"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="SHIFT+TAB">
+		</key>
+	</extension>
+
+	<extension
+		point="org.eclipse.ui.menus">
+		<menuContribution
+			allPopups="false"
+			locationURI="popup:com.cthing.cmakeed.ui.editor.CMakeEditor.EditorContext?after=group.edit">
+			<command
+				commandId="com.cthing.cmakeed.ui.ToggleComment.Command"
+				mnemonic="C">
+			</command>
+		</menuContribution>
+	</extension>
+	<extension
+		point="org.eclipse.ui.preferenceTransfer">
+		<transfer
+			icon="icons/CMakeLogo.gif"
+			id="com.cthing.cmakeed.ui.transfer"
+			name="CMake Editor Preferences">
+			<mapping
+				scope="instance">
+				<entry
+					node="com.cthing.cmakeed.ui">
+				</entry>
+			</mapping>
+			<description>
+				Syntax highligting, uppercasing preferences and code templates.
+			</description>
+		</transfer>
+	</extension>
+	<extension
+		point="org.eclipse.e4.ui.css.swt.theme">
+		<stylesheet
+			uri="css/e4-default_prefstyle.css">
+			<themeid
+				refid="org.eclipse.e4.ui.css.theme.e4_default">
+			</themeid>
+		</stylesheet>
+		<stylesheet
+			uri="css/e4-dark_prefstyle.css">
+			<themeid
+				refid="org.eclipse.e4.ui.css.theme.e4_dark">
+			</themeid>
+		</stylesheet>
+	</extension>
+
+	<extension
+		point="org.eclipse.ui.themes">
+		<themeElementCategory
+			id="com.cthing.cmakeed.ui.themeElementCategory"
+			label="%CMakePreferences.Name">
+			<description></description>
+		</themeElementCategory>
+		<themeElementCategory
+			id="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			label="%label.syntax_highlighting"
+			parentId="com.cthing.cmakeed.ui.preferences.themeElementCategory">
+			<description>Syntax highlighting colors</description>
+		</themeElementCategory>
+		<fontDefinition
+			categoryId="com.cthing.cmakeed.ui.preferences.themeElementCategory"
+			defaultsTo="org.eclipse.jface.textfont"
+			id="com.cthing.cmakeed.ui.fontDefinition.editor"
+			label="Text Font">
+			<description>The font used by the editor</description>
+		</fontDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			id="com.cthing.cmakeed.ui.matchingBracketsColor"
+			label="%label.matchingBrackets"
+			value="254,222,0">
+			<description>This color is used to highlight the matching bracket</description>
+		</colorDefinition>
+		<colorDefinition
+        categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+        id="com.cthing.cmakeed.ui.cmake_propertyColor"
+        isEditable="false"
+        label="%label.cmake_property"
+        value="0,127,85">
+			<description>This color is used to highlight properties defined by 	CMake</description>
+		</colorDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			id="com.cthing.cmakeed.ui.cmake_reserved_wordColor"
+			label="%label.cmake_reserved_word"
+			value="127,85,85">
+			<description>This color is used to highlight words reserved by CMake</description>
+		</colorDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			id="com.cthing.cmakeed.ui.cmake_user_variableColor"
+			label="%label.cmake_user_variable"
+			value="52,89,129">
+			<description>This color is used to highlight variables defined in the CMakeLists.txt</description>
+		</colorDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			id="com.cthing.cmakeed.ui.cmake_variableColor"
+			label="%label.cmake_variable" value="127,127,85">
+			<description>This color is used to highlight variables defined by CMake</description>
+		</colorDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			id="com.cthing.cmakeed.ui.commandColor"
+			label="%label.command"
+			value="0,0,128">
+			<description>This color is used to highlight CMake commands</description>
+		</colorDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			id="com.cthing.cmakeed.ui.commentColor"
+			label="%label.comment"
+			value="0,128,0">
+			<description>This color is used to highlight comments</description>
+		</colorDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			defaultsTo="com.cthing.cmakeed.ui.commandColor"
+			id="com.cthing.cmakeed.ui.depCommandColor"
+			label="%label.depCommand">
+			<description>This color is used to highlight deprecated CMake commands</description>
+		</colorDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			id="com.cthing.cmakeed.ui.stringColor"
+			label="%label.string"
+			value="42,0,255">
+			<description>This color is used to highlight strings</description>
+		</colorDefinition>
+		<colorDefinition
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory_syntax"
+			id="com.cthing.cmakeed.ui.variableColor"
+			label="%label.variable"
+			value="52,89,129">
+			<description>This color is used to highlight command arguments</description>
+		</colorDefinition>
+	</extension>
 </plugin>

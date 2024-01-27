@@ -6,6 +6,7 @@
 package com.cthing.cmakeed.ui;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -146,5 +147,15 @@ public class CMakeEditorPlugin extends AbstractUIPlugin
         final Status status = new Status(severity, PLUGIN_ID, severity,
                                          msg.toString(), e);
         plugin.getLog().log(status);
+    }
+
+    /**
+     * Gets a translated string from the plugins localization (plugin.properties).
+     *
+     * @param key
+     *            the key for the translated string
+     */
+    public static String getResourceString(String key) {
+      return Platform.getResourceString(plugin.getBundle(), "%" + key);
     }
 }

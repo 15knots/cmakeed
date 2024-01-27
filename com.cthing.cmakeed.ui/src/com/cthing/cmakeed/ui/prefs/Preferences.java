@@ -40,19 +40,19 @@ public final class Preferences
     /** preference key for the matching character painter */
     public static final String MATCHING_BRACKETS_ON = "matchBrackets";
     /** preference key for the color used by the matching character painter */
-    public static final String MATCHING_BRACKETS_COLOR = "matchingBracketsColor";
+    public static final String MATCHING_BRACKETS_COLOR = "matchingBrackets";
 
     /** All text attribute related keys.  */
     public static final String[] TEXT_KEYS = new String[] {
-        COMMAND,
-        DEP_COMMAND,
-        COMMENT,
-        STRING,
-        DOLLAR_VARIABLE,
-        CMAKE_VARIABLE,
         CMAKE_PROPERTY,
         CMAKE_RESERVED_WORD,
+        CMAKE_VARIABLE,
         CMAKE_USER_VARIABLE,
+        COMMAND,
+        COMMENT,
+        DEP_COMMAND,
+        STRING,
+        DOLLAR_VARIABLE,
     };
 
     /**

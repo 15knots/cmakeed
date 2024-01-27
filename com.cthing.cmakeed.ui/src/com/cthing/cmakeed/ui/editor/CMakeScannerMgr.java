@@ -6,12 +6,13 @@
 package com.cthing.cmakeed.ui.editor;
 
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.ui.PlatformUI;
 
 import com.cthing.cmakeed.ui.CMakeEditorPlugin;
 import com.cthing.cmakeed.ui.prefs.Preferences;
@@ -22,20 +23,20 @@ import com.cthing.cmakeed.ui.prefs.Preferences;
 public class CMakeScannerMgr
 {
     private ColorMgr colorMgr;
-    
+
     /**
      * Constructor for the class.
-     * 
+     *
      * @param colorMgr  Manages text editor colors.
      */
     public CMakeScannerMgr(final ColorMgr colorMgr)
     {
         this.colorMgr = colorMgr;
     }
-    
+
     /**
      * Obtains a scanner corresponding to the specified partition content type.
-     * 
+     *
      * @param contentType  Content type for which a scanner is desired.
      * @return The scanner corresponding to the specified partition content
      *      type or <code>null</code> if the content type is not recognized.
@@ -60,7 +61,7 @@ public class CMakeScannerMgr
         if (CMakePartitionScanner.isDepCommand(contentType)) {
             return getDepCommandScanner();
         }
-        
+
         if (CMakePartitionScanner.isCMakeVariable(contentType)) {
         	return getCMakeVariableScanner();
         }
@@ -84,10 +85,10 @@ public class CMakeScannerMgr
 
     /**
      * Obtains the top level document scanner.
-     * 
+     *
      * @return Top level document scanner
      */
-    private CMakeScanner getCMakeScanner() 
+    private CMakeScanner getCMakeScanner()
     {
         final CMakeScanner scanner = new CMakeScanner();
         return scanner;
@@ -95,50 +96,50 @@ public class CMakeScannerMgr
 
     /**
      * Obtains the scanner for the comment partition.
-     * 
+     *
      * @return Comment partition scanner.
      */
-    private RuleBasedPartitionScanner getCommentScanner() 
+    private RuleBasedPartitionScanner getCommentScanner()
     {
         return createRuleBasedScanner(Preferences.COMMENT);
     }
 
     /**
      * Obtains the scanner for the command argument partition.
-     * 
+     *
      * @return Argument partition scanner.
      */
-    private RuleBasedPartitionScanner getArgumentScanner() 
+    private RuleBasedPartitionScanner getArgumentScanner()
     {
         return createRuleBasedScanner(Preferences.DOLLAR_VARIABLE);
     }
 
     /**
      * Obtains the scanner for the string partition.
-     * 
+     *
      * @return String partition scanner.
      */
-    private RuleBasedPartitionScanner getStringScanner() 
+    private RuleBasedPartitionScanner getStringScanner()
     {
         return createRuleBasedScanner(Preferences.STRING);
     }
 
     /**
      * Obtains the scanner for the command partition.
-     * 
+     *
      * @return Command partition scanner.
      */
-    private RuleBasedPartitionScanner getCommandScanner() 
+    private RuleBasedPartitionScanner getCommandScanner()
     {
         return createRuleBasedScanner(Preferences.COMMAND);
     }
 
     /**
      * Obtains the scanner for the deprecated command partition.
-     * 
+     *
      * @return Deprecated command partition scanner.
      */
-    private RuleBasedPartitionScanner getDepCommandScanner() 
+    private RuleBasedPartitionScanner getDepCommandScanner()
     {
         return createRuleBasedScanner(Preferences.DEP_COMMAND);
     }
@@ -147,37 +148,38 @@ public class CMakeScannerMgr
     {
     	return createRuleBasedScanner(Preferences.CMAKE_VARIABLE);
     }
-    
+
     private RuleBasedPartitionScanner getPropertyScanner()
     {
     	return createRuleBasedScanner(Preferences.CMAKE_PROPERTY);
     }
-    
+
     private RuleBasedPartitionScanner getReservedWordScanner()
     {
     	return createRuleBasedScanner(Preferences.CMAKE_RESERVED_WORD);
-    } 
-    
+    }
+
     private RuleBasedPartitionScanner getUserVariableScanner()
     {
     	return createRuleBasedScanner(Preferences.CMAKE_USER_VARIABLE);
     }
-    
+
     /**
      * Obtains a scanner with the specified text coloring attribute.
-     * 
+     *
      * @param baseKey  Base preference key
      * @return Rule-based scanner with the specified text coloring attribute.
      */
     private RuleBasedPartitionScanner createRuleBasedScanner(final String baseKey)
     {
+      ColorRegistry registry = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme().getColorRegistry();
+      final Color color = registry.get(CMakeEditorPlugin.PLUGIN_ID + "." + Preferences.getColorKey(baseKey));
+
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
-        
-        final RGB color = PreferenceConverter.getColor(store, Preferences.getColorKey(baseKey));
         final int style = store.getInt(Preferences.getStyleKey(baseKey));
 
         final RuleBasedPartitionScanner scanner = new RuleBasedPartitionScanner();
-        final TextAttribute attr = new TextAttribute(this.colorMgr.getColor(color), null, style);
+        final TextAttribute attr = new TextAttribute(color, null, style);
         scanner.setDefaultReturnToken(new Token(attr));
         return scanner;
     }

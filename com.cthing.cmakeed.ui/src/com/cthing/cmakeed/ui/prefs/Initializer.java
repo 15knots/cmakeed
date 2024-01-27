@@ -38,40 +38,41 @@ public class Initializer extends AbstractPreferenceInitializer
     {
         final IPreferenceStore store = CMakeEditorPlugin.getDefault().getPreferenceStore();
         ColorRegistry registry = null;
-        if (PlatformUI.isWorkbenchRunning())
+        if (PlatformUI.isWorkbenchRunning()) {
           registry = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme().getColorRegistry();
+        }
 
-        setThemeBasedDefault(store, registry, Preferences.CMAKE_PROPERTY, new RGB(0, 127, 85));
+        setThemeBasedDefault(store, registry, Preferences.CMAKE_PROPERTY);
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_PROPERTY), SWT.NONE);
 
-        setThemeBasedDefault(store, registry, Preferences.CMAKE_RESERVED_WORD, new RGB(127, 85, 85));
+        setThemeBasedDefault(store, registry, Preferences.CMAKE_RESERVED_WORD);
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_RESERVED_WORD), SWT.NONE);
 
-        setThemeBasedDefault(store, registry, Preferences.CMAKE_USER_VARIABLE, new RGB(52,89,129));
+        setThemeBasedDefault(store, registry, Preferences.CMAKE_USER_VARIABLE);
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_USER_VARIABLE), SWT.NONE);
 
-        setThemeBasedDefault(store, registry, Preferences.CMAKE_VARIABLE, new RGB(127, 127, 85));
+        setThemeBasedDefault(store, registry, Preferences.CMAKE_VARIABLE);
         store.setDefault(Preferences.getStyleKey(Preferences.CMAKE_VARIABLE), SWT.NONE);
 
-        setThemeBasedDefault(store, registry, Preferences.COMMAND, new RGB(0, 0, 128));
+        setThemeBasedDefault(store, registry, Preferences.COMMAND);
         store.setDefault(Preferences.getStyleKey(Preferences.COMMAND), SWT.NONE);
 
-        setThemeBasedDefault(store, registry,Preferences.COMMENT, new RGB(0, 128, 0));
+        setThemeBasedDefault(store, registry, Preferences.COMMENT);
         store.setDefault(Preferences.getStyleKey(Preferences.COMMENT), SWT.NONE);
 
-        setThemeBasedDefault(store, registry, Preferences.DEP_COMMAND, new RGB(0, 0, 128));
+        setThemeBasedDefault(store, registry, Preferences.DEP_COMMAND);
         store.setDefault(Preferences.getStyleKey(Preferences.DEP_COMMAND),
                 TextAttribute.STRIKETHROUGH);
 
-
-        setThemeBasedDefault(store, registry, Preferences.STRING, new RGB(42, 0, 255));
+        setThemeBasedDefault(store, registry, Preferences.STRING);
         store.setDefault(Preferences.getStyleKey(Preferences.STRING), SWT.NONE);
 
-        setThemeBasedDefault(store, registry, Preferences.DOLLAR_VARIABLE, new RGB(52,89,129));
+        setThemeBasedDefault(store, registry, Preferences.DOLLAR_VARIABLE);
         store.setDefault(Preferences.getStyleKey(Preferences.DOLLAR_VARIABLE), SWT.NONE);
 
+        setThemeBasedDefault(store, registry, Preferences.MATCHING_BRACKETS_COLOR);
+
         store.setDefault(Preferences.MATCHING_BRACKETS_ON, true);
-        store.setDefault(Preferences.MATCHING_BRACKETS_COLOR, "254,222,0");
     }
 
     /**
@@ -81,14 +82,11 @@ public class Initializer extends AbstractPreferenceInitializer
      *                 the preference store
      * @param basicKey
      *                 the basic preference key
-     * @param newValue
-     *                 the default value
      */
-    private static void setThemeBasedDefault(IPreferenceStore store, ColorRegistry registry, String basicKey,
-        RGB newValue) {
+    private static void setThemeBasedDefault(IPreferenceStore store, ColorRegistry registry, String basicKey) {
       String colorKey = Preferences.getColorKey(basicKey);
       String regKey = CMakeEditorPlugin.PLUGIN_ID + "." + colorKey;
-      PreferenceConverter.setDefault(store, colorKey, findRGB(registry, regKey, newValue));
+      PreferenceConverter.setDefault(store, colorKey, findRGB(registry, regKey));
     }
 
     /**
@@ -98,15 +96,11 @@ public class Initializer extends AbstractPreferenceInitializer
      *                   the color registry
      * @param key
      *                   the key for the constant in the registry
-     * @param defaultRGB
-     *                   the default RGB if no entry is found
      * @return RGB the RGB
      */
-    private static RGB findRGB(ColorRegistry registry, String key, RGB defaultRGB) {
+    private static RGB findRGB(ColorRegistry registry, String key) {
       if (registry == null)
-        return defaultRGB;
-
-      RGB rgb = registry.getRGB(key);
-      return rgb != null ? rgb : defaultRGB;
+        return null;
+      return registry.getRGB(key);
     }
-  }
+}
