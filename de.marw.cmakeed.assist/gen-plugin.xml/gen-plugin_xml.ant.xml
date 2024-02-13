@@ -10,7 +10,7 @@
   <property name="cmake.build.root" location="${cmake.src.root}/build" description="root directory of the CMake build" />
 
   <path id="saxon9">
-    <pathelement location="/usr/share/java/saxon9.jar" />
+    <pathelement location="/usr/share/java/saxon10.jar" />
   </path>
 
   <!-- ================================= 
