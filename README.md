@@ -5,7 +5,7 @@
 An Eclipse plug-in for editing CMake files such as CMakeLists.txt. Provides syntax coloring, CMake command content assist, 
 and code templates.
 
-Requires Java 8 or higher and Eclipse 4.5.2 or higher.
+Requires Java 11 or higher and Eclipse 4.17 or higher.
 
 # Screenshots
 Screenshots can be found at the <a href="https://marketplace.eclipse.org/content/cmake-editor#group-screenshots">Eclipse Marketplace</a>.
@@ -24,7 +24,7 @@ https://raw.githubusercontent.com/15knots/cmakeed/master/cmakeed-update/ .
 Tool integrators will find each release at [cloudsmith](https://cloudsmith.io/~15knots/repos/p2-zip/packages/).
 Each release is provided as a stand-alone zipped p2 repository and can be consumed in a PDE target platform. To add one
 of these repositories to your target platform, add a **Software Site** and enter a URL for the location as
-`jar:https://cloudsmith.io/~15knots/repos/p2-zip/packages/CMakeEd-1.18.0.zip!/` (note the leading `jar:` and the trailing `!/`).
+`jar:https://cloudsmith.io/~15knots/repos/p2-zip/packages/CMakeEd-1.22.0.zip!/` (note the leading `jar:` and the trailing `!/`).
 
 ### Debug and Build
 This project uses Apache maven as its build system.
@@ -35,11 +35,13 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 ---
 # Release History
 
-## Next release
+## 1.22.0 (2024-02-14)
 ### Changes
 - Fix #15: Missing requirement: 'java.package; javax.crypto 0.0.0'
 - Requires Eclipse 4.17 (2020-09)
 - Requires Java 11
+- Fix #17: Improve colors for dark theme
+- Enhancement: Updated syntax highlighting data and tool tips to cmake 3.28.
 
 ## 1.21.0 (2023-03-21)
 ### Changes

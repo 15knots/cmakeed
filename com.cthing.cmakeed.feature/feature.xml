@@ -2,7 +2,7 @@
 <feature
       id="com.cthing.cmakeed.feature"
       label="CMake Editor"
-      version="1.21.0"
+      version="1.22.0"
       provider-name="Martin Weber/C Thing Software/BlueQuartz Software">
 
    <description url="http://cmakeed.sourceforge.net">
@@ -114,23 +114,14 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
    <plugin
          id="com.cthing.cmakeed.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="com.cthing.cmakeed.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="de.marw.cmakeed.assist"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>
