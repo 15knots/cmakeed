@@ -46,6 +46,13 @@
             <xsl:with-param name="command" select="$name" tunnel="yes" />
           </xsl:apply-templates>
         </xsl:when>
+        <xsl:when
+          test="$name='add_executable' or $name='add_library'"
+        >
+           <xsl:apply-templates select="//desc_name">
+            <xsl:with-param name="command" select="$name" tunnel="yes" />
+          </xsl:apply-templates>
+        </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates select="literal_block|section/section/literal_block">
             <xsl:with-param name="command" select="$name" tunnel="yes" />

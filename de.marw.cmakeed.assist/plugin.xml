@@ -24,14 +24,15 @@
 <usage value="(&lt;target&gt; [&lt;target-dependency&gt;]...)"/>
 </command>
 <command name="add_executable" desc="Add an executable to the project using the specified source files.">
-<usage value="(&lt;name&gt; [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] [source1] [source2 ...])"/>
+<usage value="(&lt;name&gt; &lt;options&gt;... &lt;sources&gt;...)"/>
 <usage value="(&lt;name&gt; IMPORTED [GLOBAL])"/>
 <usage value="(&lt;name&gt; ALIAS &lt;target&gt;)"/>
 </command>
 <command name="add_library" desc="Add a library to the project using the specified source files.">
-<usage value="(&lt;name&gt; [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] [&lt;source&gt;...])"/>
-<usage value="(&lt;name&gt; OBJECT [&lt;source&gt;...])"/>
+<usage value="(&lt;name&gt; [&lt;type&gt;] [EXCLUDE_FROM_ALL] &lt;sources&gt;...)"/>
+<usage value="(&lt;name&gt; OBJECT &lt;sources&gt;...)"/>
 <usage value="(&lt;name&gt; INTERFACE)"/>
+<usage value="(&lt;name&gt; INTERFACE [EXCLUDE_FROM_ALL] &lt;sources&gt;...)"/>
 <usage value="(&lt;name&gt; &lt;type&gt; IMPORTED [GLOBAL])"/>
 <usage value="(&lt;name&gt; ALIAS &lt;target&gt;)"/>
 </command>
@@ -75,6 +76,7 @@
 <usage value="(DEFER &lt;options&gt;... CALL &lt;command&gt; [&lt;arg&gt;...])"/>
 <usage value="(SET_DEPENDENCY_PROVIDER &lt;command&gt; SUPPORTED_METHODS &lt;methods&gt;...)"/>
 <usage value="(GET_MESSAGE_LOG_LEVEL &lt;output_variable&gt;)"/>
+<usage value="(EXIT &lt;exit-code&gt;)"/>
 </command>
 <command name="cmake_minimum_required" desc="Require a minimum version of cmake.">
 <usage value="(VERSION &lt;min&gt;[...&lt;policy_max&gt;] [FATAL_ERROR])"/>
@@ -138,9 +140,7 @@
 <command name="continue" desc="Continue to the top of enclosing foreach or while loop.">
 <usage value="()"/>
 </command>
-<command name="create_test_sourcelist" desc="Create a test driver and source list for building test programs.">
-<usage value="(&lt;sourceListName&gt; &lt;driverName&gt; &lt;tests&gt; ... [EXTRA_INCLUDE &lt;include&gt;] [FUNCTION &lt;function&gt;])"/>
-</command>
+<command name="create_test_sourcelist" desc="Create a test driver program that links together many small tests into a single executable. This is useful when building static executables with large libraries to shrink the total required size."/>
 <command name="ctest_build" desc="Perform the CTest Build Step as a Dashboard Client.">
 <usage value="([BUILD &lt;build-dir&gt;] [APPEND] [CONFIGURATION &lt;config&gt;] [PARALLEL_LEVEL &lt;parallel&gt;] [FLAGS &lt;flags&gt;] [PROJECT_NAME &lt;project-name&gt;] [TARGET &lt;target-name&gt;] [NUMBER_ERRORS &lt;num-err-var&gt;] [NUMBER_WARNINGS &lt;num-warn-var&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] )"/>
 </command>
@@ -174,7 +174,7 @@
 <usage value="(CDASH_UPLOAD &lt;file&gt; [CDASH_UPLOAD_TYPE &lt;type&gt;] [SUBMIT_URL &lt;url&gt;] [BUILD_ID &lt;result-var&gt;] [HTTPHEADER &lt;header&gt;] [RETRY_COUNT &lt;count&gt;] [RETRY_DELAY &lt;delay&gt;] [RETURN_VALUE &lt;result-var&gt;] [QUIET])"/>
 </command>
 <command name="ctest_test" desc="Perform the CTest Test Step as a Dashboard Client.">
-<usage value="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL &lt;level&gt;] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_ON_FAILURE] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [OUTPUT_JUNIT &lt;file&gt;] [QUIET] )"/>
+<usage value="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FROM_FILE &lt;filename&gt;] [INCLUDE_FROM_FILE &lt;filename&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL [&lt;level&gt;]] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_ON_FAILURE] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [OUTPUT_JUNIT &lt;file&gt;] [QUIET] )"/>
 </command>
 <command name="ctest_update" desc="Perform the CTest Update Step as a Dashboard Client.">
 <usage value="([SOURCE &lt;source-dir&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [QUIET])"/>
@@ -224,29 +224,30 @@
 <command name="export" desc="Export targets or packages for outside projects to use them directly from the current project's build tree, without installation.">
 <usage value="(TARGETS &lt;target&gt;... ANDROID_MK &lt;filename&gt;)"/>
 <usage value="(TARGETS &lt;target&gt;... [NAMESPACE &lt;namespace&gt;] [APPEND] FILE &lt;filename&gt; [EXPORT_LINK_INTERFACE_LIBRARIES] [CXX_MODULES_DIRECTORY &lt;directory&gt;])"/>
-<usage value="(EXPORT &lt;export-name&gt; [NAMESPACE &lt;namespace&gt;] [FILE &lt;filename&gt;] [CXX_MODULES_DIRECTORY &lt;directory&gt;])"/>
+<usage value="(EXPORT &lt;export-name&gt; [NAMESPACE &lt;namespace&gt;] [FILE &lt;filename&gt;] [CXX_MODULES_DIRECTORY &lt;directory&gt;] [EXPORT_PACKAGE_DEPENDENCIES])"/>
 <usage value="(PACKAGE &lt;PackageName&gt;)"/>
+<usage value="(SETUP &lt;export-name&gt; [PACKAGE_DEPENDENCY &lt;dep&gt; [ENABLED (&lt;bool-true&gt;|&lt;bool-false&gt;|AUTO)] [EXTRA_ARGS &lt;args&gt;...] ] [...] [TARGET &lt;target&gt; [XCFRAMEWORK_LOCATION &lt;location&gt;] ] [...] )"/>
 </command>
 <command name="export_library_dependencies" desc="Disallowed since version 3.0. See CMake Policy CMP0033." deprecated="true">
 <usage value="(&lt;file&gt; [APPEND])"/>
 </command>
 <command name="file" desc="File manipulation command.">
 <usage value="(READ &lt;filename&gt; &lt;variable&gt; [OFFSET &lt;offset&gt;] [LIMIT &lt;max-in&gt;] [HEX])"/>
-<usage value="(STRINGS &lt;filename&gt; &lt;variable&gt; [&lt;options&gt;...])"/>
+<usage value="(STRINGS &lt;filename&gt; &lt;variable&gt; &lt;options&gt;...)"/>
 <usage value="(&lt;HASH&gt; &lt;filename&gt; &lt;variable&gt;)"/>
 <usage value="(TIMESTAMP &lt;filename&gt; &lt;variable&gt; [&lt;format&gt;] [UTC])"/>
 <usage value="(GET_RUNTIME_DEPENDENCIES [...])"/>
 <usage value="(WRITE &lt;filename&gt; &lt;content&gt;...)"/>
 <usage value="(APPEND &lt;filename&gt; &lt;content&gt;...)"/>
-<usage value="(TOUCH [&lt;files&gt;...])"/>
-<usage value="(TOUCH_NOCREATE [&lt;files&gt;...])"/>
+<usage value="(TOUCH &lt;files&gt;...)"/>
+<usage value="(TOUCH_NOCREATE &lt;files&gt;...)"/>
 <usage value="(GENERATE [...])"/>
 <usage value="(CONFIGURE OUTPUT &lt;output-file&gt; CONTENT &lt;content&gt; [ESCAPE_QUOTES] [@ONLY] [NEWLINE_STYLE [UNIX|DOS|WIN32|LF|CRLF] ])"/>
-<usage value="(GLOB &lt;variable&gt; [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] [&lt;globbing-expressions&gt;...])"/>
-<usage value="(GLOB_RECURSE &lt;variable&gt; [FOLLOW_SYMLINKS] [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] [&lt;globbing-expressions&gt;...])"/>
-<usage value="(MAKE_DIRECTORY [&lt;directories&gt;...])"/>
-<usage value="(REMOVE [&lt;files&gt;...])"/>
-<usage value="(REMOVE_RECURSE [&lt;files&gt;...])"/>
+<usage value="(GLOB &lt;variable&gt; [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] &lt;globbing-expressions&gt;...)"/>
+<usage value="(GLOB_RECURSE &lt;variable&gt; [FOLLOW_SYMLINKS] [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] &lt;globbing-expressions&gt;...)"/>
+<usage value="(MAKE_DIRECTORY &lt;directories&gt;...)"/>
+<usage value="(REMOVE &lt;files&gt;...)"/>
+<usage value="(REMOVE_RECURSE &lt;files&gt;...)"/>
 <usage value="(RENAME &lt;oldname&gt; &lt;newname&gt; [RESULT &lt;result&gt;] [NO_REPLACE])"/>
 <usage value="(COPY_FILE &lt;oldname&gt; &lt;newname&gt; [RESULT &lt;result&gt;] [ONLY_IF_DIFFERENT] [INPUT_MAY_BE_RECENT])"/>
 <usage value="(COPY [...])"/>
@@ -260,8 +261,8 @@
 <usage value="(RELATIVE_PATH &lt;variable&gt; &lt;directory&gt; &lt;file&gt;)"/>
 <usage value="(TO_CMAKE_PATH &#34;&lt;path&gt;&#34; &lt;variable&gt;)"/>
 <usage value="(TO_NATIVE_PATH &#34;&lt;path&gt;&#34; &lt;variable&gt;)"/>
-<usage value="(DOWNLOAD &lt;url&gt; [&lt;file&gt;] [&lt;options&gt;...])"/>
-<usage value="(UPLOAD &lt;file&gt; &lt;url&gt; [&lt;options&gt;...])"/>
+<usage value="(DOWNLOAD &lt;url&gt; [&lt;file&gt;] &lt;options&gt;...)"/>
+<usage value="(UPLOAD &lt;file&gt; &lt;url&gt; &lt;options&gt;...)"/>
 <usage value="(LOCK &lt;path&gt; [DIRECTORY] [RELEASE] [GUARD &lt;FUNCTION|FILE|PROCESS&gt;] [RESULT_VARIABLE &lt;variable&gt;] [TIMEOUT &lt;seconds&gt;])"/>
 <usage value="(ARCHIVE_CREATE OUTPUT &lt;archive&gt; PATHS &lt;paths&gt;... [FORMAT &lt;format&gt;] [COMPRESSION &lt;compression&gt; [COMPRESSION_LEVEL &lt;compression-level&gt;]] [MTIME &lt;mtime&gt;] [VERBOSE])"/>
 <usage value="(ARCHIVE_EXTRACT INPUT &lt;archive&gt; [DESTINATION &lt;dir&gt;] [PATTERNS &lt;patterns&gt;...] [LIST_ONLY] [VERBOSE] [TOUCH])"/>
@@ -343,6 +344,9 @@
 <usage value="(DEFINED &lt;name&gt;|CACHE{&lt;name&gt;}|ENV{&lt;name&gt;})"/>
 <usage value="(&lt;variable|string&gt; IN_LIST &lt;variable&gt;)"/>
 <usage value="(EXISTS &lt;path-to-file-or-directory&gt;)"/>
+<usage value="(IS_READABLE &lt;path-to-file-or-directory&gt;)"/>
+<usage value="(IS_WRITABLE &lt;path-to-file-or-directory&gt;)"/>
+<usage value="(IS_EXECUTABLE &lt;path-to-file-or-directory&gt;)"/>
 <usage value="(&lt;file1&gt; IS_NEWER_THAN &lt;file2&gt;)"/>
 <usage value="(IS_DIRECTORY &lt;path&gt;)"/>
 <usage value="(IS_SYMLINK &lt;path&gt;)"/>
@@ -598,12 +602,12 @@
 <command name="try_compile" desc="Try building some code.">
 <usage value="(&lt;compileResultVar&gt; PROJECT &lt;projectName&gt; SOURCE_DIR &lt;srcdir&gt; [BINARY_DIR &lt;bindir&gt;] [TARGET &lt;targetName&gt;] [LOG_DESCRIPTION &lt;text&gt;] [NO_CACHE] [NO_LOG] [CMAKE_FLAGS &lt;flags&gt;...] [OUTPUT_VARIABLE &lt;var&gt;])"/>
 <usage value="(&lt;compileResultVar&gt; &lt;bindir&gt; &lt;srcdir&gt; &lt;projectName&gt; [&lt;targetName&gt;] [CMAKE_FLAGS &lt;flags&gt;...] [OUTPUT_VARIABLE &lt;var&gt;])"/>
-<usage value="(&lt;compileResultVar&gt; [SOURCES_TYPE &lt;type&gt;] &lt;SOURCES &lt;srcfile...&gt; | SOURCE_FROM_CONTENT &lt;name&gt; &lt;content&gt; | SOURCE_FROM_VAR &lt;name&gt; &lt;var&gt; | SOURCE_FROM_FILE &lt;name&gt; &lt;path&gt; &gt;... [LOG_DESCRIPTION &lt;text&gt;] [NO_CACHE] [NO_LOG] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] )"/>
+<usage value="(&lt;compileResultVar&gt; [SOURCES_TYPE &lt;type&gt;] &lt;SOURCES &lt;srcfile...&gt; | SOURCE_FROM_CONTENT &lt;name&gt; &lt;content&gt; | SOURCE_FROM_VAR &lt;name&gt; &lt;var&gt; | SOURCE_FROM_FILE &lt;name&gt; &lt;path&gt; &gt;... [LOG_DESCRIPTION &lt;text&gt;] [NO_CACHE] [NO_LOG] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [LINKER_LANGUAGE &lt;lang&gt;] [OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] )"/>
 <usage value="(&lt;compileResultVar&gt; &lt;bindir&gt; &lt;srcfile|SOURCES srcfile...&gt; [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] )"/>
 </command>
 <command name="try_run" desc="Try compiling and then running some code.">
 <usage value="(&lt;runResultVar&gt; &lt;compileResultVar&gt; [SOURCES_TYPE &lt;type&gt;] &lt;SOURCES &lt;srcfile...&gt; | SOURCE_FROM_CONTENT &lt;name&gt; &lt;content&gt; | SOURCE_FROM_VAR &lt;name&gt; &lt;var&gt; | SOURCE_FROM_FILE &lt;name&gt; &lt;path&gt; &gt;... [LOG_DESCRIPTION &lt;text&gt;] [NO_CACHE] [NO_LOG] [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [COMPILE_OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] [RUN_OUTPUT_VARIABLE &lt;var&gt;] [RUN_OUTPUT_STDOUT_VARIABLE &lt;var&gt;] [RUN_OUTPUT_STDERR_VARIABLE &lt;var&gt;] [WORKING_DIRECTORY &lt;var&gt;] [ARGS &lt;args&gt;...] )"/>
-<usage value="(&lt;runResultVar&gt; &lt;compileResultVar&gt; &lt;bindir&gt; &lt;srcfile|SOURCES srcfile...&gt; [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [COMPILE_OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] [RUN_OUTPUT_VARIABLE &lt;var&gt;] [OUTPUT_VARIABLE &lt;var&gt;] [WORKING_DIRECTORY &lt;var&gt;] [ARGS &lt;args&gt;...] )"/>
+<usage value="(&lt;runResultVar&gt; &lt;compileResultVar&gt; &lt;bindir&gt; &lt;srcfile|SOURCES srcfile...&gt; [CMAKE_FLAGS &lt;flags&gt;...] [COMPILE_DEFINITIONS &lt;defs&gt;...] [LINK_OPTIONS &lt;options&gt;...] [LINK_LIBRARIES &lt;libs&gt;...] [LINKER_LANGUAGE &lt;lang&gt;] [COMPILE_OUTPUT_VARIABLE &lt;var&gt;] [COPY_FILE &lt;fileName&gt; [COPY_FILE_ERROR &lt;var&gt;]] [&lt;LANG&gt;_STANDARD &lt;std&gt;] [&lt;LANG&gt;_STANDARD_REQUIRED &lt;bool&gt;] [&lt;LANG&gt;_EXTENSIONS &lt;bool&gt;] [RUN_OUTPUT_VARIABLE &lt;var&gt;] [OUTPUT_VARIABLE &lt;var&gt;] [WORKING_DIRECTORY &lt;var&gt;] [ARGS &lt;args&gt;...] )"/>
 </command>
 <command name="unset" desc="Unset a variable, cache variable, or environment variable.">
 <usage value="(&lt;variable&gt; [CACHE | PARENT_SCOPE])"/>
@@ -706,12 +710,14 @@
 <property name="ASM_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
 <property name="ATTACHED_FILES" desc="Attach a list of files to a dashboard submission."/>
 <property name="ATTACHED_FILES_ON_FAIL" desc="Attach a list of files to a dashboard submission if the test fails."/>
+<property name="AUTOGEN_BETTER_GRAPH_MULTI_CONFIG" desc="AUTOGEN_BETTER_GRAPH_MULTI_CONFIG is a boolean property that can be set on a target to have better dependency graph for multi-configuration generators. When this property is enabled, CMake will generate more per-config targets. Thus, the dependency graph will be more accurate for multi-configuration generators and some recompilations will be avoided."/>
 <property name="AUTOGEN_BUILD_DIR" desc="Directory where AUTOMOC, AUTOUIC and AUTORCC generate files for the target."/>
-<property name="AUTOGEN_ORIGIN_DEPENDS" desc="Switch for forwarding origin target dependencies to the corresponding _autogen target."/>
+<property name="AUTOGEN_COMMAND_LINE_LENGTH_MAX" desc="Command line length limit for autogen targets, i.e. moc or uic, that triggers the use of response files on Windows instead of passing all arguments to the command line."/>
+<property name="AUTOGEN_ORIGIN_DEPENDS" desc="Switch for forwarding origin target dependencies to the corresponding The &lt;ORIGIN&gt;_autogen target target."/>
 <property name="AUTOGEN_PARALLEL" desc="Number of parallel moc or uic processes to start when using AUTOMOC and AUTOUIC."/>
 <property name="AUTOGEN_SOURCE_GROUP" desc="Name of the source_group() for AUTOMOC, AUTORCC and AUTOUIC generated files."/>
 <property name="AUTOGEN_TARGETS_FOLDER" desc="Name of FOLDER for *_autogen targets that are added automatically by CMake for targets for which AUTOMOC is enabled."/>
-<property name="AUTOGEN_TARGET_DEPENDS" desc="Additional target dependencies of the corresponding _autogen target."/>
+<property name="AUTOGEN_TARGET_DEPENDS" desc="Additional target dependencies of the corresponding The &lt;ORIGIN&gt;_autogen target target."/>
 <property name="AUTOGEN_USE_SYSTEM_INCLUDE" desc="AUTOGEN_USE_SYSTEM_INCLUDE is a boolean property that can be set on a target to indicate that the autogen target include directory should be added as a system include directory or normal include directory to the target."/>
 <property name="AUTOMOC" desc="Should the target be processed with auto-moc (for Qt projects)."/>
 <property name="AUTOMOC_COMPILER_PREDEFINES" desc="Boolean value used by AUTOMOC to determine if the compiler pre definitions file moc_predefs.h should be generated."/>
@@ -862,12 +868,13 @@
 <property name="EXCLUDE_FROM_DEFAULT_BUILD" desc="Exclude target from Build Solution."/>
 <property name="EXCLUDE_FROM_DEFAULT_BUILD_&lt;CONFIG&gt;" desc="Per-configuration version of target exclusion from Build Solution."/>
 <property name="EXPORT_COMPILE_COMMANDS" desc="Enable/Disable output of compile commands during generation for a target."/>
+<property name="EXPORT_FIND_PACKAGE_NAME" desc="Control the package name associated with a dependency target when exporting a find_dependency() call in install(EXPORT) or export(EXPORT). This can be used to assign a package name to a package that is built by CMake and exported, or to override the package in the find_package() call that created the target."/>
 <property name="EXPORT_NAME" desc="Exported name for target files."/>
 <property name="EXPORT_NO_SYSTEM" desc="This property affects the behavior of the install(EXPORT) and export() commands when they install or export the target respectively. When EXPORT_NO_SYSTEM is set to true, those commands generate an imported target with SYSTEM property set to false."/>
 <property name="EXPORT_PROPERTIES" desc="List additional properties to export for a target."/>
 <property name="EXTERNAL_OBJECT" desc="If set to true then this is an object file."/>
 <property name="EchoString" desc="A message to be displayed when the target is built."/>
-<property name="FAIL_REGULAR_EXPRESSION" desc="If the output matches this regular expression the test will fail, regardless of the process exit code."/>
+<property name="FAIL_REGULAR_EXPRESSION" desc="If the test output (stdout or stderr) matches this regular expression the test will fail, regardless of the process exit code. Tests that exceed the timeout specified by TIMEOUT fail regardless of FAIL_REGULAR_EXPRESSION. Any non-zero return code or system-level test failures including segmentation faults, signal abort, or heap errors fail the test even if the regular expression does not match."/>
 <property name="FIND_LIBRARY_USE_LIB32_PATHS" desc="Whether the find_library() command should automatically search lib32 directories."/>
 <property name="FIND_LIBRARY_USE_LIB64_PATHS" desc="Whether find_library() should automatically search lib64 directories."/>
 <property name="FIND_LIBRARY_USE_LIBX32_PATHS" desc="Whether the find_library() command should automatically search libx32 directories."/>
@@ -1004,6 +1011,7 @@
 <property name="LIBRARY_OUTPUT_NAME" desc="Output name for LIBRARY target files."/>
 <property name="LIBRARY_OUTPUT_NAME_&lt;CONFIG&gt;" desc="Per-configuration output name for LIBRARY target files."/>
 <property name="LINKER_LANGUAGE" desc="Specifies language whose compiler will invoke the linker."/>
+<property name="LINKER_TYPE" desc="Specify which linker will be used for the link step. The property value may use generator expressions."/>
 <property name="LINK_DEPENDS" desc="Additional files on which a target binary depends for linking."/>
 <property name="LINK_DEPENDS_NO_SHARED" desc="Do not depend on linked shared library files."/>
 <property name="LINK_DIRECTORIES" desc="List of directories to use for the link step of shared library, module and executable targets."/>
@@ -1057,7 +1065,7 @@
 <property name="PACKAGES_FOUND" desc="List of packages which were found during the CMake run."/>
 <property name="PACKAGES_NOT_FOUND" desc="List of packages which were not found during the CMake run."/>
 <property name="PARENT_DIRECTORY" desc="Source directory that added current subdirectory."/>
-<property name="PASS_REGULAR_EXPRESSION" desc="The output must match this regular expression for the test to pass. The process exit code is ignored."/>
+<property name="PASS_REGULAR_EXPRESSION" desc="The test output (stdout or stderr) must match this regular expression for the test to pass. The process exit code is ignored. Tests that exceed the timeout specified by TIMEOUT still fail regardless of PASS_REGULAR_EXPRESSION. System-level test failures including segmentation faults, signal abort, or heap errors may fail the test even if PASS_REGULAR_EXPRESSION is matched."/>
 <property name="PCH_INSTANTIATE_TEMPLATES" desc="When this property is set to true, the precompiled header compiler options will contain a flag to instantiate templates during the generation of the PCH if supported. This can significantly improve compile times. Supported in Clang since version 11."/>
 <property name="PCH_WARN_INVALID" desc="When this property is set to true, the precompile header compiler options will contain a compiler flag which should warn about invalid precompiled headers e.g. -Winvalid-pch for GNU compiler."/>
 <property name="PDB_NAME" desc="Output name for the MS debug symbol .pdb file generated by the linker for an executable or shared library target."/>
@@ -1108,12 +1116,12 @@
 <property name="SKIP_BUILD_RPATH" desc="Should rpaths be used for the build tree."/>
 <property name="SKIP_LINTING" desc="This property allows you to exclude a specific source file from the linting process. The linting process involves running tools such as &lt;LANG&gt;_CPPLINT, &lt;LANG&gt;_CLANG_TIDY, &lt;LANG&gt;_CPPCHECK, and &lt;LANG&gt;_INCLUDE_WHAT_YOU_USE on the source files, as well as compiling header files as part of VERIFY_INTERFACE_HEADER_SETS. By setting SKIP_LINTING on a source file, the mentioned linting tools will not be executed for that particular file."/>
 <property name="SKIP_PRECOMPILE_HEADERS" desc="Is this source file skipped by PRECOMPILE_HEADERS feature."/>
-<property name="SKIP_REGULAR_EXPRESSION" desc="If the output matches this regular expression the test will be marked as skipped."/>
+<property name="SKIP_REGULAR_EXPRESSION" desc="If the test output (stderr or stdout) matches this regular expression the test will be marked as skipped, regardless of the process exit code. Tests that exceed the timeout specified by TIMEOUT still fail regardless of SKIP_REGULAR_EXPRESSION. System-level test failures including segmentation faults, signal abort, or heap errors may fail the test even if the regular expression matches."/>
 <property name="SKIP_RETURN_CODE" desc="Return code to mark a test as skipped."/>
 <property name="SKIP_UNITY_BUILD_INCLUSION" desc="Setting this property to true ensures the source file will be skipped by unity builds when its associated target has its UNITY_BUILD property set to true. The source file will instead be compiled on its own in the same way as it would with unity builds disabled."/>
 <property name="SOURCES" desc="This specifies the list of paths to source files for the target. The following commands all set or add to the SOURCES target property and are the usual way to manipulate it:"/>
 <property name="SOURCE_DIR" desc="This read-only property reports the value of the CMAKE_CURRENT_SOURCE_DIR variable in the directory in which the target was defined."/>
-<property name="SOVERSION" desc="What version number is this target."/>
+<property name="SOVERSION" desc="ABI version number of a shared library target."/>
 <property name="STATIC_LIBRARY_FLAGS" desc="Archiver (or MSVC librarian) flags for a static library target. Targets that are shared libraries, modules, or executables need to use the LINK_OPTIONS or LINK_FLAGS target properties."/>
 <property name="STATIC_LIBRARY_FLAGS_&lt;CONFIG&gt;" desc="Per-configuration archiver (or MSVC librarian) flags for a static library target."/>
 <property name="STATIC_LIBRARY_OPTIONS" desc="Archiver (or MSVC librarian) flags for a static library target. Targets that are shared libraries, modules, or executables need to use the LINK_OPTIONS target property."/>
@@ -1124,6 +1132,7 @@
 <property name="SYSTEM" desc="Specifies that a target is a system target. This has the following effects:"/>
 <property name="Swift_CLANG_TIDY" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <property name="Swift_CLANG_TIDY_EXPORT_FIXES_DIR" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX, and only has an effect when &lt;LANG&gt;_CLANG_TIDY is set."/>
+<property name="Swift_COMPILATION_MODE" desc="Specify how Swift compiles a target."/>
 <property name="Swift_COMPILER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
 <property name="Swift_CPPCHECK" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
 <property name="Swift_CPPLINT" desc="This property is supported only when &lt;LANG&gt; is C or CXX."/>
@@ -1144,6 +1153,7 @@
 <property name="TESTS" desc="List of tests."/>
 <property name="TEST_INCLUDE_FILE" desc="Deprecated. Use TEST_INCLUDE_FILES instead."/>
 <property name="TEST_INCLUDE_FILES" desc="A list of cmake files that will be included when ctest is run."/>
+<property name="TEST_LAUNCHER" desc="Use the given launcher to run executables. This command will be added as a prefix to add_test() commands for build target system executables and is meant to be run on the host machine."/>
 <property name="TIMEOUT" desc="How many seconds to allow for this test."/>
 <property name="TIMEOUT_AFTER_MATCH" desc="Change a test's timeout duration after a matching line is encountered in its output."/>
 <property name="TIMEOUT_SIGNAL_GRACE_PERIOD" desc="If the TIMEOUT_SIGNAL_NAME test property is set, this property specifies the number of seconds to wait for a test process to terminate after sending the custom signal. Otherwise, this property has no meaning."/>
@@ -1160,7 +1170,7 @@
 <property name="VALUE" desc="Value of a cache entry."/>
 <property name="VARIABLES" desc="List of variables defined in the current directory."/>
 <property name="VERIFY_INTERFACE_HEADER_SETS" desc="Used to verify that all headers in a target's PUBLIC and INTERFACE header sets can be included on their own."/>
-<property name="VERSION" desc="What version number is this target."/>
+<property name="VERSION" desc="Version number of a shared library target."/>
 <property name="VISIBILITY_INLINES_HIDDEN" desc="Whether to add a compile flag to hide symbols of inline functions"/>
 <property name="VS_CONFIGURATION_TYPE" desc="Visual Studio project configuration type."/>
 <property name="VS_COPY_TO_OUT_DIR" desc="Sets the &lt;CopyToOutputDirectory&gt; tag for a source file in a Visual Studio project file. Valid values are Never, Always and PreserveNewest."/>
@@ -1224,7 +1234,7 @@
 <property name="VS_WINRT_REFERENCES" desc="Visual Studio project Windows Runtime Metadata references"/>
 <property name="VS_XAML_TYPE" desc="Mark a Extensible Application Markup Language (XAML) source file as a different type than the default Page. The most common usage would be to set the default App.xaml file as ApplicationDefinition."/>
 <property name="WATCOM_RUNTIME_LIBRARY" desc="Select the Watcom runtime library for use by compilers targeting the Watcom ABI."/>
-<property name="WILL_FAIL" desc="If set to true, this will invert the pass/fail flag of the test."/>
+<property name="WILL_FAIL" desc="If true, inverts the pass / fail test criteria. Tests for which WILL_FAIL is true fail with return code 0 and pass with non-zero return code. Tests that exceed the timeout specified by TIMEOUT still fail regardless of WILL_FAIL. System-level test failures including segmentation faults, signal abort, or heap errors may fail the test even if WILL_FAIL is true."/>
 <property name="WIN32_EXECUTABLE" desc="Build an executable with a WinMain entry point on windows."/>
 <property name="WINDOWS_EXPORT_ALL_SYMBOLS" desc="This property is implemented only for MS-compatible tools on Windows."/>
 <property name="WORKING_DIRECTORY" desc="The directory from which the test executable will be called."/>
@@ -1314,11 +1324,10 @@
 <reservedword name="CHECK_PASS"/>
 <reservedword name="CHECK_START"/>
 <reservedword name="CLEAR"/>
+<reservedword name="CMAKE_EXPERIMENTAL_EXPORT_PACKAGE_DEPENDENCIES"/>
 <reservedword name="CMAKE_FIND_PACKAGE_NAME"/>
 <reservedword name="CMAKE_FIND_ROOT_PATH_BOTH"/>
 <reservedword name="CMAKE_FLAGS"/>
-<reservedword name="CMAKE_TESTDRIVER_AFTER_TESTMAIN"/>
-<reservedword name="CMAKE_TESTDRIVER_BEFORE_TESTMAIN"/>
 <reservedword name="COMMAND"/>
 <reservedword name="COMMAND_ECHO"/>
 <reservedword name="COMMAND_ERROR_IS_FATAL"/>
@@ -1370,6 +1379,7 @@
 <reservedword name="ECHO"/>
 <reservedword name="ECHO_ERROR_VARIABLE"/>
 <reservedword name="ECHO_OUTPUT_VARIABLE"/>
+<reservedword name="ENABLED"/>
 <reservedword name="ENCODING"/>
 <reservedword name="END"/>
 <reservedword name="ENV"/>
@@ -1383,12 +1393,14 @@
 <reservedword name="EXCLUDE_FIXTURE_CLEANUP"/>
 <reservedword name="EXCLUDE_FIXTURE_SETUP"/>
 <reservedword name="EXCLUDE_FROM_ALL"/>
+<reservedword name="EXCLUDE_FROM_FILE"/>
 <reservedword name="EXCLUDE_LABEL"/>
 <reservedword name="EXECUTABLE"/>
 <reservedword name="EXPORT"/>
 <reservedword name="EXPORT_LINK_INTERFACE_LIBRARIES"/>
+<reservedword name="EXPORT_PACKAGE_DEPENDENCIES"/>
 <reservedword name="EXTENSIONS"/>
-<reservedword name="EXTRA_INCLUDE"/>
+<reservedword name="EXTRA_ARGS"/>
 <reservedword name="FAILED_TO_RUN"/>
 <reservedword name="FALSE"/>
 <reservedword name="FATAL_ERROR"/>
@@ -1430,7 +1442,6 @@
 <reservedword name="FOUND"/>
 <reservedword name="FQDN"/>
 <reservedword name="FULL_DOCS"/>
-<reservedword name="FUNCTION"/>
 <reservedword name="GCC"/>
 <reservedword name="GET"/>
 <reservedword name="GLOB"/>
@@ -1461,9 +1472,9 @@
 <reservedword name="HTTPHEADER"/>
 <reservedword name="IMPLICIT_DEPENDS"/>
 <reservedword name="IMPORTED"/>
-<reservedword name="IMPORTED_LOCATION"/>
 <reservedword name="INCLUDE"/>
 <reservedword name="INCLUDE_DIRECTORIES"/>
+<reservedword name="INCLUDE_FROM_FILE"/>
 <reservedword name="INCLUDE_INTERNALS"/>
 <reservedword name="INCLUDE_LABEL"/>
 <reservedword name="INHERITED"/>
@@ -1482,9 +1493,9 @@
 <reservedword name="LANGUAGES"/>
 <reservedword name="LAST"/>
 <reservedword name="LAST_ONLY"/>
-<reservedword name="LC_ID_DYLIB"/>
 <reservedword name="LF"/>
 <reservedword name="LINKER"/>
+<reservedword name="LINKER_LANGUAGE"/>
 <reservedword name="LINK_DIRECTORIES"/>
 <reservedword name="LINK_INTERFACE_LIBRARIES"/>
 <reservedword name="LINK_LIBRARIES"/>
@@ -1493,7 +1504,6 @@
 <reservedword name="LINK_PUBLIC"/>
 <reservedword name="LISTS"/>
 <reservedword name="LOG_DESCRIPTION"/>
-<reservedword name="MACOSX_BUNDLE"/>
 <reservedword name="MAIN_DEPENDENCY"/>
 <reservedword name="MODIFIED_ACCESS"/>
 <reservedword name="MODULE"/>
@@ -1525,7 +1535,6 @@
 <reservedword name="NUMBER_WARNINGS"/>
 <reservedword name="OBJC"/>
 <reservedword name="OBJCXX"/>
-<reservedword name="OBJECT"/>
 <reservedword name="OEM"/>
 <reservedword name="OFF"/>
 <reservedword name="OLD"/>
@@ -1539,6 +1548,7 @@
 <reservedword name="OS_RELEASE"/>
 <reservedword name="OS_VERSION"/>
 <reservedword name="OUTPUT"/>
+<reservedword name="OUTPUTS"/>
 <reservedword name="OUTPUT_FILE"/>
 <reservedword name="OUTPUT_JUNIT"/>
 <reservedword name="OUTPUT_QUIET"/>
@@ -1546,6 +1556,7 @@
 <reservedword name="OWNER_EXECUTE"/>
 <reservedword name="OWNER_READ"/>
 <reservedword name="OWNER_WRITE"/>
+<reservedword name="PACKAGE_DEPENDENCY"/>
 <reservedword name="PACKAGE_FIND_NAME"/>
 <reservedword name="PACKAGE_FIND_VERSION"/>
 <reservedword name="PACKAGE_FIND_VERSION_COMPLETE"/>
@@ -1640,7 +1651,6 @@
 <reservedword name="SETUID"/>
 <reservedword name="SHARED"/>
 <reservedword name="SHELL"/>
-<reservedword name="SONAME"/>
 <reservedword name="SOURCE"/>
 <reservedword name="SOURCES"/>
 <reservedword name="SOURCES_TYPE"/>
@@ -1714,6 +1724,7 @@
 <reservedword name="WORLD_EXECUTE"/>
 <reservedword name="WORLD_READ"/>
 <reservedword name="WORLD_WRITE"/>
+<reservedword name="XCFRAMEWORK_LOCATION"/>
 </extension>
 <extension point="com.cthing.cmakeed.core.variables" >
 <variable name="&lt;PROJECT-NAME&gt;_BINARY_DIR" desc="Top level binary directory for the named project."/>
@@ -1731,7 +1742,7 @@
 <variable name="APPLE" desc="Set to True when the target system is an Apple platform (macOS, iOS, tvOS, visionOS or watchOS)."/>
 <variable name="BORLAND" desc="True if the Borland compiler is being used."/>
 <variable name="BSD" desc="Set to a string value when the target system is BSD. This value can be one of the following: DragonFlyBSD, FreeBSD, OpenBSD, or NetBSD."/>
-<variable name="BUILD_SHARED_LIBS" desc="Global flag to cause add_library() to create shared libraries if on."/>
+<variable name="BUILD_SHARED_LIBS" desc="Tell add_library() to default to SHARED libraries, instead of STATIC libraries, when called with no explicit library type."/>
 <variable name="CACHE" desc="Operator to read cache variables."/>
 <variable name="CMAKE_&lt;CONFIG&gt;_POSTFIX" desc="Default filename postfix for libraries under configuration &lt;CONFIG&gt;."/>
 <variable name="CMAKE_&lt;LANG&gt;_FLAGS_&lt;CONFIG&gt;" desc="Language-wide flags for language &lt;LANG&gt; used when building for the &lt;CONFIG&gt; configuration. These flags will be passed to all invocations of the compiler in the corresponding configuration. This includes invocations that drive compiling and those that drive linking."/>
@@ -1740,6 +1751,7 @@
 <variable name="CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED" desc="This variable specifies whether the &lt;FEATURE&gt; is supported for the link language &lt;LANG&gt;. If this variable is true, then the &lt;FEATURE&gt; must be defined by CMAKE_&lt;LANG&gt;_LINK_GROUP_USING_&lt;FEATURE&gt;, and the more generic CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt;_SUPPORTED and CMAKE_LINK_GROUP_USING_&lt;FEATURE&gt; variables are not used."/>
 <variable name="CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;" desc="This variable defines how to link a library or framework for the specified &lt;FEATURE&gt; when a LINK_LIBRARY generator expression is used and the link language for the target is &lt;LANG&gt;. For this variable to have any effect, the associated CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED variable must be set to true."/>
 <variable name="CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;_SUPPORTED" desc="Set to TRUE if the &lt;FEATURE&gt;, as defined by variable CMAKE_&lt;LANG&gt;_LINK_LIBRARY_USING_&lt;FEATURE&gt;, is supported for the linker language &lt;LANG&gt;."/>
+<variable name="CMAKE_&lt;LANG&gt;_USING_LINKER_&lt;TYPE&gt;" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
 <variable name="CMAKE_ABSOLUTE_DESTINATION_FILES" desc="List of files which have been installed using an ABSOLUTE DESTINATION path."/>
 <variable name="CMAKE_ADD_CUSTOM_COMMAND_DEPENDS_EXPLICIT_ONLY" desc="Whether to enable the DEPENDS_EXPLICIT_ONLY option by default in add_custom_command()."/>
 <variable name="CMAKE_ADSP_ROOT" desc="When Cross Compiling for ADSP SHARC/Blackfin, this variable holds the absolute path to the latest CCES or VDSP++ install. The directory is expected to contain the cc21k.exe and ccblkfn.exe compilers. This will be set automatically if a default install of CCES or VDSP++ can be found."/>
@@ -1796,6 +1808,10 @@
 <variable name="CMAKE_ASM-ATT_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_ASM-ATT_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_ASM-ATT_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -1855,6 +1871,8 @@
 <variable name="CMAKE_ASM-ATT_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_ASM-ATT_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_ASM-ATT_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_ASM-ATT_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_ASM-ATT_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_ASM-ATT_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_ASM-MASM_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
 <variable name="CMAKE_ASM-MASM_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
@@ -1873,6 +1891,10 @@
 <variable name="CMAKE_ASM-MASM_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_ASM-MASM_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_ASM-MASM_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -1932,6 +1954,8 @@
 <variable name="CMAKE_ASM-MASM_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_ASM-MASM_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_ASM-MASM_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_ASM-MASM_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_ASM-MASM_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_ASM-MASM_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_ASM-NASM_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
 <variable name="CMAKE_ASM-NASM_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
@@ -1950,6 +1974,10 @@
 <variable name="CMAKE_ASM-NASM_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_ASM-NASM_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_ASM-NASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_ASM-NASM_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_ASM-NASM_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_ASM-NASM_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_ASM-NASM_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2009,6 +2037,8 @@
 <variable name="CMAKE_ASM-NASM_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_ASM-NASM_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_ASM-NASM_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_ASM-NASM_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_ASM-NASM_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_ASM-NASM_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_ASM_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
 <variable name="CMAKE_ASM_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
@@ -2027,6 +2057,10 @@
 <variable name="CMAKE_ASM_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_ASM_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_ASM_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_ASM_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_ASM_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_ASM_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_ASM_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_ASM_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_ASM_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_ASM_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2086,8 +2120,12 @@
 <variable name="CMAKE_ASM_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_ASM_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_ASM_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_ASM_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_ASM_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_ASM_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
-<variable name="CMAKE_AUTOGEN_ORIGIN_DEPENDS" desc="Switch for forwarding origin target dependencies to the corresponding _autogen targets."/>
+<variable name="CMAKE_AUTOGEN_BETTER_GRAPH_MULTI_CONFIG" desc="This variable is used to initialize the AUTOGEN_BETTER_GRAPH_MULTI_CONFIG property on all targets as they are created. See that target property for additional information."/>
+<variable name="CMAKE_AUTOGEN_COMMAND_LINE_LENGTH_MAX" desc="Command line length limit for autogen targets, i.e. moc or uic, that triggers the use of response files on Windows instead of passing all arguments to the command line."/>
+<variable name="CMAKE_AUTOGEN_ORIGIN_DEPENDS" desc="Switch for forwarding origin target dependencies to the corresponding The &lt;ORIGIN&gt;_autogen target targets."/>
 <variable name="CMAKE_AUTOGEN_PARALLEL" desc="Number of parallel moc or uic processes to start when using AUTOMOC and AUTOUIC."/>
 <variable name="CMAKE_AUTOGEN_USE_SYSTEM_INCLUDE" desc="This variable is used to initialize the AUTOGEN_USE_SYSTEM_INCLUDE property on all targets as they are created. See that target property for additional information."/>
 <variable name="CMAKE_AUTOGEN_VERBOSE" desc="Sets the verbosity of AUTOMOC, AUTOUIC and AUTORCC. A positive integer value or a true boolean value lets the AUTO* generators output additional processing information."/>
@@ -2156,6 +2194,10 @@
 <variable name="CMAKE_CSharp_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_CSharp_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_CSharp_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_CSharp_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_CSharp_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_CSharp_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_CSharp_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_CSharp_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_CSharp_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_CSharp_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2215,6 +2257,8 @@
 <variable name="CMAKE_CSharp_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_CSharp_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_CSharp_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_CSharp_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_CSharp_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_CSharp_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_CTEST_ARGUMENTS" desc="Set this to a semicolon-separated list of command-line arguments to pass to ctest(1) when running tests through the test (or RUN_TESTS) target of the generated build system."/>
 <variable name="CMAKE_CTEST_COMMAND" desc="Full path to ctest(1) command installed with CMake."/>
@@ -2236,6 +2280,10 @@
 <variable name="CMAKE_CUDA_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_CUDA_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_CUDA_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_CUDA_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_CUDA_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_CUDA_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_CUDA_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_CUDA_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_CUDA_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_CUDA_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2304,6 +2352,8 @@
 <variable name="CMAKE_CUDA_STANDARD_REQUIRED" desc="Default value for CUDA_STANDARD_REQUIRED target property if set when a target is created."/>
 <variable name="CMAKE_CUDA_STANDARD_REQUIRED" desc="The variations are:"/>
 <variable name="CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES" desc="When the CUDA language has been enabled, this provides a semicolon-separated list of include directories provided by the CUDA Toolkit. The value may be useful for C++ source files to include CUDA headers."/>
+<variable name="CMAKE_CUDA_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_CUDA_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_CUDA_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_CURRENT_BINARY_DIR" desc="The path to the binary directory currently being processed."/>
 <variable name="CMAKE_CURRENT_FUNCTION" desc="When executing code inside a function(), this variable contains the name of the current function. It can be useful for diagnostic or debug messages."/>
@@ -2331,6 +2381,10 @@
 <variable name="CMAKE_CXX_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_CXX_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_CXX_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_CXX_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_CXX_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_CXX_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_CXX_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_CXX_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_CXX_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_CXX_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2395,6 +2449,8 @@
 <variable name="CMAKE_CXX_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_CXX_STANDARD_REQUIRED" desc="Default value for CXX_STANDARD_REQUIRED target property if set when a target is created."/>
 <variable name="CMAKE_CXX_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_CXX_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_CXX_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_CXX_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_C_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
 <variable name="CMAKE_C_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
@@ -2413,6 +2469,10 @@
 <variable name="CMAKE_C_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_C_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_C_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_C_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_C_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_C_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_C_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_C_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_C_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_C_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2476,6 +2536,8 @@
 <variable name="CMAKE_C_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_C_STANDARD_REQUIRED" desc="Default value for C_STANDARD_REQUIRED target property if set when a target is created."/>
 <variable name="CMAKE_C_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_C_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_C_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_C_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_DEBUG_POSTFIX" desc="See variable CMAKE_&lt;CONFIG&gt;_POSTFIX."/>
 <variable name="CMAKE_DEBUG_TARGET_PROPERTIES" desc="Enables tracing output for target properties."/>
@@ -2509,6 +2571,7 @@
 <variable name="CMAKE_EXE_LINKER_FLAGS_&lt;CONFIG&gt;_INIT" desc="Value used to initialize the CMAKE_EXE_LINKER_FLAGS_&lt;CONFIG&gt; cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_EXE_LINKER_FLAGS_INIT" desc="Value used to initialize the CMAKE_EXE_LINKER_FLAGS cache entry the first time a build tree is configured. This variable is meant to be set by a toolchain file. CMake may prepend or append content to the value based on the environment and target platform."/>
 <variable name="CMAKE_EXPORT_COMPILE_COMMANDS" desc="Enable/Disable output of compile commands during generation."/>
+<variable name="CMAKE_EXPORT_FIND_PACKAGE_NAME" desc="Initializes the value of EXPORT_FIND_PACKAGE_NAME."/>
 <variable name="CMAKE_EXPORT_NO_PACKAGE_REGISTRY" desc="Disable the export(PACKAGE) command when CMP0090 is not set to NEW."/>
 <variable name="CMAKE_EXPORT_PACKAGE_REGISTRY" desc="Enables the export(PACKAGE) command when CMP0090 is set to NEW."/>
 <variable name="CMAKE_EXTRA_GENERATOR" desc="The extra generator used to build the project. See cmake-generators(7)."/>
@@ -2564,6 +2627,10 @@
 <variable name="CMAKE_Fortran_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_Fortran_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_Fortran_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_Fortran_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_Fortran_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_Fortran_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_Fortran_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_Fortran_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_Fortran_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_Fortran_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2629,6 +2696,8 @@
 <variable name="CMAKE_Fortran_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_Fortran_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_Fortran_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_Fortran_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_Fortran_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_Fortran_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_GENERATOR" desc="The generator used to build the project. See cmake-generators(7)."/>
 <variable name="CMAKE_GENERATOR_INSTANCE" desc="Generator-specific instance specification provided by user."/>
@@ -2670,7 +2739,7 @@
 <variable name="CMAKE_INSTALL_MESSAGE" desc="Specify verbosity of installation script code generated by the install() command (using the file(INSTALL) command). For paths that are newly installed or updated, installation may print lines like:"/>
 <variable name="CMAKE_INSTALL_NAME_DIR" desc="Directory name for installed targets on Apple platforms."/>
 <variable name="CMAKE_INSTALL_PREFIX" desc="Install directory used by install()."/>
-<variable name="CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT" desc="CMake sets this variable to a TRUE value when the CMAKE_INSTALL_PREFIX has just been initialized to its default value, typically on the first run of CMake within a new build tree. This can be used by project code to change the default without overriding a user-provided value:"/>
+<variable name="CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT" desc="CMake sets this variable to a TRUE value when the CMAKE_INSTALL_PREFIX has just been initialized to its default value, typically on the first run of CMake within a new build tree and the CMAKE_INSTALL_PREFIX environment variable is not set on the first run of CMake. This can be used by project code to change the default without overriding a user-provided value:"/>
 <variable name="CMAKE_INSTALL_REMOVE_ENVIRONMENT_RPATH" desc="Sets the default for whether toolchain-defined rpaths should be removed during installation."/>
 <variable name="CMAKE_INSTALL_RPATH" desc="The rpath to use for installed targets."/>
 <variable name="CMAKE_INSTALL_RPATH_USE_LINK_PATH" desc="Add paths to linker search and installed rpath."/>
@@ -2702,6 +2771,10 @@
 <variable name="CMAKE_Java_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_Java_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_Java_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_Java_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_Java_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_Java_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_Java_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_Java_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_Java_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_Java_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2761,6 +2834,8 @@
 <variable name="CMAKE_Java_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_Java_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_Java_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_Java_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_Java_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_Java_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_KATE_FILES_MODE" desc="This cache variable is used by the Kate project generator and controls to what mode the files entry in the project file will be set. See cmake-generators(7)."/>
 <variable name="CMAKE_KATE_MAKE_ARGUMENTS" desc="This cache variable is used by the Kate project generator. See cmake-generators(7)."/>
@@ -2770,6 +2845,7 @@
 <variable name="CMAKE_LIBRARY_OUTPUT_DIRECTORY_&lt;CONFIG&gt;" desc="Where to put all the LIBRARY target files when built for a specific configuration."/>
 <variable name="CMAKE_LIBRARY_PATH" desc="Semicolon-separated list of directories specifying a search path for the find_library() command. By default it is empty, it is intended to be set by the project."/>
 <variable name="CMAKE_LIBRARY_PATH_FLAG" desc="The flag to be used to add a library search path to a compiler."/>
+<variable name="CMAKE_LINKER_TYPE" desc="Specify which linker will be used for the link step."/>
 <variable name="CMAKE_LINK_DEF_FILE_FLAG" desc="Linker flag to be used to specify a .def file for dll creation."/>
 <variable name="CMAKE_LINK_DEPENDS_NO_SHARED" desc="Whether to skip link dependencies on shared library files."/>
 <variable name="CMAKE_LINK_DEPENDS_USE_LINKER" desc="For the Makefile and Ninja generators, link dependencies are now, for a selection of linkers, generated by the linker itself. By defining this variable with value FALSE, you can deactivate this feature."/>
@@ -2833,6 +2909,10 @@
 <variable name="CMAKE_OBJCXX_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_OBJCXX_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_OBJCXX_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_OBJCXX_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_OBJCXX_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_OBJCXX_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_OBJCXX_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_OBJCXX_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_OBJCXX_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_OBJCXX_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2895,6 +2975,8 @@
 <variable name="CMAKE_OBJCXX_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_OBJCXX_STANDARD_REQUIRED" desc="Default value for OBJCXX_STANDARD_REQUIRED target property if set when a target is created."/>
 <variable name="CMAKE_OBJCXX_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_OBJCXX_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_OBJCXX_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_OBJCXX_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_OBJC_ANDROID_TOOLCHAIN_MACHINE" desc="When Cross Compiling for Android this variable contains the toolchain binutils machine name (e.g. gcc -dumpmachine). The binutils typically have a &lt;machine&gt;- prefix on their name."/>
 <variable name="CMAKE_OBJC_ANDROID_TOOLCHAIN_PREFIX" desc="When Cross Compiling for Android this variable contains the absolute path prefixing the toolchain GNU compiler and its binutils."/>
@@ -2913,6 +2995,10 @@
 <variable name="CMAKE_OBJC_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_OBJC_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_OBJC_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_OBJC_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_OBJC_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_OBJC_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_OBJC_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_OBJC_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_OBJC_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_OBJC_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -2975,6 +3061,8 @@
 <variable name="CMAKE_OBJC_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_OBJC_STANDARD_REQUIRED" desc="Default value for OBJC_STANDARD_REQUIRED target property if set when a target is created."/>
 <variable name="CMAKE_OBJC_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_OBJC_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_OBJC_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_OBJC_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_OBJECT_PATH_MAX" desc="Maximum object file full-path length allowed by native build tools."/>
 <variable name="CMAKE_OPTIMIZE_DEPENDENCIES" desc="Initializes the OPTIMIZE_DEPENDENCIES target property."/>
@@ -2993,12 +3081,12 @@
 <variable name="CMAKE_POSITION_INDEPENDENT_CODE" desc="Default value for POSITION_INDEPENDENT_CODE of targets."/>
 <variable name="CMAKE_PREFIX_PATH" desc="Semicolon-separated list of directories specifying installation prefixes to be searched by the find_package(), find_program(), find_library(), find_file(), and find_path() commands. Each command will add appropriate subdirectories (like bin, lib, or include) as specified in its own documentation."/>
 <variable name="CMAKE_PROGRAM_PATH" desc="Semicolon-separated list of directories specifying a search path for the find_program() command. By default it is empty, it is intended to be set by the project."/>
-<variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE" desc="A CMake language file or module to be included as the last step of any project() command calls that specify &lt;PROJECT-NAME&gt; as the project name. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
-<variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE_BEFORE" desc="A CMake language file or module to be included as the first step of any project() command calls that specify &lt;PROJECT-NAME&gt; as the project name. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
+<variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE" desc="A CMake language file to be included as the last step of any project() command calls that specify &lt;PROJECT-NAME&gt; as the project name. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
+<variable name="CMAKE_PROJECT_&lt;PROJECT-NAME&gt;_INCLUDE_BEFORE" desc="A CMake language file to be included as the first step of any project() command calls that specify &lt;PROJECT-NAME&gt; as the project name. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
 <variable name="CMAKE_PROJECT_DESCRIPTION" desc="The description of the top level project."/>
 <variable name="CMAKE_PROJECT_HOMEPAGE_URL" desc="The homepage URL of the top level project."/>
-<variable name="CMAKE_PROJECT_INCLUDE" desc="A CMake language file or module to be included as the last step of all project() command calls. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
-<variable name="CMAKE_PROJECT_INCLUDE_BEFORE" desc="A CMake language file or module to be included as the first step of all project() command calls. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
+<variable name="CMAKE_PROJECT_INCLUDE" desc="A CMake language file to be included as the last step of all project() command calls. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
+<variable name="CMAKE_PROJECT_INCLUDE_BEFORE" desc="A CMake language file to be included as the first step of all project() command calls. This is intended for injecting custom code into project builds without modifying their source. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
 <variable name="CMAKE_PROJECT_NAME" desc="The name of the top level project."/>
 <variable name="CMAKE_PROJECT_TOP_LEVEL_INCLUDES" desc="Semicolon-separated list of CMake language files to include as part of the very first project() call. The files will be included immediately after the toolchain file has been read (if one is specified) and platform variables have been set, but before any languages have been enabled. Therefore, language-specific variables, including things like CMAKE_&lt;LANG&gt;_COMPILER, might not be set. See Code Injection for a more detailed discussion of files potentially included during a project() call."/>
 <variable name="CMAKE_PROJECT_VERSION" desc="The version of the top level project."/>
@@ -3024,6 +3112,10 @@
 <variable name="CMAKE_RC_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_RC_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_RC_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_RC_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_RC_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_RC_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_RC_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_RC_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_RC_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_RC_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -3083,6 +3175,8 @@
 <variable name="CMAKE_RC_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_RC_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_RC_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_RC_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_RC_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_RC_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_REQUIRE_FIND_PACKAGE_&lt;PackageName&gt;" desc="Variable for making find_package() call REQUIRED."/>
 <variable name="CMAKE_ROOT" desc="Install directory for running cmake."/>
@@ -3105,6 +3199,7 @@
 <variable name="CMAKE_SKIP_INSTALL_RPATH" desc="Do not include RPATHs in the install tree."/>
 <variable name="CMAKE_SKIP_INSTALL_RULES" desc="Whether to disable generation of installation rules."/>
 <variable name="CMAKE_SKIP_RPATH" desc="If true, do not add run time path information."/>
+<variable name="CMAKE_SKIP_TEST_ALL_DEPENDENCY" desc="Control whether the test target depends on the all target."/>
 <variable name="CMAKE_SOURCE_DIR" desc="The path to the top level of the source tree."/>
 <variable name="CMAKE_STAGING_PREFIX" desc="This variable may be set to a path to install to when cross-compiling. This can be useful if the path in CMAKE_SYSROOT is read-only, or otherwise should remain pristine."/>
 <variable name="CMAKE_STATIC_LIBRARY_PREFIX" desc="The prefix for static libraries that you link to."/>
@@ -3140,6 +3235,7 @@
 <variable name="CMAKE_Swift_BYTE_ORDER" desc="Byte order of &lt;LANG&gt; compiler target architecture, if known. If defined and not empty, the value is one of:"/>
 <variable name="CMAKE_Swift_CLANG_TIDY" desc="Default value for &lt;LANG&gt;_CLANG_TIDY target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
 <variable name="CMAKE_Swift_CLANG_TIDY_EXPORT_FIXES_DIR" desc="Default value for &lt;LANG&gt;_CLANG_TIDY_EXPORT_FIXES_DIR target property when &lt;LANG&gt; is C, CXX, OBJC or OBJCXX."/>
+<variable name="CMAKE_Swift_COMPILATION_MODE" desc="Specify how Swift compiles a target. This variable is used to initialize the Swift_COMPILATION_MODE property on targets as they are created."/>
 <variable name="CMAKE_Swift_COMPILER" desc="The full path to the compiler for LANG."/>
 <variable name="CMAKE_Swift_COMPILER_ABI" desc="An internal variable subject to change."/>
 <variable name="CMAKE_Swift_COMPILER_AR" desc="A wrapper around ar adding the appropriate --plugin option for the compiler."/>
@@ -3148,6 +3244,10 @@
 <variable name="CMAKE_Swift_COMPILER_FRONTEND_VARIANT" desc="Identification string of the compiler frontend variant."/>
 <variable name="CMAKE_Swift_COMPILER_ID" desc="Compiler identification string."/>
 <variable name="CMAKE_Swift_COMPILER_LAUNCHER" desc="Default value for &lt;LANG&gt;_COMPILER_LAUNCHER target property. This variable is used to initialize the property on each target as it is created. This is done only when &lt;LANG&gt; is C, CXX, Fortran, HIP, ISPC, OBJC, OBJCXX, or CUDA."/>
+<variable name="CMAKE_Swift_COMPILER_LINKER" desc="The full path to the linker for LANG."/>
+<variable name="CMAKE_Swift_COMPILER_LINKER_FRONTEND_VARIANT" desc="Identification string of the linker frontend variant."/>
+<variable name="CMAKE_Swift_COMPILER_LINKER_ID" desc="Linker identification string."/>
+<variable name="CMAKE_Swift_COMPILER_LINKER_VERSION" desc="Linker version string."/>
 <variable name="CMAKE_Swift_COMPILER_LOADED" desc="Defined to true if the language is enabled."/>
 <variable name="CMAKE_Swift_COMPILER_PREDEFINES_COMMAND" desc="Command that outputs the compiler pre definitions."/>
 <variable name="CMAKE_Swift_COMPILER_RANLIB" desc="A wrapper around ranlib adding the appropriate --plugin option for the compiler."/>
@@ -3210,8 +3310,11 @@
 <variable name="CMAKE_Swift_STANDARD_INCLUDE_DIRECTORIES" desc="Include directories to be used for every source file compiled with the &lt;LANG&gt; compiler. This is meant for specification of system include directories needed by the language for the current platform. The directories always appear at the end of the include path passed to the compiler."/>
 <variable name="CMAKE_Swift_STANDARD_LIBRARIES" desc="Libraries linked into every executable and shared library linked for language &lt;LANG&gt;. This is meant for specification of system libraries needed by the language for the current platform."/>
 <variable name="CMAKE_Swift_STANDARD_REQUIRED" desc="The variations are:"/>
+<variable name="CMAKE_Swift_USING_LINKER" desc="This variable defines how to specify the linker for the link step for the type as specified by the variable CMAKE_LINKER_TYPE or the target property LINKER_TYPE. It can hold compiler flags for the link step or directly the linker tool. The type of data is given by the variable CMAKE_&lt;LANG&gt;_USING_LINKER_MODE."/>
+<variable name="CMAKE_Swift_USING_LINKER_MODE" desc=""/>
 <variable name="CMAKE_Swift_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <variable name="CMAKE_TASKING_TOOLSET" desc="Select the Tasking toolset which provides the compiler"/>
+<variable name="CMAKE_TEST_LAUNCHER" desc="This variable is used to initialize the TEST_LAUNCHER target property of executable targets as they are created. It is used to specify a launcher for running tests, added by the add_test() command, that run an executable target."/>
 <variable name="CMAKE_TLS_CAINFO" desc="Specify the default value for the file(DOWNLOAD) and file(UPLOAD) commands' TLS_CAINFO options. It is unset by default."/>
 <variable name="CMAKE_TLS_VERIFY" desc="Specify the default value for the file(DOWNLOAD) and file(UPLOAD) commands' TLS_VERIFY options. If not set, the default is off."/>
 <variable name="CMAKE_TOOLCHAIN_FILE" desc="Path to toolchain file supplied to cmake(1)."/>
@@ -3249,6 +3352,7 @@
 <variable name="CMAKE_VS_PLATFORM_TOOLSET" desc="Visual Studio Platform Toolset name."/>
 <variable name="CMAKE_VS_PLATFORM_TOOLSET_CUDA" desc="NVIDIA CUDA Toolkit version whose Visual Studio toolset to use."/>
 <variable name="CMAKE_VS_PLATFORM_TOOLSET_CUDA_CUSTOM_DIR" desc="Path to standalone NVIDIA CUDA Toolkit (eg. extracted from installer)."/>
+<variable name="CMAKE_VS_PLATFORM_TOOLSET_FORTRAN" desc="Fortran compiler to be used by Visual Studio projects."/>
 <variable name="CMAKE_VS_PLATFORM_TOOLSET_HOST_ARCHITECTURE" desc="Visual Studio preferred tool architecture."/>
 <variable name="CMAKE_VS_PLATFORM_TOOLSET_VERSION" desc="Visual Studio Platform Toolset version."/>
 <variable name="CMAKE_VS_SDK_EXCLUDE_DIRECTORIES" desc="This variable allows to override Visual Studio default Exclude Directories."/>
