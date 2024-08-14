@@ -315,11 +315,11 @@
 		<themeElementCategory
 			id="com.cthing.cmakeed.ui.themeElementCategory_syntax"
 			label="%label.syntax_highlighting"
-			parentId="com.cthing.cmakeed.ui.preferences.themeElementCategory">
+			parentId="com.cthing.cmakeed.ui.themeElementCategory">
 			<description>Syntax highlighting colors</description>
 		</themeElementCategory>
 		<fontDefinition
-			categoryId="com.cthing.cmakeed.ui.preferences.themeElementCategory"
+			categoryId="com.cthing.cmakeed.ui.themeElementCategory"
 			defaultsTo="org.eclipse.jface.textfont"
 			id="com.cthing.cmakeed.ui.fontDefinition.editor"
 			label="Text Font">
