@@ -24,7 +24,7 @@ https://raw.githubusercontent.com/15knots/cmakeed/master/cmakeed-update/ .
 Tool integrators will find each release at [cloudsmith](https://cloudsmith.io/~15knots/repos/p2-zip/packages/).
 Each release is provided as a stand-alone zipped p2 repository and can be consumed in a PDE target platform. To add one
 of these repositories to your target platform, add a **Software Site** and enter a URL for the location as
-`jar:https://cloudsmith.io/~15knots/repos/p2-zip/packages/CMakeEd-1.22.0.zip!/` (note the leading `jar:` and the trailing `!/`).
+`jar:https://cloudsmith.io/~15knots/repos/p2-zip/packages/CMakeEd-1.24.1.zip!/` (note the leading `jar:` and the trailing `!/`).
 
 ### Debug and Build
 This project uses Apache maven as its build system.
@@ -34,6 +34,10 @@ There is a run configuration for eclipse to invoke maven `build cmakeed` plus a 
 
 ---
 # Release History
+
+## 1.24.1 (2024-08-23)
+### Changes
+- Fix: Fix visibility of syntax highlighting colors preference page.
 
 ## 1.24.0 (2024-07-31)
 ### Changes

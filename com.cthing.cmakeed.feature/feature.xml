@@ -2,10 +2,10 @@
 <feature
       id="com.cthing.cmakeed.feature"
       label="CMake Editor"
-      version="1.24.0"
+      version="1.24.1"
       provider-name="Martin Weber/C Thing Software/BlueQuartz Software">
 
-   <description url="http://cmakeed.sourceforge.net">
+   <description url="https://github.com/15knots/cmakeed">
       The CMakeEd plug-in provides an editor for CMake files. The plug-in
 registers an editor for files named CMakeLists.txt, CMakeLists.txt.in,
 *.cmake, *.ctest and *.cmake.in
