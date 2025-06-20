@@ -57,6 +57,10 @@
           <xsl:apply-templates select="literal_block|section/section/literal_block">
             <xsl:with-param name="command" select="$name" tunnel="yes" />
           </xsl:apply-templates>
+          <!-- load_cache, create_test_sourcelist command -->
+          <xsl:apply-templates select="desc/desc_signature">
+            <xsl:with-param name="command" select="$name" tunnel="yes" />
+          </xsl:apply-templates>
           <!-- for project command -->
           <xsl:apply-templates select="section[@ids='synopsis']/literal_block[@language='cmake']">
             <xsl:with-param name="command" select="$name" tunnel="yes" />
