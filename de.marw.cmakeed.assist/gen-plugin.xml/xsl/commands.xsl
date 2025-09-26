@@ -83,7 +83,7 @@
     <!-- <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message> -->
     <xsl:variable name="text" select="normalize-space(string-join(node()))" />
     <!-- remove command name from usage description -->
-    <xsl:variable name="text2" select="normalize-space(substring-after($text, $command))" />
+    <xsl:variable name="usage" select="normalize-space(substring-after($text, $command))" />
 
     <!--
       <xsl:message terminate="no"
@@ -94,28 +94,28 @@
     <xsl:choose>
       <!-- skip useless usages -->
       <xsl:when test="not(starts-with($text, $command))" />
-      <xsl:when test="starts-with($text2,'(...')" />
-      <xsl:when test="starts-with($text2,'(Experimental ')" />
-      <xsl:when test="contains($text2,'myExe')" />
-      <xsl:when test="contains($text2,'myexe')" />
-      <xsl:when test="contains($text2,'mylib')" />
-      <xsl:when test="contains($text2,'myTarget')" />
-      <xsl:when test="starts-with($text2,'(foo')"/> 
-      <xsl:when test="starts-with($text2,'(bar')"/> 
+      <xsl:when test="starts-with($usage,'(...')" />
+      <xsl:when test="starts-with($usage,'(Experimental ')" />
+      <xsl:when test="contains($usage,'myExe')" />
+      <xsl:when test="contains($usage,'myexe')" />
+      <xsl:when test="contains($usage,'mylib')" />
+      <xsl:when test="contains($usage,'myTarget')" />
+      <xsl:when test="starts-with($usage,'(foo')"/> 
+      <xsl:when test="starts-with($usage,'(bar')"/> 
       <xsl:when test="starts-with($text,'if(var')"/>
       <!-- no longer needed as of cmake 3.26 
-       <xsl:when test="$text2=''"/> 
-        <xsl:when test="contains($text2,'libfoo')"/> <xsl:when test="contains($text2,'mypro')"/> -->
+       <xsl:when test="$usage=''"/> 
+        <xsl:when test="contains($usage,'libfoo')"/> <xsl:when test="contains($usage,'mypro')"/> -->
       <xsl:when test="$command='cmake_path'">
         <!-- CMAKE_PATH may have multiple usages in a single text block -->
         <xsl:for-each select="tokenize(text(), '&#10;')">
           <xsl:variable name="text" select="normalize-space(.)" />
           <xsl:if test="starts-with($text, $command)">
-            <xsl:variable name="text2" select="normalize-space(substring-after($text, $command))" />
+            <xsl:variable name="usage" select="normalize-space(substring-after($text, $command))" />
             <xsl:message terminate="no" >#<xsl:value-of select="$text" />#</xsl:message>
             <xsl:value-of select="'&#10;'" />
             <xsl:element name="usage">
-              <xsl:attribute name="value" select="$text2" />
+              <xsl:attribute name="value" select="$usage" />
             </xsl:element>
             <xsl:value-of select="'&#10;'" />
           </xsl:if>
@@ -124,7 +124,7 @@
     <xsl:otherwise>
         <xsl:call-template name="write-usage">
             <xsl:with-param name="command" select="$command"/>
-            <xsl:with-param name="usage" select="$text2"/>
+            <xsl:with-param name="usage" select="$usage"/>
         </xsl:call-template>
     </xsl:otherwise>
     </xsl:choose>
