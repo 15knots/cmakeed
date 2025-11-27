@@ -24,7 +24,7 @@ jobs:
         maven-version: 3.9.0
 
     - name: Build
-      run: mvn -P release -B --file parent/pom.xml package
+      run: mvn -V -ntp -P release -B --file parent/pom.xml package
 
     - name: Determine artifact to upload
       id: TheZIP
