@@ -13,8 +13,19 @@
     <xsl:apply-templates />
   </xsl:template>
 
+  <!--  Most commands use XPATH '/document/section/literal_block[@language='cmake']' for the signature -->
+  <!-- commands with usage in XPATH '/document/section/desc/desc_signature/desc_name'.  -->
+  <xsl:variable name="usageIn_desc_name">|cmake_file_api|create_test_sourcelist|load_cache|</xsl:variable>
+  <!-- commands with usage in XPATH '/document/section/section/desc/desc_signature/desc_name' -->
+  <xsl:variable name="usageIn_section_desc_name">|add_executable|add_library|cmake_policy|set|</xsl:variable>
+  <!-- commands with preferred usage in XPATH '/document/section/section/section/desc/desc_signature/desc_name'.  -->
+  <xsl:variable name="preferUsageIn_desc_name">|if|string|</xsl:variable>
+  <!-- commands with multiple signatures in a single XMl element; one per line -->
+  <xsl:variable name="multiUsagesIn_element">|cmake_language|cmake_path|file|install|list|source_group|</xsl:variable>
+  
   <xsl:template match="/document/section">
     <xsl:variable name="name" select="title/text()" />
+    <xsl:variable name="lname" select="concat('|', $name, '|')" />
     <!-- assume the first paragraph element contains the description -->
     <xsl:variable name="descr" select="normalize-space(paragraph[1][text()])" />
     <!-- first word in description marks deprecated command -->
@@ -30,103 +41,78 @@
       <xsl:if test="$deprecated">
         <xsl:attribute name="deprecated" select="'true'" />
       </xsl:if>
-      <!-- most commands use tag 'literal_block' for the usage, some use 'desc_name'... -->
+      <!-- get command signature(s)... -->
       <xsl:choose>
-        <xsl:when
-          test="$name='cmake_file_api' or $name='cmake_language' or $name='cmake_policy'"
-        >
-           <xsl:apply-templates select="//desc_name">
+        <xsl:when test="contains($usageIn_desc_name, $lname)">
+          <xsl:apply-templates select="desc/desc_signature/desc_name">
             <xsl:with-param name="command" select="$name" tunnel="yes" />
           </xsl:apply-templates>
         </xsl:when>
-        <xsl:when
-          test="$name='file' or $name='if' or $name='install' or $name='list' or $name='set' or $name='string'"
-        >
-           <xsl:apply-templates select="//desc_name">
+        <xsl:when test="contains($usageIn_section_desc_name, $lname)">
+          <xsl:apply-templates select="section/desc/desc_signature/desc_name">
             <xsl:with-param name="command" select="$name" tunnel="yes" />
           </xsl:apply-templates>
         </xsl:when>
-        <xsl:when
-          test="$name='add_executable' or $name='add_library'"
-        >
-           <xsl:apply-templates select="//desc_name">
+<!--         <xsl:when test="$name='if'"> -->
+        <xsl:when test="contains($preferUsageIn_desc_name, $lname)">
+          <!-- the first literal_block gives us garbage here -->
+          <xsl:apply-templates select="section/section/desc/desc_signature/desc_name|section/desc/desc_signature/desc_name">
             <xsl:with-param name="command" select="$name" tunnel="yes" />
           </xsl:apply-templates>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="literal_block|section/section/literal_block">
+        <!--  Most commands use XPATH '/document/section/literal_block[@language='cmake']' for the signature -->
+          <xsl:message terminate="no" select="concat('@ literal_block: Command= ',$name)" />
+          <xsl:apply-templates 
+            select="section[@ids='synopsis']/literal_block[@language='none']|section[not(contains(@ids, 'example'))]/literal_block[@language='cmake']|literal_block[@language='cmake' or @language='none']">
             <xsl:with-param name="command" select="$name" tunnel="yes" />
           </xsl:apply-templates>
-          <!-- load_cache, create_test_sourcelist command -->
-          <xsl:apply-templates select="desc/desc_signature">
-            <xsl:with-param name="command" select="$name" tunnel="yes" />
-          </xsl:apply-templates>
-          <!-- for project command -->
-          <xsl:apply-templates select="section[@ids='synopsis']/literal_block[@language='cmake']">
-            <xsl:with-param name="command" select="$name" tunnel="yes" />
-          </xsl:apply-templates>
+          <!-- TODO math, source_group -->
         </xsl:otherwise>
       </xsl:choose>
-
-      <xsl:apply-templates
-        select="section[@ids!='synopsis' and not(contains(@ids,'example')) and @ids!='arguments' and @ids!='invocation' and @ids!='argument-caveats id2']/literal_block"
-      >
-        <xsl:with-param name="command" select="$name" tunnel="yes" />
-      </xsl:apply-templates>
     </xsl:element>
     <xsl:value-of select="'&#10;'" />
   </xsl:template>
 
-  <!-- literal_block in any section contains a usage description -->
-  <xsl:template match="literal_block[@language='cmake' or @language='none' or not(@language)]">
+  <!-- literal_block in any section contains a single usage description -->
+  <xsl:template match="literal_block[@language='cmake' or @language='none']">
     <xsl:param name="command" tunnel="yes" />
+    <xsl:variable name="lcommand" select="concat('|', $command, '|')" />
     <!-- <xsl:message terminate="no" >#<xsl:value-of select="text()" />#</xsl:message> -->
     <xsl:variable name="text" select="normalize-space(string-join(node()))" />
-    <!-- remove command name from usage description -->
-    <xsl:variable name="usage" select="normalize-space(substring-after($text, $command))" />
-
     <!--
-      <xsl:message terminate="no"
-      select="concat('DESC #',$text,'# : ',string(string-length($command)))" />
-      <xsl:message terminate="no"
-      select="concat('DESC #',substring-after($text,$command),'#')" />
+      <xsl:message terminate="no" select="concat('TXT #+ +',$text,'- -#')" />
     -->
     <xsl:choose>
-      <!-- skip useless usages -->
-      <xsl:when test="not(starts-with($text, $command))" />
-      <xsl:when test="starts-with($usage,'(...')" />
-      <xsl:when test="starts-with($usage,'(Experimental ')" />
-      <xsl:when test="contains($usage,'myExe')" />
-      <xsl:when test="contains($usage,'myexe')" />
-      <xsl:when test="contains($usage,'mylib')" />
-      <xsl:when test="contains($usage,'myTarget')" />
-      <xsl:when test="starts-with($usage,'(foo')"/> 
-      <xsl:when test="starts-with($usage,'(bar')"/> 
-      <xsl:when test="starts-with($text,'if(var')"/>
-      <!-- no longer needed as of cmake 3.26 
-       <xsl:when test="$usage=''"/> 
-        <xsl:when test="contains($usage,'libfoo')"/> <xsl:when test="contains($usage,'mypro')"/> -->
-      <xsl:when test="$command='cmake_path'">
+      <xsl:when test="contains($multiUsagesIn_element, $lcommand)">
         <!-- CMAKE_PATH may have multiple usages in a single text block -->
-        <xsl:for-each select="tokenize(text(), '&#10;')">
+<!--         <xsl:message terminate="no" select="concat('TXT#+#',string-join(descendant-or-self::text()),'#-#')" /> -->
+        <xsl:for-each select="tokenize(string-join(descendant-or-self::text()), '&#10;')">
           <xsl:variable name="text" select="normalize-space(.)" />
+<!--           <xsl:message terminate="no" select="concat('LINE #',$text,'#')" /> -->
           <xsl:if test="starts-with($text, $command)">
+            <!-- remove command name from usage description -->
             <xsl:variable name="usage" select="normalize-space(substring-after($text, $command))" />
-            <xsl:message terminate="no" >#<xsl:value-of select="$text" />#</xsl:message>
-            <xsl:value-of select="'&#10;'" />
-            <xsl:element name="usage">
-              <xsl:attribute name="value" select="$usage" />
-            </xsl:element>
-            <xsl:value-of select="'&#10;'" />
+            <xsl:call-template name="write-usage">
+              <xsl:with-param name="command" select="$command"/>
+              <xsl:with-param name="usage" select="$usage"/>
+            </xsl:call-template>
           </xsl:if>
-      </xsl:for-each>
-    </xsl:when>
-    <xsl:otherwise>
-        <xsl:call-template name="write-usage">
-            <xsl:with-param name="command" select="$command"/>
-            <xsl:with-param name="usage" select="$usage"/>
+        </xsl:for-each>
+<!--  <xsl:message terminate="yes" select="' DONE'" /> -->
+      </xsl:when>
+      <!-- skip useless texts -->
+      <xsl:when test="not(starts-with($text, $command))" />
+<!--       <xsl:when test="starts-with($text,'if(var')"/> -->
+      <xsl:otherwise>
+<!--         <xsl:variable name="text" select="normalize-space(string-join(node()))" /> -->
+        <!-- remove command name from usage description -->
+        <xsl:variable name="usage" select="normalize-space(substring-after($text, $command))" />
+        <xsl:call-template name="filter-write-usage">
+          <xsl:with-param name="command" select="$command"/>
+          <xsl:with-param name="usage" select="$usage"/>
         </xsl:call-template>
-    </xsl:otherwise>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
@@ -143,9 +129,29 @@
       <xsl:message terminate="no"
       select="concat('DESC #',substring-after($text,$command),'#')" />
     -->
+    <xsl:call-template name="filter-write-usage">
+      <xsl:with-param name="command" select="$command"/>
+      <xsl:with-param name="usage" select="$usage"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <!-- write command/usage pair to plugin.xml, filter our useless usage strings -->
+  <xsl:template name="filter-write-usage">
+    <xsl:param name="command"/>
+    <xsl:param name="usage"/>
     <xsl:choose>
       <!-- skip useless usages -->
-      <xsl:when test="not(starts-with($text, $command))" />
+      <xsl:when test="starts-with($usage,'(...')" />
+      <xsl:when test="starts-with($usage,'(Experimental ')" />
+      <xsl:when test="contains($usage,'myExe')" />
+      <xsl:when test="contains($usage,'myexe')" />
+      <xsl:when test="contains($usage,'mylib')" />
+      <xsl:when test="contains($usage,'myTarget')" />
+      <xsl:when test="starts-with($usage,'(foo')"/> 
+      <xsl:when test="starts-with($usage,'(bar')"/> 
+      <xsl:when test="$usage=''"/> 
+      <!-- no longer needed as of cmake 3.26 
+        <xsl:when test="contains($usage,'libfoo')"/> <xsl:when test="contains($usage,'mypro')"/> -->
       <xsl:otherwise>
         <xsl:call-template name="write-usage">
             <xsl:with-param name="command" select="$command"/>
@@ -154,11 +160,12 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+    
+  <!-- write command/usage pair to plugin.xml -->
   <xsl:template name="write-usage">
     <xsl:param name="command"/>
     <xsl:param name="usage"/>
-      <xsl:message terminate="no" ><xsl:value-of select="$command"/> #<xsl:value-of select="$usage" />#</xsl:message>
+      <xsl:message terminate="no" >USAGE: |<xsl:value-of select="$usage" />|</xsl:message>
       <xsl:value-of select="'&#10;'" />
       <xsl:element name="usage">
         <xsl:attribute name="value" select="$usage" />
