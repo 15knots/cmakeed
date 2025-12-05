@@ -88,8 +88,6 @@
     <xslt style="xsl/commands.xsl" basedir="${out.dir}/noDTD/command" includes="*.xml" destdir="${out.dir}/command" extension=".xml" force="true">
       <factory name="net.sf.saxon.TransformerFactoryImpl" />
       <classpath refid="saxon9" />
-      <xmlcatalog>
-      </xmlcatalog>
     </xslt>
     <!-- concatenate all files into one -->
     <concat destfile="${out.dir}/commands-stage1.xml" force="no">
@@ -134,7 +132,7 @@
     <uptodate property="reswords.stage1.uptodate" targetfile="${out.dir}/reswords-stage1.xml">
       <srcresources>
         <fileset dir="${out.dir}" includes="reswords-stage0.xml" />
-        <fileset dir="${basedir}" includes="xsl/reswords.xsl" />
+        <fileset dir="${basedir}" includes="xsl/commands.xsl" />
       </srcresources>
     </uptodate>
   </target>
@@ -149,9 +147,10 @@
     <echo>Processing documentation files for command reserved words...</echo>
 
     <!-- transform cmake commands documentation files -->
-    <xslt style="xsl/reswords.xsl" basedir="${out.dir}/noDTD/command" includes="*.xml" destdir="${out.dir}/resword" extension=".xml" force="true">
+    <xslt style="xsl/commands.xsl" basedir="${out.dir}/noDTD/command" includes="*.xml" destdir="${out.dir}/resword" extension=".xml" force="true">
       <factory name="net.sf.saxon.TransformerFactoryImpl" />
       <classpath refid="saxon9" />
+      <param name="process-reswords" expression="true" type="BOOLEAN"/>
     </xslt>
     <!-- concatenate all files into one -->
     <concat destfile="${out.dir}/reswords-stage0.xml" force="no">
@@ -167,7 +166,7 @@
     <uptodate property="reswords.stage0.uptodate" targetfile="${out.dir}/reswords-stage0.xml">
       <srcresources>
         <fileset dir="${out.dir}/noDTD/command" includes="*.xml" />
-        <fileset dir="${basedir}" includes="xsl/reswords.xsl" />
+        <fileset dir="${basedir}" includes="xsl/commands.xsl" />
       </srcresources>
     </uptodate>
   </target>

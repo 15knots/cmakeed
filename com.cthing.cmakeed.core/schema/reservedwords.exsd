@@ -6,7 +6,7 @@
          <meta.schema plugin="com.cthing.cmakeed.core" id="reservedwords" name="CMake Reserved Words"/>
       </appinfo>
       <documentation>
-         Information about all CMake Variables
+         Information about all CMake reserved words
       </documentation>
    </annotation>
 
