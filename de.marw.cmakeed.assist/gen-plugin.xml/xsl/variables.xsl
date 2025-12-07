@@ -10,13 +10,16 @@
   <xsl:variable name="languagesLiteral">
     <lang>ASM</lang>
     <lang>ASM-ATT</lang>
-    <lang>ASM-MASM</lang>
-    <lang>ASM-NASM</lang>
+    <lang>ASM_MASM</lang>
+    <lang>ASM_MARMASM</lang>
+    <lang>ASM_NASM</lang>
     <lang>C</lang>
     <lang>CSharp</lang>
     <lang>CUDA</lang>
     <lang>CXX</lang>
     <lang>Fortran</lang>
+    <lang>HIP</lang>
+    <lang>ISPC</lang>
     <lang>Java</lang>
     <lang>OBJC</lang>
     <lang>OBJCXX</lang>
@@ -73,17 +76,22 @@
     <xsl:param name="descr" />
     <xsl:param name="deprecated" />
 
-    <!--
-    <xsl:message terminate="no" select="concat('variable: ', $name)" />
-    -->
-    <xsl:element name="variable">
-      <xsl:attribute name="name" select="$name" />
-      <xsl:attribute name="desc" select="normalize-space($descr)" />
-      <xsl:if test="$deprecated">
-        <xsl:attribute name="deprecated" select="'true'" />
-      </xsl:if>
-    </xsl:element>
-    <xsl:value-of select="'&#10;'" />
+    <!-- <xsl:message terminate="no" select="concat('variable: ', $name)" /> -->
+    <xsl:choose>
+      <!-- skip useless usages -->
+      <xsl:when test="string-length($descr)=0" />
+      <xsl:otherwise>
+        <xsl:message terminate="no" select="concat('VAR: \', $name, '\', $descr, '\')" />
+        <xsl:element name="variable">
+          <xsl:attribute name="name" select="$name" />
+          <xsl:attribute name="desc" select="normalize-space($descr)" />
+          <xsl:if test="$deprecated">
+            <xsl:attribute name="deprecated" select="'true'" />
+          </xsl:if>
+        </xsl:element>
+        <xsl:value-of select="'&#10;'" />
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- suppress printing of empty lines -->
