@@ -74,7 +74,7 @@
     <xsl:message terminate="no" select="concat('property: ', $name)" />
     <!--
     -->
-    <xsl:element name="property">
+    <xsl:element name="prop">
       <xsl:attribute name="name" select="$name" />
       <xsl:attribute name="desc" select="normalize-space($descr)" />
       <xsl:if test="$deprecated">

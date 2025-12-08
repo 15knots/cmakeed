@@ -31,7 +31,7 @@ public final class CMakeCommands
     private static final String ATT_NAME = "name";  //$NON-NLS-1$
     private static final String ATT_DESC = "desc";  //$NON-NLS-1$
     private static final String ATT_DEPRECATED = "deprecated";  //$NON-NLS-1$
-    private static final String ATT_VALUE = "value";  //$NON-NLS-1$
+    private static final String ATT_VALUE = "val";  //$NON-NLS-1$
 
     private static Map<String, CMakeCommand> commands;
 
@@ -50,7 +50,7 @@ public final class CMakeCommands
     private static void loadCommands()
     {
         commands = new HashMap<String, CMakeCommand>();
-        
+
         final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(CorePlugin.PLUGIN_ID, COMMANDS_EXT_ID);
         final IExtension[] extensions = extensionPoint.getExtensions();
 
@@ -110,6 +110,7 @@ public final class CMakeCommands
             commandsSorted = new ArrayList<CMakeCommand>(commands.values());
             Collections.sort(commandsSorted, new Comparator<CMakeCommand>() {
 
+              @Override
               public int compare(CMakeCommand c1, CMakeCommand c2) {
                 final int byName = c1.getName().compareToIgnoreCase(c2.getName());
                 return byName!=0 ? byName: c1.getUsages()[0].compareToIgnoreCase(c2.getUsages()[0]);

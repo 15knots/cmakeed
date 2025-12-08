@@ -82,7 +82,7 @@
       <xsl:when test="string-length($descr)=0" />
       <xsl:otherwise>
         <xsl:message terminate="no" select="concat('VAR: \', $name, '\', $descr, '\')" />
-        <xsl:element name="variable">
+        <xsl:element name="var">
           <xsl:attribute name="name" select="$name" />
           <xsl:attribute name="desc" select="normalize-space($descr)" />
           <xsl:if test="$deprecated">

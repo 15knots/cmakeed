@@ -182,7 +182,7 @@
                 <xsl:when test="matches( ., '^[A-Z@][A-Z_]*[A-Z]$')">
                   <xsl:message terminate="no">RESWORD: \<xsl:value-of select="." />\</xsl:message>
                   <!-- output reserved word -->
-                  <xsl:element name="reservedword">
+                  <xsl:element name="word">
                     <xsl:attribute name="name" select="." />
                   </xsl:element>
                   <xsl:value-of select="'&#10;'" />
@@ -194,8 +194,8 @@
             <!-- output command/usage pair to plugin.xml -->
             <xsl:message terminate="no" >USAGE: \<xsl:value-of select="$usage" />\</xsl:message>
             <xsl:value-of select="'&#10;'" />
-            <xsl:element name="usage">
-              <xsl:attribute name="value" select="$usage" />
+            <xsl:element name="use">
+              <xsl:attribute name="val" select="$usage" />
             </xsl:element>
             <xsl:value-of select="'&#10;'" />
           </xsl:otherwise>

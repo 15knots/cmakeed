@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="com.cthing.cmakeed.core">
+<schema targetNamespace="com.cthing.cmakeed.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="com.cthing.cmakeed.core" id="commands" name="CMake Commands"/>
@@ -11,9 +11,14 @@
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
       <complexType>
          <sequence>
-            <element ref="command" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="cmd" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -42,10 +47,10 @@
       </complexType>
    </element>
 
-   <element name="command">
+   <element name="cmd">
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="usage"/>
+            <element ref="use"/>
          </sequence>
          <attribute name="name" type="string" use="required">
             <annotation>
@@ -71,9 +76,9 @@
       </complexType>
    </element>
 
-   <element name="usage">
+   <element name="use">
       <complexType>
-         <attribute name="value" type="string" use="required">
+         <attribute name="val" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -119,13 +124,5 @@
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="copyright"/>
-      </appInfo>
-      <documentation>
-         
-      </documentation>
-   </annotation>
 
 </schema>
