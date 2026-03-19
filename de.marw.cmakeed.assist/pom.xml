@@ -10,6 +10,6 @@
   </parent>
 
   <artifactId>de.marw.cmakeed.assist</artifactId>
-  <version>1.22.1</version>
+  <version>1.23.0</version>
   <packaging>eclipse-plugin</packaging>
 </project>
