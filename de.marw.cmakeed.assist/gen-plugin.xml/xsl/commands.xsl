@@ -19,9 +19,9 @@
   <!-- commands with usage in XPATH '/document/section/desc/desc_signature/desc_name'.  -->
   <xsl:variable name="usageIn_desc_name">|cmake_file_api|create_test_sourcelist|load_cache|</xsl:variable>
   <!-- commands with usage in XPATH '/document/section/section/desc/desc_signature/desc_name' -->
-  <xsl:variable name="usageIn_section_desc_name">|add_executable|add_library|cmake_policy|set|unset|</xsl:variable>
+  <xsl:variable name="usageIn_section_desc_name">|cmake_host_system_information|add_executable|add_library|cmake_policy|set|unset|</xsl:variable>
   <!-- commands with preferred usage in XPATH '/document/section/section/section/desc/desc_signature/desc_name'.  -->
-  <xsl:variable name="preferUsageIn_desc_name">|if|string|</xsl:variable>
+  <xsl:variable name="preferUsageIn_desc_name">|add_custom_command|if|string|</xsl:variable>
   <!-- commands with multiple signatures in a single XMl element; one per line -->
   <xsl:variable name="multiUsagesIn_element">|cmake_language|cmake_path|file|install|list|source_group|</xsl:variable>
 
