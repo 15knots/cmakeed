@@ -17,13 +17,15 @@
 
   <!--  Most commands use XPATH '/document/section/literal_block[@language='cmake']' for the signature -->
   <!-- commands with usage in XPATH '/document/section/desc/desc_signature/desc_name'.  -->
-  <xsl:variable name="usageIn_desc_name">|cmake_file_api|create_test_sourcelist|load_cache|</xsl:variable>
+  <xsl:variable name="usageIn_desc_name">|cmake_file_api|ctest_sleep|create_test_sourcelist|load_cache|</xsl:variable>
   <!-- commands with usage in XPATH '/document/section/section/desc/desc_signature/desc_name' -->
   <xsl:variable name="usageIn_section_desc_name">|cmake_host_system_information|add_executable|add_library|cmake_policy|set|unset|</xsl:variable>
   <!-- commands with preferred usage in XPATH '/document/section/section/section/desc/desc_signature/desc_name'.  -->
   <xsl:variable name="preferUsageIn_desc_name">|add_custom_command|if|string|</xsl:variable>
   <!-- commands with multiple signatures in a single XMl element; one per line -->
   <xsl:variable name="multiUsagesIn_element">|cmake_language|cmake_path|file|install|list|source_group|</xsl:variable>
+  <!-- commands with multiple signatures in a single XMl element; line wrapped; separated by empty line -->
+  <xsl:variable name="multiUsagesIn_element_wrapped">|cmake_parse_arguments|</xsl:variable>
 
   <xsl:template match="/document/section">
     <xsl:variable name="command" select="title/text()" />
@@ -107,6 +109,22 @@
         <xsl:for-each select="tokenize(string-join(descendant-or-self::text()), '&#10;')">
           <xsl:variable name="text" select="normalize-space(.)" />
 <!--           <xsl:message terminate="no" select="concat('LINE #',$text,'#')" /> -->
+          <xsl:if test="starts-with($text, $command)">
+            <!-- remove command name from usage description -->
+            <xsl:variable name="usage" select="normalize-space(substring-after($text, $command))" />
+            <xsl:call-template name="filter-write-usage">
+              <xsl:with-param name="command" select="$command"/>
+              <xsl:with-param name="usage" select="$usage"/>
+            </xsl:call-template>
+          </xsl:if>
+        </xsl:for-each>
+<!--  <xsl:message terminate="yes" select="' DONE'" /> -->
+      </xsl:when>
+      <xsl:when test="contains($multiUsagesIn_element_wrapped, $lcommand)">
+<!--         <xsl:message terminate="no" select="concat('TXT#+#',string-join(descendant-or-self::text()),'#-#')" /> -->
+        <xsl:for-each select="tokenize(string-join(descendant-or-self::text()), '&#10;&#10;')">
+          <xsl:variable name="text" select="normalize-space(.)" />
+<!--           <xsl:message terminate="no" select="concat('TOKEN #',$text,'#')" /> -->
           <xsl:if test="starts-with($text, $command)">
             <!-- remove command name from usage description -->
             <xsl:variable name="usage" select="normalize-space(substring-after($text, $command))" />

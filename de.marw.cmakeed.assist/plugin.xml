@@ -43,14 +43,14 @@
 <use val="(source_dir [binary_dir] [EXCLUDE_FROM_ALL] [SYSTEM])"/>
 </command>
 <command name="add_test" desc="Add a test to the project to be run by ctest(1).">
-<use val="(NAME &lt;name&gt; COMMAND &lt;command&gt; [&lt;arg&gt;...] [CONFIGURATIONS &lt;config&gt;...] [WORKING_DIRECTORY &lt;dir&gt;] [COMMAND_EXPAND_LISTS])"/>
+<use val="(NAME &lt;name&gt; COMMAND &lt;command&gt; [&lt;arg&gt;...] [CONFIGURATIONS &lt;config&gt;...] [WORKING_DIRECTORY &lt;dir&gt;] [COMMAND_EXPAND_LISTS] [BUILD_DEPENDS &lt;dependencies&gt;...])"/>
 <use val="(&lt;name&gt; &lt;command&gt; [&lt;arg&gt;...])"/>
 </command>
 <command name="aux_source_directory" desc="Find all source files in a directory.">
 <use val="(&lt;dir&gt; &lt;variable&gt;)"/>
 </command>
 <command name="block" desc="Evaluate a group of commands with a dedicated variable and/or policy scope.">
-<use val="([SCOPE_FOR [POLICIES] [VARIABLES]] [PROPAGATE &lt;var-name&gt;...]) &lt;commands&gt; endblock()"/>
+<use val="([SCOPE_FOR [DIAGNOSTICS] [POLICIES] [VARIABLES]] [PROPAGATE &lt;var-name&gt;...]) &lt;commands&gt; endblock()"/>
 </command>
 <command name="break" desc="Break from an enclosing foreach or while loop.">
 <use val="()"/>
@@ -62,6 +62,7 @@
 <command name="build_name" desc="Disallowed since version 3.0. See CMake Policy CMP0036." deprecated="true">
 <use val="(variable)"/>
 </command>
+<command name="cmake_diagnostic" desc="Manage CMake Diagnostic settings. See the cmake-diagnostics(7) manual for a list of available categories."/>
 <command name="cmake_file_api" desc="Enables interacting with the CMake file API.">
 <use val="(QUERY ...)"/>
 </command>
@@ -85,7 +86,9 @@
 <use val="(VERSION &lt;min&gt;[...&lt;policy_max&gt;] [FATAL_ERROR])"/>
 </command>
 <command name="cmake_parse_arguments" desc="Parse function or macro arguments.">
-<use val="(&lt;prefix&gt; &lt;options&gt; &lt;one_value_keywords&gt; &lt;multi_value_keywords&gt; &lt;args&gt;...) cmake_parse_arguments(PARSE_ARGV &lt;N&gt; &lt;prefix&gt; &lt;options&gt; &lt;one_value_keywords&gt; &lt;multi_value_keywords&gt;)"/>
+<use val="(&lt;prefix&gt; &lt;options&gt; &lt;one_value_keywords&gt; &lt;multi_value_keywords&gt; &lt;args&gt;...)"/>
+<use val="(PARSE_ARGV &lt;N&gt; &lt;prefix&gt; &lt;options&gt; &lt;one_value_keywords&gt; &lt;multi_value_keywords&gt;)"/>
+<use val="(PARSE_ARGN &lt;prefix&gt; &lt;options&gt; &lt;one_value_keywords&gt; &lt;multi_value_keywords&gt;)"/>
 </command>
 <command name="cmake_path" desc="This command is for the manipulation of paths. Only syntactic aspects of paths are handled, there is no interaction of any kind with any underlying file system. The path may represent a non-existing path or even one that is not allowed to exist on the current file system or platform. For operations that do interact with the filesystem, see the file() command.">
 <use val="(GET &lt;path-var&gt; ROOT_NAME &lt;out-var&gt;)"/>
@@ -145,31 +148,31 @@
 <use val="(&lt;sourceListName&gt; &lt;driverName&gt; &lt;test&gt;... &lt;options&gt;...)"/>
 </command>
 <command name="ctest_build" desc="Perform the CTest Build Step as a Dashboard Client.">
-<use val="([BUILD &lt;build-dir&gt;] [APPEND] [CONFIGURATION &lt;config&gt;] [PARALLEL_LEVEL &lt;parallel&gt;] [FLAGS &lt;flags&gt;] [PROJECT_NAME &lt;project-name&gt;] [TARGET &lt;target-name&gt;] [NUMBER_ERRORS &lt;num-err-var&gt;] [NUMBER_WARNINGS &lt;num-warn-var&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] )"/>
+<use val="([BUILD &lt;build-dir&gt;] [APPEND] [CONFIGURATION &lt;config&gt;] [PARALLEL_LEVEL &lt;parallel&gt;] [FLAGS &lt;flags&gt;] [PROJECT_NAME &lt;project-name&gt;] [TARGET &lt;target-name&gt;] [NUMBER_ERRORS &lt;num-err-var&gt;] [NUMBER_WARNINGS &lt;num-warn-var&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [PRESET &lt;preset&gt;] [PRESETS_FILE &lt;file&gt;] )"/>
 </command>
 <command name="ctest_configure" desc="Perform the CTest Configure Step as a Dashboard Client.">
-<use val="([BUILD &lt;build-dir&gt;] [SOURCE &lt;source-dir&gt;] [APPEND] [OPTIONS &lt;options&gt;] [RETURN_VALUE &lt;result-var&gt;] [QUIET] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;])"/>
+<use val="([BUILD &lt;build-dir&gt;] [SOURCE &lt;source-dir&gt;] [APPEND] [OPTIONS &lt;options&gt;] [RETURN_VALUE &lt;result-var&gt;] [QUIET] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [PRESET &lt;preset&gt;] [PRESETS_FILE &lt;file&gt;] )"/>
 </command>
 <command name="ctest_coverage" desc="Perform the CTest Coverage Step as a Dashboard Client.">
 <use val="([BUILD &lt;build-dir&gt;] [APPEND] [LABELS &lt;label&gt;...] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [QUIET] )"/>
 </command>
-<command name="ctest_empty_binary_directory" desc="empties the binary directory">
+<command name="ctest_empty_binary_directory" desc="Empties the binary directory.">
 <use val="(&lt;directory&gt;)"/>
 </command>
 <command name="ctest_memcheck" desc="Perform the CTest MemCheck Step as a Dashboard Client.">
-<use val="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL &lt;level&gt;] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_ON_FAILURE] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [OUTPUT_JUNIT &lt;file&gt;] [DEFECT_COUNT &lt;defect-count-var&gt;] [QUIET] )"/>
+<use val="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL &lt;level&gt;] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_ON_FAILURE] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [OUTPUT_JUNIT &lt;file&gt;] [PRESET &lt;preset&gt;] [PRESETS_FILE &lt;path&gt;] [DEFECT_COUNT &lt;defect-count-var&gt;] [QUIET] )"/>
 </command>
-<command name="ctest_read_custom_files" desc="read CTestCustom files.">
+<command name="ctest_read_custom_files" desc="Read CTestCustom files.">
 <use val="(&lt;directory&gt;...)"/>
 </command>
-<command name="ctest_run_script" desc="runs a ctest -S script">
-<use val="([NEW_PROCESS] script_file_name script_file_name1 script_file_name2 ... [RETURN_VALUE var])"/>
+<command name="ctest_run_script" desc="Run a ctest -S script.">
+<use val="([NEW_PROCESS] &lt;script-file&gt;... [RETURN_VALUE &lt;result-var&gt;] )"/>
 </command>
-<command name="ctest_sleep" desc="sleeps for some amount of time">
+<command name="ctest_sleep" desc="Sleep for some amount of time.">
 <use val="(&lt;seconds&gt;)"/>
 <use val="(&lt;time1&gt; &lt;duration&gt; &lt;time2&gt;)"/>
 </command>
-<command name="ctest_start" desc="Starts the testing for a given model">
+<command name="ctest_start" desc="Perform the CTest Start Step as a Dashboard Client.">
 <use val="(&lt;model&gt; [&lt;source&gt; [&lt;binary&gt;]] [GROUP &lt;group&gt;] [QUIET]) ctest_start([&lt;model&gt; [&lt;source&gt; [&lt;binary&gt;]]] [GROUP &lt;group&gt;] APPEND [QUIET])"/>
 </command>
 <command name="ctest_submit" desc="Perform the CTest Submit Step as a Dashboard Client.">
@@ -177,16 +180,19 @@
 <use val="(CDASH_UPLOAD &lt;file&gt; [CDASH_UPLOAD_TYPE &lt;type&gt;] [SUBMIT_URL &lt;url&gt;] [BUILD_ID &lt;result-var&gt;] [HTTPHEADER &lt;header&gt;] [RETRY_COUNT &lt;count&gt;] [RETRY_DELAY &lt;delay&gt;] [RETURN_VALUE &lt;result-var&gt;] [QUIET])"/>
 </command>
 <command name="ctest_test" desc="Perform the CTest Test Step as a Dashboard Client.">
-<use val="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FROM_FILE &lt;filename&gt;] [INCLUDE_FROM_FILE &lt;filename&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL [&lt;level&gt;]] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_ON_FAILURE] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [OUTPUT_JUNIT &lt;file&gt;] [QUIET] )"/>
+<use val="([BUILD &lt;build-dir&gt;] [APPEND] [START &lt;start-number&gt;] [END &lt;end-number&gt;] [STRIDE &lt;stride-number&gt;] [EXCLUDE &lt;exclude-regex&gt;] [INCLUDE &lt;include-regex&gt;] [EXCLUDE_LABEL &lt;label-exclude-regex&gt;] [INCLUDE_LABEL &lt;label-include-regex&gt;] [EXCLUDE_FROM_FILE &lt;filename&gt;] [INCLUDE_FROM_FILE &lt;filename&gt;] [EXCLUDE_FIXTURE &lt;regex&gt;] [EXCLUDE_FIXTURE_SETUP &lt;regex&gt;] [EXCLUDE_FIXTURE_CLEANUP &lt;regex&gt;] [PARALLEL_LEVEL [&lt;level&gt;]] [RESOURCE_SPEC_FILE &lt;file&gt;] [TEST_LOAD &lt;threshold&gt;] [SCHEDULE_RANDOM &lt;ON|OFF&gt;] [STOP_ON_FAILURE] [STOP_TIME &lt;time-of-day&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [REPEAT &lt;mode&gt;:&lt;n&gt;] [OUTPUT_JUNIT &lt;file&gt;] [PRESET &lt;preset&gt;] [PRESETS_FILE &lt;file&gt;] [QUIET] )"/>
 </command>
 <command name="ctest_update" desc="Perform the CTest Update Step as a Dashboard Client.">
-<use val="([SOURCE &lt;source-dir&gt;] [RETURN_VALUE &lt;result-var&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [QUIET])"/>
+<use val="([SOURCE &lt;source-dir&gt;] [RETURN_VALUE &lt;result-var&gt;] [VERSION_ONLY] [VERSION_OVERRIDE &lt;version&gt;] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;] [QUIET])"/>
 </command>
 <command name="ctest_upload" desc="Upload files to a dashboard server as a Dashboard Client.">
 <use val="(FILES &lt;file&gt;... [QUIET] [CAPTURE_CMAKE_ERROR &lt;result-var&gt;])"/>
 </command>
 <command name="define_property" desc="Define and document custom properties.">
 <use val="(&lt;GLOBAL | DIRECTORY | TARGET | SOURCE | TEST | VARIABLE | CACHED_VARIABLE&gt; PROPERTY &lt;name&gt; [INHERITED] [BRIEF_DOCS &lt;brief-doc&gt; [&lt;docs&gt;...]] [FULL_DOCS &lt;full-doc&gt; [&lt;docs&gt;...]] [INITIALIZE_FROM_VARIABLE &lt;variable&gt;])"/>
+</command>
+<command name="discover_tests" desc="Register tests with names and properties discovered at test time by ctest(1).">
+<use val="(COMMAND &lt;command&gt; [&lt;arg&gt;...] [COMMAND_EXPAND_LISTS] [CONFIGURATIONS &lt;config&gt;...] DISCOVERY_ARGS &lt;arg&gt;... DISCOVERY_MATCH &lt;regex&gt; [DISCOVERY_PROPERTIES &lt;key&gt; &lt;value&gt; [&lt;key&gt; &lt;value&gt;]...] TEST_NAME &lt;replacement&gt; TEST_ARGS &lt;replacement&gt;... [TEST_PROPERTIES &lt;key&gt; &lt;replacement&gt; [&lt;key&gt; &lt;replacement&gt;]...] )"/>
 </command>
 <command name="else" desc="Starts the else portion of an if block.">
 <use val="([&lt;condition&gt;])"/>
@@ -222,7 +228,7 @@
 <use val="( &lt;executable&gt; [&lt;working-dir&gt;] [ARGS &lt;arguments-to-executable&gt;...] [OUTPUT_VARIABLE &lt;var&gt;] [RETURN_VALUE &lt;var&gt;] )"/>
 </command>
 <command name="execute_process" desc="Execute one or more child processes.">
-<use val="(COMMAND &lt;cmd1&gt; [&lt;arguments&gt;] [COMMAND &lt;cmd2&gt; [&lt;arguments&gt;]]... [WORKING_DIRECTORY &lt;directory&gt;] [TIMEOUT &lt;seconds&gt;] [RESULT_VARIABLE &lt;variable&gt;] [RESULTS_VARIABLE &lt;variable&gt;] [OUTPUT_VARIABLE &lt;variable&gt;] [ERROR_VARIABLE &lt;variable&gt;] [INPUT_FILE &lt;file&gt;] [OUTPUT_FILE &lt;file&gt;] [ERROR_FILE &lt;file&gt;] [OUTPUT_QUIET] [ERROR_QUIET] [COMMAND_ECHO &lt;where&gt;] [OUTPUT_STRIP_TRAILING_WHITESPACE] [ERROR_STRIP_TRAILING_WHITESPACE] [ENCODING &lt;name&gt;] [ECHO_OUTPUT_VARIABLE] [ECHO_ERROR_VARIABLE] [COMMAND_ERROR_IS_FATAL &lt;ANY|LAST|NONE&gt;])"/>
+<use val="(COMMAND &lt;cmd1&gt; [&lt;arguments&gt;] [COMMAND &lt;cmd2&gt; [&lt;arguments&gt;]]... [WORKING_DIRECTORY &lt;directory&gt;] [TIMEOUT &lt;seconds&gt;] [RESULT_VARIABLE &lt;variable&gt;] [RESULTS_VARIABLE &lt;variable&gt;] [OUTPUT_VARIABLE &lt;variable&gt;] [ERROR_VARIABLE &lt;variable&gt;] [INPUT_FILE &lt;file&gt;] [OUTPUT_FILE &lt;file&gt;] [ERROR_FILE &lt;file&gt;] [OUTPUT_QUIET] [ERROR_QUIET] [COMMAND_ECHO &lt;where&gt;] [OUTPUT_STRIP_TRAILING_WHITESPACE] [ERROR_STRIP_TRAILING_WHITESPACE] [ENCODING &lt;name&gt;] [ENVIRONMENT &lt;variable=value&gt;...] [ENVIRONMENT_MODIFICATION &lt;env-mod-op&gt;...] [ECHO_OUTPUT_VARIABLE] [ECHO_ERROR_VARIABLE] [COMMAND_ERROR_IS_FATAL &lt;ANY|LAST|NONE&gt;])"/>
 </command>
 <command name="export" desc="Export targets or packages for outside projects to use them directly from the current project's build tree, without installation.">
 <use val="(TARGETS &lt;target&gt;... [...]) export(EXPORT &lt;export-name&gt; [...]) export(PACKAGE &lt;PackageName&gt;) export(SETUP &lt;export-name&gt; [...]) export(PACKAGE_INFO &lt;package-name&gt; [...]) export(SBOM &lt;sbom-name&gt; [...])"/>
@@ -250,7 +256,7 @@
 <use val="(COPY_FILE &lt;oldname&gt; &lt;newname&gt; [...])"/>
 <use val="({COPY | INSTALL} &lt;file&gt;... DESTINATION &lt;dir&gt; [...])"/>
 <use val="(SIZE &lt;filename&gt; &lt;out-var&gt;)"/>
-<use val="(READ_SYMLINK &lt;linkname&gt; &lt;out-var&gt;)"/>
+<use val="(READ_SYMLINK &lt;linkname&gt; &lt;out-var&gt; [...])"/>
 <use val="(CREATE_LINK &lt;original&gt; &lt;linkname&gt; [...])"/>
 <use val="(CHMOD &lt;files&gt;... &lt;directories&gt;... PERMISSIONS &lt;permissions&gt;... [...])"/>
 <use val="(CHMOD_RECURSE &lt;files&gt;... &lt;directories&gt;... PERMISSIONS &lt;permissions&gt;... [...])"/>
@@ -330,11 +336,13 @@
 <use val="(&lt;constant&gt;)"/>
 <use val="(&lt;variable&gt;)"/>
 <use val="(&lt;string&gt;)"/>
+<use val="()"/>
 <use val="(NOT &lt;condition&gt;)"/>
 <use val="(&lt;cond1&gt; AND &lt;cond2&gt;)"/>
 <use val="(&lt;cond1&gt; OR &lt;cond2&gt;)"/>
 <use val="((condition) AND (condition OR (condition)))"/>
 <use val="(COMMAND &lt;command-name&gt;)"/>
+<use val="(DIAGNOSTIC &lt;category&gt;)"/>
 <use val="(POLICY &lt;policy-id&gt;)"/>
 <use val="(TARGET &lt;target-name&gt;)"/>
 <use val="(TEST &lt;test-name&gt;)"/>
@@ -367,7 +375,7 @@
 <use val="(&lt;variable|string&gt; PATH_EQUAL &lt;variable|string&gt;)"/>
 </command>
 <command name="include" desc="Load and run CMake code from a file or module.">
-<use val="(&lt;file|module&gt; [OPTIONAL] [RESULT_VARIABLE &lt;var&gt;] [NO_POLICY_SCOPE])"/>
+<use val="(&lt;file|module&gt; [OPTIONAL] [RESULT_VARIABLE &lt;var&gt;] [NO_POLICY_SCOPE] [NO_DIAGNOSTIC_SCOPE])"/>
 </command>
 <command name="include_directories" desc="Add include directories to the build.">
 <use val="([AFTER|BEFORE] [SYSTEM] dir1 [dir2 ...])"/>
@@ -418,7 +426,7 @@
 <use val="(SUBLIST &lt;list&gt; &lt;begin&gt; &lt;length&gt; &lt;out-var&gt;)"/>
 <use val="(FIND &lt;list&gt; &lt;value&gt; &lt;out-var&gt;)"/>
 <use val="(APPEND &lt;list&gt; [&lt;element&gt;...])"/>
-<use val="(FILTER &lt;list&gt; {INCLUDE | EXCLUDE} REGEX &lt;regex&gt;)"/>
+<use val="(FILTER &lt;list&gt; &lt;INCLUDE|EXCLUDE&gt; &lt;MODE&gt;)"/>
 <use val="(INSERT &lt;list&gt; &lt;index&gt; [&lt;element&gt;...])"/>
 <use val="(POP_BACK &lt;list&gt; [&lt;out-var&gt;...])"/>
 <use val="(POP_FRONT &lt;list&gt; [&lt;out-var&gt;...])"/>
@@ -558,6 +566,7 @@
 <use val="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-variable&gt;] REMOVE &lt;json-string&gt; &lt;member|index&gt; [&lt;member|index&gt; ...])"/>
 <use val="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-variable&gt;] SET &lt;json-string&gt; &lt;member|index&gt; [&lt;member|index&gt; ...] &lt;value&gt;)"/>
 <use val="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-var&gt;] EQUAL &lt;json-string1&gt; &lt;json-string2&gt;)"/>
+<use val="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-var&gt;] PARTIAL_EQUAL &lt;json-pattern&gt; &lt;json-actual&gt;)"/>
 <use val="(JSON &lt;out-var&gt; [ERROR_VARIABLE &lt;error-var&gt;] STRING_ENCODE &lt;string&gt;)"/>
 </command>
 <command name="subdir_depends" desc="Disallowed since version 3.0. See CMake Policy CMP0029." deprecated="true">
@@ -749,6 +758,7 @@
 <prop name="AUTOUIC_OPTIONS" desc="Additional options for uic when using AUTOUIC"/>
 <prop name="AUTOUIC_SEARCH_PATHS" desc="Search path list used by AUTOUIC to find included .ui files."/>
 <prop name="AUTOUIC_SOURCE_GROUP" desc="Name of the source_group() for AUTOUIC generated files."/>
+<prop name="BASE_DIRS" desc="List of base directories of the file set. The target_sources() command sets or adds to the BASE_DIRS file set property and is the usual way to manipulate it."/>
 <prop name="BINARY_DIR" desc="This read-only property reports the value of the CMAKE_CURRENT_BINARY_DIR variable in the directory in which the target was defined."/>
 <prop name="BUILDSYSTEM_TARGETS" desc="This read-only directory property contains a semicolon-separated list of buildsystem targets added in the directory by calls to the add_library(), add_executable(), and add_custom_target() commands. The list does not include any Imported Targets or Alias Targets, but does include Interface Libraries. Each entry in the list is the logical name of a target, suitable to pass to the get_property() command TARGET option."/>
 <prop name="BUILD_RPATH" desc="A semicolon-separated list specifying runtime path (RPATH) entries to add to binaries linked in the build tree (for platforms that support it). By default, CMake sets the runtime path of binaries in the build tree to contain search paths it knows are needed to find the shared libraries they link. Projects may set BUILD_RPATH to specify additional search paths."/>
@@ -842,7 +852,7 @@
 <prop name="CXX_MODULE_SET_&lt;NAME&gt;" desc="Semicolon-separated list of files in the target's &lt;NAME&gt; C++ module set, which has the set type CXX_MODULES. If any of the paths are relative, they are computed relative to the target's source directory. The property supports generator expressions."/>
 <prop name="CXX_MODULE_STD" desc="CXX_MODULE_STD is a boolean specifying whether the target may use import std; its C++ sources or not."/>
 <prop name="CXX_PVS_STUDIO" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
-<prop name="CXX_SCAN_FOR_MODULES" desc="CXX_SCAN_FOR_MODULES is a boolean specifying whether CMake will scan C++ sources in the target for module dependencies. See also the CXX_SCAN_FOR_MODULES for per-source settings which, if set, overrides the target-wide settings."/>
+<prop name="CXX_SCAN_FOR_MODULES" desc="CXX_SCAN_FOR_MODULES is a boolean specifying whether CMake will scan C++ sources in the target for module dependencies. See also the CXX_SCAN_FOR_MODULES for per-source settings and CXX_SCAN_FOR_MODULES for file set settings. If either is set, it overrides the target-wide settings."/>
 <prop name="CXX_STANDARD" desc="The C++ standard whose features are requested to build this target."/>
 <prop name="CXX_STANDARD" desc="The variations are:"/>
 <prop name="CXX_STANDARD_REQUIRED" desc="Boolean describing whether the value of CXX_STANDARD is a requirement."/>
@@ -988,6 +998,7 @@
 <prop name="IMPORT_SUFFIX" desc="What comes after the import library name."/>
 <prop name="INCLUDE_DIRECTORIES" desc="List of preprocessor include file search directories."/>
 <prop name="INCLUDE_REGULAR_EXPRESSION" desc="Include file scanning regular expression."/>
+<prop name="INDEPENDENT_FILES" desc="INDEPENDENT_FILES is a boolean specifying that any GENERATED sources in the file set are not necessary for the compilation of other sources in the same target. Stated another way, these files are &#34;independent&#34; and their presence is never necessary for compilation of other sources (e.g., via #include)."/>
 <prop name="INSTALL_NAME_DIR" desc="Directory name for installed targets on Apple platforms."/>
 <prop name="INSTALL_OBJECT_NAME" desc="Set the installed object name (without the object extension) of the source file. An empty string value disables custom object naming. The value must be a relative path, and may not include special directory components (e.g., ..)."/>
 <prop name="INSTALL_OBJECT_NAME_STRATEGY" desc="INSTALL_OBJECT_NAME_STRATEGY is a string target property variable specifying the strategy to use when naming installed object files. The supported values are:"/>
@@ -1014,6 +1025,7 @@
 <prop name="INTERFACE_POSITION_INDEPENDENT_CODE" desc="Whether consumers need to create a position-independent target"/>
 <prop name="INTERFACE_PRECOMPILE_HEADERS" desc="List of interface header files to precompile into consuming targets."/>
 <prop name="INTERFACE_SOURCES" desc="List of interface sources to compile into consuming targets."/>
+<prop name="INTERFACE_SOURCE_SETS" desc="Read-only list of the target's INTERFACE and PUBLIC source sets (i.e. all file sets with the type SOURCES). Files listed in these source sets can be installed with install(TARGETS) and exported with install(EXPORT) and export()."/>
 <prop name="INTERFACE_SYSTEM_INCLUDE_DIRECTORIES" desc="List of public system include directories for a library."/>
 <prop name="INTERPROCEDURAL_OPTIMIZATION" desc="Enable interprocedural optimization for a target."/>
 <prop name="INTERPROCEDURAL_OPTIMIZATION_&lt;CONFIG&gt;" desc="Per-configuration interprocedural optimization for a target."/>
@@ -1077,7 +1089,7 @@
 <prop name="MACOSX_FRAMEWORK_INFO_PLIST" desc="Specify a custom Info.plist template for a macOS and iOS Framework."/>
 <prop name="MACOSX_PACKAGE_LOCATION" desc="Place a source file inside a Application Bundle (MACOSX_BUNDLE), Core Foundation Bundle (BUNDLE), or Framework Bundle (FRAMEWORK). It is applicable for macOS and iOS."/>
 <prop name="MACOSX_RPATH" desc="Whether this target on macOS or iOS is located at runtime using rpaths."/>
-<prop name="MACROS" desc="List of macro commands available in the current directory."/>
+<prop name="MACROS" desc="This directory property does not exist anymore. See policy CMP0217."/>
 <prop name="MANUALLY_ADDED_DEPENDENCIES" desc="Get manually added dependencies to other top-level targets."/>
 <prop name="MAP_IMPORTED_CONFIG_&lt;CONFIG&gt;" desc="Map from project configuration to imported target's configuration."/>
 <prop name="MEASUREMENT" desc="Specify a CDASH measurement and value to be reported for a test."/>
@@ -1153,6 +1165,9 @@
 <prop name="RUNTIME_OUTPUT_NAME" desc="Output name for RUNTIME target files."/>
 <prop name="RUNTIME_OUTPUT_NAME_&lt;CONFIG&gt;" desc="Per-configuration output name for RUNTIME target files."/>
 <prop name="RUN_SERIAL" desc="Do not run this test in parallel with any other test."/>
+<prop name="Rust_EDITION" desc="The Rust edition required to build this target. It is initialized from the CMAKE_Rust_EDITION variable if defined. Setting this property results in adding a flag such as --edition=2018 to the compile line."/>
+<prop name="Rust_EMIT" desc="This property controls the type of output generated by the Rust compiler. Can be one of several values:"/>
+<prop name="SCOPE" desc="The scope of the file set."/>
 <prop name="SKIP_AUTOGEN" desc="Exclude the source file from AUTOMOC, AUTOUIC and AUTORCC processing (for Qt projects)."/>
 <prop name="SKIP_AUTOMOC" desc="Exclude the source file from AUTOMOC processing (for Qt projects)."/>
 <prop name="SKIP_AUTORCC" desc="Exclude the source file from AUTORCC processing (for Qt projects)."/>
@@ -1165,6 +1180,11 @@
 <prop name="SKIP_UNITY_BUILD_INCLUSION" desc="Setting this property to true ensures the source file will be skipped by unity builds when its associated target has its UNITY_BUILD property set to true. The source file will instead be compiled on its own in the same way as it would with unity builds disabled."/>
 <prop name="SOURCES" desc="This specifies the list of paths to source files for the target. The following commands all set or add to the SOURCES target property and are the usual way to manipulate it:"/>
 <prop name="SOURCE_DIR" desc="This read-only property reports the value of the CMAKE_CURRENT_SOURCE_DIR variable in the directory in which the target was defined."/>
+<prop name="SOURCE_DIRS" desc="Semicolon-separated list of base directories of the target's default source set (i.e. the file set with name and type SOURCES). The property supports generator expressions."/>
+<prop name="SOURCE_DIRS_&lt;NAME&gt;" desc="Semicolon-separated list of base directories of the target's &lt;NAME&gt; source set, which has the set type SOURCES. The property supports generator expressions."/>
+<prop name="SOURCE_SET" desc="Semicolon-separated list of files in the target's default source set, (i.e. the file set with name and type SOURCES). If any of the paths are relative, they are computed relative to the target's source directory. The property supports generator expressions."/>
+<prop name="SOURCE_SETS" desc="Read-only list of the target's PRIVATE and PUBLIC source sets (i.e. all file sets with the type SOURCES). Files listed in these file sets are treated as source files."/>
+<prop name="SOURCE_SET_&lt;NAME&gt;" desc="Semicolon-separated list of files in the target's &lt;NAME&gt; source set, which has the set type SOURCES. If any of the paths are relative, they are computed relative to the target's source directory. The property supports generator expressions."/>
 <prop name="SOVERSION" desc="ABI version number of a shared library target."/>
 <prop name="SPDX_LICENSE" desc="Specify the license(s) of a target using a System Package Data Exchange (SPDX) License Expression. See the SPDX License List for a list of commonly used licenses and their identifiers."/>
 <prop name="STATIC_LIBRARY_FLAGS" desc="Archiver (or MSVC librarian) flags for a static library target. Targets that are shared libraries, modules, or executables need to use the LINK_OPTIONS or LINK_FLAGS target properties."/>
@@ -1189,8 +1209,10 @@
 <prop name="Swift_LANGUAGE_VERSION" desc="This property sets the language version for the Swift sources in the target. If one is not specified, it will default to CMAKE_Swift_LANGUAGE_VERSION if specified, otherwise it is the latest version supported by the compiler."/>
 <prop name="Swift_LINKER_LAUNCHER" desc="This property is implemented only when &lt;LANG&gt; is one of:"/>
 <prop name="Swift_MODULE_DIRECTORY" desc="Specify output directory for Swift modules provided by the target."/>
-<prop name="Swift_MODULE_NAME" desc="This property specifies the name of the Swift module. It is defaulted to the name of the target."/>
+<prop name="Swift_MODULE_NAME" desc="This property specifies the name of the Swift module. It is defaulted to the name of the target, with hyphens replaced by underscores (hyphens are not valid in Swift module identifiers)."/>
+<prop name="Swift_PACKAGE_NAME" desc="Specify the Swift package name for a target."/>
 <prop name="Swift_PVS_STUDIO" desc="This property is implemented only when &lt;LANG&gt; is C or CXX."/>
+<prop name="Swift_SEPARATE_MODULE_EMISSION" desc="Emit Swift modules separately from compilation in the Ninja Generators."/>
 <prop name="Swift_STANDARD" desc="The variations are:"/>
 <prop name="Swift_STANDARD_REQUIRED" desc="The variations are:"/>
 <prop name="Swift_VISIBILITY_PRESET" desc="Value for symbol visibility compile flags"/>
@@ -1366,6 +1388,7 @@
 <word name="BOTH"/>
 <word name="BRIEF_DOCS"/>
 <word name="BUILD"/>
+<word name="BUILD_DEPENDS"/>
 <word name="BUILD_ID"/>
 <word name="BYPASS_PROVIDER"/>
 <word name="BYPRODUCTS"/>
@@ -1425,7 +1448,12 @@
 <word name="DEPENDS"/>
 <word name="DESCRIPTION"/>
 <word name="DESTINATION"/>
+<word name="DIAGNOSTIC"/>
+<word name="DIAGNOSTICS"/>
 <word name="DIRECTORY"/>
+<word name="DISCOVERY_ARGS"/>
+<word name="DISCOVERY_MATCH"/>
+<word name="DISCOVERY_PROPERTIES"/>
 <word name="DOC"/>
 <word name="DOS"/>
 <word name="DOWNLOAD"/>
@@ -1435,6 +1463,8 @@
 <word name="ENCODING"/>
 <word name="END"/>
 <word name="ENV"/>
+<word name="ENVIRONMENT"/>
+<word name="ENVIRONMENT_MODIFICATION"/>
 <word name="EQUAL"/>
 <word name="ERROR_FILE"/>
 <word name="ERROR_QUIET"/>
@@ -1553,6 +1583,7 @@
 <word name="MATCHALL"/>
 <word name="MATCHES"/>
 <word name="MEMBER"/>
+<word name="MODE"/>
 <word name="MODULE"/>
 <word name="NAME"/>
 <word name="NAMES"/>
@@ -1578,6 +1609,7 @@
 <word name="NO_CMAKE_SYSTEM_PACKAGE_REGISTRY"/>
 <word name="NO_CMAKE_SYSTEM_PATH"/>
 <word name="NO_DEFAULT_PATH"/>
+<word name="NO_DIAGNOSTIC_SCOPE"/>
 <word name="NO_LOG"/>
 <word name="NO_MODULE"/>
 <word name="NO_PACKAGE_ROOT_PATH"/>
@@ -1609,7 +1641,9 @@
 <word name="PARALLEL_LEVEL"/>
 <word name="PARENT_PATH"/>
 <word name="PARENT_SCOPE"/>
+<word name="PARSE_ARGN"/>
 <word name="PARSE_ARGV"/>
+<word name="PARTIAL_EQUAL"/>
 <word name="PARTS"/>
 <word name="PATHS"/>
 <word name="PATH_EQUAL"/>
@@ -1627,6 +1661,8 @@
 <word name="PREFIX"/>
 <word name="PREORDER"/>
 <word name="PREPEND"/>
+<word name="PRESET"/>
+<word name="PRESETS_FILE"/>
 <word name="PRE_BUILD"/>
 <word name="PRE_LINK"/>
 <word name="PRIVATE"/>
@@ -1727,7 +1763,10 @@
 <word name="TARGETS"/>
 <word name="TARGET_DIRECTORY"/>
 <word name="TEST"/>
+<word name="TEST_ARGS"/>
 <word name="TEST_LOAD"/>
+<word name="TEST_NAME"/>
+<word name="TEST_PROPERTIES"/>
 <word name="TEST_VARIABLE"/>
 <word name="TIMEOUT"/>
 <word name="TIMESTAMP"/>
@@ -1764,6 +1803,8 @@
 <word name="VERSION_GREATER_EQUAL"/>
 <word name="VERSION_LESS"/>
 <word name="VERSION_LESS_EQUAL"/>
+<word name="VERSION_ONLY"/>
+<word name="VERSION_OVERRIDE"/>
 <word name="WINDOWS_REGISTRY"/>
 <word name="WORKING_DIRECTORY"/>
 <word name="WRITE"/>
@@ -3770,6 +3811,7 @@
 <var name="CMAKE_RULE_MESSAGES" desc="Specify whether to report a message for each make rule."/>
 <var name="CMAKE_RUNTIME_OUTPUT_DIRECTORY" desc="Where to put all the RUNTIME target files when built."/>
 <var name="CMAKE_RUNTIME_OUTPUT_DIRECTORY_&lt;CONFIG&gt;" desc="Where to put all the RUNTIME target files when built for a specific configuration."/>
+<var name="CMAKE_Rust_EDITION" desc="Default value for Rust_EDITION target property if set when a target is created."/>
 <var name="CMAKE_SCRIPT_MODE_FILE" desc="Full path to the cmake -P script file currently being processed."/>
 <var name="CMAKE_SHARED_LIBRARY_ARCHIVE_SUFFIX" desc="The suffix for archived shared libraries that you link to."/>
 <var name="CMAKE_SHARED_LIBRARY_ENABLE_EXPORTS" desc="Specify whether shared library generates an import file."/>
@@ -3903,6 +3945,7 @@
 <var name="CMAKE_Swift_OUTPUT_EXTENSION" desc="Extension for the output of a compile for a single file."/>
 <var name="CMAKE_Swift_PLATFORM_ID" desc="An internal variable subject to change."/>
 <var name="CMAKE_Swift_PVS_STUDIO" desc="Default value for &lt;LANG&gt;_PVS_STUDIO target property when &lt;LANG&gt; is C or CXX."/>
+<var name="CMAKE_Swift_SEPARATE_MODULE_EMISSION" desc="Specify whether Swift targets emit .swiftmodule from a dedicated build edge. This variable is used to initialize the Swift_SEPARATE_MODULE_EMISSION property on targets as they are created."/>
 <var name="CMAKE_Swift_SIMULATE_ID" desc="Identification string of the &#34;simulated&#34; compiler."/>
 <var name="CMAKE_Swift_SIMULATE_VERSION" desc="Version string of &#34;simulated&#34; compiler."/>
 <var name="CMAKE_Swift_SIZEOF_DATA_PTR" desc="Size of pointer-to-data types for language &lt;LANG&gt;."/>
@@ -3918,6 +3961,7 @@
 <var name="CMAKE_Swift_USING_LINKER_MODE" desc="This variable controls how the value of the CMAKE_&lt;LANG&gt;_USING_LINKER_&lt;TYPE&gt; variable should be interpreted. The supported linker mode values are:"/>
 <var name="CMAKE_Swift_VISIBILITY_PRESET" desc="Default value for the &lt;LANG&gt;_VISIBILITY_PRESET target property when a target is created."/>
 <var name="CMAKE_TASKING_TOOLSET" desc="Select the Tasking toolset which provides the compiler"/>
+<var name="CMAKE_TEST_BUILD_DEPENDS" desc="Enable test_prep/&lt;name&gt; build targets for tests added by add_test() when using the Ninja Generators."/>
 <var name="CMAKE_TEST_LAUNCHER" desc="This variable is used to initialize the TEST_LAUNCHER target property of executable targets as they are created. It is used to specify a launcher for running tests, added by the add_test() command, that run an executable target."/>
 <var name="CMAKE_TLS_CAINFO" desc="Specify the default value for the file(DOWNLOAD) and file(UPLOAD) commands' TLS_CAINFO options. It is unset by default."/>
 <var name="CMAKE_TLS_VERIFY" desc="Specify the default value for the file(DOWNLOAD) and file(UPLOAD) commands' TLS_VERIFY options. If this variable is not set, the commands check the CMAKE_TLS_VERIFY environment variable. If neither is set, the default is on."/>
@@ -4025,18 +4069,20 @@
 <var name="CPACK_PACKAGING_INSTALL_PREFIX" desc="The prefix used in the built package."/>
 <var name="CPACK_SET_DESTDIR" desc="Boolean toggle to make CPack use DESTDIR mechanism when packaging."/>
 <var name="CPACK_WARN_ON_ABSOLUTE_INSTALL_DESTINATION" desc="Ask CPack to warn each time a file with absolute INSTALL DESTINATION is encountered."/>
-<var name="CTEST_BINARY_DIRECTORY" desc="Specify the CTest BuildDirectory setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_BUILD_COMMAND" desc="Specify the CTest MakeCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_BUILD_NAME" desc="Specify the CTest BuildName setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_BZR_COMMAND" desc="Specify the CTest BZRCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_BZR_UPDATE_OPTIONS" desc="Specify the CTest BZRUpdateOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_CHANGE_ID" desc="Specify the CTest ChangeId setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_CHECKOUT_COMMAND" desc="Tell the ctest_start() command how to checkout or initialize the source directory in a ctest(1) Dashboard Client script."/>
+<var name="CTEST_BINARY_DIRECTORY" desc="Specify the CTest BuildDirectory setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_BUILD_COMMAND" desc="Specify the CTest MakeCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_BUILD_NAME" desc="Specify the CTest BuildName setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_BUILD_PRESET" desc="Specify the PRESET option for the ctest_build() command in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_BZR_COMMAND" desc="Specify the CTest BZRCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_BZR_UPDATE_OPTIONS" desc="Specify the CTest BZRUpdateOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_CHANGE_ID" desc="Specify the CTest ChangeId setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_CHECKOUT_COMMAND" desc="Tell the ctest_start() command how to checkout or initialize the source directory in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
 <var name="CTEST_CONFIGURATION_TYPE" desc="Specify the CTest DefaultCTestConfigurationType setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_CONFIGURE_COMMAND" desc="Specify the CTest ConfigureCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_COVERAGE_COMMAND" desc="Specify the CTest CoverageCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_COVERAGE_EXTRA_FLAGS" desc="Specify the CTest CoverageExtraFlags setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_CURL_OPTIONS" desc="Specify the CTest CurlOptions setting in a ctest(1) Dashboard Client script."/>
+<var name="CTEST_CONFIGURE_COMMAND" desc="Specify the CTest ConfigureCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_CONFIGURE_PRESET" desc="Specify the PRESET option for the ctest_configure() command in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_COVERAGE_COMMAND" desc="Specify the CTest CoverageCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_COVERAGE_EXTRA_FLAGS" desc="Specify the CTest CoverageExtraFlags setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_CURL_OPTIONS" desc="Specify the CTest CurlOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
 <var name="CTEST_CUSTOM_COVERAGE_EXCLUDE" desc="A list of regular expressions which will be used to exclude files by their path from coverage output by the ctest_coverage() command."/>
 <var name="CTEST_CUSTOM_ERROR_EXCEPTION" desc="A list of regular expressions which will be used to exclude when detecting error messages in build outputs by the ctest_build() command."/>
 <var name="CTEST_CUSTOM_ERROR_MATCH" desc="A list of regular expressions which will be used to detect error messages in build outputs by the ctest_build() command."/>
@@ -4055,55 +4101,60 @@
 <var name="CTEST_CUSTOM_TEST_OUTPUT_TRUNCATION" desc="Set the test output truncation mode in case a maximum size is configured via the CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE or CTEST_CUSTOM_MAXIMUM_FAILED_TEST_OUTPUT_SIZE variables. By default the tail of the output will be truncated. Other possible values are middle and head."/>
 <var name="CTEST_CUSTOM_WARNING_EXCEPTION" desc="A list of regular expressions which will be used to exclude when detecting warning messages in build outputs by the ctest_build() command."/>
 <var name="CTEST_CUSTOM_WARNING_MATCH" desc="A list of regular expressions which will be used to detect warning messages in build outputs by the ctest_build() command."/>
-<var name="CTEST_CVS_COMMAND" desc="Specify the CTest CVSCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_CVS_UPDATE_OPTIONS" desc="Specify the CTest CVSUpdateOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_DROP_LOCATION" desc="Specify the CTest DropLocation setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_DROP_METHOD" desc="Specify the CTest DropMethod setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_DROP_SITE" desc="Specify the CTest DropSite setting in a ctest(1) Dashboard Client script."/>
+<var name="CTEST_CVS_COMMAND" desc="Specify the CTest CVSCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_CVS_UPDATE_OPTIONS" desc="Specify the CTest CVSUpdateOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_DROP_LOCATION" desc="Specify the CTest DropLocation setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_DROP_METHOD" desc="Specify the CTest DropMethod setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_DROP_SITE" desc="Specify the CTest DropSite setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
 <var name="CTEST_DROP_SITE_CDASH" desc="Specify the CTest IsCDash setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_DROP_SITE_PASSWORD" desc="Specify the CTest DropSitePassword setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_DROP_SITE_USER" desc="Specify the CTest DropSiteUser setting in a ctest(1) Dashboard Client script."/>
+<var name="CTEST_DROP_SITE_PASSWORD" desc="Specify the CTest DropSitePassword setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_DROP_SITE_USER" desc="Specify the CTest DropSiteUser setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
 <var name="CTEST_EXTRA_COVERAGE_GLOB" desc="A list of regular expressions which will be used to find files which should be covered by the ctest_coverage() command."/>
-<var name="CTEST_EXTRA_SUBMIT_FILES" desc="Specify files for ctest_submit(PARTS ExtraFiles) to submit in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_GIT_COMMAND" desc="Specify the CTest GITCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_GIT_INIT_SUBMODULES" desc="Specify the CTest GITInitSubmodules setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_GIT_UPDATE_CUSTOM" desc="Specify the CTest GITUpdateCustom setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_GIT_UPDATE_OPTIONS" desc="Specify the CTest GITUpdateOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_HG_COMMAND" desc="Specify the CTest HGCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_HG_UPDATE_OPTIONS" desc="Specify the CTest HGUpdateOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_LABELS_FOR_SUBPROJECTS" desc="Specify the CTest LabelsForSubprojects setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_MEMORYCHECK_COMMAND" desc="Specify the CTest MemoryCheckCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_MEMORYCHECK_COMMAND_OPTIONS" desc="Specify the CTest MemoryCheckCommandOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_MEMORYCHECK_SANITIZER_OPTIONS" desc="Specify the CTest MemoryCheckSanitizerOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_MEMORYCHECK_SUPPRESSIONS_FILE" desc="Specify the CTest MemoryCheckSuppressionFile setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_MEMORYCHECK_TYPE" desc="Specify the CTest MemoryCheckType setting in a ctest(1) Dashboard Client script. Valid values are Valgrind, Purify, BoundsChecker, DrMemory, CudaSanitizer, ThreadSanitizer, AddressSanitizer, LeakSanitizer, MemorySanitizer and UndefinedBehaviorSanitizer."/>
-<var name="CTEST_NIGHTLY_START_TIME" desc="Specify the CTest NightlyStartTime setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_NOTES_FILES" desc="Specify files for ctest_submit(PARTS Notes) to submit in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_P4_CLIENT" desc="Specify the CTest P4Client setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_P4_COMMAND" desc="Specify the CTest P4Command setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_P4_OPTIONS" desc="Specify the CTest P4Options setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_P4_UPDATE_OPTIONS" desc="Specify the CTest P4UpdateOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_RESOURCE_SPEC_FILE" desc="Specify the CTest ResourceSpecFile setting in a ctest(1) Dashboard Client script."/>
+<var name="CTEST_EXTRA_SUBMIT_FILES" desc="Specify files for ctest_submit(PARTS ExtraFiles) to submit in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_GIT_COMMAND" desc="Specify the CTest GITCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_GIT_INIT_SUBMODULES" desc="Specify the CTest GITInitSubmodules setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_GIT_UPDATE_CUSTOM" desc="Specify the CTest GITUpdateCustom setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_GIT_UPDATE_OPTIONS" desc="Specify the CTest GITUpdateOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_HG_COMMAND" desc="Specify the CTest HGCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_HG_UPDATE_OPTIONS" desc="Specify the CTest HGUpdateOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_LABELS_FOR_SUBPROJECTS" desc="Specify the CTest LabelsForSubprojects setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_MEMORYCHECK_COMMAND" desc="Specify the CTest MemoryCheckCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_MEMORYCHECK_COMMAND_OPTIONS" desc="Specify the CTest MemoryCheckCommandOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_MEMORYCHECK_SANITIZER_OPTIONS" desc="Specify the CTest MemoryCheckSanitizerOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_MEMORYCHECK_SUPPRESSIONS_FILE" desc="Specify the CTest MemoryCheckSuppressionFile setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_MEMORYCHECK_TYPE" desc="Specify the CTest MemoryCheckType setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option. Valid values are Valgrind, Purify, BoundsChecker, DrMemory, CudaSanitizer, ThreadSanitizer, AddressSanitizer, LeakSanitizer, MemorySanitizer and UndefinedBehaviorSanitizer."/>
+<var name="CTEST_NIGHTLY_START_TIME" desc="Specify the CTest NightlyStartTime setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_NOTES_FILES" desc="Specify files for ctest_submit(PARTS Notes) to submit in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_P4_CLIENT" desc="Specify the CTest P4Client setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_P4_COMMAND" desc="Specify the CTest P4Command setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_P4_OPTIONS" desc="Specify the CTest P4Options setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_P4_UPDATE_OPTIONS" desc="Specify the CTest P4UpdateOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_PRESET" desc="Specify a preset name to use for all relevant ctest(1) Dashboard Client steps in a dashboard script, or on the ctest command line via the -D option."/>
+<var name="CTEST_PRESETS_FILE" desc="Specify the PRESETS_FILE option for all relevant ctest(1) Dashboard Client step commands in a dashboard script, or on the ctest command line via the -D option."/>
+<var name="CTEST_RESOURCE_SPEC_FILE" desc="Specify the CTest ResourceSpecFile setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
 <var name="CTEST_RUN_CURRENT_SCRIPT" desc="Removed. This variable once supported an undocumented feature that has since been removed."/>
 <var name="CTEST_SCP_COMMAND" desc="Legacy option. Not used."/>
 <var name="CTEST_SCRIPT_DIRECTORY" desc="The directory containing the top-level CTest script. The concept is similar to CMAKE_SOURCE_DIR."/>
-<var name="CTEST_SITE" desc="Specify the CTest Site setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_SOURCE_DIRECTORY" desc="Specify the CTest SourceDirectory setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_SUBMIT_INACTIVITY_TIMEOUT" desc="Specify the CTest SubmitInactivityTimeout setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_SUBMIT_URL" desc="Specify the CTest SubmitURL setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_SVN_COMMAND" desc="Specify the CTest SVNCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_SVN_OPTIONS" desc="Specify the CTest SVNOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_SVN_UPDATE_OPTIONS" desc="Specify the CTest SVNUpdateOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_TEST_LOAD" desc="Specify the TestLoad setting in the CTest Test Step of a ctest(1) Dashboard Client script. This sets the default value for the TEST_LOAD option of the ctest_test() command."/>
-<var name="CTEST_TEST_TIMEOUT" desc="Specify the CTest TimeOut setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_TLS_VERIFY" desc="Specify the CTest TLSVerify setting in a ctest(1) Dashboard Client script or in project CMakeLists.txt code before including the CTest module. The value is a boolean indicating whether to verify the server certificate when submitting to a dashboard via https:// URLs."/>
-<var name="CTEST_TLS_VERSION" desc="Specify the CTest TLSVersion setting in a ctest(1) Dashboard Client script or in project CMakeLists.txt code before including the CTest module. The value is a minimum TLS version allowed when submitting to a dashboard via https:// URLs."/>
+<var name="CTEST_SITE" desc="Specify the CTest Site setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_SOURCE_DIRECTORY" desc="Specify the CTest SourceDirectory setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_SUBMIT_INACTIVITY_TIMEOUT" desc="Specify the CTest SubmitInactivityTimeout setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_SUBMIT_PARTS" desc="Specify a semicolon-separated list of parts for the ctest_submit() command to submit in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_SUBMIT_URL" desc="Specify the CTest SubmitURL setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_SVN_COMMAND" desc="Specify the CTest SVNCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_SVN_OPTIONS" desc="Specify the CTest SVNOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_SVN_UPDATE_OPTIONS" desc="Specify the CTest SVNUpdateOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_TEST_COVERAGE_TOOL" desc="Specify the CTest CoverageTool setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_TEST_LOAD" desc="Specify the TestLoad setting in the CTest Test Step of a ctest(1) Dashboard Client script, or on the ctest command line via the -D option. This sets the default value for the TEST_LOAD option of the ctest_test() command."/>
+<var name="CTEST_TEST_PRESET" desc="Specify the PRESET option for the ctest_test() and ctest_memcheck() commands in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_TEST_TIMEOUT" desc="Specify the CTest TimeOut setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_TLS_VERIFY" desc="Specify the CTest TLSVerify setting in a ctest(1) Dashboard Client script or in project CMakeLists.txt code before including the CTest module, or on the ctest command line via the -D option. The value is a boolean indicating whether to verify the server certificate when submitting to a dashboard via https:// URLs."/>
+<var name="CTEST_TLS_VERSION" desc="Specify the CTest TLSVersion setting in a ctest(1) Dashboard Client script or in project CMakeLists.txt code before including the CTest module, or on the ctest command line via the -D option. The value is a minimum TLS version allowed when submitting to a dashboard via https:// URLs."/>
 <var name="CTEST_TRIGGER_SITE" desc="Legacy option. Not used."/>
-<var name="CTEST_UPDATE_COMMAND" desc="Specify the CTest UpdateCommand setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_UPDATE_OPTIONS" desc="Specify the CTest UpdateOptions setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_UPDATE_VERSION_ONLY" desc="Specify the CTest UpdateVersionOnly setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_UPDATE_VERSION_OVERRIDE" desc="Specify the CTest UpdateVersionOverride setting in a ctest(1) Dashboard Client script."/>
-<var name="CTEST_USE_LAUNCHERS" desc="Specify the CTest UseLaunchers setting in a ctest(1) Dashboard Client script."/>
+<var name="CTEST_UPDATE_COMMAND" desc="Specify the CTest UpdateCommand setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_UPDATE_OPTIONS" desc="Specify the CTest UpdateOptions setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_UPDATE_VERSION_ONLY" desc="Specify the CTest UpdateVersionOnly setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_UPDATE_VERSION_OVERRIDE" desc="Specify the CTest UpdateVersionOverride setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
+<var name="CTEST_USE_LAUNCHERS" desc="Specify the CTest UseLaunchers setting in a ctest(1) Dashboard Client script, or on the ctest command line via the -D option."/>
 <var name="CYGWIN" desc="True for Cygwin."/>
 <var name="ENV" desc="Operator to read environment variables."/>
 <var name="EXECUTABLE_OUTPUT_PATH" desc="Old executable location variable."/>
