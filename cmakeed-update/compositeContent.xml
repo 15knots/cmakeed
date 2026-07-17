@@ -8,6 +8,6 @@
     <property name='p2.name' value='cmakeed Update' />
   </properties>
   <children size='1'>
-    <child location='jar:https://dl.cloudsmith.io/public/15knots/p2-zip/raw/files/CMakeEd-1.28.0.zip!/' />
+    <child location='jar:https://dl.cloudsmith.io/public/15knots/p2-zip/raw/files/CMakeEd-1.29.0.zip!/' />
   </children>
 </repository>
