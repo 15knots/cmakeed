@@ -9,17 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
 
     - name: Set up JDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v5
       with:
         java-version: '17'
         distribution: 'adopt'
         settings-path: ${{ github.workspace }}
 
     - name: Set up Maven
-      uses: stCarolas/setup-maven@v4.5
+      uses: stCarolas/setup-maven@v5
       with:
         maven-version: 3.9.0
 
@@ -34,7 +34,7 @@ jobs:
 #         script: |
 #           const globber = await glob.create('releng/*-repo/target/cmake4eclipse-[0-9]*.[0-9]*.[0-9]*.zip')
 #           return await globber.glob()
-# NOTE: glob gives us absolute paths which is not understtod by cloudsmith-io/action
+# NOTE: glob gives us absolute paths which is not understood by cloudsmith-io/action
       run: 'echo "::set-output name=result::$(find com.cthing.cmakeed.site/target/ -type f -name CMakeEd-\*.zip)"'
 
     - name: Artifact to upload
