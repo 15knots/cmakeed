@@ -46,10 +46,6 @@
     </developer>
   </developers>
 
-  <prerequisites>
-    <maven>3.0</maven>
-  </prerequisites>
-
   <modules>
     <module>../com.cthing.cmakeed-target</module>
     <module>../com.cthing.cmakeed.core</module>
