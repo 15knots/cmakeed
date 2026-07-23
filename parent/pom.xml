@@ -69,7 +69,7 @@
 
   <properties>
     <java.source>11</java.source>
-    <tycho-version>4.0.4</tycho-version>
+    <tycho-version>4.0.13</tycho-version>
     <platform.version>1.0.0</platform.version>
     <!-- don't pollute maven repositories with useless stuff, submodules can override this property -->
     <maven.deploy.skip>true</maven.deploy.skip>
@@ -113,7 +113,7 @@
 	    <plugin>
 	      <groupId>org.apache.maven.plugins</groupId>
 	      <artifactId>maven-enforcer-plugin</artifactId>
-	      <version>3.3.0</version>
+	      <version>3.6.3</version>
 	      <executions>
 	        <execution>
 	          <id>enforce-versions</id>
@@ -123,7 +123,7 @@
 	          <configuration>
 	            <rules>
 	              <requireMavenVersion>
-	                <version>3.6.3</version>
+	                <version>3.9.0</version>
 	              </requireMavenVersion>
 	            </rules>
 	          </configuration>
@@ -132,7 +132,7 @@
 	    </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.11</version>
+          <version>3.15.0</version>
           <configuration>
             <encoding>UTF-8</encoding>
           </configuration>
@@ -140,7 +140,7 @@
 
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.5.0</version>
           <configuration>
             <encoding>UTF-8</encoding>
           </configuration>
@@ -148,7 +148,7 @@
 
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.1.4</version>
         </plugin>
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
@@ -156,7 +156,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.5.6</version>
         </plugin>
 
         <plugin>
@@ -292,9 +292,6 @@
               <groupId>org.eclipse.tycho</groupId>
               <artifactId>tycho-compiler-plugin</artifactId>
               <configuration>
-                <!-- MWE: debuglevel scheint tycho 0.19.0 noch nicht
-                  zu kennen.. -->
-                <debuglevel>lines,source</debuglevel>
                 <optimize>true</optimize>
               </configuration>
             </plugin>
