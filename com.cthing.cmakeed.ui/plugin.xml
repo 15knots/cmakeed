@@ -396,4 +396,53 @@
 			<description>This color is used to highlight command arguments</description>
 		</colorDefinition>
 	</extension>
+	
+  <extension
+        point="org.eclipse.debug.core.breakpoints">
+     <breakpoint
+           class="com.cthing.cmakeed.ui.debug.Breakpoint"
+           id="com.cthing.cmakeed.ui.debug.linebreakpoint"
+           markerType="com.cthing.cmakeed.ui.debug.breakpoint.marker"
+           name="CMake breakpoint">
+     </breakpoint>
+  </extension>
+<extension point="org.eclipse.core.resources.markers"
+      id="com.cthing.cmakeed.ui.debug.breakpoint.marker"
+      name="CMake line breakpoint"
+      >
+    <persistent value="true" />
+    <super type="org.eclipse.debug.core.lineBreakpointMarker" />
+</extension>
+   <extension point="org.eclipse.debug.ui.toggleBreakpointsTargetFactories">
+      <toggleTargetFactory
+            id="com.cthing.cmakeed.ui.debug.ToggleBreakpointsTargetFactory"
+            class="com.cthing.cmakeed.ui.debug.ToggleBreakpointsTargetFactory">
+<enablement><instanceof value="com.cthing.cmakeed.ui.editor.CMakeEditor"/></enablement>
+      </toggleTargetFactory>
+   </extension>
+<extension point="org.eclipse.ui.editorActions">
+      <editorContribution
+         targetID="com.cthing.cmakeed.ui.editor.CMakeEditor"
+         id="com.cthing.cmakeed.ui.debug.EditorBreakpointRulerActions">
+         <action
+               actionID="RulerDoubleClick"
+               class="org.eclipse.debug.ui.actions.RulerToggleBreakpointActionDelegate"
+               id="com.cthing.cmakeed.ui.debug.rulerDoubleClickAction"
+               label="unused"
+               style="push">
+         </action>
+      </editorContribution>
+   </extension>
+   <extension point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+         targetID="#RulerContext"
+         id="com.cthing.cmakeed.ui.debug.EditorBreakpointRulerPopupActions">
+         <action
+               class="org.eclipse.debug.ui.actions.RulerToggleBreakpointActionDelegate"
+               menubarPath="additions"
+               id="com.cthing.cmakeed.ui.debug.rulerContextMenu.toggleBreakpointAction"
+               label="Toggle Breakpoint">
+         </action>
+      </viewerContribution>
+   </extension>
 </plugin>
