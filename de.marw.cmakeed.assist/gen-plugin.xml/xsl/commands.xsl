@@ -22,6 +22,8 @@
   <xsl:variable name="usageIn_section_desc_name">|cmake_host_system_information|add_executable|add_library|cmake_policy|set|unset|</xsl:variable>
   <!-- commands with preferred usage in XPATH '/document/section/section/section/desc/desc_signature/desc_name'.  -->
   <xsl:variable name="preferUsageIn_desc_name">|add_custom_command|if|string|</xsl:variable>
+  <!-- commands with preferred usage in XPATH '/document/section/section/desc/desc_content/literal_block'.  -->
+  <xsl:variable name="preferUsageIn_desc_content_lit">|add_custom_rule|</xsl:variable>
   <!-- commands with multiple signatures in a single XMl element; one per line -->
   <xsl:variable name="multiUsagesIn_element">|cmake_language|cmake_path|file|install|list|source_group|</xsl:variable>
   <!-- commands with multiple signatures in a single XMl element; line wrapped; separated by empty line -->
@@ -78,6 +80,12 @@
         <xsl:apply-templates
           select="section/section/desc/desc_signature/desc_name|section/desc/desc_signature/desc_name"
         >
+          <xsl:with-param name="command" select="$command" tunnel="yes" />
+        </xsl:apply-templates>
+      </xsl:when>
+      <xsl:when test="contains($preferUsageIn_desc_content_lit, $lname)">
+        <!-- the first literal_block gives us garbage here -->
+        <xsl:apply-templates select="section/desc/desc_content/literal_block">
           <xsl:with-param name="command" select="$command" tunnel="yes" />
         </xsl:apply-templates>
       </xsl:when>
